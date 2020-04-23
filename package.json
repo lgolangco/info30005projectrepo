@@ -1,24 +1,18 @@
 {
-  "name": "mylibraryapp",
+  "name": "studyspot",
   "version": "1.0.0",
-  "description": "Library App project for workshops in INFO30005",
+  "description": "INFO30005 Group Assignment - StudySpot Website",
   "main": "app.js",
   "scripts": {
     "start": "node app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "Ronal Singh and Steven Tang",
+  "author": "",
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.19.0",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
-    "mongoose": "^5.9.9",
-    "nodemon": "^2.0.3"
-  },
-  "devDependencies": {},
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/lux9903/myownlibapp.git"
+    "mongoose": "^5.9.9"
   }
 }

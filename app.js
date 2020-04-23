@@ -16,15 +16,14 @@ app.get("/", (req, res) => {
   res.send("<H1>Team Name: Cosmos</H1>");
 });
 
-// handle author-management related requests
-// first import the author router
-const authorRouter = require("./routes/authorRouter");
+// first import the back-end routes
+const backendRoutes = require("./routes/backendRoutes");
 
-// the author routes are added onto the end of '/author-management'
-app.use("/author-management", authorRouter);
+// the user routes are added onto the end of '/user'
+app.use("/user", backendRoutes);
 
 // start app and listen for incoming requests on port
 app.listen(process.env.PORT || 3000, () => {
-  console.log("The library app is running!");
+  console.log("StudySpot app is running!");
 });
 
