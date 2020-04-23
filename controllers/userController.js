@@ -33,20 +33,6 @@ const updateUser = async (req, res) => {
 };
 
 
-// .put(function(req, res){
-//
-//   Article.update(
-//       {title: req.params.articleTitle},
-//       {title: req.body.title, content: req.body.content},
-//       {overwrite: true},
-//       function(err){
-//         if(!err){
-//           res.send("Successfully updated the selected article.");
-//         }
-//       }
-//   );
-// })
-
 // function to add user
 const addUser = async (req, res) => {
  res.send("adding User");
