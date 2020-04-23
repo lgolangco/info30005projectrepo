@@ -19,8 +19,8 @@ app.get("/", (req, res) => {
 // first import the back-end routes
 const backendRoutes = require("./routes/backendRoutes");
 
-// the user routes are added onto the end of '/user'
-app.use("/user", backendRoutes);
+// backend routes added onto the end of "/"
+app.use("/", backendRoutes);
 
 // start app and listen for incoming requests on port
 app.listen(process.env.PORT || 3000, () => {

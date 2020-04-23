@@ -11,16 +11,16 @@ const reviewController = require("../controllers/reviewController.js");
 /* USER ROUTES */
 
 // get all users
-router.get("/", userController.getAllUsers);
+router.get("/user", userController.getAllUsers);
 
 // get a user by ID
-router.get("/:id", userController.getUserByID);
+router.get("/user/:id", userController.getUserByID);
 
 // create a user
-router.post("/", userController.addUser);
+router.put("/", userController.addUser);
 
 // update a user
-router.post("/:id", userController.updateUser);
+router.put("/user/:id", userController.updateUser);
 
 
 /* VENUE ROUTES */
