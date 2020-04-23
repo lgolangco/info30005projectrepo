@@ -1,7 +1,7 @@
 require('dotenv').config();
 const mongoose = require("mongoose");
 
-require("./author");
+require("./user");
 
 // Connect to MongoDB
 CONNECTION_STRING = "mongodb+srv://lyn:<password>@cluster0-r6reg.mongodb.net/test?retryWrites=true&w=majority";
