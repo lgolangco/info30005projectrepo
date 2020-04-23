@@ -1,0 +1,24 @@
+{
+  "name": "studyspot",
+  "version": "1.0.0",
+  "description": "INFO30005 semester 1, StudySpot",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lgolangco/info30005projectrepo.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/lgolangco/info30005projectrepo/issues"
+  },
+  "homepage": "https://github.com/lgolangco/info30005projectrepo#readme",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "express": "^4.17.1",
+    "mongoose": "^5.9.7"
+  }
+}
