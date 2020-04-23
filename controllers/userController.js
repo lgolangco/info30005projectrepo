@@ -49,7 +49,7 @@ const updateUser = async (req, res) => {
 
 // function to add user
 const addUser = async (req, res) => {
- res.send("Working on this feature");
+ res.send("adding User");
 };
 
 
