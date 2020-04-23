@@ -14,7 +14,7 @@ mongoose.connect(MONGO_URL, {
   useCreateIndex: true,
   useUnifiedTopology: true,
   useFindAndModify: false,
-  dbName: "mylibraryapp"
+  dbName: "studyspot"
 });
 
 const db = mongoose.connection;
