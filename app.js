@@ -18,13 +18,13 @@ app.get("/", (req, res) => {
 
 // handle user-management related requests
 // first import the user router
-const userRouter = require("./routes/userRoute");
+const userRouter = require("./routes/userRouter");
 
 // the user routes are added onto the end of '/user'
 app.use("/user", userRouter);
 
 // start app and listen for incoming requests on port
 app.listen(process.env.PORT || 3000, () => {
-  console.log("The library app is running!");
+  console.log("StudySpot app is running!");
 });
 

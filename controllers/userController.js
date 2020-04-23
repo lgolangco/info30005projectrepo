@@ -30,14 +30,14 @@ const addUser = async (req, res) => {
 };
 
 // function to get user by id
-const getAllUserID = (req, res) => {
+const getUserByID = (req, res) => {
   res.send("Working on this feature");
 };
 
 // remember to export the functions
 module.exports = {
   getAllUsers,
-  getAllUserID,
+  getUserByID,
   addUser,
   updateUser
 };
