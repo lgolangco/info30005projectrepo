@@ -16,12 +16,11 @@ app.get("/", (req, res) => {
   res.send("<H1>Team Name: Cosmos</H1>");
 });
 
-// handle user-management related requests
-// first import the user router
-const userRouter = require("./routes/userRouter");
+// first import the back-end routes
+const backendRoutes = require("./routes/backendRoutes");
 
 // the user routes are added onto the end of '/user'
-app.use("/user", userRouter);
+app.use("/user", backendRoutes);
 
 // start app and listen for incoming requests on port
 app.listen(process.env.PORT || 3000, () => {
