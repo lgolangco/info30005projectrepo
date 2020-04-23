@@ -83,6 +83,7 @@
       <change beforePath="$PROJECT_DIR$/node_modules/util-deprecate/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/util-deprecate/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/node_modules/utils-merge/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/utils-merge/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/node_modules/vary/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/vary/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/routes/backendRoutes.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes/backendRoutes.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -120,7 +121,7 @@
       <updated>1586452295594</updated>
       <workItem from="1586452299782" duration="14179000" />
       <workItem from="1587613718042" duration="4061000" />
-      <workItem from="1587647688609" duration="10186000" />
+      <workItem from="1587647688609" duration="10486000" />
     </task>
     <servers />
   </component>
