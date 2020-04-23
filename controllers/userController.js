@@ -13,7 +13,7 @@ const getAllUsers = async (req, res) => {
     res.status(400);
     return res.send("Database query failed");
   }
-};s
+};
 
 // function to modify user by ID
 const updateUser = async (req, res) => {
