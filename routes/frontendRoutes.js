@@ -9,7 +9,6 @@ router.get("/", userContent.getAllUsers);
 
 // sign-up page
 
-
 // login page
 
 // logout page

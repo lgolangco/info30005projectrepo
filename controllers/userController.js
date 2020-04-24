@@ -15,15 +15,15 @@ const getAllUsers = async (req, res) => {
   }
 };
 
+
 // function to modify user by ID
 const updateUser = async (req, res) => {
   await User.update(
       {id: req.params.id},
-      {id: req.body.id, first_name: req.body.first_name, last_name: req.body.last_name},
-      {overwrite: true},
+      {$set: req.body},
       function(err) {
         if (!err) {
-          return res.send("Successfully updated selected user");
+          return res.send("Successfully updated user");
         } else {
           res.status(400);
           return res.send("updateUser function failed");

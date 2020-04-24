@@ -3,6 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="d5d64c4a-9c12-4175-867a-0f0a8ca37d86" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/frontendRoutes.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes/frontendRoutes.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -39,8 +40,13 @@
       <updated>1586452295594</updated>
       <workItem from="1586452299782" duration="14179000" />
       <workItem from="1587613718042" duration="4061000" />
+<<<<<<< HEAD
       <workItem from="1587647688609" duration="11735000" />
       <workItem from="1587692229797" duration="501000" />
+=======
+      <workItem from="1587647688609" duration="12593000" />
+      <workItem from="1587694167963" duration="699000" />
+>>>>>>> feature-user
     </task>
     <servers />
   </component>
@@ -48,13 +54,19 @@
     <option name="version" value="1" />
   </component>
   <component name="WindowStateProjectService">
+<<<<<<< HEAD
     <state x="549" y="187" key="FileChooserDialogImpl" timestamp="1587692357488">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
     <state x="549" y="187" key="FileChooserDialogImpl/0.0.1536.864@0.0.1536.864" timestamp="1587692357488" />
     <state x="229" y="100" key="SettingsEditor" timestamp="1587649940542">
       <screen x="0" y="23" width="1440" height="877" />
+=======
+    <state x="229" y="79" key="SettingsEditor" timestamp="1587694991429">
+      <screen x="0" y="0" width="1440" height="900" />
+>>>>>>> feature-user
     </state>
+    <state x="229" y="79" key="SettingsEditor/0.0.1440.900@0.0.1440.900" timestamp="1587694991429" />
     <state x="229" y="100" key="SettingsEditor/0.23.1440.877@0.23.1440.877" timestamp="1587649940542" />
     <state x="778" y="371" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1587662907952">
       <screen x="0" y="0" width="1440" height="900" />
