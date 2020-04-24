@@ -1,8 +1,6 @@
 require('dotenv').config();
 const mongoose = require("mongoose");
 
-require("./user");
-
 // Connect to MongoDB
 CONNECTION_STRING = "mongodb+srv://lyn:<password>@cluster0-r6reg.mongodb.net/test?retryWrites=true&w=majority";
 MONGO_URL = CONNECTION_STRING.replace("<password>",process.env.MONGO_PASSWORD);
@@ -26,3 +24,4 @@ db.once("open", async () => {
   console.log("Mongo connection started on " + db.host + ":" + db.port);
 });
 
+require("./user");
