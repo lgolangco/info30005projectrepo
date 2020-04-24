@@ -20,7 +20,7 @@ router.get("/user/:id", userController.getUserByID);
 router.put("/user", userController.addUser);
 
 // update a user
-router.put("/user/:id", userController.updateUser);
+router.patch("/user/:id", userController.updateUser);
 
 
 /* VENUE ROUTES */
