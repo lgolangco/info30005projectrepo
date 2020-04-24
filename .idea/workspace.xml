@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d5d64c4a-9c12-4175-867a-0f0a8ca37d86" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/frontendRoutes.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes/frontendRoutes.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -41,7 +41,7 @@
       <workItem from="1586452299782" duration="14179000" />
       <workItem from="1587613718042" duration="4061000" />
       <workItem from="1587647688609" duration="12593000" />
-      <workItem from="1587694167963" duration="553000" />
+      <workItem from="1587694167963" duration="699000" />
     </task>
     <servers />
   </component>
@@ -49,9 +49,10 @@
     <option name="version" value="2" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="229" y="100" key="SettingsEditor" timestamp="1587649940542">
-      <screen x="0" y="23" width="1440" height="877" />
+    <state x="229" y="79" key="SettingsEditor" timestamp="1587694991429">
+      <screen x="0" y="0" width="1440" height="900" />
     </state>
+    <state x="229" y="79" key="SettingsEditor/0.0.1440.900@0.0.1440.900" timestamp="1587694991429" />
     <state x="229" y="100" key="SettingsEditor/0.23.1440.877@0.23.1440.877" timestamp="1587649940542" />
     <state x="778" y="371" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1587662907952">
       <screen x="0" y="0" width="1440" height="900" />
