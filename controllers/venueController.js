@@ -82,6 +82,7 @@ const updateVenue = async (req, res) => {
 };
 
 // function to delete venue by id
+//NOTE - DELETES TWICE for some reason
 const deleteVenue = async (req, res) => {
   await Venue.deleteOne({id: req.params.id},
     function(err) {
