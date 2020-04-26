@@ -16,7 +16,7 @@ const getAllVenues = async (req, res) => {
 
 
 // function to modify venue by ID
-const updateVenue = async (req, res, next) => {
+const updateVenue = async (req, res) => {
   await Venue.update(
       {id: req.params.id},
       {$set: req.body},
@@ -32,22 +32,24 @@ const updateVenue = async (req, res, next) => {
 };
 
 
-// function to add user
+// function to add venue
 const addVenue = async (req, res) => {
   // extract info. from body
+  // try and catch
+  // prevent users from adding another entry with the same id (what else?)
    const venue = req.body;
+   const db = mongoose.connection
+   db.collection('venue').insertOne(venue);
+   return res.send("Successfully added a venue");
 
-   // add author to array
-   authors.push(venue);
-   res.send(authors);
  };
 
 
 // function to get venues by id
 const getVenueByID = async (req, res) => {
-   Venue.find({id: req.params.id}, function(err, user) {
-      if (user) {
-        res.send(user);
+   await Venue.find({id: req.params.id}, function(err, venue) {
+      if (venue) {
+        res.send(venue);
       } else {
         res.status(400);
         res.send("getVenueByID function failed")
