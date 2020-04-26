@@ -34,6 +34,9 @@ const updateVenue = async (req, res) => {
 
 // function to add venue
 const addVenue = async (req, res) => {
+  try {
+    const all_venues = await Venue.find();
+    return res.send(all_venues);
   // extract info. from body
   // try and catch
   // prevent users from adding another entry with the same id (what else?)
