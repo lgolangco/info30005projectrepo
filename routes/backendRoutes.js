@@ -5,7 +5,7 @@ const router = express.Router();
 
 // load/import the user controller
 const userController = require("../controllers/userController.js");
-const venueController = require("../controllers/reviewController.js");
+const venueController = require("../controllers/venueController.js");
 const reviewController = require("../controllers/reviewController.js");
 
 /* USER ROUTES */
@@ -26,14 +26,18 @@ router.patch("/user/:id", userController.updateUser);
 /* VENUE ROUTES */
 
 // get all venues
+router.get("/venue", venueController.getAllVenues);
 
 // get all venues by id
+router.get("/venue/:id", venueController.getVenueByID);
 
 // create venues
+router.put("/venue", venueController.addVenue);
 
 // delete review by id
 
 // update venues
+router.patch("/venue/:id", venueController.getAllVenues);
 
 
 /* REVIEW ROUTES */
@@ -55,4 +59,3 @@ router.patch("/user/:id", userController.updateUser);
 
 // export the router
 module.exports = router;
-
