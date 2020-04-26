@@ -34,13 +34,20 @@ const updateVenue = async (req, res, next) => {
 
 // function to add user
 const addVenue = async (req, res) => {
+  try {
+    const all_venues = await Venue.find();
+    return res.send(all_venues);
   // extract info. from body
+  // need to add a checker which ensures you cannot add 2 of the same idea
    const venue = req.body;
-
-   // add author to array
-   authors.push(venue);
-   res.send(authors);
- };
+   const db = mongoose.connection
+   db.collection('venue').insertOne(venue);
+   return res.send("Successfully added a venue");
+  } catch (err) {
+    res.status(400);
+    return res.send("addVenue function failed");
+  }
+};
 
 
 // function to get venues by id
