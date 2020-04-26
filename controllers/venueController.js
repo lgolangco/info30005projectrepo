@@ -22,10 +22,10 @@ const updateVenue = async (req, res, next) => {
       {$set: req.body},
       function(err) {
         if (!err) {
-          return res.send("Successfully updated user");
+          return res.send("Successfully updated venue");
         } else {
           res.status(400);
-          return res.send("updateUser function failed");
+          return res.send("updateVenue function failed");
         }
       }
   )
@@ -50,7 +50,7 @@ const getVenueByID = async (req, res) => {
         res.send(user);
       } else {
         res.status(400);
-        res.send("getUserByID function doesn't work")
+        res.send("getVenueByID function failed")
       }
     }
   )

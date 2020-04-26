@@ -37,7 +37,7 @@ router.put("/venue", venueController.addVenue);
 // delete review by id
 
 // update venues
-router.patch("/venue/:id", venueController.getAllVenues);
+router.patch("/venue/:id", venueController.updateVenue);
 
 
 /* REVIEW ROUTES */
