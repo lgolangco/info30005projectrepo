@@ -31,17 +31,20 @@ router.get("/venue", venueController.getAllVenues);
 // get all venues by id
 router.get("/venue/:id", venueController.getVenueByID);
 
-// get all venues by venue_postcode
+// get all venues by postcode
+
 
 // get all venues by type
+
 
 // create venues
 router.put("/venue", venueController.addVenue);
 
-// delete venue by id
-
 // update venues
 router.patch("/venue/:id", venueController.updateVenue);
+
+// delete venue by id
+
 
 
 /* REVIEW ROUTES */

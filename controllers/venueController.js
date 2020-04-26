@@ -14,22 +14,23 @@ const getAllVenues = async (req, res) => {
   }
 };
 
-
-// function to modify venue by ID
-const updateVenue = async (req, res) => {
-  await Venue.update(
-      {id: req.params.id},
-      {$set: req.body},
-      function(err) {
-        if (!err) {
-          return res.send("Successfully updated venue");
-        } else {
-          res.status(400);
-          return res.send("updateVenue function failed");
-        }
+// function to get venues by id
+const getVenueByID = async (req, res) => {
+   await Venue.find({id: req.params.id}, function(err, venue) {
+      if (venue) {
+        res.send(venue);
+      } else {
+        res.status(400);
+        res.send("getVenueByID function failed")
       }
+    }
   )
 };
+
+// function to get venues by postcode
+
+
+// function to get venues by type
 
 
 // function to add venue
@@ -47,20 +48,23 @@ const addVenue = async (req, res) => {
 
  };
 
-
-// function to get venues by id
-const getVenueByID = async (req, res) => {
-   await Venue.find({id: req.params.id}, function(err, venue) {
-      if (venue) {
-        res.send(venue);
-      } else {
-        res.status(400);
-        res.send("getVenueByID function failed")
+// function to modify venue by ID
+const updateVenue = async (req, res) => {
+  await Venue.update(
+      {id: req.params.id},
+      {$set: req.body},
+      function(err) {
+        if (!err) {
+          return res.send("Successfully updated venue");
+        } else {
+          res.status(400);
+          return res.send("updateVenue function failed");
+        }
       }
-    }
   )
 };
 
+// function to delete venue by id
 
 // remember to export the functions
 module.exports = {
