@@ -44,7 +44,7 @@ router.put("/venue", venueController.addVenue);
 router.patch("/venue/:id", venueController.updateVenue);
 
 // delete venue by id
-
+router.delete("/venue/:id", venueController.deleteVenue);
 
 
 /* REVIEW ROUTES */

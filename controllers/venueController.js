@@ -82,6 +82,18 @@ const updateVenue = async (req, res) => {
 };
 
 // function to delete venue by id
+const deleteVenue = async (req, res) => {
+  await Venue.deleteOne({id: req.params.id},
+    function(err) {
+      if (!err) {
+        return res.send("Successfully deleted venue");
+      } else {
+        res.status(400);
+        return res.send("deleteVenue function failed");
+      }
+    }
+  )
+}
 
 // remember to export the functions
 module.exports = {
@@ -90,5 +102,6 @@ module.exports = {
   getVenueByPostcode,
   getVenueByType,
   addVenue,
-  updateVenue
+  updateVenue,
+  deleteVenue
 };
