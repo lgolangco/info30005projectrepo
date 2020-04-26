@@ -25,3 +25,4 @@ db.once("open", async () => {
 });
 
 require("./user");
+require("./review");
