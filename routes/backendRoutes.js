@@ -29,13 +29,13 @@ router.patch("/user/:id", userController.updateUser);
 router.get("/venue", venueController.getAllVenues);
 
 // get all venues by id
-router.get("/venue/:id", venueController.getVenueByID);
+router.get("/venue/byid/:id", venueController.getVenueByID);
 
 // get all venues by postcode
-
+router.get("/venue/bypostcode/:venue_postcode", venueController.getVenueByPostcode);
 
 // get all venues by type
-
+router.get("/venue/bytype/:venue_type", venueController.getVenueByType);
 
 // create venues
 router.put("/venue", venueController.addVenue);

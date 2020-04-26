@@ -21,23 +21,40 @@ const getVenueByID = async (req, res) => {
         res.send(venue);
       } else {
         res.status(400);
-        res.send("getVenueByID function failed")
+        res.send("getVenueByID function failed");
       }
     }
   )
 };
 
 // function to get venues by postcode
-
+const getVenueByPostcode = async (req, res) => {
+   await Venue.find({venue_postcode: req.params.venue_postcode}, function(err, venue) {
+      if (venue) {
+        res.send(venue);
+      } else {
+        res.status(400);
+        res.send("getVenueByPostcode function failed");
+      }
+    }
+  )
+};
 
 // function to get venues by type
-
+const getVenueByType = async (req, res) => {
+   await Venue.find({venue_type: req.params.venue_type}, function(err, venue) {
+      if (venue) {
+        res.send(venue);
+      } else {
+        res.status(400);
+        res.send("getVenueByType function failed");
+      }
+    }
+  )
+};
 
 // function to add venue
 const addVenue = async (req, res) => {
-  try {
-    const all_venues = await Venue.find();
-    return res.send(all_venues);
   // extract info. from body
   // try and catch
   // prevent users from adding another entry with the same id (what else?)
@@ -70,6 +87,8 @@ const updateVenue = async (req, res) => {
 module.exports = {
   getAllVenues,
   getVenueByID,
+  getVenueByPostcode,
+  getVenueByType,
   addVenue,
   updateVenue
 };
