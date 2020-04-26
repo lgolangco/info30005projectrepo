@@ -5,7 +5,7 @@ const router = express.Router();
 
 // load/import the user controller
 const userController = require("../controllers/userController.js");
-const venueController = require("../controllers/reviewController.js");
+const venueController = require("../controllers/venueController.js");
 const reviewController = require("../controllers/reviewController.js");
 
 /* USER ROUTES */
