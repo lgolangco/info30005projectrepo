@@ -56,14 +56,15 @@ const getVenueByType = async (req, res) => {
 // function to add venue
 const addVenue = async (req, res) => {
   // extract info. from body
-  // try and catch
-  // prevent users from adding another entry with the same id (what else?)
    const venue = req.body;
    const db = mongoose.connection
-   db.collection('venue').insertOne(venue);
-   return res.send("Successfully added a venue");
-
- };
+   try {
+     await db.collection('venue').insertOne(venue);
+     return res.send("Successfully added a venue");
+   } catch(err){
+     res.status(400);
+     return res.send("addVenue failed");
+   }};
 
 // function to modify venue by ID
 const updateVenue = async (req, res) => {
