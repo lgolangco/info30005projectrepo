@@ -106,6 +106,7 @@ const deleteVenue = async (req, res) => {
   const result = await Venue.deleteOne({id: req.params.id}).exec();
 
   if (result.n === 0) {
+    res.status(400);
     return res.send("deleteVenue function failed");
   } else {
     return res.send("Successfully deleted venue");
