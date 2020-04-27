@@ -29,14 +29,25 @@ router.delete("/user/:id", userController.deleteUserByID);
 /* VENUE ROUTES */
 
 // get all venues
+router.get("/venue", venueController.getAllVenues);
 
 // get all venues by id
+router.get("/venue/byid/:id", venueController.getVenueByID);
+
+// get all venues by postcode
+router.get("/venue/bypostcode/:venue_postcode", venueController.getVenueByPostcode);
+
+// get all venues by type
+router.get("/venue/bytype/:venue_type", venueController.getVenueByType);
 
 // create venues
-
-// delete review by id
+router.put("/venue", venueController.addVenue);
 
 // update venues
+router.patch("/venue/:id", venueController.updateVenue);
+
+// delete venue by id
+router.delete("/venue/:id", venueController.deleteVenue);
 
 
 /* REVIEW ROUTES */
@@ -58,4 +69,3 @@ router.delete("/user/:id", userController.deleteUserByID);
 
 // export the router
 module.exports = router;
-

@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 
 const User = mongoose.model("user");
 
-    
+
 // function to handle a request to get all users
 const getAllUsers = async (req, res) => {
   try {
@@ -54,9 +54,11 @@ const getUserByID = async (req, res) => {
     } else {
       res.status(400);
       return res.send("getUserByID function failed");
+
     }
   })
 };
+
 
 // function to delete User by ID
 const deleteUserByID = async(req, res) => {
