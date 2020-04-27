@@ -54,11 +54,9 @@ const getUserByID = async (req, res) => {
     } else {
       res.status(400);
       return res.send("getUserByID function failed");
-
     }
   })
 };
-
 
 // function to delete User by ID
 const deleteUserByID = async(req, res) => {

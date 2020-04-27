@@ -22,9 +22,6 @@ router.put("/user", userController.addUser);
 // update a user
 router.patch("/user/:id", userController.updateUser);
 
-// delete user by id
-router.delete("/user/:id", userController.deleteUserByID);
-
 
 /* VENUE ROUTES */
 
