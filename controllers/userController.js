@@ -1,6 +1,5 @@
 const mongoose = require("mongoose");
 
-// import user model
 const User = mongoose.model("user");
 
     
@@ -35,26 +34,54 @@ const updateUser = async (req, res) => {
 
 // function to add user
 const addUser = async (req, res) => {
- res.send("adding User");
+  const user = req.body;
+  const db = mongoose.connection;
+  try {
+    db.collection("user").insertOne(user);
+    return res.send("Successfully added a user");
+  } catch(err) {
+    res.status(400);
+    return res.send("addUser function failed");
+  }
 };
 
 
 // function to get user by id
 const getUserByID = async (req, res) => {
-  User.find({id: req.params.id}, function(err, user) {
+  await User.find({id: req.params.id}, function(err, user) {
     if (user) {
-      res.send(user);
+      return res.send(user);
     } else {
       res.status(400);
-      res.send("getUserByID function doesn't work");
+      return res.send("getUserByID function failed");
     }
   })
 };
+
+// function to delete User by ID
+const deleteUserByID = async(req, res) => {
+
+  // TODO: delete associated reviews made by user
+
+
+  await User.deleteMany( {id: req.params.id}, function(err) {
+    try {
+      return res.send("Successfully deleted the specified user");
+    } catch (err) {
+      res.sendStatus(400);
+      return res.send("deleteUserByID function failed");
+    }
+  })
+
+};
+
+
 
 // remember to export the functions
 module.exports = {
   getAllUsers,
   getUserByID,
   addUser,
-  updateUser
+  updateUser,
+  deleteUserByID
 };
