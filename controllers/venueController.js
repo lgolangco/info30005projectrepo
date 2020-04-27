@@ -83,18 +83,35 @@ const updateVenue = async (req, res) => {
 
 // function to delete venue by id
 //NOTE - DELETES TWICE for some reason
+// const deleteVenue = async (req, res) => {
+//   console.log("check1");
+//   const result = await Venue.deleteOne({id: req.params.id}
+//
+//
+//     function(err) {
+//       console.log("check2");
+//       if (!err) {
+//         console.log("check3");
+//         return res.send("Successfully deleted venue");
+//       } else {
+//         res.status(400);
+//         console.log("check4");
+//         return res.send("deleteVenue function failed");
+//       }
+//     }
+//   )
+// }
+
 const deleteVenue = async (req, res) => {
-  await Venue.deleteOne({id: req.params.id},
-    function(err) {
-      if (!err) {
-        return res.send("Successfully deleted venue");
-      } else {
-        res.status(400);
-        return res.send("deleteVenue function failed");
-      }
-    }
-  )
+  const result = await Venue.deleteOne({id: req.params.id}).exec();
+
+  if (result.n === 0) {
+    return res.send("deleteVenue function failed");
+  } else {
+    return res.send("Successfully deleted venue");
+  }
 }
+
 
 // remember to export the functions
 module.exports = {
