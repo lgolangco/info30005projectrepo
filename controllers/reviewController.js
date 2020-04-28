@@ -47,7 +47,7 @@ var addReview = function(req, res) {
         date_posted:new Date(),
         content:req.body.content,
         rating:req.body.rating
-    };
+    });
 
     review.save(function (err,newReview) {
         if (!err) {
