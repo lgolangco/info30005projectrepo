@@ -18,7 +18,7 @@ var getAllReviews = function(req, res) {
 };
 
 
-// function to modify review by ID
+// function to modify review by venue and user
 var updateReview = function(req, res) {
     var venue_id = req.body.venue_id;
     var user_id = req.body.user_id;
@@ -61,7 +61,7 @@ var addReview = function(req, res) {
 };
 
 
-// function to get review by venue and user id
+// function to get review by venue and user ID
 var getReviewByIDs = function(req, res) {
     var venue_id = req.body.venue_id;
     var user_id = req.body.user_id;
@@ -77,7 +77,7 @@ var getReviewByIDs = function(req, res) {
 };
 
 
-// function to get review by venue id
+// function to get review by venue ID
 var getReviewByVenueID = function(req, res) {
     var venue_id = req.body.venue_id;
 
@@ -92,7 +92,7 @@ var getReviewByVenueID = function(req, res) {
 };
 
 
-// function to get review by user id
+// function to get review by user ID
 var getReviewByUserID = function(req, res) {
     var user_id = req.body.user_id;
 
