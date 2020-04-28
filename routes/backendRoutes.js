@@ -5,8 +5,8 @@ const router = express.Router();
 
 // load/import the user controller
 const userController = require("../controllers/userController.js");
-const venueController = require("../controllers/reviewController.js");
-const reviewController = require("../controllers/reviewController.js");
+const venueController = require("../controllers/reviewControllerroller.js");
+const reviewController = require("../controllers/reviewControllerroller.js");
 
 /* USER ROUTES */
 
@@ -38,19 +38,23 @@ router.patch("/user/:id", userController.updateUser);
 
 /* REVIEW ROUTES */
 
-// get all reviews of venues
-
-// get a review by id
-
-// create review
-
-// delete review by id
-
+// get all reviews
+router.get('/review', reviewController.getAllReviews);
 // update review
+router.patch('/review/venueID/:userID', reviewController.updateReview);
+// add review
+router.post('/review', reviewController.addReview);
+// get review by venue and user ID
+router.get('/review/venueID/:userID', reviewController.getReviewByIDs);
+// get all reviews about a given venue by venue ID
+router.get('/review/:venueID', reviewController.getReviewByVenueID);
+// get all reviews about about a given user by user ID
+router.get('/review/:userID', reviewController.getReviewByUserID);
+// delete review by venue and user ID
+router.delete('/review/venueID/:userID', reviewController.deleteReview);
 
-// return all reviews about a given venue
-
-// return all reviews left by a given user
+// // create review
+// router.post('/review/id/:userId/:leftById', reviewController.create);
 
 
 // export the router
