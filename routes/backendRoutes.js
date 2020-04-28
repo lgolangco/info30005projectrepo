@@ -40,18 +40,24 @@ router.patch("/user/:id", userController.updateUser);
 
 // get all reviews
 router.get('/reviews', reviewController.getAllReviews);
+
 // update review
-router.put('/reviews/venueID/:userID', reviewController.updateReview);
+router.put('/reviews/venueId/:userId', reviewController.updateReview);
+
 // add review
 router.post('/reviews', reviewController.addReview);
+
 // get review by venue and user ID
-router.get('/reviews/venueID/:userID', reviewController.getReviewByIDs);
+router.get('/reviews/venueId/:userId', reviewController.getReviewByIDs);
+
 // get all reviews about a given venue by venue ID
-router.get('/reviews/:venueID', reviewController.getReviewByVenueID);
+router.get('/reviews/:venueId', reviewController.getReviewByVenueID);
+
 // get all reviews about about a given user by user ID
-router.get('/reviews/:userID', reviewController.getReviewByUserID);
+router.get('/reviews/:userId', reviewController.getReviewByUserID);
+
 // delete review by venue and user ID
-router.delete('/reviews/venueID/:userID', reviewController.deleteReview);
+router.delete('/reviews/venueId/:userId', reviewController.deleteReview);
 
 // // create review
 // router.post('/reviews/id/:userId/:leftById', reviewController.create);
