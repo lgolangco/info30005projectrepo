@@ -33,9 +33,10 @@ var updateReview = function(req, res) {
                 res.send("Successfully updated review");
             }else{
                 res.sendStatus(400);
-                res.send("updateReview function failed");
+                return res.send("updateReview function failed");
             }
     });
+    res.redirect('/');
 };
 
 
@@ -55,9 +56,10 @@ var addReview = function(req, res) {
             res.send("Successfully added review");
         } else {
             res.sendStatus(400);
-            res.send("addReview function failed");
+            return res.send("addReview function failed");
         }
     });
+    res.redirect('/');
 };
 
 
@@ -119,10 +121,11 @@ var deleteReview = function(req, res) {
                 res.send("Successfully deleted review");
             }else{
                 res.sendStatus(404);
-                res.send("deleteReview function failed");
+                return res.send("deleteReview function failed");
             }
         });
-}
+    res.redirect('/');
+};
 
 
 // remember to export the functions
