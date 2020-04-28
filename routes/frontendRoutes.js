@@ -3,6 +3,7 @@ const express = require("express");
 const router = express.Router();
 
 const userContent = require("../controllers/userController.js");
+const reviewContent = require("../controllers/reviewController.js");
 
 // home page
 router.get("/", userContent.getAllUsers);
