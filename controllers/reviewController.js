@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 
 // import review model
 const Review = mongoose.model("review");
@@ -6,125 +6,102 @@ const Review = mongoose.model("review");
 
 
 // function to handle a request to get all reviews
-var getAllReviews = function(req, res) {
-    Review.find(function(err,reviews){
-        if(!err){
-            res.send(reviews);
-        }else{
-            res.sendStatus(400);
-            res.send("Database query failed");
+const getAllReviews = async (req, res) => {
+        try {
+            const all_reviews = await Review.find();
+            res.send(all_reviews);
+        } catch (err) {
+            res.status(400);
+            return res.send("Database query failed");
         }
-    });
-};
+    };
 
 
 // function to modify review by venue and user
-var updateReview = function(req, res) {
-    var venue_id = req.body.venue_id;
-    var user_id = req.body.user_id;
-    var content = req.body.content;
-
-    Review.findOneAndUpdate(
-        {venue_id: venue_id, user_id: user_id},
-        {content: content},
-        function(err, updatedReview){
-            if(!err){
-                res.send(updatedReview);
-                res.send("Successfully updated review");
-            }else{
-                res.sendStatus(400);
-                return res.send("updateReview function failed");
-            }
-    });
-    res.redirect('/');
+const updateReview = async (req, res) => {
+    try {
+        const updatedReview = await Review.findOneAndUpdate(
+            {venueId: req.body.venueId, userId: req.body.userId},
+            {$set: {content: req.body.content, rating: req.body.rating}}
+            );
+        res.send(updatedReview);
+        res.send("Successfully updated review");
+        // res.redirect('/');
+    } catch (err) {
+        res.status(400);
+        return res.send("updateReview function failed");
+    }
 };
 
 
 // function to add review
-var addReview = function(req, res) {
-    var review = new Review({
-        venue_id:req.body.venue_id,
-        user_id:req.body.user_id,
-        date_posted:new Date(),
+const addReview = async (req, res) => {
+    const review = new Review({
+        venueId:req.body.venueId,
+        userId:req.body.userId,
+        datePosted:new Date(),
         content:req.body.content,
         rating:req.body.rating
     });
 
-    review.save(function (err,newReview) {
-        if (!err) {
-            res.send(newReview);
-            res.send("Successfully added review");
-        } else {
-            res.sendStatus(400);
-            return res.send("addReview function failed");
-        }
-    });
-    res.redirect('/');
+    try {
+        const newReview = await review.save();
+        res.send(newReview);
+        res.send("Successfully added review");
+        // res.redirect('/');
+    } catch (err) {
+        res.status(400);
+        return res.send("addReview function failed");
+    }
 };
 
 
 // function to get review by venue and user ID
-var getReviewByIDs = function(req, res) {
-    var venue_id = req.body.venue_id;
-    var user_id = req.body.user_id;
-
-    Review.find({venue_id: venue_id, user_id: user_id}, function(err, review) {
-        if(!err) {
-            res.send(review);
-        }else{
-            res.sendStatus(404);
-            res.send("getReviewByIDs function failed");
-        }
-    });
+const getReviewByIDs = async (req, res) => {
+    try {
+        const review = await Review.find({venueId: req.body.venueId, userId: req.body.userId});
+        res.send(review);
+    } catch (err) {
+        res.status(404);
+        res.send("getReviewByIDs function failed");
+    }
 };
 
 
 // function to get review by venue ID
-var getReviewByVenueID = function(req, res) {
-    var venue_id = req.body.venue_id;
-
-    Review.find({venue_id: venue_id}, function(err, review) {
-        if(!err) {
-            res.send(review);
-        }else{
-            res.sendStatus(404);
-            res.send("getReviewByVenueID function failed");
-        }
-    });
+const getReviewByVenueID = async (req, res) => {
+    try {
+        const review = await Review.find({venueId: req.body.venueId});
+        res.send(review);
+    } catch (err) {
+        res.status(404);
+        res.send("getReviewByVenueID function failed");
+    }
 };
 
 
 // function to get review by user ID
-var getReviewByUserID = function(req, res) {
-    var user_id = req.body.user_id;
-
-    Review.find({user_id: user_id}, function(err, review) {
-        if(!err) {
-            res.send(review);
-        }else{
-            res.sendStatus(404);
-            res.send("getReviewByUserID function failed");
-        }
-    });
+const getReviewByUserID = async (req, res) => {
+    try {
+        const review = await Review.find({userId: req.body.userId});
+        res.send(review);
+    } catch (err) {
+        res.status(404);
+        res.send("getReviewByUserID function failed");
+    }
 };
 
 
-var deleteReview = function(req, res) {
-    var venue_id = req.body.venue_id;
-    var user_id = req.body.user_id;
-
-    Review.findOneAndRemove(
-        {venue_id: venue_id, user_id: user_id},
-        function(err, review){
-            if(!err){
-                res.send(review);
-                res.send("Successfully deleted review");
-            }else{
-                res.sendStatus(404);
-                return res.send("deleteReview function failed");
-            }
-        });
-    res.redirect('/');
+const deleteReview = async (req, res) => {
+    try {
+        const review = await Review.findOneAndRemove({venueId: req.body.venueId, userId: req.body.userId});
+        res.send(review);
+        res.send("Successfully deleted review");
+        // res.redirect('/');
+    } catch (err) {
+        res.status(404);
+        return res.send("deleteReview function failed");
+    }
 };
 
 
