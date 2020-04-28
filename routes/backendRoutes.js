@@ -5,8 +5,8 @@ const router = express.Router();
 
 // load/import the user controller
 const userController = require("../controllers/userController.js");
-const venueController = require("../controllers/reviewControllerroller.js");
-const reviewController = require("../controllers/reviewControllerroller.js");
+const venueController = require("../controllers/reviewController.js");
+const reviewController = require("../controllers/reviewController.js");
 
 /* USER ROUTES */
 
@@ -39,22 +39,22 @@ router.patch("/user/:id", userController.updateUser);
 /* REVIEW ROUTES */
 
 // get all reviews
-router.get('/review', reviewController.getAllReviews);
+router.get('/reviews', reviewController.getAllReviews);
 // update review
-router.patch('/review/venueID/:userID', reviewController.updateReview);
+router.put('/reviews/venueID/:userID', reviewController.updateReview);
 // add review
-router.post('/review', reviewController.addReview);
+router.post('/reviews', reviewController.addReview);
 // get review by venue and user ID
-router.get('/review/venueID/:userID', reviewController.getReviewByIDs);
+router.get('/reviews/venueID/:userID', reviewController.getReviewByIDs);
 // get all reviews about a given venue by venue ID
-router.get('/review/:venueID', reviewController.getReviewByVenueID);
+router.get('/reviews/:venueID', reviewController.getReviewByVenueID);
 // get all reviews about about a given user by user ID
-router.get('/review/:userID', reviewController.getReviewByUserID);
+router.get('/reviews/:userID', reviewController.getReviewByUserID);
 // delete review by venue and user ID
-router.delete('/review/venueID/:userID', reviewController.deleteReview);
+router.delete('/reviews/venueID/:userID', reviewController.deleteReview);
 
 // // create review
-// router.post('/review/id/:userId/:leftById', reviewController.create);
+// router.post('/reviews/id/:userId/:leftById', reviewController.create);
 
 
 // export the router
