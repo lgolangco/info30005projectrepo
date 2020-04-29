@@ -1,0 +1,127 @@
+const mongoose = require("mongoose");
+
+// import venue model
+const Venue = mongoose.model("venue")
+
+// function to handle a request to get all venues
+const getAllVenues = async (req, res) => {
+  try {
+    const all_venues = await Venue.find();
+    return res.send(all_venues);
+  } catch (err) {
+    res.status(400);
+    return res.send("Database query failed");
+  }
+};
+
+// function to get venues by id
+const getVenueByID = async (req, res) => {
+   await Venue.find({id: req.params.id}, function(err, venue) {
+      if (venue) {
+        res.send(venue);
+      } else {
+        res.status(400);
+        res.send("getVenueByID function failed");
+      }
+    }
+  )
+};
+
+// function to get venues by postcode
+const getVenueByPostcode = async (req, res) => {
+   await Venue.find({venue_postcode: req.params.venue_postcode}, function(err, venue) {
+      if (venue) {
+        res.send(venue);
+      } else {
+        res.status(400);
+        res.send("getVenueByPostcode function failed");
+      }
+    }
+  )
+};
+
+// function to get venues by type
+const getVenueByType = async (req, res) => {
+   await Venue.find({venue_type: req.params.venue_type}, function(err, venue) {
+      if (venue) {
+        res.send(venue);
+      } else {
+        res.status(400);
+        res.send("getVenueByType function failed");
+      }
+    }
+  )
+};
+
+// function to add venue
+const addVenue = async (req, res) => {
+  // extract info. from body
+   const venue = req.body;
+   const db = mongoose.connection
+   try {
+     await db.collection('venue').insertOne(venue);
+     return res.send("Successfully added a venue");
+   } catch(err){
+     res.status(400);
+     return res.send("addVenue failed");
+   }};
+
+// function to modify venue by ID
+const updateVenue = async (req, res) => {
+  await Venue.update(
+      {id: req.params.id},
+      {$set: req.body},
+      function(err) {
+        if (!err) {
+          return res.send("Successfully updated venue");
+        } else {
+          res.status(400);
+          return res.send("updateVenue function failed");
+        }
+      }
+  )
+};
+
+// function to delete venue by id
+//NOTE - DELETES TWICE for some reason
+// const deleteVenue = async (req, res) => {
+//   console.log("check1");
+//   const result = await Venue.deleteOne({id: req.params.id}
+//
+//
+//     function(err) {
+//       console.log("check2");
+//       if (!err) {
+//         console.log("check3");
+//         return res.send("Successfully deleted venue");
+//       } else {
+//         res.status(400);
+//         console.log("check4");
+//         return res.send("deleteVenue function failed");
+//       }
+//     }
+//   )
+// }
+
+const deleteVenue = async (req, res) => {
+  const result = await Venue.deleteOne({id: req.params.id}).exec();
+
+  if (result.n === 0) {
+    res.status(400);
+    return res.send("deleteVenue function failed");
+  } else {
+    return res.send("Successfully deleted venue");
+  }
+}
+
+
+// remember to export the functions
+module.exports = {
+  getAllVenues,
+  getVenueByID,
+  getVenueByPostcode,
+  getVenueByType,
+  addVenue,
+  updateVenue,
+  deleteVenue
+};
