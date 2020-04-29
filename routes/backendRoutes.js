@@ -59,7 +59,7 @@ router.patch('/review/:venueId', reviewController.updateReview);
 router.post('/review', reviewController.addReview);
 
 // get review by venue and user ID
-router.get('/review/:venueId', reviewController.getReviewByIDs);
+router.get('/review/byids/:venueId/:userId', reviewController.getReviewByIDs);
 
 // get all reviews about a given venue by venue ID
 router.get('/review/byvenue/:venueId', reviewController.getReviewByVenueID);
