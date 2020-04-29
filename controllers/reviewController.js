@@ -51,7 +51,7 @@ const addReview = async (req, res) => {
         // res.redirect('/');
     } catch (err) {
         res.status(400);
-        return res.send("addReview function failed");
+        res.send("addReview function failed");
     }
 };
 
@@ -94,7 +94,7 @@ const getReviewByUserID = async (req, res) => {
 
 const deleteReview = async (req, res) => {
     try {
-        const review = await Review.findOneAndRemove({venueId: req.body.venueId, userId: req.body.userId});
+        const review = await Review.deleteOne({venueId: req.body.venueId, userId: req.body.userId});
         res.send(review);
         res.send("Successfully deleted review");
         // res.redirect('/');
