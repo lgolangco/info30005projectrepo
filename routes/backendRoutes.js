@@ -49,19 +49,29 @@ router.delete("/venue/:id", venueController.deleteVenue);
 
 /* REVIEW ROUTES */
 
-// get all reviews of venues
-
-// get a review by id
-
-// create review
-
-// delete review by id
+// get all reviews
+router.get('/review', reviewController.getAllReviews);
 
 // update review
+router.patch('/review/:venueId', reviewController.updateReview);
 
-// return all reviews about a given venue
+// add review
+router.post('/review', reviewController.addReview);
 
-// return all reviews left by a given user
+// get review by venue and user ID
+router.get('/review/:venueId', reviewController.getReviewByIDs);
+
+// get all reviews about a given venue by venue ID
+router.get('/review/byvenue/:venueId', reviewController.getReviewByVenueID);
+
+// get all reviews about about a given user by user ID
+router.get('/review/byuser/:userId', reviewController.getReviewByUserID);
+
+// delete review by venue and user ID
+router.delete('/review/:venueId', reviewController.deleteReview);
+
+// // create review
+// router.post('/reviews/id/:userId/:leftById', reviewController.create);
 
 
 // export the router
