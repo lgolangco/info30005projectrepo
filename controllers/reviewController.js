@@ -42,22 +42,28 @@ const updateReview = async (req, res) => {
 
 // function to add review
 const addReview = async (req, res) => {
-    const review = new Review({
-        venueId:req.body.venueId,
-        userId:req.body.userId,
-        datePosted:new Date(),
-        content:req.body.content,
-        rating:req.body.rating
-    });
-
-    try {
-        const newReview = await review.save();
-        res.send(newReview);
-        return res.send("Successfully added review");
-        // res.redirect('/');
-    } catch (err) {
-        res.status(400);
-        res.send("addReview function failed");
+    const check = await Review.find({venueId: req.body.venueId, userId: req.body.userId});
+    if (check.length) {
+        console.log("Review already exists for venueId %s and userId %s", req.body.venueId, req.body.userId, ", try updateReview instead");
+        return res.send("Review already exists for for venueId " + req.body.venueId + " and userId " + req.body.userId + ", try updateReview instead");
+    } else {
+        const review = new Review({
+            venueId:req.body.venueId,
+            userId:req.body.userId,
+            datePosted:new Date(),
+            content:req.body.content,
+            rating:req.body.rating
+        });
+        await review.save(function (err, newReview) {
+            if (newReview) {
+                console.log("Successfully added review");
+                return res.send(newReview);
+            } else {
+                console.log("Failed to addReview for venueId %s and userId %s", req.body.venueId, req.body.userId);
+                res.status(400);
+                return res.send("Failed to addReview for  for venueId " + req.params.venueId + " and userId " + req.params.userId);
+            }
+        })
     }
 };
 
@@ -75,6 +81,7 @@ const getReviewByIDs = async (req, res) => {
         }
     })
 };
+
 
 // function to get reviews by venue ID
 const getReviewByVenueID = async (req, res) => {
