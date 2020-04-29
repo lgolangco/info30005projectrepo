@@ -9,7 +9,7 @@ const Review = mongoose.model("review");
 const getAllReviews = async (req, res) => {
         try {
             const all_reviews = await Review.find();
-            res.send(all_reviews);
+            return res.send(all_reviews);
         } catch (err) {
             res.status(400);
             return res.send("Database query failed");
@@ -21,11 +21,12 @@ const getAllReviews = async (req, res) => {
 const updateReview = async (req, res) => {
     try {
         const updatedReview = await Review.findOneAndUpdate(
-            {venueId: req.body.venueId, userId: req.body.userId},
-            {$set: {content: req.body.content, rating: req.body.rating}}
+            {venueId: req.params.venueId, userId: req.body.userId},
+            {$set: {content: req.body.content, rating: req.body.rating}},
+            {new: true}
             );
         res.send(updatedReview);
-        res.send("Successfully updated review");
+        return res.send("Successfully updated review");
         // res.redirect('/');
     } catch (err) {
         res.status(400);
@@ -47,7 +48,7 @@ const addReview = async (req, res) => {
     try {
         const newReview = await review.save();
         res.send(newReview);
-        res.send("Successfully added review");
+        return res.send("Successfully added review");
         // res.redirect('/');
     } catch (err) {
         res.status(400);
@@ -59,8 +60,8 @@ const addReview = async (req, res) => {
 // function to get review by venue and user ID
 const getReviewByIDs = async (req, res) => {
     try {
-        const review = await Review.find({venueId: req.body.venueId, userId: req.body.userId});
-        res.send(review);
+        const review = await Review.find({venueId: req.params.venueId, userId: req.body.userId});
+        return res.send(review);
     } catch (err) {
         res.status(404);
         res.send("getReviewByIDs function failed");
@@ -71,8 +72,8 @@ const getReviewByIDs = async (req, res) => {
 // function to get review by venue ID
 const getReviewByVenueID = async (req, res) => {
     try {
-        const review = await Review.find({venueId: req.body.venueId});
-        res.send(review);
+        const reviews = await Review.find({venueId: req.params.venueId});
+        return res.send(reviews);
     } catch (err) {
         res.status(404);
         res.send("getReviewByVenueID function failed");
@@ -83,8 +84,8 @@ const getReviewByVenueID = async (req, res) => {
 // function to get review by user ID
 const getReviewByUserID = async (req, res) => {
     try {
-        const review = await Review.find({userId: req.body.userId});
-        res.send(review);
+        const reviews = await Review.find({userId: req.params.userId});
+        return res.send(reviews);
     } catch (err) {
         res.status(404);
         res.send("getReviewByUserID function failed");
@@ -94,10 +95,10 @@ const getReviewByUserID = async (req, res) => {
 
 const deleteReview = async (req, res) => {
     try {
-        const review = await Review.deleteOne({venueId: req.body.venueId, userId: req.body.userId});
+        const review = await Review.deleteOne({venueId: req.params.venueId, userId: req.body.userId});
         res.send(review);
         res.send("Successfully deleted review");
-        // res.redirect('/');
+        return res.redirect('/');
     } catch (err) {
         res.status(404);
         return res.send("deleteReview function failed");
