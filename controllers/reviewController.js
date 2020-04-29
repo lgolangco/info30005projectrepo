@@ -7,31 +7,36 @@ const Review = mongoose.model("review");
 
 // function to handle a request to get all reviews
 const getAllReviews = async (req, res) => {
-        try {
-            const all_reviews = await Review.find();
-            return res.send(all_reviews);
-        } catch (err) {
+    await Review.find({}, function (err, reviews) {
+        if (reviews.length) {
+            console.log("Getting all reviews");
+            return res.send(reviews);
+        } else {
+            console.log("Failed to getAllReviews");
             res.status(400);
-            return res.send("Database query failed");
+            return res.send("Failed to getAllReviews")
         }
-    };
+    })
+};
 
 
 // function to modify review by venue and user
 const updateReview = async (req, res) => {
-    try {
-        const updatedReview = await Review.findOneAndUpdate(
-            {venueId: req.params.venueId, userId: req.body.userId},
-            {$set: {content: req.body.content, rating: req.body.rating}},
-            {new: true}
-            );
-        res.send(updatedReview);
-        return res.send("Successfully updated review");
-        // res.redirect('/');
-    } catch (err) {
-        res.status(400);
-        return res.send("updateReview function failed");
-    }
+    await Review.findOneAndUpdate(
+    {venueId: req.params.venueId, userId: req.body.userId},
+    {$set: {content: req.body.content, rating: req.body.rating}},
+    // {new: true},
+    function (err, updatedReview) {
+        if (updatedReview) {
+            console.log("Successfully updated review for venueId %s", req.params.venueId);
+            return res.send(updatedReview);
+            // res.redirect('/');
+        } else {
+            console.log("Failed to updateReview for venueId %s", req.params.venueId);
+            res.status(400);
+            return res.send("Failed to updateReview for venueId " + req.params.venueId);
+        }
+    })
 };
 
 
@@ -59,54 +64,68 @@ const addReview = async (req, res) => {
 
 // function to get review by venue and user ID
 const getReviewByIDs = async (req, res) => {
-    try {
-        const review = await Review.find({venueId: req.params.venueId, userId: req.body.userId});
-        return res.send(review);
-    } catch (err) {
-        res.status(404);
-        res.send("getReviewByIDs function failed");
-    }
+    await Review.find({venueId: req.params.venueId, userId: req.params.userId}, function(err, review) {
+        if (review.length) {
+            console.log("Listing reviews with venueId %s and userId %s", req.params.venueId, req.params.userId);
+            return res.send(review);
+        } else {
+            console.log("Failed to getReviewByIDs for venueId %s and userId %s", req.params.venueId, req.params.userId);
+            res.status(400);
+            return res.send("Failed to getReviewByIDs for venueId " + req.params.venueId + " and userId " + req.params.userId);
+        }
+    })
 };
 
-
-// function to get review by venue ID
+// function to get reviews by venue ID
 const getReviewByVenueID = async (req, res) => {
-    try {
-        const reviews = await Review.find({venueId: req.params.venueId});
-        return res.send(reviews);
-    } catch (err) {
-        res.status(404);
-        res.send("getReviewByVenueID function failed");
-    }
+    await Review.find({venueId: req.params.venueId}, function(err, reviews) {
+        if (reviews.length) {
+            console.log("Listing reviews with venueId %s", req.params.venueId);
+            return res.send(reviews);
+        } else {
+            console.log("Failed to getReviewByVenueID for venueId %s", req.params.venueId);
+            res.status(400);
+            return res.send("Failed to getReviewByVenueID for venueId " + req.params.venueId);
+        }
+    })
 };
 
 
 // function to get review by user ID
 const getReviewByUserID = async (req, res) => {
-    try {
-        const reviews = await Review.find({userId: req.params.userId});
-        return res.send(reviews);
-    } catch (err) {
-        res.status(404);
-        res.send("getReviewByUserID function failed");
-    }
+    await Review.find({userId: req.params.userId}, function(err, reviews) {
+        if (reviews.length) {
+            console.log("Listing reviews with userId %s", req.params.userId);
+            return res.send(reviews);
+        } else {
+            console.log("Failed to getReviewByUserID for userId %s", req.params.userId);
+            res.status(400);
+            return res.send("Failed to getReviewByUserID for userId " + req.params.userId);
+        }
+    })
 };
 
 
+// function to delete review by venue and user ID
 const deleteReview = async (req, res) => {
-    try {
-        const review = await Review.deleteOne({venueId: req.params.venueId, userId: req.body.userId});
-        res.send(review);
-        res.send("Successfully deleted review");
-        return res.redirect('/');
-    } catch (err) {
-        res.status(404);
-        return res.send("deleteReview function failed");
-    }
+    const review = await Review.find({venueId: req.params.venueId, userId: req.body.userId});
+        await Review.deleteOne(
+    {venueId: req.params.venueId, userId: req.body.userId},
+    function() {
+        if (review.length) {
+            // res.send(review);
+            console.log("Successfully deleted review with venueId %s and userId %s", req.params.venueId, req.body.userId);
+            return res.redirect('/review');
+        } else {
+            console.log("Failed to deleteReview for venueId %s", req.params.venueId);
+            res.status(400);
+            return res.send("Failed to deleteReview for venueId " + req.params.venueId);
+        }
+    })
 };
 
 
-// remember to export the functions
+// export functions
 module.exports = {
     getAllReviews,
     updateReview,
