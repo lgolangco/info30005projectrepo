@@ -22,7 +22,7 @@ const userRoute = require("./routes/userRoute");
 const venueRoute = require("./routes/venueRoute");
 
 // assign routes
-app.use("/routes/user", userRoute);
+app.use("/user", userRoute);
 app.use("/routes/venue", venueRoute);
 
 
