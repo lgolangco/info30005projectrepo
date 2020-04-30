@@ -16,10 +16,6 @@ app.get("/", (req, res) => {
   res.send("<H1>Team Name: Cosmos</H1>");
 });
 
-<<<<<<< Updated upstream
-// first import the back-end routes
-const backendRoutes = require("./routes/backendRoutes");
-=======
 // setting up routes
 const userRoute = require("./routes/userRoute");
 // setting up routes
