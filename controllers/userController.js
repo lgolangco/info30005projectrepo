@@ -1,9 +1,9 @@
 const mongoose = require("mongoose");
 
-// import user model
 const User = mongoose.model("user");
+const Review = mongoose.model("review");
 
-    
+
 // function to handle a request to get all users
 const getAllUsers = async (req, res) => {
   try {
@@ -18,13 +18,13 @@ const getAllUsers = async (req, res) => {
 
 // function to modify user by ID
 const updateUser = async (req, res) => {
-  await User.update(
+  await User.updateMany(
       {id: req.params.id},
       {$set: req.body},
       function(err) {
-        if (!err) {
-          return res.send("Successfully updated user");
-        } else {
+        try {
+          res.send("Successfully updated user");
+        } catch(err) {
           res.status(400);
           return res.send("updateUser function failed");
         }
@@ -35,26 +35,66 @@ const updateUser = async (req, res) => {
 
 // function to add user
 const addUser = async (req, res) => {
- res.send("adding User");
+  const user = req.body;
+  const db = mongoose.connection;
+  try {
+    db.collection("user").insertOne(user);
+    return res.send("Successfully added a user");
+  } catch(err) {
+    res.status(400);
+    return res.send("addUser function failed");
+  }
 };
 
 
 // function to get user by id
 const getUserByID = async (req, res) => {
-  User.find({id: req.params.id}, function(err, user) {
-    if (user) {
-      res.send(user);
-    } else {
+  await User.find({id: req.params.id}, function(err, user) {
+    try {
+      return res.send(user);
+    } catch(err) {
       res.status(400);
-      res.send("getUserByID function doesn't work");
+      return res.send("getUserByID function failed");
     }
   })
 };
 
-// remember to export the functions
+// function to get user by email
+const getUserByEmail = async(req,res) => {
+  await User.find({email: req.params.email}, function(req, user) {
+    try {
+      res.send(user);
+    } catch (err) {
+      res.status(400);
+      res.send("getUserByEmail function failed");
+    }
+  })
+}
+
+// function to delete User by ID
+const deleteUserByID = async(req, res) => {
+
+  Review.deleteMany( {userId: req.params.id}, function(err) {
+    res.status(400);
+  });
+
+  await User.deleteMany( {id: req.params.id}, function(err) {
+    try {
+      return res.send("Successfully deleted the specified user");
+    } catch (err) {
+      res.sendStatus(400);
+      return res.send("deleteUserByID function failed");
+    }
+  })
+
+};
+
+
 module.exports = {
   getAllUsers,
   getUserByID,
   addUser,
-  updateUser
+  updateUser,
+  deleteUserByID,
+  getUserByEmail
 };
