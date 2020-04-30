@@ -1,3 +1,4 @@
+// USER MODEL
 const mongoose = require("mongoose");
 const uniqueValidator = require("mongoose-unique-validator");
 
@@ -10,12 +11,12 @@ const userSchema = new mongoose.Schema({
 
   email: String,
 
-  first_name: {
+  firstName: {
     type: String,
     required: true
   },
 
-  last_name: {
+  lastName: {
     type: String,
     required: true
   },

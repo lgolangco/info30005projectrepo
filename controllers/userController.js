@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 
 const User = mongoose.model("user");
+const Review = mongoose.model("review");
 
 
 // function to handle a request to get all users
@@ -17,13 +18,13 @@ const getAllUsers = async (req, res) => {
 
 // function to modify user by ID
 const updateUser = async (req, res) => {
-  await User.update(
+  await User.updateMany(
       {id: req.params.id},
       {$set: req.body},
       function(err) {
-        if (!err) {
-          return res.send("Successfully updated user");
-        } else {
+        try {
+          res.send("Successfully updated user");
+        } catch(err) {
           res.status(400);
           return res.send("updateUser function failed");
         }
@@ -49,20 +50,33 @@ const addUser = async (req, res) => {
 // function to get user by id
 const getUserByID = async (req, res) => {
   await User.find({id: req.params.id}, function(err, user) {
-    if (user) {
+    try {
       return res.send(user);
-    } else {
+    } catch(err) {
       res.status(400);
       return res.send("getUserByID function failed");
     }
   })
 };
 
+// function to get user by email
+const getUserByEmail = async(req,res) => {
+  await User.find({email: req.params.email}, function(req, user) {
+    try {
+      res.send(user);
+    } catch (err) {
+      res.status(400);
+      res.send("getUserByEmail function failed");
+    }
+  })
+}
+
 // function to delete User by ID
 const deleteUserByID = async(req, res) => {
 
-  // TODO: delete associated reviews made by user
-
+  Review.deleteMany( {userId: req.params.id}, function(err) {
+    res.status(400);
+  });
 
   await User.deleteMany( {id: req.params.id}, function(err) {
     try {
@@ -76,12 +90,11 @@ const deleteUserByID = async(req, res) => {
 };
 
 
-
-// remember to export the functions
 module.exports = {
   getAllUsers,
   getUserByID,
   addUser,
   updateUser,
-  deleteUserByID
+  deleteUserByID,
+  getUserByEmail
 };
