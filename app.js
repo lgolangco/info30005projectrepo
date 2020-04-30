@@ -16,13 +16,13 @@ app.get("/", (req, res) => {
   res.send("<H1>Team Name: Cosmos</H1>");
 });
 
-// first import the back-end routes
+// setting up routes
 const userRoute = require("./routes/userRoute");
 
-// Link routes
+// assign routes
 app.use("/routes/user", userRoute);
 
-// start app and listen for incoming requests on port
+
 app.listen(process.env.PORT || 3000, () => {
   console.log("StudySpot app is running!");
 });
