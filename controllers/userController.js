@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 
 const User = mongoose.model("user");
+const Review = mongoose.model("review");
 
 
 // function to handle a request to get all users
@@ -65,7 +66,9 @@ const getUserByID = async (req, res) => {
 const deleteUserByID = async(req, res) => {
 
   // TODO: delete associated reviews made by user
-
+  User.deleteMany( {userId: req.params.id}, function(err) {
+    res.status(400);
+  });
 
   await User.deleteMany( {id: req.params.id}, function(err) {
     try {
