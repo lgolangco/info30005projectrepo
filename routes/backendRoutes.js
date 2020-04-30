@@ -3,24 +3,11 @@ const express = require("express");
 // create router
 const router = express.Router();
 
-// load/import the user controller
-const userController = require("../controllers/userController.js");
+
 const venueController = require("../controllers/venueController.js");
 const reviewController = require("../controllers/reviewController.js");
 
-/* USER ROUTES */
 
-// get all users
-router.get("/user", userController.getAllUsers);
-
-// get a user by ID
-router.get("/user/:id", userController.getUserByID);
-
-// create a user
-router.put("/user", userController.addUser);
-
-// update a user
-router.patch("/user/:id", userController.updateUser);
 
 
 /* VENUE ROUTES */

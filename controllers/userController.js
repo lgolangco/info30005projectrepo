@@ -17,18 +17,21 @@ const getAllUsers = async (req, res) => {
 
 // function to modify user by ID
 const updateUser = async (req, res) => {
-  await User.update(
+  User.updateMany(
       {id: req.params.id},
       {$set: req.body},
       function(err) {
         if (!err) {
           return res.send("Successfully updated user");
         } else {
+          console.log("Failed to get updateUser to work");
           res.status(400);
           return res.send("updateUser function failed");
         }
       }
   )
+
+
 };
 
 
