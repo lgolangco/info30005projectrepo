@@ -18,10 +18,10 @@ const getAllVenues = async (req, res) => {
 const getVenueByID = async (req, res) => {
    await Venue.find({id: req.params.id}, function(err, venue) {
       if (venue) {
-        res.send(venue);
+        return res.send(venue);
       } else {
         res.status(400);
-        res.send("getVenueByID function failed");
+        return res.send("getVenueByID function failed");
       }
     }
   )
@@ -31,10 +31,10 @@ const getVenueByID = async (req, res) => {
 const getVenueByPostcode = async (req, res) => {
    await Venue.find({venue_postcode: req.params.venue_postcode}, function(err, venue) {
       if (venue) {
-        res.send(venue);
+        return res.send(venue);
       } else {
         res.status(400);
-        res.send("getVenueByPostcode function failed");
+        return res.send("getVenueByPostcode function failed");
       }
     }
   )
@@ -44,10 +44,10 @@ const getVenueByPostcode = async (req, res) => {
 const getVenueByType = async (req, res) => {
    await Venue.find({venue_type: req.params.venue_type}, function(err, venue) {
       if (venue) {
-        res.send(venue);
+        return res.send(venue);
       } else {
         res.status(400);
-        res.send("getVenueByType function failed");
+        return res.send("getVenueByType function failed");
       }
     }
   )
@@ -82,30 +82,9 @@ const updateVenue = async (req, res) => {
   )
 };
 
-// function to delete venue by id
-//NOTE - DELETES TWICE for some reason
-// const deleteVenue = async (req, res) => {
-//   console.log("check1");
-//   const result = await Venue.deleteOne({id: req.params.id}
-//
-//
-//     function(err) {
-//       console.log("check2");
-//       if (!err) {
-//         console.log("check3");
-//         return res.send("Successfully deleted venue");
-//       } else {
-//         res.status(400);
-//         console.log("check4");
-//         return res.send("deleteVenue function failed");
-//       }
-//     }
-//   )
-// }
-
+// function to delete venue by ID
 const deleteVenue = async (req, res) => {
   const result = await Venue.deleteOne({id: req.params.id}).exec();
-
   if (result.n === 0) {
     res.status(400);
     return res.send("deleteVenue function failed");
