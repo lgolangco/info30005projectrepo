@@ -16,8 +16,22 @@ app.get("/", (req, res) => {
   res.send("<H1>Team Name: Cosmos</H1>");
 });
 
+<<<<<<< Updated upstream
 // first import the back-end routes
 const backendRoutes = require("./routes/backendRoutes");
+=======
+// setting up routes
+const userRoute = require("./routes/userRoute");
+// setting up routes
+const venueRoute = require("./routes/venueRoute");
+// setting up review routes
+const reviewRouter = require("./routes/reviewRoute");
+
+// assign routes
+app.use("/user", userRoute);
+app.use("/routes/venue", venueRoute);
+app.use("/review", reviewRouter);
+>>>>>>> Stashed changes
 
 // backend routes added onto the end of "/"
 app.use("/", backendRoutes);
