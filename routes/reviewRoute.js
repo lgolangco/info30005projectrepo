@@ -3,8 +3,8 @@ const express = require("express");
 // create router
 const reviewRouter = express.Router();
 
-// load the user controller
-const reviewController = require("../controllersController.js");
+// load the review controller
+const reviewController = require("../controllers/reviewController.js");
 
 /* REVIEW ROUTES */
 
