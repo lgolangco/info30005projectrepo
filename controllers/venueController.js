@@ -21,28 +21,30 @@ const getAllVenues = async (req, res) => {
 
 // function to get venues by id
 const getVenueByID = async (req, res) => {
-   await Venue.find({_id: req.params._id}, function(err, venue) {
+  if (ObjectId.isValid(req.params._id) === false) {
+      return res.send("There are no venues listed with this id");
+  }
 
-     // checks if the _id is invalid or there are no venues listed with that _id
-     if (ObjectId.isValid(req.params._id) === false || venue.length === 0) {
-       return res.send("There are no venues listed with this id");
+  await Venue.find({_id: req.params._id}, function(err, venue) {
+    // checks if the _id is invalid or there are no venues listed with that _id
+    if (venue.length === 0) {
+      return res.send("There are no venues listed with this id");
 
-     } else if (venue) {
-        return res.send(venue);
-      } else {
-        res.status(400);
-        return res.send("getVenueByID function failed");
-      }
+    } else if (venue) {
+      return res.send(venue);
+    } else {
+      res.status(400);
+      return res.send("getVenueByID function failed");
     }
-  )
+  })
 };
 
 
 // function to get venues by postcode
 const getVenueByPostcode = async (req, res) => {
-   await Venue.find({venue_postcode: req.params.venue_postcode}, function(err, venue) {
+   await Venue.find({venuePostcode: req.params.venuePostcode}, function(err, venue) {
 
-    // checks if there are no venues listed with that venue_postcode
+    // checks if there are no venues listed with that venuePostcode
      if (venue.length === 0){
        return res.send("There are no venues listed with this postcode");
      } else if (venue) {
@@ -58,9 +60,9 @@ const getVenueByPostcode = async (req, res) => {
 
 // function to get venues by type
 const getVenueByType = async (req, res) => {
-   await Venue.find({venue_type: req.params.venue_type}, function(err, venue) {
+   await Venue.find({venueType: req.params.venueType}, function(err, venue) {
 
-     // checks if there are no venues listed with that venue_type
+     // checks if there are no venues listed with that venueType
       if (venue.length === 0){
         return res.send("There are no venues listed with this type")
 
@@ -92,9 +94,14 @@ const addVenue = async (req, res) => {
 // function to modify venue by ID
 const updateVenue = async (req, res) => {
 
-  // checks if the _id is invalid or there are no venues listed with that _id
+  // checks if the _id is invalid
+  if (ObjectId.isValid(req.params._id) === false) {
+      return res.send("There are no venues listed with this id");
+  }
+
+  // checks if there are no venues listed with that _id
   await Venue.find({_id: req.params._id}, function(err, venue) {
-    if (ObjectId.isValid(req.params._id) === false || venue.length === 0) {
+    if (venue.length === 0) {
       return res.send("There are no venues listed with this id");
     }
   })
@@ -118,9 +125,14 @@ const updateVenue = async (req, res) => {
 // function to delete venue by ID
 const deleteVenue = async (req, res) => {
 
-  // checks if the _id is invalid or there are no venues listed with that _id
+  // checks if the _id is invalid
+  if (ObjectId.isValid(req.params._id) === false) {
+      return res.send("There are no venues listed with this id");
+  }
+
+  // checks if there are no venues listed with that _id
   await Venue.find({_id: req.params._id}, function(err, venue) {
-    if (ObjectId.isValid(req.params._id) === false || venue.length === 0) {
+    if (venue.length === 0) {
       return res.send("There are no venues listed with this id");
     }
   })
