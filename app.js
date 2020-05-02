@@ -23,7 +23,7 @@ const reviewRouter = require("./routes/reviewRoute");
 
 // assign routes
 app.use("/user", userRoute);
-app.use("/routes/venue", venueRoute);
+app.use("/venue", venueRoute);
 app.use("/review", reviewRouter);
 
 

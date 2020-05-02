@@ -8,21 +8,21 @@ const venueController = require("../controllers/venueController.js");
 router.get("/", venueController.getAllVenues);
 
 // get all venues by id
-router.get("/byid/:id", venueController.getVenueByID);
+router.get("/byid/:_id", venueController.getVenueByID);
 
 // get all venues by postcode
-router.get("/bypostcode/:venue_postcode", venueController.getVenueByPostcode);
+router.get("/bypostcode/:venuePostcode", venueController.getVenueByPostcode);
 
 // get all venues by type
-router.get("/bytype/:venue_type", venueController.getVenueByType);
+router.get("/bytype/:venueType", venueController.getVenueByType);
 
 // create venues
 router.put("/", venueController.addVenue);
 
 // update venues
-router.patch("/:id", venueController.updateVenue);
+router.patch("/byid/:_id", venueController.updateVenue);
 
 // delete venue by id
-router.delete("/:id", venueController.deleteVenue);
+router.delete("/byid/:_id", venueController.deleteVenue);
 
 module.exports = router;

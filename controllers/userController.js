@@ -1,7 +1,11 @@
 const mongoose = require("mongoose");
 
+// import user and review model
 const User = mongoose.model("user");
 const Review = mongoose.model("review");
+
+// import object id type to check if request _id is valid
+const ObjectId = mongoose.Types.ObjectId;
 
 
 // function to handle a request to get all users
@@ -18,13 +22,26 @@ const getAllUsers = async (req, res) => {
 
 // function to modify user by ID
 const updateUser = async (req, res) => {
-  await User.updateMany(
-      {id: req.params.id},
+  // checks if the _id is invalid
+  if (ObjectId.isValid(req.params._id) === false) {
+    return res.send("There are no users listed with this id");
+  }
+
+  // checks if there are no venues listed with that _id
+  await User.find({_id: req.params._id}, function(err, user) {
+    if (user.length === 0) {
+      return res.send("There are no venues listed with this id");
+    }
+  })
+
+  // update the venue with the following _id
+  await User.findOneAndUpdate(
+      {_id: req.params._id},
       {$set: req.body},
       function(err) {
-        try {
-          res.send("Successfully updated user");
-        } catch(err) {
+        if (!err) {
+          return res.send(req.body);
+        } else {
           res.status(400);
           return res.send("updateUser function failed");
         }
@@ -49,15 +66,23 @@ const addUser = async (req, res) => {
 
 // function to get user by id
 const getUserByID = async (req, res) => {
-  await User.find({id: req.params.id}, function(err, user) {
-    try {
+  // checks if the _id is invalid
+  if (ObjectId.isValid(req.params._id) === false) {
+    return res.send("There are no users listed with this id");
+  }
+
+  await User.find({_id: req.params._id}, function(err, user) {
+    if (user.length === 0) {
+      return res.send("There are no users listed with this id");
+    } else if (user) {
       return res.send(user);
-    } catch(err) {
+    } else {
       res.status(400);
       return res.send("getUserByID function failed");
     }
   })
 };
+
 
 // function to get user by email
 const getUserByEmail = async(req,res) => {
@@ -71,22 +96,29 @@ const getUserByEmail = async(req,res) => {
   })
 }
 
+
 // function to delete User by ID
 const deleteUserByID = async(req, res) => {
 
-  Review.deleteMany( {userId: req.params.id}, function(err) {
+  // checks if the _id is invalid
+  if (ObjectId.isValid(req.params._id) === false) {
+    return res.send("There are no users listed with this id");
+  }
+
+  // deletes the reviews associated with the user
+  Review.deleteMany( {userId: req.params._id}, function(err) {
     res.status(400);
   });
 
-  await User.deleteMany( {id: req.params.id}, function(err) {
+  // deletes the user with the following _id
+  await User.deleteOne( {_id: req.params._id}, function(err) {
     try {
-      return res.send("Successfully deleted the specified user");
+      res.send("Successfully deleted specified user");
     } catch (err) {
       res.sendStatus(400);
       return res.send("deleteUserByID function failed");
     }
   })
-
 };
 
 
