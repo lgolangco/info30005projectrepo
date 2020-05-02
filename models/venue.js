@@ -2,13 +2,12 @@
 const mongoose = require("mongoose");
 
 const venueSchema = new mongoose.Schema({
-  venue_id: String,
-  venue_name: String,
-  venue_type: String,
-  venue_streetaddress: String,
-  venue_suburb: String,
-  venue_state: String,
-  venue_postcode: String
+  venue_name: {type: String, required: true},
+  venue_type: {type: String, required: true},
+  venue_streetaddress: {type: String, required: true, unique: true},
+  venue_suburb: {type: String, required: true},
+  venue_state: {type: String, required: true},
+  venue_postcode: {type: String, required: true}
 });
 
 const Venue = mongoose.model("venue", venueSchema, "venue");
