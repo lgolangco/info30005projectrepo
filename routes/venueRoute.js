@@ -11,10 +11,10 @@ router.get("/", venueController.getAllVenues);
 router.get("/byid/:_id", venueController.getVenueByID);
 
 // get all venues by postcode
-router.get("/bypostcode/:venue_postcode", venueController.getVenueByPostcode);
+router.get("/bypostcode/:venuePostcode", venueController.getVenueByPostcode);
 
 // get all venues by type
-router.get("/bytype/:venue_type", venueController.getVenueByType);
+router.get("/bytype/:venueType", venueController.getVenueByType);
 
 // create venues
 router.put("/", venueController.addVenue);
