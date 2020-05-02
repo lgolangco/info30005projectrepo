@@ -1,5 +1,11 @@
 # API documentation
 
+## INFO30005 (Cosmos)
+http://info30005-studyspot.herokuapp.com/
+- Name: StudySpot
+- Members: Lucy, Michael, Lauren, Su Lyn
+
+
 For this deliverable, we've identified three key components:
 1. User
 2. Venue
@@ -10,10 +16,10 @@ The functionalities associated with each component are outlined below.
 
 ## User
 The user schema is as follows:
-* \_id *(e.g. 5eac96af534733377b14d6ce)*
+* \_id *(e.g. 5ead49c814167d410fff9cec)*
+* name *(e.g. Derek Shephard)*
 * email *(e.g. derekshephard@gmail.com)*
-* firstName *(e.g. Derek)*
-* lastName *(e.g. Shephard)*
+* password *(e.g. admin)*
 
 The user component has the following functionalities:
 1. **getAllUsers: GET /user/**  
@@ -22,7 +28,7 @@ e.g. /user/
 
 2. **getUserByID: GET /user/:id/**  
 This returns the user objects with the given \_id, if it exists in the database.  
-e.g. /user/5eac96af534733377b14d6ce  
+e.g. /user/5ead49c814167d410fff9cec 
 
 3. **getUserByEmail: GET /user/email/:email/**  
 This returns the user objects with the given email, if it exists in the database.  
@@ -34,11 +40,11 @@ e.g. /user/
 
 5. **updateUser: PATCH /user/:id/**  
 This updates the user object with the given \_id as per the request, if it exists in the database.  
-e.g. /user/5eac96af534733377b14d6ce  
+e.g. /user/5ead49c814167d410fff9cec
 
 6. **deleteUserByID: DELETE /user/:id/**  
 This deletes the user object with the given \_id, if it exists in the database.
-e.g. /user/5eac96af534733377b14d6ce  
+e.g. /user/5ead49c814167d410fff9cec
 
 ## Venue
 The venue schema is as follows:
