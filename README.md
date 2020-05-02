@@ -120,9 +120,9 @@ This returns the review object with the given venue and user id values as per th
 e.g. /review/5ea67d644f821a73b6841702  
 
 3. **addReview: POST /review/**  
-This is used for creating a review with a rating and an optional comment for a user for a venue.   
+This is used for creating a review with a rating and an optional comment for a user for a venue (each user is only allowed have one review per venue).   
 It takes the following inputs: from body an existing venueId, an existing userId, a rating and a optional comment.   
-This adds a review object with values set as per the request, otherwise returns message describing reasons why request failed..  
+This adds a review object with values set as per the request, otherwise returns message describing reasons why request failed, if an review for the specified venue and user already exists, it returns a message "try updateReview instead".  
 e.g. /review/  
 
 4. **getReviewByIDs: GET /review/byids/:venueId/:userId/**   
