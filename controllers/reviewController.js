@@ -1,8 +1,11 @@
 const mongoose = require('mongoose');
+// import object id type to check if request _id is valid
+const ObjectId = mongoose.Types.ObjectId;
 
 // import review model
 const Review = mongoose.model("review");
-//const User = mongoose.model("user");
+const User = mongoose.model("user");
+const Venue = mongoose.model("venue");
 
 
 // function to handle a request to get all reviews
@@ -11,6 +14,9 @@ const getAllReviews = async (req, res) => {
         if (reviews.length) {
             console.log("Getting all reviews");
             return res.send(reviews);
+        } else if (reviews.length === 0){
+            console.log("There are no existing reviews yet");
+            return res.send("There are no existing reviews yet")
         } else {
             console.log("Failed to getAllReviews");
             res.status(400);
@@ -22,15 +28,18 @@ const getAllReviews = async (req, res) => {
 
 // function to modify review by venue and user
 const updateReview = async (req, res) => {
+    if (!(ObjectId.isValid(req.body.userId) && ObjectId.isValid(req.params.venueId))) {
+        console.log("Failed to updateReview due to invalid venueId %s or userId %s", req.params.venueId, req.body.userId);
+        res.status(400);
+        return res.send("Failed to updateReview due to invalid venueId " + req.params.venueId + " or userId " + req.body.userId);
+    }
     await Review.findOneAndUpdate(
     {venueId: req.params.venueId, userId: req.body.userId},
     {$set: {content: req.body.content, rating: req.body.rating}},
-    // {new: true},
     function (err, updatedReview) {
         if (updatedReview) {
             console.log("Successfully updated review for venueId %s", req.params.venueId);
             return res.send(updatedReview);
-            // res.redirect('/');
         } else {
             console.log("Failed to updateReview for venueId %s", req.params.venueId);
             res.status(400);
@@ -42,10 +51,22 @@ const updateReview = async (req, res) => {
 
 // function to add review
 const addReview = async (req, res) => {
-    const check = await Review.find({venueId: req.body.venueId, userId: req.body.userId});
-    if (check.length) {
+    if (!(ObjectId.isValid(req.body.userId) && ObjectId.isValid(req.body.venueId))) {
+        console.log("Failed to addReview due to invalid venueId %s or userId %s", req.body.venueId, req.body.userId);
+        res.status(400);
+        return res.send("Failed to addReview due to invalid venueId " + req.body.venueId + " or userId " + req.body.userId);
+    }
+    const checkExists = await Review.find({venueId: req.body.venueId, userId: req.body.userId});
+    const checkUserId = await User.find({_id: req.body.userId});
+    const checkVenueId = await Venue.find({_id: req.body.venueId});
+
+    if (!(checkUserId.length && checkVenueId.length)) {
+        console.log("Failed to addReview due to non-existing venueId %s or userId %s", req.body.venueId, req.body.userId);
+        res.status(400);
+        return res.send("Failed to addReview due to non-existing venueId " + req.body.venueId + " or userId " + req.body.userId);
+    } else if (checkExists.length) {
         console.log("Review already exists for venueId %s and userId %s", req.body.venueId, req.body.userId, ", try updateReview instead");
-        return res.send("Review already exists for for venueId " + req.body.venueId + " and userId " + req.body.userId + ", try updateReview instead");
+        return res.send("Review already exists for venueId " + req.body.venueId + " and userId " + req.body.userId + ", try updateReview instead");
     } else {
         const review = new Review({
             venueId:req.body.venueId,
@@ -61,7 +82,7 @@ const addReview = async (req, res) => {
             } else {
                 console.log("Failed to addReview for venueId %s and userId %s", req.body.venueId, req.body.userId);
                 res.status(400);
-                return res.send("Failed to addReview for  for venueId " + req.params.venueId + " and userId " + req.params.userId);
+                return res.send("Failed to addReview for venueId " + req.body.venueId + " and userId " + req.body.userId);
             }
         })
     }
@@ -70,6 +91,11 @@ const addReview = async (req, res) => {
 
 // function to get review by venue and user ID
 const getReviewByIDs = async (req, res) => {
+    if (!(ObjectId.isValid(req.params.userId) && ObjectId.isValid(req.params.venueId))) {
+        console.log("Failed to getReviewByIDs due to invalid venueId %s or userId %s", req.params.venueId, req.params.userId);
+        res.status(400);
+        return res.send("Failed to getReviewByIDs due to invalid venueId " + req.params.venueId + " or userId " + req.params.userId);
+    }
     await Review.find({venueId: req.params.venueId, userId: req.params.userId}, function(err, review) {
         if (review.length) {
             console.log("Listing reviews with venueId %s and userId %s", req.params.venueId, req.params.userId);
@@ -85,6 +111,11 @@ const getReviewByIDs = async (req, res) => {
 
 // function to get reviews by venue ID
 const getReviewByVenueID = async (req, res) => {
+    if (!ObjectId.isValid(req.params.venueId)) {
+        console.log("Failed to getReviewByVenueID due to invalid venueId %s", req.params.venueId);
+        res.status(400);
+        return res.send("Failed to getReviewByVenueID due to invalid venueId " + req.params.venueId);
+    }
     await Review.find({venueId: req.params.venueId}, function(err, reviews) {
         if (reviews.length) {
             console.log("Listing reviews with venueId %s", req.params.venueId);
@@ -100,6 +131,11 @@ const getReviewByVenueID = async (req, res) => {
 
 // function to get review by user ID
 const getReviewByUserID = async (req, res) => {
+    if (!ObjectId.isValid(req.params.userId)) {
+        console.log("Failed to getReviewByUserID due to invalid userId %s", req.params.userId);
+        res.status(400);
+        return res.send("Failed to getReviewByUserID due to invalid userId " + req.params.userId);
+    }
     await Review.find({userId: req.params.userId}, function(err, reviews) {
         if (reviews.length) {
             console.log("Listing reviews with userId %s", req.params.userId);
@@ -115,14 +151,18 @@ const getReviewByUserID = async (req, res) => {
 
 // function to delete review by venue and user ID
 const deleteReview = async (req, res) => {
+    if (!(ObjectId.isValid(req.body.userId) && ObjectId.isValid(req.params.venueId))) {
+        console.log("Failed to deleteReview due to invalid venueId %s or userId %s", req.params.venueId, req.body.userId);
+        res.status(400);
+        return res.send("Failed to deleteReview due to invalid venueId " + req.params.venueId + " or userId " + req.body.userId);
+    }
     const review = await Review.find({venueId: req.params.venueId, userId: req.body.userId});
         await Review.deleteOne(
     {venueId: req.params.venueId, userId: req.body.userId},
     function() {
         if (review.length) {
-            // res.send(review);
             console.log("Successfully deleted review with venueId %s and userId %s", req.params.venueId, req.body.userId);
-            return res.redirect('/review');
+            return res.send("Successfully deleted review with venueId " + req.params.venueId);
         } else {
             console.log("Failed to deleteReview for venueId %s", req.params.venueId);
             res.status(400);
