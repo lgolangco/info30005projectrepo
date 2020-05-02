@@ -100,7 +100,7 @@ The review schema is as follows:
 * rating *(e.g. 2)*
 
 The review component has the following functionalities:
-1. **getAllReviews: GET /review/**  
+1. **getAllReviews: `GET /review/`**  
 This returns an array of all reviews.  
 e.g. /review/5ea95743b78d3762f88873c1  
 
