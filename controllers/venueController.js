@@ -16,7 +16,7 @@ const getAllVenues = async (req, res) => {
 
 // function to get venues by id
 const getVenueByID = async (req, res) => {
-   await Venue.find({id: req.params.id}, function(err, venue) {
+   await Venue.find({_id: req.params._id}, function(err, venue) {
       if (venue) {
         return res.send(venue);
       } else {
@@ -69,7 +69,7 @@ const addVenue = async (req, res) => {
 // function to modify venue by ID
 const updateVenue = async (req, res) => {
   await Venue.update(
-      {id: req.params.id},
+      {_id: req.params._id},
       {$set: req.body},
       function(err) {
         if (!err) {
@@ -84,7 +84,7 @@ const updateVenue = async (req, res) => {
 
 // function to delete venue by ID
 const deleteVenue = async (req, res) => {
-  const result = await Venue.deleteOne({id: req.params.id}).exec();
+  const result = await Venue.deleteOne({_id: req.params._id}).exec();
   if (result.n === 0) {
     res.status(400);
     return res.send("deleteVenue function failed");

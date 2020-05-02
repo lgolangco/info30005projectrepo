@@ -2,7 +2,6 @@
 const mongoose = require("mongoose");
 
 const venueSchema = new mongoose.Schema({
-  venue_id: String,
   venue_name: String,
   venue_type: String,
   venue_streetaddress: String,
