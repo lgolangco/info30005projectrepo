@@ -28,7 +28,7 @@ e.g. /user/
 
 2. **getUserByID: GET /user/:id/**  
 This returns the user objects with the given \_id, if it exists in the database.  
-e.g. /user/5ead49c814167d410fff9cec 
+e.g. /user/5ead49c814167d410fff9cec
 
 3. **getUserByEmail: GET /user/email/:email/**  
 This returns the user objects with the given email, if it exists in the database.  
@@ -58,41 +58,52 @@ The venue schema is as follows:
 
 The venue component has the following functionalities:
 1. **getAllVenues: GET /venue/**  
-This returns an array of all venue objects.  
+This is used for viewing all existing venues.  
+This returns an array of all existing venue objects. If there are no existing
+venue objects it notifies the client.  
+
 e.g. /venue/  
 
 2. **getVenueByID: GET /venue/byid/:\_id/**  
 This returns the venue object with the given \_id, if it exists in the database.  
 If it does not exist in the database, it notifies the client.  
+It takes the following inputs: from route parameter a venue's \_id.
 
 e.g. /venue/byid/5ea39c005745fd4b5d77c8fe  
 
 3. **getVenueByPostcode: GET /venue/bypostcode/:venuePostcode**  
 This returns an array of all the venue objects with the given postcode, if such venues exist in the database.  
-If there are no venues in that postcode, it notifies the client.  
+If there are no venues in that postcode, it notifies the client.
+It takes the following inputs: from route parameter a venuePostcode.  
 
 e.g. /venue/bypostcode/3053  
 
 4. **getVenueByType: GET /venue/bytype/:venueType**  
 This returns an array of all the venue objects with the given type, if such venues  exist in the database.  
 If there are no venues with that type, it notifies the client.  
+It takes the following inputs: from route parameter a venueType.  
 
 e.g. /venue/bytype/Cafe  
 
 5. **addVenue: PUT /venue/**  
 This adds a venue object with values set as per the request.  
+It takes the following inputs: from body a venueName, venueType, venueStreetAddress, venueSuburb, venueState, and venuePostcode.  
 
 e.g. /venue/  
 
 6. **updateVenue: PATCH /venue/byid/:\_id**  
 This updates the venue object with the given \_id as per the request, if it exists in the database.  
-If it does not exist in the database, it notifies the client.  
+If it does not exist in the database, it notifies the client.    
+It takes the following inputs: from route parameter a venue's \_id, and from body it
+can take any of venueName, venueType, venueStreetAddress, venueSuburb, venueState,
+or venuePostcode.  
 
 e.g. /venue/byid/5ea39c005745fd4b5d77c8fe  
 
 7. **deleteVenue: delete /venue/byid/:\_id**  
 This deletes the venue object with the given \_id, if it exists in the database.  
 If it does not exist in the database, it notifies the client.  
+It takes the following inputs: from route parameter a venueId.    
 
 e.g. /venue/byid/5ea39c005745fd4b5d77c8fe  
 
@@ -122,7 +133,7 @@ e.g. /review/5ea67d644f821a73b6841702
 3. **addReview: POST /review/**  
 This is used for creating a review with a rating and an optional comment for a user for a venue (each user is only allowed have one review per venue).   
 It takes the following inputs: from body an existing venueId, an existing userId, a rating and a optional comment.   
-This adds a review object with values set as per the request, otherwise returns message describing reasons why request failed, if an review for the specified venue and user already exists, it returns a message "try updateReview instead".  
+This adds a review object with values set as per the request, otherwise returns message describing reasons why request failed, if a review for the specified venue and user already exists, it returns a message "try updateReview instead".  
 e.g. /review/  
 
 4. **getReviewByIDs: GET /review/byids/:venueId/:userId/**   
@@ -148,4 +159,3 @@ This is used for deleting a review for a user about a venue.
 It takes the following inputs: from route parameter a venueId, and from body a userId.   
 This deletes the venue object with the given venue and user id values, and returns success message if it exists in the database, otherwise returns message describing reasons why request failed.  
 e.g. /review/5ea67d644f821a73b6841702/  
-
