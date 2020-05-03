@@ -102,7 +102,7 @@ It takes the following inputs: from route parameter a venueType.
 
 e.g. /venue/bytype/Cafe  
 
-5. **addVenue: PUT /venue/**  
+5. **addVenue: POST /venue/**  
 This adds a venue object with values set as per the request.  
 It takes the following inputs: from body a venueName, venueType, venueStreetAddress, venueSuburb, venueState, and venuePostcode.  
 
