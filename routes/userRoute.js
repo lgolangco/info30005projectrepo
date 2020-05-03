@@ -14,7 +14,7 @@ router.get("/:_id", userController.getUserByID);
 router.get("/email/:email", userController.getUserByEmail);
 
 // create a user
-router.put("/", userController.addUser);
+router.post("/", userController.addUser);
 
 // update a user
 router.patch("/:_id", userController.updateUser);
