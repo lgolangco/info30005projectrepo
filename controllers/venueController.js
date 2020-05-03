@@ -11,7 +11,11 @@ const ObjectId = mongoose.Types.ObjectId;
 const getAllVenues = async (req, res) => {
   try {
     const all_venues = await Venue.find();
-    return res.send(all_venues);
+    if (all_venues.length === 0){
+      return res.send("There are no existing venues yet");
+    } else {
+      return res.send(all_venues);
+    }
   } catch (err) {
     res.status(400);
     return res.send("Database query failed");
