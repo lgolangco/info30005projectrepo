@@ -42,7 +42,7 @@ It takes the following inputs: from route parameter a user's email.
 
 e.g. /user/email/derekshephard@gmail.com
 
-4. **addUser: PUT /user/**  
+4. **addUser: POST /user/**  
 This adds a user object with values set as per the request.  
 It takes the following inputs: from body a name, email, and password.  
 
