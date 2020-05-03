@@ -29,9 +29,6 @@ reviewRouter.get('/byuser/:userId', reviewController.getReviewByUserID);
 // delete review by venue and user ID
 reviewRouter.delete('/:venueId', reviewController.deleteReview);
 
-// // create review
-// router.post('/id/:userId/:leftById', reviewController.create);
-
 
 // export the router
 module.exports = reviewRouter;
