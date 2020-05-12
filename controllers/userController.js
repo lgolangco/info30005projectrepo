@@ -54,15 +54,49 @@ const updateUser = async (req, res) => {
 
 
 // function to add user
-const addUser = async (req, res) => {
-    const user = req.body;
-    const db = mongoose.connection;
-    try {
-        db.collection("user").insertOne(user);
-        return res.send("Successfully added a user");
-    } catch (err) {
-        res.status(400);
-        return res.send("addUser function failed");
+const addUser = async (req, res, next) => {
+    // const user = req.body;
+    // const db = mongoose.connection;
+    // try {
+    //     db.collection("user").insertOne(user);
+    //     return res.send("Successfully added a user");
+    // } catch (err) {
+    //     res.status(400);
+    //     return res.send("addUser function failed");
+    // }
+    if (req.body.email &&
+        req.body.name &&
+        req.body.password &&
+        req.body.confirmPassword) {
+
+        // confirm that user typed same password twice
+        if (req.body.password != req.body.confirmPassword) {
+            var err = new Error("Passwords do not match");
+            err.status = 400;
+            return next(err);
+        }
+
+        // create object with form input
+        var userData = {
+            email: req.body.email,
+            name: req.body.name,
+            password: req.body.password
+        };
+
+        User.create(userData, function(error, user) {
+            if (error) {
+                console.log("failed to create user");
+                return next(error);
+            } else {
+                console.log("Created user");
+                return res.redirect("/profile");
+            }
+        });
+
+    } else {
+        var err = new Error("All fields required");
+        err.status = 400;
+        return next(err);
     }
 };
 
