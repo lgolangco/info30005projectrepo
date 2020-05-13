@@ -113,7 +113,7 @@ const getUserByID = async (req, res) => {
         if (user.length === 0) {
             return res.send("There are no users listed with this id");
         } else if (user) {
-            return res.render('userProfile', {user: user});
+            return res.render('userProfile', {user: user[0]});
         } else {
             res.status(400);
             return res.send("getUserByID function failed");
