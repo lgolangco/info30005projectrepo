@@ -4,12 +4,11 @@ const cors = require("cors");
 const session = require("express-session");
 const app = express();
 
-// use sessions for tracking logins
+// session middleware
 app.use(session({
-  // secret option is used to sign a cookie to ensure that only the application created the cookie
   secret: "studyspot secret",
   resave: true,
-  saveUninitialized: false
+  saveUninitialized: false,
 }));
 
 // make user ID available in templates

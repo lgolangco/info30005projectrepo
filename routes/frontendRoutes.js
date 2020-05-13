@@ -1,8 +1,8 @@
 const express = require("express");
 var router = express.Router();
 
-// load the user controller
 const userController = require("../controllers/userController.js");
+const mid = require("../middleware");
 
 
 // GET home page
@@ -21,7 +21,7 @@ router.get("/contact", (req, res, next) => {
 });
 
 // GET Register
-router.get("/register", (req, res, next) => {
+router.get("/register", mid.loggedOut, function(req, res, next) {
     return res.render("register", {title: "Sign Up"});
 });
 
@@ -29,7 +29,7 @@ router.get("/register", (req, res, next) => {
 router.post("/register", userController.addUser);
 
 // GET Login
-router.get("/login", function(req, res, next) {
+router.get("/login", mid.loggedOut, function(req, res, next) {
     return res.render("login", {title: "Log In"});
 });
 
@@ -37,7 +37,7 @@ router.get("/login", function(req, res, next) {
 router.post("/login", userController.login);
 
 // GET Profile
-router.get("/profile", userController.accessProfile);
+router.get("/profile", mid.requiresLogin, userController.accessProfile);
 
 // GET Logout
 router.get("/logout", userController.logout);
