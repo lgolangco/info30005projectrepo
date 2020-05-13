@@ -43,7 +43,7 @@ router.post("/login", function(req, res, next) {
                 err.status = 401;
                 return next(err);
             } else {
-                req.sessions.userId = user._id;
+                req.session.userId = user._id;
                 return res.redirect("/profile");
             }
         });
@@ -53,6 +53,23 @@ router.post("/login", function(req, res, next) {
         return next(err);
     }
 })
+
+// GET Profile
+router.get("/profile", function(req, res, next) {
+    if (! req.session.userId) {
+        var err = new Error("You are not authorised to view this page.");
+        err.status = 403;
+        return next(err);
+    }
+    User.findById(req.session.userId)
+        .exec(function(error, user) {
+            if (error) {
+                return next(error);
+            } else {
+                return res.render("profile", {title: "Profile", name: user.name});
+            }
+        });
+});
 
 
 module.exports = router;
