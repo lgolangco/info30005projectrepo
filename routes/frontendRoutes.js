@@ -16,8 +16,8 @@ router.get("/about", (req, res, next) => {
 });
 
 // GET Contact
-router.get("/contact", (req, res, next) => {
-    return res.render("contact", {title: "Contact"});
+router.get("/venues", (req, res, next) => {
+    return res.render("venues", {title: "Study Areas"});
 });
 
 // GET Register
