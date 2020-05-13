@@ -39,6 +39,12 @@ router.post("/login", userController.login);
 // GET Profile
 router.get("/profile", mid.requiresLogin, userController.accessProfile);
 
+// displays edit form based on user ID
+router.get("/profile/edit", userController.updateUserForm);
+
+// update a user
+router.post("/profile", userController.updateUser);
+
 // GET Logout
 router.get("/logout", userController.logout);
 
