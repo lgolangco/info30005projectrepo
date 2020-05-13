@@ -55,15 +55,6 @@ const updateUser = async (req, res) => {
 
 // function to add user
 const addUser = async (req, res, next) => {
-    // const user = req.body;
-    // const db = mongoose.connection;
-    // try {
-    //     db.collection("user").insertOne(user);
-    //     return res.send("Successfully added a user");
-    // } catch (err) {
-    //     res.status(400);
-    //     return res.send("addUser function failed");
-    // }
     if (req.body.email &&
         req.body.name &&
         req.body.password &&

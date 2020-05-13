@@ -3,28 +3,56 @@ var router = express.Router();
 
 // load the user controller
 const userController = require("../controllers/userController.js");
+const User = require("../models/user");
+
 
 // GET home page
 router.get("/", (req, res, next) => {
     return res.render("index", {title: "Home"});
 });
 
-// GET About page
-router.get("about", (req, res, next) => {
+// GET About
+router.get("/about", (req, res, next) => {
     return res.render("about", {title: "About"});
 });
 
-// GET Contact page
+// GET Contact
 router.get("/contact", (req, res, next) => {
     return res.render("contact", {title: "Contact"});
 });
 
-// GET Register page
+// GET Register
 router.get("/register", (req, res, next) => {
     return res.render("register", {title: "Sign Up"});
 });
 
 // POST Register
 router.post("/register", userController.addUser);
+
+// GET Login
+router.get("/login", function(req, res, next) {
+    return res.render("login", {title: "Log In"});
+});
+
+// POST Login
+router.post("/login", function(req, res, next) {
+    if (req.body.email && req.body.password) {
+        User.authenticate(req.body.email, req.body.password, function(error, user) {
+            if (error || !user) {
+                var err = new Error("Wrong email or password");
+                err.status = 401;
+                return next(err);
+            } else {
+                req.sessions.userId = user._id;
+                return res.redirect("/profile");
+            }
+        });
+    } else {
+        var err = new Error("Email and password are required");
+        err.status = 401;
+        return next(err);
+    }
+})
+
 
 module.exports = router;

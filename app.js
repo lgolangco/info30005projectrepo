@@ -1,11 +1,20 @@
 const express = require("express");
 const bodyParser = require("body-parser");
-const app = express();
 const cors = require("cors");
+const session = require("express-session");
+const app = express();
 
-require("./models");
+// use sessions for tracking logins
+app.use(session({
+  // secret option is used to sign a cookie to ensure that only the application created the cookie
+  secret: "studyspot secret",
+  resave: true,
+  saveUninitialized: false
+}));
 
 app.use(cors());
+
+require("./models");
 
 // parse incoming requests
 app.use(bodyParser.json());
