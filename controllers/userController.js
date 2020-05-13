@@ -61,7 +61,7 @@ const addUser = async (req, res, next) => {
         req.body.confirmPassword) {
 
         // confirm that user typed same password twice
-        if (req.body.password != req.body.confirmPassword) {
+        if (req.body.password !== req.body.confirmPassword) {
             var err = new Error("Passwords do not match");
             err.status = 400;
             return next(err);
@@ -80,7 +80,7 @@ const addUser = async (req, res, next) => {
                 return next(error);
             } else {
                 console.log("Created user");
-                return res.redirect("/profile");
+                return res.redirect("/login");
             }
         });
 
