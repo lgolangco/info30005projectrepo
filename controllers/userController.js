@@ -149,6 +149,54 @@ const deleteUserByID = async (req, res) => {
     })
 };
 
+const login = async (req, res) => {
+    if (req.body.email && req.body.password) {
+        User.authenticate(req.body.email, req.body.password, function(error, user) {
+            if (error || !user) {
+                var err = new Error("Wrong email or password");
+                err.status = 401;
+                return next(err);
+            } else {
+                req.session.userId = user._id;
+                return res.redirect("/profile");
+            }
+        });
+    } else {
+        var err = new Error("Email and password are required");
+        err.status = 401;
+        return next(err);
+    }
+}
+
+const accessProfile = async (req, res, next) => {
+    if (! req.session.userId) {
+        var err = new Error("You are not authorised to view this page.");
+        err.status = 403;
+        return next(err);
+    }
+    User.findById(req.session.userId)
+        .exec(function(error, user) {
+            if (error) {
+                return next(error);
+            } else {
+                return res.render("profile", {title: "Profile", name: user.name});
+            }
+        });
+}
+
+const logout = async (req, res, next) => {
+    if (req.session) {
+        // delete session object
+        req.session.destroy(function(err) {
+            if (err) {
+                return next(err);
+            } else {
+                return res.redirect("/");
+            }
+        });
+    }
+}
+
 
 module.exports = {
     getAllUsers,
@@ -156,5 +204,8 @@ module.exports = {
     addUser,
     updateUser,
     deleteUserByID,
-    getUserByEmail
+    getUserByEmail,
+    login,
+    accessProfile,
+    logout
 };

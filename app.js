@@ -12,6 +12,13 @@ app.use(session({
   saveUninitialized: false
 }));
 
+// make user ID available in templates
+app.use(function(req, res, next) {
+  // if user is logged in, res.locals.currentUser will hold their user id, else no session and no session id.
+  res.locals.currentUser = req.session.userId;
+  next();
+});
+
 app.use(cors());
 
 require("./models");
