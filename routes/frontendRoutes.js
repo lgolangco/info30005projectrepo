@@ -10,7 +10,7 @@ router.get("/", (req, res, next) => {
 });
 
 // GET About page
-router.get("about", (req, res, next) => {
+router.get("/about", (req, res, next) => {
     return res.render("about", {title: "About"});
 });
 
