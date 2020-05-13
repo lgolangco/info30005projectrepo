@@ -28,7 +28,7 @@ const getAllUsers = async (req, res) => {
 const updateUserForm = async (req, res) => {
 
     try {
-        const users = await User.find({_id: req.params._id});
+        const users = await User.find({_id: req.session.userId});
         if (!users) {
             res.status(400);
             console.log("User not found");
@@ -38,12 +38,7 @@ const updateUserForm = async (req, res) => {
         const user = users[0];
         console.log("Updating user:", user);
 
-        res.render('userUpdateForm', {
-            id: user.id,
-            username: user.name,
-            email: user.email,
-            password: user.password
-        });
+        res.render('userUpdateForm', {user: user});
     } catch (err) {
         res.status(400);
         console.log(err);
@@ -55,12 +50,12 @@ const updateUserForm = async (req, res) => {
 // function to modify user by ID
 const updateUser = async (req, res,next) => {
     // checks if the _id is invalid
-    if (ObjectId.isValid(req.params._id) === false) {
+    if (ObjectId.isValid(req.session.userId) === false) {
         return res.send("There are no users listed with this id");
     }
 
     // checks if there are no venues listed with that _id
-    await User.find({_id: req.params._id}, function (err, user) {
+    await User.find({_id: req.session.userId}, function (err, user) {
         if (user.length === 0) {
             return res.send("There are no venues listed with this id");
         }
@@ -80,11 +75,11 @@ const updateUser = async (req, res,next) => {
 
         // update the venue with the following _id
         await User.findOneAndUpdate(
-            {_id: req.params._id},
+            {_id: req.session.userId},
             {$set: req.body},
             function (err, user) {
                 if (!err) {
-                    return res.redirect("/user/" + user._id);
+                    return res.redirect("/profile");
                 } else {
                     res.status(400);
                     return res.send("updateUser function failed");
@@ -195,7 +190,7 @@ const deleteUserByID = async (req, res) => {
     })
 };
 
-const login = async (req, res) => {
+const login = async (req, res,next) => {
     if (req.body.email && req.body.password) {
         User.authenticate(req.body.email, req.body.password, function(error, user) {
             if (error || !user) {
@@ -220,7 +215,7 @@ const accessProfile = async (req, res, next) => {
             if (error) {
                 return next(error);
             } else {
-                return res.render("profile", {title: "Profile", name: user.name});
+                return res.render("profile", {title: "Profile", user: user});
             }
         });
 }
