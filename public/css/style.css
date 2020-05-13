@@ -2,9 +2,7 @@
 
 body {
     font-family: "Open Sans", sans-serif;
-    background-color: #f9eadf;
-    /*background: #1d2a33 url("../images/bg.jpg") no-repeat;*/
-    /*background-size: cover;*/
+    background-color: #3d85c6;
 }
 
 a {
@@ -20,6 +18,10 @@ a:hover {
 
 h1, h2, h3, h4, h5, h6 {
     font-family: "Poppins", "sans-serif";
+}
+
+h6 {
+    font-weight: lighter;
 }
 
 
