@@ -1,7 +1,18 @@
 extends layout
 
 block content
-    .main.container.text-xs-center
-        h1.display-3 Find the best studyspots!
-        p.lead Choose from a wide selection bla bla
-        a.btn.btn-outline-info.btn-lg(href='/register') Get Started!
+    body
+        header.masthead.text-white.text-center
+            .overlay
+            .container
+                .row
+                    .col-xl-9.mx-auto
+                        h1.mb-5 StudySpot
+                    .col-xl-9.mx-auto
+                        h5.mb-5 Discover the best study spots in Australia
+                    .col-md-10.col-lg-8.col-xl-7.mx-auto
+                        .input-group
+                            input.form-control(type="text", placeholder="Search for cafes, libraries or hidden spots")
+                            .input-group-append
+                                button.btn.btn-info(type="button")
+                                    i.fa.fa-search

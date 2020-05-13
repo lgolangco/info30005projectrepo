@@ -1,17 +1,27 @@
 /* Base Styles */
 
 body {
-    background: #1d2a33 url('../images/bg.jpg') no-repeat;
-    background-size: cover;
+    font-family: "Open Sans", sans-serif;
+    background-color: #f9eadf;
+    /*background: #1d2a33 url("../images/bg.jpg") no-repeat;*/
+    /*background-size: cover;*/
 }
+
 a {
-    color: #e9ecef;
+    color: #959799;
     text-decoration: solid;
     background-color: transparent;
+    font-family: "Montserrat", sans-serif;
 }
+
 a:hover {
     color: rgba(49,176,213, .7);
 }
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: "Poppins", "sans-serif";
+}
+
 
 /* Component Styles */
 
@@ -23,16 +33,40 @@ a:hover {
     margin-bottom: 2.5rem;
 }
 .main {
-    color: #fff;
+    color: #000000;
     min-height: calc(100vh - 34px);
 }
 .foot {
     font-size: .85rem;
     padding: .5rem 0;
-    color: rgba(255,255,255, .6);
+    color: #000000;
 }
 
+header.masthead {
+    position: relative;
+    background-color: #343a40;
+    background: url("../images/bg.jpg") no-repeat center center;
+    background-size: cover;
+    padding-top: 13rem;
+    padding-bottom: 15rem;
+}
+
+
 /* Modifier Styles */
+
+header.masthead .overlay {
+    position: absolute;
+    background-color: #212529;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    left: 0;
+    opacity: 0.3;
+}
+
+header.masthead h1 {
+    font-size: 2rem;
+}
 
 .nav-items .nav-link {
     margin: 0 1rem;
@@ -54,6 +88,7 @@ a:hover {
     margin: 3px 0 0 4px;
 }
 
+
 /* Button Styles */
 
 .btn-primary {
@@ -61,11 +96,11 @@ a:hover {
     border-color: #417aba;
 }
 .btn-info {
-    background-color: #31b0d5;
-    border-color: #2aabd2;
+    background-color: #0b5394;
+    border-color: #3d8596;
 }
 .btn-info:hover {
-    background-color: #5bc0de;
+    background-color: #3d85c6;
     border-color: #5bc0de;
 }
 .btn-light {
@@ -78,6 +113,7 @@ a:hover {
 .active,
 .btn {
     transition: .4s;
+    font-family: "Poppins", "Montserrat", "sans-serif"
 }
 
 /* Icon Styles */
