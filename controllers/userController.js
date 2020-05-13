@@ -9,12 +9,13 @@ const ObjectId = mongoose.Types.ObjectId;
 
 
 const getAllUsers = async (req, res) => {
+    users = [];
     try {
         const all_users = await User.find();
         if (all_users.length === 0) {
             return res.send("There are no existing users yet");
         } else {
-            return res.send(all_users);
+            return res.render('users', {users: all_users});
         }
     } catch (err) {
         res.status(400);
@@ -41,9 +42,9 @@ const updateUser = async (req, res) => {
     await User.findOneAndUpdate(
         {_id: req.params._id},
         {$set: req.body},
-        function (err) {
+        function (err, user) {
             if (!err) {
-                return res.send(req.body);
+                return res.redirect("/user/" + user._id);
             } else {
                 res.status(400);
                 return res.send("updateUser function failed");
@@ -89,7 +90,7 @@ const addUser = async (req, res, next) => {
                 return next(error);
             } else {
                 console.log("Created user");
-                return res.redirect("/profile");
+                return res.redirect("/user/" + user._id);
             }
         });
 
@@ -112,7 +113,7 @@ const getUserByID = async (req, res) => {
         if (user.length === 0) {
             return res.send("There are no users listed with this id");
         } else if (user) {
-            return res.send(user);
+            return res.render('userProfile', {user: user});
         } else {
             res.status(400);
             return res.send("getUserByID function failed");
@@ -125,7 +126,7 @@ const getUserByID = async (req, res) => {
 const getUserByEmail = async (req, res) => {
     await User.find({email: req.params.email}, function (req, user) {
         try {
-            res.send(user);
+            return res.redirect("/user/" + user._id);
         } catch (err) {
             res.status(400);
             res.send("getUserByEmail function failed");
@@ -150,7 +151,7 @@ const deleteUserByID = async (req, res) => {
     // deletes the user with the following _id
     await User.deleteOne({_id: req.params._id}, function (err) {
         try {
-            res.send("Successfully deleted specified user");
+            return res.redirect("/user");
         } catch (err) {
             res.sendStatus(400);
             return res.send("deleteUserByID function failed");
