@@ -1,0 +1,23 @@
+extends layout
+
+block content
+    .main.container
+        .row
+            .col-md-8.col-md-offset-2
+                h1.display-4.m-b-2 User Profile
+
+                // register form
+                form(method='POST' action='/user/'+id)
+                    div.form-group
+                        label(for='name') Name:
+                        input#name.form-control(type='text', placeholder='first and last' name='name' autocomplete="off" value=username)
+                    div.form-group
+                        label(for='email') Email:
+                        input#email.form-control(type='email', placeholder='name@email.com' name='email' autocomplete="off" value=email)
+                    div.form-group
+                        label(for='pw') Password:
+                        input#pw.form-control(type='password' name='password' value=password)
+                    div.form-group
+                        label(for='pw2') Confirm Password:
+                        input#pw2.form-control(type='password' name='confirmPassword' value=password)
+                    button.btn.btn-primary(type='submit') Update

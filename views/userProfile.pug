@@ -1,0 +1,13 @@
+extends layout
+
+block content
+    .main.container
+        .row
+            .col-md-8.col-md-offset-2
+                h1.display-4.m-b-2 User Profile
+                p Welcome! #{user.name}
+                p #{user.email}
+                p #{user._id}
+
+                a(href=user._id+"/edit")
+                    button.btn.btn-primary(type='button') Edit
