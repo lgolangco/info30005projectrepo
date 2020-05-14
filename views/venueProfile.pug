@@ -1,5 +1,5 @@
 extends layout
-
+    
 block content
   
   h1 INSERT PHOTO
@@ -12,13 +12,97 @@ block content
       
       p Leave a review
       
-      h3 Details
-      
-      h3 Reviews
-      
-      //- each detail in venue
-      //-   if venue detail = 1/true 
-      //-     div.col-md-6 cafeDetailImg
+      div.venue-details-div
+        h3 Details
+        
+        p #{venue.venueDetails}
+          
+        table.venue-details-table
+          
+          // icons
+          tr
+            
+            // type
+            td
+              if venue.venueType === "Cafe"
+                img.rounded(src="/images/venue/cafe.png", width="50px")
+              else if venue.venueType === "Public Library"
+                img.rounded(src="/images/venue/library.png", width="50px")
+              else
+                img.rounded(src="/images/venue/other.png", width="50px")
+            
+            // noise
+            td
+              if venue.venueDetails.noise === "low"
+                img.rounded(src="/images/venue/low.png", width="40px")
+              else if venue.venueDetails.noise === "med"
+                img.rounded(src="/images/venue/med.png", width="40px")
+              else
+                img.rounded(src="/images/venue/high.png", width="40px")
+            
+            // wifi
+            td
+              if venue.venueDetails.wifi
+                img.rounded(src="/images/venue/wifi.png", width="50px")
+              else
+                img.rounded(src="/images/venue/wifi.png", width="50px")
+            
+            // toilets
+            td
+              if venue.venueDetails.toilets
+                img.rounded(src="/images/venue/toilets.png", width="50px")
+              else
+                img.rounded(src="/images/venue/notoilets.png", width="50px")
+              
+            // powerpoints
+            td
+              if venue.venueDetails.power
+                img.rounded(src="/images/venue/power.png", width="50px")
+              else
+                img.rounded(src="/images/venue/nopower.png", width="50px")
+                  
+            // discussion-friendly
+            td
+              if venue.venueDetails.discussionFriendly
+                img.rounded(src="/images/venue/discussion.png", width="50px")
+              else
+                img.rounded(src="/images/venue/silence.png", width="50px")
+           
+          // labels
+          tr
+            //type
+            td #{venue.venueType}  
+            //noise
+            td #{venue.venueDetails.noise} noise
+            //wifi
+            if venue.venueDetails.wifi
+              td wifi
+            else
+              td no wifi
+            // toilets
+            if venue.venueDetails.toilets
+              td toilets
+            else
+              td no toilets
+            //powerpoints
+            if venue.venueDetails.power
+              td powerpoints
+            else
+              td no powerpoints
+            //discussion-friendly
+            if venue.venueDetails.discussionFriendly
+              td discussion
+                p friendly
+            else
+              td silent 
+                p space
+            
+        br
+        h3 Reviews
+        
+        //- each detail in venue
+        //-   if venue detail = 1/true 
+        //-     div.col-md-6 cafeDetailImg
     
     //side bar
     div.col-lg-4.col-md-12.venue-side-bar
@@ -32,6 +116,7 @@ block content
         |#{venue.venueAddress.venueSuburb}, #{venue.venueAddress.venueState}, #{venue.venueAddress.venuePostcode}
       
       h5 Opening Hours
+  
       
       
   
