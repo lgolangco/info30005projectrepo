@@ -213,3 +213,11 @@ header.masthead h1 {
   width: 600px;
   vertical-align: text-bottom;
 }
+
+.venue-profile-page{
+  background-color: white;
+}
+
+#venues-page{
+  background-color: white;
+}

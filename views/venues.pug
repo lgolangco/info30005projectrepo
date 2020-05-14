@@ -1,34 +1,9 @@
 extends layout
 
-//- block content
-//-   h1 #{title}
-//- 
-//-   .main.container
-//-     center
-//-         table.venue-table
-//-           tr
-//-             th Name
-//-             th Type
-//-             th Street Address
-//-             th Suburb
-//-             th State
-//-             th Postcode
-//- 
-//-           each venue in venues
-//-             tr
-//-               td
-//-                 a(href='/venue/' + venue._id) #{venue.venueName}
-//-               td #{venue.venueType}
-//-               td #{venue.venueStreetAddress}
-//-               td #{venue.venueSuburb}
-//-               td #{venue.venueState}
-//-               td #{venue.venuePostcode}
-              
-//- h1.display-4.m-b-2 Study Areas
 
 block content
   
-  .main.container
+  #venues-page.main.container
       .row
           .col-md-8.col-md-offset-2
               h1.display-4.m-b-2 Venues
@@ -50,7 +25,4 @@ block content
                         td #{venue.venueDetails}
                         td #{venue.venueContact}
                         td #{venue.venueHours}
-                        //- td #{venue.venueStreetAddress}
-                        //- td #{venue.venueSuburb}
-                        //- td #{venue.venueState}
-                        //- td #{venue.venuePostcode}
+    
