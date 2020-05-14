@@ -1,37 +1,151 @@
 extends layout
-
+    
 block content
   
-  h1 INSERT PHOTO
+  mixin google-map-place(query, key)
+    - if ("alt" in attributes)
+      - alt = attributes.alt;
+      - delete attributes.alt;
+    - else
+      - alt = true;
+    - if (query.length == 27 && query.indexOf(["+"]) < 1)
+      - query = "place_id:" + query
+    - else
+      - query = query.replace(/ /g, "+");
+    iframe(src=`https://google.com/maps/embed/v1/place?key=${key}&q=${query}`
+           frameborder="0"
+           width="90%"
+           height="450")&attributes(attributes)
+      - if (alt)
+        | Your browser does not support iframes.
+
+  - const gMapsKey = "AIzaSyDw04dJQyETFjfsthXJzhvjAiY9XE9Labc";
   
+
   .row
+    div.offset-lg-1
+      h1 INSERT PHOTO
+  .row
+      
     //main content 
-    div.col-lg-8.col-md-12
+    div.col-lg-8.col-md-12.offset-lg-1
       h2 #{venue.venueName}
       p #{venue.venueType} | #{venue.venueAddress.venueSuburb}, #{venue.venueAddress.venueState}
       
       p Leave a review
       
-      h3 Details
-      
-      h3 Reviews
-      
-      //- each detail in venue
-      //-   if venue detail = 1/true 
-      //-     div.col-md-6 cafeDetailImg
+      div.venue-details-div
+        h3 Details
+        
+        p #{venue.venueDetails}
+          
+        table.venue-details-table
+          
+          // icons
+          tr
+            
+            // type
+            td
+              if venue.venueType === "Cafe"
+                img.rounded(src="/images/venue/cafe.png", width="50px")
+              else if venue.venueType === "Public Library"
+                img.rounded(src="/images/venue/library.png", width="50px")
+              else
+                img.rounded(src="/images/venue/other.png", width="50px")
+            
+            // noise
+            td
+              if venue.venueDetails.noise === "low"
+                img.rounded(src="/images/venue/low.png", width="40px")
+              else if venue.venueDetails.noise === "med"
+                img.rounded(src="/images/venue/med.png", width="40px")
+              else
+                img.rounded(src="/images/venue/high.png", width="40px")
+            
+            // wifi
+            td
+              if venue.venueDetails.wifi
+                img.rounded(src="/images/venue/wifi.png", width="50px")
+              else
+                img.rounded(src="/images/venue/wifi.png", width="50px")
+            
+            // toilets
+            td
+              if venue.venueDetails.toilets
+                img.rounded(src="/images/venue/toilets.png", width="50px")
+              else
+                img.rounded(src="/images/venue/notoilets.png", width="50px")
+              
+            // powerpoints
+            td
+              if venue.venueDetails.power
+                img.rounded(src="/images/venue/power.png", width="50px")
+              else
+                img.rounded(src="/images/venue/nopower.png", width="50px")
+                  
+            // discussion-friendly
+            td
+              if venue.venueDetails.discussionFriendly
+                img.rounded(src="/images/venue/discussion.png", width="50px")
+              else
+                img.rounded(src="/images/venue/silence.png", width="50px")
+           
+          // labels
+          tr
+            //type
+            td #{venue.venueType}  
+            //noise
+            td #{venue.venueDetails.noise} noise
+            //wifi
+            if venue.venueDetails.wifi
+              td wifi
+            else
+              td no wifi
+            // toilets
+            if venue.venueDetails.toilets
+              td toilets
+            else
+              td no toilets
+            //powerpoints
+            if venue.venueDetails.power
+              td powerpoints
+            else
+              td no powerpoints
+            //discussion-friendly
+            if venue.venueDetails.discussionFriendly
+              td discussion
+                p friendly
+            else
+              td silent 
+                p space
+            
+        br
+        h3 Reviews
+        
+        //- each detail in venue
+        //-   if venue detail = 1/true 
+        //-     div.col-md-6 cafeDetailImg
     
     //side bar
-    div.col-lg-4.col-md-12.venue-side-bar
+    div.col-lg-3.col-md-12.venue-side-bar
       h5 Contact Details
       p(style='white-space:pre;')
         |#{venue.venueContact.phone}
         |#{venue.venueContact.email}
         |#{venue.venueContact.web}
       h5 Location
+      
+      - const query = venue.venueAddress.venueStreetAddress + ", " + venue.venueAddress.venueSuburb
+      +google-map-place(query, gMapsKey)(maptype="roadmap")
+      
       p #{venue.venueAddress.venueStreetAddress}, 
         |#{venue.venueAddress.venueSuburb}, #{venue.venueAddress.venueState}, #{venue.venueAddress.venuePostcode}
       
       h5 Opening Hours
+
+      - const venueHours = venue.venueHours.toObject()
+        each timeframe, day in venueHours
+          p= day+ ": " + timeframe
       
       
   
