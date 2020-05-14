@@ -1,11 +1,26 @@
 const express = require("express");
 const bodyParser = require("body-parser");
-const app = express();
 const cors = require("cors");
+const session = require("express-session");
+const app = express();
 
-require("./models");
+// session middleware
+app.use(session({
+  secret: "studyspot secret",
+  resave: true,
+  saveUninitialized: false,
+}));
+
+// make user ID available in templates
+app.use(function(req, res, next) {
+  // if user is logged in, res.locals.currentUser will hold their user id, else no session and no session id.
+  res.locals.currentUser = req.session.userId;
+  next();
+});
 
 app.use(cors());
+
+require("./models");
 
 // parse incoming requests
 app.use(bodyParser.json());
