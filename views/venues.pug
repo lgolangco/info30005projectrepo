@@ -3,7 +3,7 @@ extends layout
 block content
   h1 #{title}
   
-  div
+  .main.container
     center
         table.venue-table
           tr
@@ -23,3 +23,17 @@ block content
               td #{venue.venueSuburb}
               td #{venue.venueState}
               td #{venue.venuePostcode}
+              
+              
+              
+  .main.container
+    .row
+      .col-md-8.col-md-offset-2 Name
+      .col-md-8.col-md-offset-2 Type
+      .col-md-8.col-md-offset-2 Street Address
+      .col-md-8.col-md-offset-2 Suburb
+      .col-md-8.col-md-offset-2 State
+      .col-md-8.col-md-offset-2 Postcode
+        
+        
+        h1.display-4.m-b-2 Study Areas
