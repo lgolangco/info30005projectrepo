@@ -12,9 +12,14 @@ const getAllVenues = async (req, res) => {
   try {
     const all_venues = await Venue.find();
     if (all_venues.length === 0){
-      return res.send("There are no existing venues yet");
+      res.render('venues', {
+        title: "There are no existing venues yet"
+      })
     } else {
-      return res.send(all_venues);
+      res.render('venues', {
+        title: "Venue List - All Venues",
+        venues: all_venues
+      });
     }
   } catch (err) {
     res.status(400);

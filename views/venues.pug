@@ -1,0 +1,25 @@
+extend layout
+
+block content
+  h1 #{title}
+  
+  div
+    center
+        table.venue-table
+          tr
+            th Name
+            th Type
+            th Street Address
+            th Suburb
+            th State
+            th Postcode
+
+          each venue in venues
+            tr
+              td
+                a(href='/venue/' + venue._id) #{venue.venueName}
+              td #{venue.venueType}
+              td #{venue.venueStreetAddress}
+              td #{venue.venueSuburb}
+              td #{venue.venueState}
+              td #{venue.venuePostcode}
