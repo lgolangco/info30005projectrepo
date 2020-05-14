@@ -4,24 +4,34 @@ block content
   
   h1 INSERT PHOTO
   
-  //main content 
-  div 
-    h2 #{venue.venueName}
-    p #{venue.venueType} | #{venue.venueSuburb}, #{venue.venueState}
+  .row
+    //main content 
+    div.col-lg-8.col-md-12
+      h2 #{venue.venueName}
+      p #{venue.venueType} | #{venue.venueAddress.venueSuburb}, #{venue.venueAddress.venueState}
+      
+      p Leave a review
+      
+      h3 Details
+      
+      h3 Reviews
+      
+      //- each detail in venue
+      //-   if venue detail = 1/true 
+      //-     div.col-md-6 cafeDetailImg
     
-    p Leave a review
-    
-    h3 Details
-    
-    //- each detail in venue
-    //-   if venue detail = 1/true 
-    //-     div.col-md-6 cafeDetailImg
-  
-  //- //side bar
-  //- div
-  //-   h3 Contact Details
-  //-   each contact in venue
-    
-    
+    //side bar
+    div.col-lg-4.col-md-12.venue-side-bar
+      h5 Contact Details
+      p(style='white-space:pre;')
+        |#{venue.venueContact.phone}
+        |#{venue.venueContact.email}
+        |#{venue.venueContact.web}
+      h5 Location
+      p #{venue.venueAddress.venueStreetAddress}, 
+        |#{venue.venueAddress.venueSuburb}, #{venue.venueAddress.venueState}, #{venue.venueAddress.venuePostcode}
+      
+      h5 Opening Hours
+      
       
   

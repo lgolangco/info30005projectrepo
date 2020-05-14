@@ -41,7 +41,7 @@ const getVenueByID = async (req, res) => {
 
     } else if (venue) {
       return res.render('venueProfile', {
-        venue: venue
+        venue: venue[0]
       });
       // return res.send(venue);
     } else {
