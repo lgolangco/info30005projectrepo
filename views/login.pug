@@ -1,14 +1,15 @@
 extends layout
 
 block content
-    body.text-center.login
+    body.text-center
         .main.container-fluid
-                form.form-signin
-                    h1.h3.mb-3.font-weight-normal Please sign in
+
+                form(method="POST" action="/login").form-signin
+                    h4.mb-3.font-weight-normal Please sign in
                     label.sr-only(for="email") Email
-                    input.form-control(type="email" placeholder="Email address" name="email" required="" autofocus="")
+                    input.form-control(type="email" placeholder="Email address" name="email" id="email" required="" autofocus="")
                     label.sr-only(for="password") Password
-                    input.form-control(type="password" placeholder="Password" name="pasword" required="")
+                    input.form-control(type="password" placeholder="Password" name="password" id="password" required="")
                     .checkbox.mb-3
                         label
                             input(type="checkbox" value="is-venue-owner")

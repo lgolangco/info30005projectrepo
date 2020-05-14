@@ -64,9 +64,6 @@ h1 {
     vertical-align: baseline;
 }
 
-.container {
-    background-color: lightcoral;
-}
 
 /**********************/
 
@@ -221,14 +218,10 @@ header.masthead h1 {
 
 /* Login page */
 
-body.login {
-    align-items: center;
-}
-
-.form-signin {
+.form-signin{
     width: 100%;
     max-width: 330px;
-    padding: 80px 15px 15px;
+    padding: 150px 15px 15px;
     margin: auto;
 }
 
@@ -260,4 +253,9 @@ body.login {
     border-top-right-radius: 0;
 }
 
-.form-signin
+/* Register */
+
+.registration {
+    max-width: 400px;
+    padding-top: 100px;
+}
