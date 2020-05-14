@@ -1,21 +1,46 @@
 nav.navbar.navbar-expand-lg.navbar-light.bg-light
-    button.navbar-toggler.hidden-md-up.pull-xs-right(type="button" data-toggle="collapse" data-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation") &#x2630;
-    #navbar.collapse.navbar-collapse.navbar-toggleable-sm
-        .container
+    a.navbar-brand(href="/")
+        img.rounded(src="/images/logo.png", width="210px")
+    button.navbar-toggler(type="button" data-toggle="collapse" data-target="#navbarToggler")
+        span.navbar-toggler-icon
+    #navbarToggler.collapse.navbar-collapse
 
-            a.navbar-brand(href="/")
-                img.rounded(src="/images/logo.png", width="210px")
-            .nav.navbar-nav.ml-auto
+        ul.navbar-nav.ml-auto
+            li.nav-item
                 a.nav-item.nav-link(href="/about") About
+            li.nav-item
                 a.nav-item.nav-link(href="/venue") Venues
+            li.nav-item
                 a.nav-item.nav-link(href="/user") Users
-                if !currentUser
-                    a.nav-item.nav-link(href="/register") Sign Up
+            if !currentUser
+                a.nav-item.nav-link(href="/register") Sign Up
 
-            if currentUser
-                div
-                    img.avatar.img-circle.hidden-xs-down(src="/images/avatar.png", alt="avatar")
-                    a.btn.btn-outline-dark.pull-md-right(href="/logout", style="margin:10px") Log out
-            else
-                //a.btn.btn-info.pull-md-right.nav-item(href="login") Login
-                a.btn.btn-info(href="/login", style="margin:10px") Login
+        if currentUser
+            div
+                img.avatar.img-circle.hidden-xs-down(src="/images/avatar.png", alt="avatar")
+                a.btn.btn-outline-dark.pull-md-right(href="/logout", style="margin:10px") Log out
+        else
+            a.btn.btn-info(href="/login", style="margin:0 10px") Login
+
+
+//nav.navbar.navbar-expand-lg.navbar-light.bg-light
+//    button.navbar-toggler.hidden-md-up.pull-xs-right(type="button" data-toggle="collapse" data-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation") &#x2630;
+//    #navbar.collapse.navbar-collapse.navbar-toggleable-sm
+//        .container
+//
+//            a.navbar-brand(href="/")
+//                img.rounded(src="/images/logo.png", width="210px")
+//            .nav.navbar-nav.ml-auto
+//                a.nav-item.nav-link(href="/about") About
+//                a.nav-item.nav-link(href="/venue") Venues
+//                a.nav-item.nav-link(href="/user") Users
+//                if !currentUser
+//                    a.nav-item.nav-link(href="/register") Sign Up
+//
+//            if currentUser
+//                div
+//                    img.avatar.img-circle.hidden-xs-down(src="/images/avatar.png", alt="avatar")
+//                    a.btn.btn-outline-dark.pull-md-right(href="/logout", style="margin:10px") Log out
+//            else
+//                //a.btn.btn-info.pull-md-right.nav-item(href="login") Login
+//                a.btn.btn-info(href="/login", style="margin:10px") Login
