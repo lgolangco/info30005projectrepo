@@ -2,7 +2,7 @@
 
 body {
     font-family: "Open Sans", sans-serif;
-    background-color: white;
+    background-color: #ffffff;
 }
 
 a {
@@ -20,19 +20,23 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 h1 {
-    color: #ffffff;
-    font-size: 60px;
+    color: #000000;
+    font-size: 40px;
     line-height: 66px;
     vertical-align: baseline;
     margin: 0px 0px 6px;
     text-align: center;
 }
 
+.big-heading {
+    color: #ffffff;
+}
+
 
 /* Component Styles */
 
 .navbar {
-    padding: 1rem 0;
+    padding: 0.5rem 6rem;
     background: rgba(0, 0, 0, .25);
 }
 
@@ -60,6 +64,7 @@ h1 {
     vertical-align: baseline;
 }
 
+
 /**********************/
 
 header.masthead {
@@ -67,7 +72,7 @@ header.masthead {
     background: #343a40 url("../images/bg.jpg") no-repeat center;
     background-size: cover;
     padding-top: 6rem;
-    padding-bottom: 15rem;
+    padding-bottom: 10rem;
 }
 
 header.masthead .overlay {
@@ -181,47 +186,6 @@ header.masthead h1 {
     color: initial;
 }
 
-/* Media Queries */
-
-@media (min-width: 0) and (max-width: 47em) {
-    .navbar {
-        background: #1d2a33;
-    }
-    .nav-items .nav-item {
-        float: none;
-    }
-    .nav-items .nav-link  {
-        padding: .65rem 0;
-        display: block;
-    }
-    .nav-items {
-        padding: 1rem 0;
-        clear: left;
-    }
-    .navbar .btn {
-        margin-left: 1rem;
-    }
-    .main {
-        padding-top: 6rem;
-    }
-}
-
-@media (min-width: 48em) {
-    .navbar {
-        min-height: 70px;
-    }
-    .navbar-nav .container {
-        display: -webkit-flex;
-        display: flex;
-    }
-    .nav-items {
-        margin-right: auto;
-        margin-left: auto;
-    }
-    .main {
-        padding-top: 8rem;
-    }
-}
 
 /* Venue Page */
 
@@ -252,3 +216,46 @@ header.masthead h1 {
   background-color: white;
 }
 
+/* Login page */
+
+.form-signin{
+    width: 100%;
+    max-width: 330px;
+    padding: 150px 15px 15px;
+    margin: auto;
+}
+
+.form-signin .checkbox {
+    font-weight: 400;
+}
+
+.form-signin .form-control {
+    position: relative;
+    box-sizing: border-box;
+    height: auto;
+    padding: 10px;
+    font-size: 16px;
+}
+
+.form-signin .form-control:focus {
+    z-index: 2;
+}
+
+.form-signin input[type="email"] {
+    margin-bottom: -1px;
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0;
+}
+
+.form-signin input[type="password"] {
+    margin-bottom: 10px;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+}
+
+/* Register */
+
+.registration {
+    max-width: 400px;
+    padding-top: 100px;
+}
