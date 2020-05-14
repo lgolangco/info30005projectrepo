@@ -1,25 +1,28 @@
 extends layout
 
-block content
-  h1 #{title}
-  
-  div
-    center
-        table.venue-table
-          tr
-            th Name
-            th Type
-            th Street Address
-            th Suburb
-            th State
-            th Postcode
 
-          each venue in venues
-            tr
-              td
-                a(href='/venue/' + venue._id) #{venue.venueName}
-              td #{venue.venueType}
-              td #{venue.venueStreetAddress}
-              td #{venue.venueSuburb}
-              td #{venue.venueState}
-              td #{venue.venuePostcode}
+block content
+  
+  #venues-page.main.container
+      .row
+          .col-md-8.col-md-offset-2
+              h1.display-4.m-b-2 #{title}
+              p #{message}
+              h5 
+                a(href='/newvenue') Register a new venue
+              table
+                  tr
+                      th Name
+                      th Type
+                      th Address
+
+                
+                  each venue in venues
+                      - const address = venue.venueAddress.venueStreetAddress +", "+venue.venueAddress.venueSuburb+", "+venue.venueAddress.venuePostcode;
+                      tr
+                        td
+                          a(href='/venue/' + venue._id) #{venue.venueName}
+                        td #{venue.venueType}
+                        td #{address}
+
+          

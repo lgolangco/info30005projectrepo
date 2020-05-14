@@ -198,3 +198,26 @@ header.masthead h1 {
 .venue-table{
   background-color: white;
 }
+
+.venue-side-bar{
+  background-color: white;
+}
+
+.venue-details-div{
+  background-color: white;
+}
+
+.venue-details-table{
+  text-align: center;
+  table-layout: fixed;
+  width: 600px;
+  vertical-align: text-bottom;
+}
+
+.venue-profile-page{
+  background-color: white;
+}
+
+#venues-page{
+  background-color: white;
+}
