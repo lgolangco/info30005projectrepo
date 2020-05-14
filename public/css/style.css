@@ -1,9 +1,5 @@
 /* Base Styles */
 
-html {
-    scroll-behavior: smooth;
-}
-
 body {
     font-family: "Open Sans", sans-serif;
     background-color: #3d85c6;
@@ -76,7 +72,7 @@ header.masthead {
 
 header.masthead .overlay {
     position: absolute;
-    background-color: #212529;
+    background-color: #0b5394;
     height: 100%;
     width: 100%;
     top: 0;
