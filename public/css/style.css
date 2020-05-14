@@ -192,3 +192,9 @@ header.masthead h1 {
         padding-top: 8rem;
     }
 }
+
+/* Venue Page */
+
+.venue-table{
+  background-color: white;
+}

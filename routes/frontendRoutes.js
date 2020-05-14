@@ -10,7 +10,9 @@ router.get("/", (req, res, next) => {
     return res.render("index", {title: "Home"});
 });
 
+
 // GET About
+
 router.get("/about", (req, res, next) => {
     return res.render("about", {title: "About"});
 });
@@ -50,3 +52,4 @@ router.get("/logout", userController.logout);
 
 
 module.exports = router;
+
