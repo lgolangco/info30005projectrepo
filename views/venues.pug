@@ -12,17 +12,13 @@ block content
                       th Name
                       th Type
                       th Address
-                      th Details
-                      th Contact
-                      th Hours
 
+                
                   each venue in venues
+                      - const address = venue.venueAddress.venueStreetAddress +", "+venue.venueAddress.venueSuburb+", "+venue.venueAddress.venuePostcode;
                       tr
                         td
                             a(href='/venue/' + venue._id) #{venue.venueName}
                         td #{venue.venueType}
-                        td #{venue.venueAddress}
-                        td #{venue.venueDetails}
-                        td #{venue.venueContact}
-                        td #{venue.venueHours}
+                        td #{address}
     
