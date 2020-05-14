@@ -8,7 +8,7 @@ const venueController = require("../controllers/venueController.js");
 router.get("/", venueController.getAllVenues);
 
 // get all venues by id
-router.get("/byid/:_id", venueController.getVenueByID);
+router.get("/:_id", venueController.getVenueByID);
 
 // get all venues by postcode
 router.get("/bypostcode/:venuePostcode", venueController.getVenueByPostcode);
