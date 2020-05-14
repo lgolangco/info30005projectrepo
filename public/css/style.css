@@ -9,19 +9,23 @@ a {
     color: #959799;
     text-decoration: solid;
     background-color: transparent;
-    font-family: "Montserrat", sans-serif;
 }
 
 a:hover {
-    color: rgba(49,176,213, .7);
+    color: rgba(49, 176, 213, .7);
 }
 
 h1, h2, h3, h4, h5, h6 {
     font-family: "Poppins", "sans-serif";
 }
 
-h6 {
-    font-weight: lighter;
+h1 {
+    color: #ffffff;
+    font-size: 60px;
+    line-height: 66px;
+    vertical-align: baseline;
+    margin: 0px 0px 6px;
+    text-align: center;
 }
 
 
@@ -29,37 +33,46 @@ h6 {
 
 .navbar {
     padding: 1rem 0;
-    background: rgba(0,0,0, .25);
-    border-bottom:
+    background: rgba(0, 0, 0, .25);
 }
+
 .lead {
     margin-bottom: 2.5rem;
 }
+
 .main {
     color: #000000;
     min-height: calc(100vh - 34px);
 }
+
 .foot {
     font-size: .85rem;
     padding: .5rem 0;
     color: #000000;
 }
 
+.popular-link-set {
+    color: #adadad;
+    background-color: #fbfbfb;
+    font-size: 16px;
+    line-height: 24px;
+    padding: 50px 0px;
+    vertical-align: baseline;
+}
+
+/**********************/
+
 header.masthead {
     position: relative;
-    background-color: #343a40;
-    background: url("../images/bg.jpg") no-repeat center center;
+    background: #343a40 url("../images/bg.jpg") no-repeat center;
     background-size: cover;
-    padding-top: 13rem;
+    padding-top: 6rem;
     padding-bottom: 15rem;
 }
 
-
-/* Modifier Styles */
-
 header.masthead .overlay {
     position: absolute;
-    background-color: #212529;
+    background-color: #0b5394;
     height: 100%;
     width: 100%;
     top: 0;
@@ -71,20 +84,31 @@ header.masthead h1 {
     font-size: 2rem;
 }
 
+.search-bottom-title {
+    font-family: "Open Sans", sans-serif;
+    color: rgb(187, 191, 191);
+    font-size: 14px;
+    line-height: 21px;
+    margin: 20px 0px;
+    font-weight: 400;
+    text-align: center;
+}
+
 .nav-items .nav-link {
     margin: 0 1rem;
 }
-.navbar-brand {
-    margin: 0;
-}
+
 .navbar .nav-link,
 .navbar .btn {
+    font-family: "Montserrat", sans-serif;
     text-transform: uppercase;
     font-size: .95rem;
 }
+
 .list-group {
     color: initial;
 }
+
 .label {
     font-size: .88rem;
     vertical-align: top;
@@ -98,21 +122,26 @@ header.masthead h1 {
     background: #417aba;
     border-color: #417aba;
 }
+
 .btn-info {
     background-color: #0b5394;
     border-color: #3d8596;
 }
+
 .btn-info:hover {
     background-color: #3d85c6;
     border-color: #5bc0de;
 }
+
 .btn-light {
-    color: rgba(255,255,255, .75);
-    background: rgba(255,255,255, .12);
+    color: rgba(255, 255, 255, .75);
+    background: rgba(255, 255, 255, .12);
 }
+
 .btn-light:hover {
-    background: rgba(255,255,255, .2);
+    background: rgba(255, 255, 255, .2);
 }
+
 .active,
 .btn {
     transition: .4s;
@@ -222,3 +251,4 @@ header.masthead h1 {
 #venues-page{
   background-color: white;
 }
+

@@ -1,13 +1,12 @@
 extends layout
 
 block content
-    body
         header.masthead.text-white.text-center
             .overlay
             .container
                 .row
                     .col-xl-9.mx-auto
-                        h1.mb-5 StudySpot
+                        h1.mb-5 Where do you plan to study today?
                     .col-xl-9.mx-auto
                         h6.mb-5 Discover the best study spots in Australia
                     .col-md-10.col-lg-8.col-xl-7.mx-auto
@@ -16,3 +15,11 @@ block content
                             .input-group-append
                                 button.btn.btn-info(type="button")
                                     i.fa.fa-search
+                        p.search-bottom-title
+                            | By using this website, you are agreeing to our 
+                            a(href="#") terms and conditions
+
+        div.popular-link-set
+            div.col-md-12(style='padding: 0px 15px; text-align: center')
+                h6 BROWSE POPULAR IN YOUR CITY
+
