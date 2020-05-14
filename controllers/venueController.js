@@ -12,9 +12,14 @@ const getAllVenues = async (req, res) => {
   try {
     const all_venues = await Venue.find();
     if (all_venues.length === 0){
-      return res.send("There are no existing venues yet");
+      return res.render('venues', {
+        title: "There are no existing venues yet"
+      })
     } else {
-      return res.send(all_venues);
+      return res.render('venues', {
+        title: "Venue List - All Venues",
+        venues: all_venues
+      });
     }
   } catch (err) {
     res.status(400);
@@ -35,7 +40,10 @@ const getVenueByID = async (req, res) => {
       return res.send("There are no venues listed with this id");
 
     } else if (venue) {
-      return res.send(venue);
+      return res.render('venueProfile', {
+        venue: venue[0]
+      });
+      // return res.send(venue);
     } else {
       res.status(400);
       return res.send("getVenueByID function failed");
@@ -81,6 +89,19 @@ const getVenueByType = async (req, res) => {
 };
 
 
+// // function to add venue
+// const addVenue = async (req, res) => {
+//   // extract info. from body
+//    const venue = req.body;
+//    const db = mongoose.connection
+//    try {
+//      await db.collection('venue').insertOne(venue);
+//      return res.send("Successfully added a venue");
+//    } catch(err){
+//      res.status(400);
+//      return res.send("addVenue failed");
+//    }};
+
 // function to add venue
 const addVenue = async (req, res) => {
   // extract info. from body
@@ -88,7 +109,9 @@ const addVenue = async (req, res) => {
    const db = mongoose.connection
    try {
      await db.collection('venue').insertOne(venue);
-     return res.send("Successfully added a venue");
+     return res.render('newvenue',{
+       title: "Successfully added user!",
+     });
    } catch(err){
      res.status(400);
      return res.send("addVenue failed");

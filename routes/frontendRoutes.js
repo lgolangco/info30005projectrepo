@@ -10,7 +10,9 @@ router.get("/", (req, res, next) => {
     return res.render("index", {title: "Home"});
 });
 
+
 // GET About
+
 router.get("/about", (req, res, next) => {
     return res.render("about", {title: "About"});
 });
@@ -23,6 +25,11 @@ router.get("/venues", (req, res, next) => {
 // GET Register
 router.get("/register", mid.loggedOut, function(req, res, next) {
     return res.render("register", {title: "Sign Up"});
+});
+
+// GET newvenue
+router.get("/newvenue", (req, res, next) => {
+  return res.render("newvenue", {title: "Register a New Venue"});
 });
 
 // POST Register

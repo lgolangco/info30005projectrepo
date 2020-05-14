@@ -1,9 +1,28 @@
 extends layout
 
-block content
-    .main.container
-        .row
-            .col-md-8.col-md-offset-2
-                h1.display-4.m-b-2 Study Areas
-                p Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed malesuada lorem id purus tristique rhoncus. Sed egestas elit id lorem sollicitudin sodales. Aliquam fringilla mi nec arcu ultricies facilisis. Sed varius pretium ante. Maecenas at pretium ex, a fringilla ligula.
 
+block content
+  
+  #venues-page.main.container
+      .row
+          .col-md-8.col-md-offset-2
+              h1.display-4.m-b-2 #{title}
+              p #{message}
+              h5 
+                a(href='/newvenue') Register a new venue
+              table
+                  tr
+                      th Name
+                      th Type
+                      th Address
+
+                
+                  each venue in venues
+                      - const address = venue.venueAddress.venueStreetAddress +", "+venue.venueAddress.venueSuburb+", "+venue.venueAddress.venuePostcode;
+                      tr
+                        td
+                          a(href='/venue/' + venue._id) #{venue.venueName}
+                        td #{venue.venueType}
+                        td #{address}
+
+          

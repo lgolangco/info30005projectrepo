@@ -2,7 +2,7 @@
 
 body {
     font-family: "Open Sans", sans-serif;
-    background-color: #3d85c6;
+    background-color: white;
 }
 
 a {
@@ -148,91 +148,107 @@ header.masthead h1 {
     font-family: "Poppins", "Montserrat", "sans-serif"
 }
 
-/*!* Icon Styles *!*/
+/* Icon Styles */
 
-/*.icn-logo {*/
-/*    margin: 3px 3px 0;*/
-/*    float: left;*/
-/*}*/
+.icn-logo {
+    margin: 3px 3px 0;
+    float: left;
+}
+.icn-person {
+    font-size: 50px;
+    border-radius: 50%;
+    border: solid 2px;
+    padding: .5rem;
+}
+.avatar {
+    width: 35px;
+    margin-right: 18px;
+    border: solid 2px rgba(255,255,255, .75);
+}
+.options {
+    display: none;
+}
+.list-group-item:hover .options {
+    display: block;
+}
+.options .material-icons {
+    font-size: 1.25rem;
+    cursor: pointer;
+    margin-left: 1rem;
+    color: rgba(0,0,0, .35);
+}
+.options .material-icons:hover {
+    color: initial;
+}
 
-/*.icn-person {*/
-/*    font-size: 50px;*/
-/*    border-radius: 50%;*/
-/*    border: solid 2px;*/
-/*    padding: .5rem;*/
-/*}*/
+/* Media Queries */
 
-/*.avatar {*/
-/*    width: 35px;*/
-/*    margin-right: 18px;*/
-/*    border: solid 2px rgba(255, 255, 255, .75);*/
-/*}*/
+@media (min-width: 0) and (max-width: 47em) {
+    .navbar {
+        background: #1d2a33;
+    }
+    .nav-items .nav-item {
+        float: none;
+    }
+    .nav-items .nav-link  {
+        padding: .65rem 0;
+        display: block;
+    }
+    .nav-items {
+        padding: 1rem 0;
+        clear: left;
+    }
+    .navbar .btn {
+        margin-left: 1rem;
+    }
+    .main {
+        padding-top: 6rem;
+    }
+}
 
-/*.options {*/
-/*    display: none;*/
-/*}*/
+@media (min-width: 48em) {
+    .navbar {
+        min-height: 70px;
+    }
+    .navbar-nav .container {
+        display: -webkit-flex;
+        display: flex;
+    }
+    .nav-items {
+        margin-right: auto;
+        margin-left: auto;
+    }
+    .main {
+        padding-top: 8rem;
+    }
+}
 
-/*.list-group-item:hover .options {*/
-/*    display: block;*/
-/*}*/
+/* Venue Page */
 
-/*.options .material-icons {*/
-/*    font-size: 1.25rem;*/
-/*    cursor: pointer;*/
-/*    margin-left: 1rem;*/
-/*    color: rgba(0, 0, 0, .35);*/
-/*}*/
+.venue-table{
+  background-color: white;
+}
 
-/*.options .material-icons:hover {*/
-/*    color: initial;*/
-/*}*/
+.venue-side-bar{
+  background-color: white;
+}
 
-/*!* Media Queries *!*/
+.venue-details-div{
+  background-color: white;
+}
 
-/*@media (min-width: 0) and (max-width: 47em) {*/
-/*    .navbar {*/
-/*        background: #1d2a33;*/
-/*    }*/
+.venue-details-table{
+  text-align: center;
+  table-layout: fixed;
+  width: 600px;
+  vertical-align: text-bottom;
+}
 
-/*    .nav-items .nav-item {*/
-/*        float: none;*/
-/*    }*/
+.venue-profile-page{
+  background-color: white;
+}
 
-/*    .nav-items .nav-link {*/
-/*        padding: .65rem 0;*/
-/*        display: block;*/
-/*    }*/
+#venues-page{
+  background-color: white;
+}
 
-/*    .nav-items {*/
-/*        padding: 1rem 0;*/
-/*        clear: left;*/
-/*    }*/
-
-/*    .navbar .btn {*/
-/*        margin-left: 1rem;*/
-/*    }*/
-
-/*    .main {*/
-/*        padding-top: 6rem;*/
-/*    }*/
-/*}*/
-
-/*@media (min-width: 48em) {*/
-/*    .navbar {*/
-/*        min-height: 70px;*/
-/*    }*/
-
-/*    .navbar-nav .container {*/
-/*        display: -webkit-flex;*/
-/*        display: flex;*/
-/*    }*/
-
-/*    .nav-items {*/
-/*        margin-right: auto;*/
-/*        margin-left: auto;*/
-/*    }*/
-
-/*    .main {*/
-/*        padding-top: 8rem;*/
-/*    }*/
-/*}*/
