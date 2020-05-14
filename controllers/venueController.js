@@ -89,6 +89,19 @@ const getVenueByType = async (req, res) => {
 };
 
 
+// // function to add venue
+// const addVenue = async (req, res) => {
+//   // extract info. from body
+//    const venue = req.body;
+//    const db = mongoose.connection
+//    try {
+//      await db.collection('venue').insertOne(venue);
+//      return res.send("Successfully added a venue");
+//    } catch(err){
+//      res.status(400);
+//      return res.send("addVenue failed");
+//    }};
+
 // function to add venue
 const addVenue = async (req, res) => {
   // extract info. from body
@@ -96,7 +109,9 @@ const addVenue = async (req, res) => {
    const db = mongoose.connection
    try {
      await db.collection('venue').insertOne(venue);
-     return res.send("Successfully added a venue");
+     return res.render('newvenue',{
+       title: "Successfully added user!",
+     });
    } catch(err){
      res.status(400);
      return res.send("addVenue failed");

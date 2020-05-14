@@ -6,7 +6,10 @@ block content
   #venues-page.main.container
       .row
           .col-md-8.col-md-offset-2
-              h1.display-4.m-b-2 Venues
+              h1.display-4.m-b-2 #{title}
+              p #{message}
+              h5 
+                a(href='/newvenue') Register a new venue
               table
                   tr
                       th Name
@@ -25,4 +28,7 @@ block content
                         td #{venue.venueDetails}
                         td #{venue.venueContact}
                         td #{venue.venueHours}
+                        
+                        
+          
     
