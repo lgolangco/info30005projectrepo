@@ -1,6 +1,4 @@
 const mongoose = require("mongoose");
-const request = require("request");
-const {check, validationResult} = require("express-validator");
 
 // import user and review model
 const User = mongoose.model("user");
