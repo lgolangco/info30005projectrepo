@@ -31,10 +31,6 @@ h1 {
     text-align: center;
 }
 
-.big-heading {
-    color: #ffffff;
-}
-
 
 /* Component Styles */
 
@@ -70,38 +66,6 @@ h1 {
 
 /**********************/
 
-header.masthead {
-    position: relative;
-    background: #343a40 url("../images/bg.jpg") no-repeat center;
-    background-size: cover;
-    padding-top: 6rem;
-    padding-bottom: 10rem;
-}
-
-header.masthead .overlay {
-    position: absolute;
-    background-color: #0b5394;
-    height: 100%;
-    width: 100%;
-    top: 0;
-    left: 0;
-    opacity: 0.3;
-}
-
-header.masthead h1 {
-    font-size: 2rem;
-}
-
-.search-bottom-title {
-    font-family: "Open Sans", sans-serif;
-    color: rgb(187, 191, 191);
-    font-size: 14px;
-    line-height: 21px;
-    margin: 20px 0px;
-    font-weight: 400;
-    text-align: center;
-}
-
 .nav-items .nav-link {
     margin: 0 1rem;
 }
@@ -125,21 +89,6 @@ header.masthead h1 {
 
 
 /* Button Styles */
-
-.btn-primary {
-    background: #417aba;
-    border-color: #417aba;
-}
-
-.btn-info {
-    background-color: #0b5394;
-    border-color: #3d8596;
-}
-
-.btn-info:hover {
-    background-color: #3d85c6;
-    border-color: #5bc0de;
-}
 
 .btn-light {
     color: rgba(255, 255, 255, .75);
@@ -254,79 +203,6 @@ img.profile-background{
         margin-left: 0.25rem;
         margin-right: 0.25rem;
     }
-}
-
-/* Venue Page */
-
-.venue-table{
-  background-color: white;
-}
-
-.venue-side-bar{
-  background-color: white;
-}
-
-.venue-details-div{
-  background-color: white;
-}
-
-.venue-details-table{
-  text-align: center;
-  table-layout: fixed;
-  width: 600px;
-  vertical-align: text-bottom;
-}
-
-.venue-profile-page{
-  background-color: white;
-}
-
-#venues-page{
-  background-color: white;
-}
-
-/* Login page */
-
-.form-signin{
-    width: 100%;
-    max-width: 330px;
-    padding: 150px 15px 15px;
-    margin: auto;
-}
-
-.form-signin .checkbox {
-    font-weight: 400;
-}
-
-.form-signin .form-control {
-    position: relative;
-    box-sizing: border-box;
-    height: auto;
-    padding: 10px;
-    font-size: 16px;
-}
-
-.form-signin .form-control:focus {
-    z-index: 2;
-}
-
-.form-signin input[type="email"] {
-    margin-bottom: -1px;
-    border-bottom-right-radius: 0;
-    border-bottom-left-radius: 0;
-}
-
-.form-signin input[type="password"] {
-    margin-bottom: 10px;
-    border-top-left-radius: 0;
-    border-top-right-radius: 0;
-}
-
-/* Register */
-
-.registration {
-    max-width: 400px;
-    padding-top: 100px;
 }
 
 
