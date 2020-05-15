@@ -33,6 +33,10 @@ block content
         p #{venue.venueType} | #{venue.venueAddress.venueSuburb}, #{venue.venueAddress.venueState}
         
         p Leave a review
+        - const id = venue._id
+        - const suggestionsPage = '/venue/' + id + '/suggestions'
+        p
+          a(href=suggestionsPage) Suggest changes
       
       //venue details
       div.venue-details-div

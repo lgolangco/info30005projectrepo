@@ -32,6 +32,13 @@ router.get("/newvenue", (req, res, next) => {
   return res.render("newvenue", {title: "Register a New Venue"});
 });
 
+// GET venueSuggestions
+router.get("/venue/:id/suggestions", (req, res, next) => {
+  return res.render("venueSuggestions", {
+    title: "Suggest Changes to"
+  });
+});
+
 // POST Register
 router.post("/register", userController.addUser);
 

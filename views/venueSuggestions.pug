@@ -1,0 +1,27 @@
+extends layout
+
+block content
+    .main.container
+        .row
+            .col-md-8.col-md-offset-2
+                h1.display-4.m-b-2 #{title}
+                p.display-4.m-b-2
+                  | Hi! Thank you for helping us improve StudySpot.
+                  | Filling out the form below submits your suggestions to the admin,
+                  | who will then update the venues accordingly.
+
+                //- // suggest venue changes form
+                //- form(method='POST' action='#')
+                //-     div.form-group
+                //-         label(for='name') Name:
+                //-         input#name.form-control(type='text', placeholder='first and last' name='name' autocomplete="off" value=user.name)
+                //-     div.form-group
+                //-         label(for='email') Email:
+                //-         input#email.form-control(type='email', placeholder='name@email.com' name='email' autocomplete="off" value=user.email)
+                //-     div.form-group
+                //-         label(for='pw') Password:
+                //-         input#pw.form-control(type='password' name='password' value=user.password)
+                //-     div.form-group
+                //-         label(for='pw2') Confirm Password:
+                //-         input#pw2.form-control(type='password' name='confirmPassword' value=user.password)
+                //-     button.btn.btn-primary(type='submit') Update
