@@ -9,6 +9,32 @@ block content
                   | Hi! Thank you for helping us improve StudySpot.
                   | Filling out the form below submits your suggestions to the admin,
                   | who will then update the venues accordingly.
+                  
+                  
+                  
+                  div.form-group.row
+                    
+                    // Display static user name
+                    label.col-sm-1.col-form-label(for="staticUserName") User:
+                    div.col-sm-11
+                      
+                      //ADD USER SCHEMA/EMAIL IN BACKEND so can set value = user.EMAIL or username
+                      input.form-control-plaintext#staticEmail(type="text" readonly value="example@email.com") 
+                  
+                    
+                    // Display static venue name
+                    label.col-sm-1.col-form-label(for="staticVenueName") Venue:
+                    div.col-sm-11
+                  
+                      input.form-control-plaintext(type="text" readonly value="Example Venue") 
+                  
+                  // Can do this
+                  div.form-group
+                    label(for="exampleFormControlTextarea1") Please enter your suggestions for updates to this venue profile here!
+                    textarea.form-control#exampleFormControlTextarea1(rows="3" placeholder="Please enter suggestions here.")
+                  
+                  // Or maybe this?
+                  input.form-control(type="text" placeholder="Please enter suggestions here.")
 
                 //- // suggest venue changes form
                 //- form(method='POST' action='#')
