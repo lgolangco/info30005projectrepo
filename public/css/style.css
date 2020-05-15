@@ -199,23 +199,21 @@ img.profile-background{
     object-fit: cover;
 }
 
-.profile-thumbnail
-{
+.profile-thumbnail{
     margin: -90px 10px 0px 50px;
     z-index: 9;
-    width: 20%;
+    width: 30%;
+}
+
+.profile-details{
+    margin: -150px 10px 0px 50px;
 }
 
 @media (max-width:768px)
 {
-
-    .profile-details>h1{
-        font-weight: 700;
-        font-size:16px;
     }
 
-    .profile-thumbnail
-    {
+    .profile-thumbnail {
         margin: -45px 10px 0px 25px;
         z-index: 9;
         width: 20%;
