@@ -109,7 +109,7 @@ const addVenue = async (req, res) => {
    const db = mongoose.connection
    try {
      await db.collection('venue').insertOne(venue);
-     return res.render('newvenue',{
+     return res.render('newVenue',{
        title: "Successfully added user!",
      });
    } catch(err){

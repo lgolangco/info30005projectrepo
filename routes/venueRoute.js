@@ -17,7 +17,7 @@ router.get("/bypostcode/:venuePostcode", venueController.getVenueByPostcode);
 router.get("/bytype/:venueType", venueController.getVenueByType);
 
 // create venues
-router.post("/newvenue", venueController.addVenue);
+router.post("/new", venueController.addVenue);
 
 // update venues
 router.patch("/byid/:_id", venueController.updateVenue);
