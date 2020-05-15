@@ -27,6 +27,11 @@ router.get("/register", mid.loggedOut, function(req, res, next) {
     return res.render("register", {title: "Sign Up"});
 });
 
+// GET newvenue
+router.get("/newvenue", (req, res, next) => {
+  return res.render("newvenue", {title: "Register a New Venue"});
+});
+
 // POST Register
 router.post("/register", userController.addUser);
 
@@ -52,4 +57,3 @@ router.get("/logout", userController.logout);
 
 
 module.exports = router;
-
