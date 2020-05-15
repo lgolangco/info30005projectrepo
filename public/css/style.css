@@ -1,64 +1,84 @@
 /* Base Styles */
+html {
+    scroll-behavior: smooth;
+}
 
 body {
     font-family: "Open Sans", sans-serif;
-    background-color: white;
+    background-color: #ffffff;
 }
 
 a {
     color: #959799;
     text-decoration: solid;
     background-color: transparent;
-    font-family: "Montserrat", sans-serif;
 }
 
 a:hover {
-    color: rgba(49,176,213, .7);
+    color: rgba(49, 176, 213, .7);
 }
 
 h1, h2, h3, h4, h5, h6 {
     font-family: "Poppins", "sans-serif";
 }
 
-h6 {
-    font-weight: lighter;
+h1 {
+    color: #000000;
+    font-size: 40px;
+    line-height: 66px;
+    vertical-align: baseline;
+    margin: 0px 0px 6px;
+    text-align: center;
+}
+
+.big-heading {
+    color: #ffffff;
 }
 
 
 /* Component Styles */
 
-.navbar {
-    padding: 1rem 0;
-    background: rgba(0,0,0, .25);
-}
+    padding: 0.5rem 6rem;
+    background: rgba(0, 0, 0, .25);
+
 .lead {
     margin-bottom: 2.5rem;
 }
+
 .main {
     color: #000000;
     min-height: calc(100vh - 34px);
 }
+
 .foot {
     font-size: .85rem;
     padding: .5rem 0;
     color: #343a40;
 }
 
-header.masthead {
-    position: relative;
-    background-color: #343a40;
-    background: url("../images/bg.jpg") no-repeat center center;
-    background-size: cover;
-    padding-top: 13rem;
-    padding-bottom: 15rem;
+.popular-link-set {
+    color: #adadad;
+    background-color: #fbfbfb;
+    font-size: 16px;
+    line-height: 24px;
+    padding: 50px 0px;
+    vertical-align: baseline;
 }
 
 
-/* Modifier Styles */
+/**********************/
+
+header.masthead {
+    position: relative;
+    background: #343a40 url("../images/bg.jpg") no-repeat center;
+    background-size: cover;
+    padding-top: 6rem;
+    padding-bottom: 10rem;
+}
 
 header.masthead .overlay {
     position: absolute;
-    background-color: #212529;
+    background-color: #0b5394;
     height: 100%;
     width: 100%;
     top: 0;
@@ -70,20 +90,31 @@ header.masthead h1 {
     font-size: 2rem;
 }
 
+.search-bottom-title {
+    font-family: "Open Sans", sans-serif;
+    color: rgb(187, 191, 191);
+    font-size: 14px;
+    line-height: 21px;
+    margin: 20px 0px;
+    font-weight: 400;
+    text-align: center;
+}
+
 .nav-items .nav-link {
     margin: 0 1rem;
 }
-.navbar-brand {
-    margin: 0;
-}
+
 .navbar .nav-link,
 .navbar .btn {
+    font-family: "Montserrat", sans-serif;
     text-transform: uppercase;
     font-size: .95rem;
 }
+
 .list-group {
     color: initial;
 }
+
 .label {
     font-size: .88rem;
     vertical-align: top;
@@ -97,21 +128,26 @@ header.masthead h1 {
     background: #417aba;
     border-color: #417aba;
 }
+
 .btn-info {
     background-color: #0b5394;
     border-color: #3d8596;
 }
+
 .btn-info:hover {
     background-color: #3d85c6;
     border-color: #5bc0de;
 }
+
 .btn-light {
-    color: rgba(255,255,255, .75);
-    background: rgba(255,255,255, .12);
+    color: rgba(255, 255, 255, .75);
+    background: rgba(255, 255, 255, .12);
 }
+
 .btn-light:hover {
-    background: rgba(255,255,255, .2);
+    background: rgba(255, 255, 255, .2);
 }
+
 .active,
 .btn {
     transition: .4s;
@@ -151,45 +187,70 @@ header.masthead h1 {
     color: initial;
 }
 
-/* Media Queries */
 
-@media (min-width: 0) and (max-width: 47em) {
-    .navbar {
-        background: #1d2a33;
-    }
-    .nav-items .nav-item {
-        float: none;
-    }
-    .nav-items .nav-link  {
-        padding: .65rem 0;
-        display: block;
-    }
-    .nav-items {
-        padding: 1rem 0;
-        clear: left;
-    }
-    .navbar .btn {
-        margin-left: 1rem;
-    }
-    .main {
-        padding-top: 6rem;
-    }
+
+/* Profile Page */
+
+img.profile-background{
+    alignment: left;
+    z-index: 0;
+    width: 100%;
+    height: 250px;
+    margin-bottom: 10px;
+    object-fit: cover;
 }
 
-@media (min-width: 48em) {
-    .navbar {
-        min-height: 70px;
+.profile-thumbnail
+{
+    margin: -90px 10px 0px 50px;
+    z-index: 9;
+    width: 20%;
+}
+
+@media (max-width:768px) {
+
+}
+
+    .profile-thumbnail
+    {
+        margin: -45px 10px 0px 25px;
+        z-index: 9;
+        width: 20%;
     }
-    .navbar-nav .container {
-        display: -webkit-flex;
-        display: flex;
-    }
-    .nav-items {
-        margin-right: auto;
-        margin-left: auto;
-    }
-    .main {
-        padding-top: 8rem;
+
+.sidebar-item.active, .sidebar-item:hover {
+    background-color: #fff;
+    border: 1px solid #e6e7e9;
+    border-right: 0;
+    margin-right: -1px;
+}
+
+.sidebar-menu {
+    border-bottom: 1px solid #e6e7e9;
+    border-top: 1px solid #e6e7e9;
+    border-right: 1px solid #e6e7e9;
+    padding-bottom: 1rem;
+    padding-top: 1rem;
+    background-color: #f4f4f4;
+}
+
+.sidebar-item {
+    position: relative;
+    display: block;
+    padding: 0.75rem 1.25rem;
+    margin-bottom: 0.5rem;
+    border: 1px solid transparent;
+}
+
+.sidebar-item.active:hover {
+    background-color: #fff;
+}
+
+@media (max-width: 767.98px) {
+    .sidebar-item.active, .sidebar-item:hover {
+        border-right: 1px solid #e6e7e9;
+        margin-left: 0.25rem;
+        margin-right: 0.25rem;
     }
 }
 
@@ -220,4 +281,98 @@ header.masthead h1 {
 
 #venues-page{
   background-color: white;
+}
+
+/* Login page */
+
+.form-signin{
+    width: 100%;
+    max-width: 330px;
+    padding: 150px 15px 15px;
+    margin: auto;
+}
+
+.form-signin .checkbox {
+    font-weight: 400;
+}
+
+.form-signin .form-control {
+    position: relative;
+    box-sizing: border-box;
+    height: auto;
+    padding: 10px;
+    font-size: 16px;
+}
+
+.form-signin .form-control:focus {
+    z-index: 2;
+}
+
+.form-signin input[type="email"] {
+    margin-bottom: -1px;
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0;
+}
+
+.form-signin input[type="password"] {
+    margin-bottom: 10px;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+}
+
+/* Register */
+
+.registration {
+    max-width: 400px;
+    padding-top: 100px;
+}
+
+
+/* Media Queries */
+
+@media (min-width: 0) and (max-width: 47em) {
+    .navbar {
+        background: #1d2a33;
+    }
+
+    .nav-items .nav-item {
+        float: none;
+    }
+
+    .nav-items .nav-link {
+        padding: .65rem 0;
+        display: block;
+    }
+
+    .nav-items {
+        padding: 1rem 0;
+    }
+
+    .navbar .btn {
+        margin-left: 1rem;
+    }
+
+    .main {
+        padding-top: 6rem;
+    }
+}
+
+@media (min-width: 48em) {
+    .navbar {
+        min-height: 70px;
+    }
+
+    .navbar-nav .container {
+        display: -webkit-flex;
+        display: flex;
+    }
+
+    .nav-items {
+        margin-right: auto;
+        margin-left: auto;
+    }
+
+    .main {
+        padding-top: 8rem;
+    }
 }

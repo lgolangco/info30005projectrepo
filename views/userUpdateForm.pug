@@ -7,17 +7,17 @@ block content
                 h1.display-4.m-b-2 User Profile
 
                 // register form
-                form(method='POST' action='/profile')
+                form(method="POST" action="/profile")
                     div.form-group
-                        label(for='name') Name:
-                        input#name.form-control(type='text', placeholder='first and last' name='name' autocomplete="off" value=user.name)
+                        label(for="name") Name:
+                        input#name.form-control(type="text", placeholder="first and last" name="name" autocomplete="off" value=user.name)
                     div.form-group
-                        label(for='email') Email:
-                        input#email.form-control(type='email', placeholder='name@email.com' name='email' autocomplete="off" value=user.email)
+                        label(for="email") Email:
+                        input#email.form-control(type="email", placeholder="name@email.com" name="email" autocomplete="off" value=user.email)
                     div.form-group
-                        label(for='pw') Password:
-                        input#pw.form-control(type='password' name='password' value=user.password)
+                        label(for="pw") Password:
+                        input#pw.form-control(type="password" name="password" value=user.password)
                     div.form-group
-                        label(for='pw2') Confirm Password:
-                        input#pw2.form-control(type='password' name='confirmPassword' value=user.password)
-                    button.btn.btn-primary(type='submit') Update
+                        label(for="pw2") Confirm Password:
+                        input#pw2.form-control(type="password" name="confirmPassword" value=user.password)
+                    button.btn.btn-primary(type="submit") Update
