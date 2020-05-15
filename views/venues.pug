@@ -9,7 +9,7 @@ block content
               h1 #{title}
               p #{message}
               h5 
-                a(href='/newvenue') Register a new venue
+                a(href="/newvenue") Register a new venue
               table
                   tr
                       th Name
@@ -21,7 +21,7 @@ block content
                       - const address = venue.venueAddress.venueStreetAddress +", "+venue.venueAddress.venueSuburb+", "+venue.venueAddress.venuePostcode;
                       tr
                         td
-                          a(href='/venue/' + venue._id) #{venue.venueName}
+                          a(href="/venue/" + venue._id) #{venue.venueName}
                         td #{venue.venueType}
                         td #{address}
 

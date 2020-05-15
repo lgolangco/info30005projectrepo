@@ -262,3 +262,53 @@ header.masthead h1 {
     max-width: 400px;
     padding-top: 100px;
 }
+
+
+/* Media Queries */
+
+@media (min-width: 0) and (max-width: 47em) {
+    .navbar {
+        background: #1d2a33;
+    }
+
+    .nav-items .nav-item {
+        float: none;
+    }
+
+    .nav-items .nav-link {
+        padding: .65rem 0;
+        display: block;
+    }
+
+    .nav-items {
+        padding: 1rem 0;
+    }
+
+    .navbar .btn {
+        margin-left: 1rem;
+    }
+
+    .main {
+        padding-top: 6rem;
+    }
+}
+
+@media (min-width: 48em) {
+    .navbar {
+        min-height: 70px;
+    }
+
+    .navbar-nav .container {
+        display: -webkit-flex;
+        display: flex;
+    }
+
+    .nav-items {
+        margin-right: auto;
+        margin-left: auto;
+    }
+
+    .main {
+        padding-top: 8rem;
+    }
+}
