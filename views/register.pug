@@ -1,11 +1,11 @@
 extends layout
 
 block content
-    .main.container
-        .registration.mx-auto.d-block.w-100
+    .text-center
+        .container-fluid
             .page-header.text-center
+            form(method="POST" action="/register").form-registration
                 h1 Sign Up
-            form(method="POST" action="/register")
                 .form-group
                     label(for="name") Full name:
                     input#name.form-control(type="text", placeholder="first and last" name="name")
