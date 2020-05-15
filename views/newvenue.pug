@@ -4,19 +4,164 @@ block content
     .main.container
         .col-md-6.col-md-offset-3
             h1.display-4.m-b-2 #{title}
-            //- 
-            //- // register form
-            //- form(method='POST' action='newvenue')
-            //-     div.form-group
-            //-         label(for='venueName') Venue Name:
-            //-         input#name.form-control(type='text', placeholder='venue name' name='venuename' autocomplete="off")
-            //-     div.form-group
-            //-         label(for='email') Email:
-            //-         input#email.form-control(type='email', placeholder='name@email.com' name='email' autocomplete="off")
-            //-     div.form-group
-            //-         label(for='pw') Password:
-            //-         input#pw.form-control(type='password' name='password')
-            //-     div.form-group
-            //-         label(for='pw2') Confirm Password:
-            //-         input#pw2.form-control(type='password' name='confirmPassword')
-            //-     button.btn.btn-primary(type='submit') Sign up
+            
+            // Register form
+            form(method='POST' action='newvenue')
+                
+                // Venue Name
+                div.form-group
+                    label(for='venueName') Venue Name
+                    input.form-control(type='text', placeholder='e.g. Campos Coffee' name='venuename' autocomplete="off")
+                
+                // Venue Type
+                div.form-group
+                  label(for="venueType") Venue Type
+                  select.form-control#exampleFormControlSelect1
+                    option Cafe
+                    option Public Library
+                    option Private Library
+                div
+                
+                // Venue Address
+                div.form-group
+                    label(for='venueStreetAddress') Street Address
+                    input#inputAddress.form-control(type='text', placeholder='e.g. 123 Study Street' name='venueStreetAddress' autocomplete="off")
+                
+                div.form-row
+                  
+                  // Suburb
+                  div.form-group.col-md-6
+                      label(for='venueSuburb') Suburb
+                      input#inputCity.form-control(type='text', placeholder='e.g. Studyville' name='venueSuburb' autocomplete="off")
+                  
+                  // State
+                  div.form-group.col-md-3
+                    label(for="venueState") State
+                    select.form-control#exampleFormControlSelect1
+                      option NSW
+                      option VIC
+                      option QLD
+                      option TAS
+                      option ACT
+                      option NT
+                      option SA
+                      option WA
+                  div
+                  
+                  // Postcode
+                  div.form-group.col-md-3
+                      label(for='venuePostcode') Postcode
+                      input#inputZip.form-control(type='text', placeholder='e.g. 3000' name='venuePostcode' autocomplete="off")
+          
+                // Venue details
+                br
+                h3 Venue details
+                
+                div.form-group
+                  label(for="noise") Noise Level
+                  select.form-control#exampleFormControlSelect1
+                    option Low
+                    option Medium
+                    option High
+                div
+                
+                div.form-check
+                  input.form-check-input(type="checkbox" value="" id="defaultCheck1")
+                  label.form-check-label(for="wifi") Wifi
+                
+                div.form-check
+                  input.form-check-input(type="checkbox" value="" id="defaultCheck1")
+                  label.form-check-label(for="toilets") Toilets
+                
+                div.form-check
+                  input.form-check-input(type="checkbox" value="" id="defaultCheck1")
+                  label.form-check-label(for="power") Powerpoints
+                
+                div.form-check
+                  input.form-check-input(type="checkbox" value="" id="defaultCheck1")
+                  label.form-check-label(for="discussionFriendly") Discussion friendly
+                
+                div.form-check
+                  input.form-check-input(type="checkbox" value="" id="defaultCheck1")
+                  label.form-check-label(for="printer") Printing Services
+                
+                // Venue Contact
+                br
+                h3 Contact details
+                
+                div.form-row
+                  div.form-group.col-lg-2
+                      label(for='phone') Prefix
+                      input.form-control(type='text', placeholder='(03)' name='venueSuburb' autocomplete="off")
+                  
+                  div.form-group.col-lg-10
+                      label(for='phone') Landline Number
+                      input.form-control(type='text', placeholder='e.g. 1234 5678' name='venueSuburb' autocomplete="off")
+                        
+                div.form-row
+                  div.form-group.col-lg-2
+                      label(for='phone') Prefix
+                      input.form-control(type='text', placeholder='+61' name='venueSuburb' autocomplete="off")
+                  
+                  div.form-group.col-lg-10
+                      label(for='mobile') Mobile Number
+                      input.form-control(type='text', placeholder='e.g. 412 345 678' name='venueSuburb' autocomplete="off")
+            
+                div.form-group
+                  label(for="email") Email address
+                  input.form-control#exampleInputEmail1(type="email" aria-describedby="emailHelp" placeholder="Enter email")
+                    
+                div.form-group
+                  label(for="web") Website
+                  input.form-control(type='text' placeholder="Enter website")
+                
+                // Venue Hours
+                br 
+                h3 Opening Hours
+                
+                div.form-row
+                  //Sunday
+                  div.form-group.col-lg-4
+                    label(for="sun") Sunday
+                    input.form-control(type='text' placeholder="e.g. 7am-5pm")
+                    
+                  //Thursday
+                  div.form-group.col-lg-4.offset-lg-2
+                    label(for="thu") Thursday
+                    input.form-control(type='text' placeholder="e.g. 7am-5pm")
+                
+                div.form-row
+                  //Monday
+                  div.form-group.col-lg-4
+                    label(for="mon") Monday
+                    input.form-control(type='text' placeholder="e.g. 7am-5pm")                
+                  
+                  //Friday
+                  div.form-group.col-lg-4.offset-lg-2
+                    label(for="fri") Friday
+                    input.form-control(type='text' placeholder="e.g. 7am-5pm")
+
+                div.form-row
+                  
+                  //Tuesday
+                  div.form-group.col-lg-4
+                    label(for="tue") Tuesday
+                    input.form-control(type='text' placeholder="e.g. 7am-5pm")
+                    
+                  //Saturday
+                  div.form-group.col-lg-4.offset-lg-2
+                    label(for="sat") Saturday
+                    input.form-control(type='text' placeholder="e.g. 7am-5pm")
+                
+                div.form-row
+                
+                  //Wednesday
+                  div.form-group.col-lg-4
+                    label(for="wed") Wednesday
+                    input.form-control(type='text' placeholder="e.g. 7am-5pm")
+                
+                
+                
+                
+
+    
