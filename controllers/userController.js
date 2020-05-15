@@ -1,4 +1,6 @@
 const mongoose = require("mongoose");
+const request = require("request");
+const {check, validationResult} = require("express-validator");
 
 // import user and review model
 const User = mongoose.model("user");
@@ -107,6 +109,12 @@ const addUser = async (req, res, next) => {
         // confirm that user typed same password twice
         if (req.body.password !== req.body.confirmPassword) {
             var err = new Error("Passwords do not match");
+            err.status = 400;
+            return next(err);
+        }
+
+        if (req.body.password.length < 7) {
+            var err = new Error("Password must be at least 7 characters");
             err.status = 400;
             return next(err);
         }
