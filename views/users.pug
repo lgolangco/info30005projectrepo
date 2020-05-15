@@ -2,21 +2,36 @@ extends layout
 
 block content
     .main.container
-        .row
-            .col-md-8.col-md-offset-2
-                h1 Users
-                table
-                    tr
-                        th Name
-                        th Email
-                        th ID
+        div.row
 
-                    each user in users
-                        tr
-                            td
+
+            each user in users
+                div.column.col-lg-3.col-sm-6
+                    .card.hovercard
+                        .cardheader
+                        .avatar
+                            img(src="https://cms-assets.tutsplus.com/uploads/users/107/posts/26101/image/44-x-men-avatars-rogue.jpg")
+                        .info
+                            .title
                                 a(href='/user/' + user._id) #{user.name}
-                            td #{user.email}
-                            td #{user._id}
+                            .desc Email: #{user.email}
+                            .desc User ID: #{user._id}
 
 
-                a.btn.btn-info-outline.btn-lg.m-t-1(href='/register') Get Started!
+            //.col-md-8.col-md-offset-2
+            //    h1 Users
+            //    table
+            //        tr
+            //            th Name
+            //            th Email
+            //            th ID
+            //
+            //        each user in users
+            //            tr
+            //                td
+            //                    a(href='/user/' + user._id) #{user.name}
+            //                td #{user.email}
+            //                td #{user._id}
+            //
+            //
+            //    a.btn.btn-info-outline.btn-lg.m-t-1(href='/register') Get Started!
