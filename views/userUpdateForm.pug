@@ -10,31 +10,31 @@ block content
                 if toDelete
                     // delete form
                     div.delete-profile
-                        form(method='POST' action='/profile/delete')
+                        form(method="POST" action="/profile/delete")
                             h5.ml-auto.mr-auto Are you sure you want to delete your account?
                             row
-                                button.btn.btn-primary(type='submit') YES
+                                button.btn.btn-primary(type="submit") YES
                                 a(href="/profile")
-                                    button.btn.btn-primary(type='button') NO
+                                    button.btn.btn-primary(type="button") NO
                 else
                     // register form
-                    form(method='POST' action='/profile')
+                    form(method="POST" action="/profile")
                         div.form-group
-                            label(for='name') Name:
-                            input#name.form-control(type='text', placeholder='first and last' name='name' autocomplete="off" value=user.name)
+                            label(for="name") Name:
+                            input#name.form-control(type="text", placeholder="first and last" name="name" autocomplete="off" value=user.name)
                         div.form-group
-                            label(for='email') Email:
-                            input#email.form-control(type='email', placeholder='name@email.com' name='email' autocomplete="off" value=user.email)
+                            label(for="email") Email:
+                            input#email.form-control(type="email", placeholder="name@email.com" name="email" autocomplete="off" value=user.email)
                         div.form-group
-                            label(for='pw') Password:
-                            input#pw.form-control(type='password' name='password' value=user.password)
+                            label(for="pw") Password:
+                            input#pw.form-control(type="password" name="password" value=user.password)
                         div.form-group
-                            label(for='pw2') Confirm Password:
-                            input#pw2.form-control(type='password' name='confirmPassword' value=user.password)
+                            label(for="pw2") Confirm Password:
+                            input#pw2.form-control(type="password" name="confirmPassword" value=user.password)
                         div.form-group
-                            label(for='cover') Cover Photo Link:
-                            input#cover.form-control(type='cover' name='cover' value=user.cover)
+                            label(for="cover") Cover Photo Link:
+                            input#cover.form-control(type="cover" name="cover" value=user.cover)
                         div.form-group
-                            label(for='avatar') Profile Photo link:
-                            input#avatar.form-control(type='avatar' name='avatar' value=user.avatar)
-                        button.btn.btn-primary(type='submit') Update
+                            label(for="avatar") Profile Photo link:
+                            input#avatar.form-control(type="avatar" name="avatar" value=user.avatar)
+                        button.btn.btn-primary(type="submit") Update
