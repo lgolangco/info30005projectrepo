@@ -5,6 +5,10 @@ const userController = require("../controllers/userController.js");
 const venueController = require("../controllers/venueController.js");
 const mid = require("../middleware");
 
+//REMOVE LATER
+const mongoose = require("mongoose");
+const Venue = mongoose.model("venue");
+//REMOVE LATER
 
 // GET home page
 router.get("/", (req, res, next) => {
@@ -17,11 +21,11 @@ router.get("/", (req, res, next) => {
 router.get("/about", (req, res, next) => {
     return res.render("about", {title: "About"});
 });
-
-// GET Venues
-router.get("/venues", (req, res, next) => {
-    return res.render("venues", {title: "Study Areas"});
-});
+//
+// // GET Venues
+// router.get("/venues", (req, res, next) => {
+//     return res.render("venues", {title: "Study Areas"});
+// });
 
 // GET Register
 router.get("/register", mid.loggedOut, function(req, res, next) {
@@ -33,15 +37,27 @@ router.get("/newvenue", (req, res, next) => {
   return res.render("newvenue", {title: "Register a New Venue"});
 });
 
-// GET venueSuggestions
-router.get("/venuesuggestions/:_id", (req, res, next) => {
-  return res.render("venueSuggestions", {
-    title: "Suggest Changes to",
-    venueID: req.params._id
-    });
+
+// GET venuesugegstions
+router.get("/venuesuggestions/:_id", async (req, res, next) => {
+  await Venue.find({_id: req.params._id}, function(err, venue) {
+    // checks if the _id is invalid or there are no venues listed with that _id
+    if (venue.length === 0) {
+      return res.send("There are no venues listed with this id");
+
+    } else if (venue) {
+      return res.render('venueSuggestions', {
+        venue: venue[0]
+      });
+    } else {
+      res.status(400);
+      return res.send("getVenueByID function failed");
+    }
+  })
 });
 
-// GET newvenue
+
+// POST newvenue
 router.post("/newvenue", venueController.addVenue);
 
 // POST Register

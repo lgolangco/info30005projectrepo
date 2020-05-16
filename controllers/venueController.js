@@ -28,7 +28,7 @@ const getAllVenues = async (req, res) => {
 };
 
 
-// function to get venues by id
+// function to get venues by id and show venue profile
 const getVenueByID = async (req, res) => {
   if (ObjectId.isValid(req.params._id) === false) {
       return res.send("There are no venues listed with this id");
@@ -50,7 +50,6 @@ const getVenueByID = async (req, res) => {
     }
   })
 };
-
 
 // function to get venues by postcode
 const getVenueByPostcode = async (req, res) => {
