@@ -3,11 +3,11 @@ extends layout
 block content
     .main.container
         .col-md-6.col-md-offset-3
-            h1 Update Venue
+            h1 #{title}
               
               
             // Update form
-            form(method='POST' action='newvenue')
+            form(method='POST' action="/venueUpdate/" + id)
                 
                 // Venue Name
                 div.form-group
@@ -282,5 +282,5 @@ block content
                     label(for="wed") Wednesday
                     input.form-control(type='text' placeholder="e.g. 7am-5pm" name = "wed" value=venue.venueHours.wed)
                 
-                
+                - const venuePath = "/venueUpdate/" + id;
                 button.btn.btn-primary(type="submit") Submit

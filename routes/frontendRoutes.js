@@ -33,6 +33,9 @@ router.get("/venuesuggestions/:_id",venueController.getVenueSuggestionsByID);
 // GET venueUpdate
 router.get("/venueUpdate/:_id",venueController.getVenueUpdateByID);
 
+// POST getVenueUpdate
+router.post("/venueUpdate/:_id",venueController.updateVenue);
+
 // POST newvenue
 router.post("/newvenue", venueController.addVenue);
 
