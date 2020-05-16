@@ -75,12 +75,13 @@ const getVenueUpdateByID = async (req, res) => {
     if (venue.length === 0){
       return res.send("There are no venues listed with this id");
     } else {
-      return res.render('venueUpdate', {
+      return res.render("venueUpdate", {
+        title: "Update Profile",
+        id: req.params._id,
         venue: venue[0]
       });
     }
   } catch (err) {
-    console.log(err);
     res.status(400);
     return res.send("getVenueUpdateByID function failed");
   }
@@ -179,7 +180,6 @@ const addVenue = async (req, res) => {
 
 // function to modify venue by ID
 const updateVenue = async (req, res) => {
-
   // checks if the _id is invalid
   if (ObjectId.isValid(req.params._id) === false) {
       return res.send("There are no venues listed with this id");
@@ -192,16 +192,25 @@ const updateVenue = async (req, res) => {
     }
   })
 
+  const venue = await Venue.findById(req.params._id).lean().exec();
   // update the venue with the prescribed _id
   await Venue.findOneAndUpdate(
       {_id: req.params._id},
       {$set: req.body},
       function(err) {
         if (!err) {
-          return res.send("Successfully updated venue");
+          res.status(200);
+          return res.render("venueUpdate",{
+            title: "Successfully updated venue!",
+            venue: venue
+          });
         } else {
+
           res.status(400);
-          return res.send("updateVenue function failed");
+          return res.render("venueUpdate",{
+            title: "Venue update failed",
+            venue: venue
+          })
         }
       }
   )
