@@ -7,25 +7,22 @@ block content
                 // Content
                 div.dashboard-area.col-md-12
                     .row
+                        // Cover and profile photo
                         user-profile.col-12.mb-2
                             img.profile-background(src=user.cover)
                             img.profile-thumbnail(src=user.avatar)
+                    // User's details
                     .profile-details.col-md-6.ml-auto.mr-auto
                         h2 #{user.name}
                         p Email: #{user.email}
                         p User ID: #{user._id}
 
+                        // Redirect to edit or delete user
                         a(href="/profile/edit")
                             button.btn.btn-primary(type='button') Edit
                         a(href="/profile/delete")
                             button.btn.btn-primary(type='button') Delete
 
-                        //a(href="/user/"+user._id) Edit
-                        //    |  |
-                        //    | {{ Form::open('method' = 'delete') }}
-                        //    button(type="submit") Delete
-                        //    | {{ Form::close() }}
-                        //form
 
                 div.col-md-3.pr-md-4.side-bar-left
                     // Sidebar menu
