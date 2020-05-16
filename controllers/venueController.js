@@ -2,12 +2,11 @@ const mongoose = require("mongoose");
 
 // import venue, user, and suggestions model
 const Venue = mongoose.model("venue");
-// const VenueSuggestions = mongoose.model("venueSuggestions");
 const User = mongoose.model("user");
+const VenueSuggestions = mongoose.model("venueSuggestions");
 
 // import object id type to check if request _id is valid
 const ObjectId = mongoose.Types.ObjectId;
-
 
 // function to handle a request to get all venues
 const getAllVenues = async (req, res) => {
@@ -53,48 +52,14 @@ const getVenueByID = async (req, res) => {
   })
 };
 
-// const userDetails = async (req, res, next) => {
-//   const user = await User.findById(req.session.userId)
-//     .exec(function(error, user) {
-//       if (error) {
-//         return next(error);
-//       } else {
-//         console.log("USER1");
-//         console.log(user);
-//         return user;
-//       }
-//     });
-//   console.log("USER 2");
-//   console.log(user);
-// };
-//
-// //  WITHOUT USER
-// // function to get venues by id and show venue suggestions page
-// const getVenueSuggestionsByID = async (req, res) => {
-//   const user = await userDetails(req);
-//   console.log("USER3");
-//   console.log(user);
-//   try {
-//     const venue = await Venue.find({_id: req.params._id});
-//     if (venue.length === 0){
-//       return res.send("There are no venues listed with this id");
-//     } else {
-//       return res.render('venueSuggestions', {
-//         venue: venue[0]
-//       });
-//     }
-//   } catch (err) {
-//     res.status(400);
-//     return res.send("getVenueSuggestionsByID function failed");
-//   }
-// };
-
-//  WITH USER
 // function to get venues by id and show venue suggestions page
 const getVenueSuggestionsByID = async (req, res) => {
   const user = await User.findById(req.session.userId);
-  if (user.length === 0) {
-    console.log("not logged in");
+  if (user === null) {
+    return res.render('error', {
+      error: "You're not logged in!",
+      message: "You must be logged in to submit a suggestion"
+    });
   }
   try {
     const venue = await Venue.find({_id: req.params._id});
@@ -111,6 +76,24 @@ const getVenueSuggestionsByID = async (req, res) => {
     return res.send("getVenueSuggestionsByID function failed");
   }
 };
+
+const submitVenueSuggestion = async (req, res) => {
+  // extract info. from body
+  console.log("RAW BODY");
+  console.log(req.body)
+  const details = req.body;
+  const db = mongoose.connection;
+  try {
+    await db.collection('venueSuggestions').insertOne(details)
+    return res.render('venueSuggestions',{
+      completed: "Successfully submitted suggestion!",
+    });
+  } catch(err){
+    res.status(400);
+    return res.send("submitVenueSuggestion failed");
+  }
+};
+
 
 // function to get venues by id and show venue update page
 const getVenueUpdateByID = async (req, res) => {
