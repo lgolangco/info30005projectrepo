@@ -7,19 +7,19 @@ const Review = mongoose.model("review");
 // import object id type to check if request _id is valid
 const ObjectId = mongoose.Types.ObjectId;
 
-
+// function to view all users
 const getAllUsers = async (req, res) => {
     users = [];
     try {
         const all_users = await User.find();
         if (all_users.length === 0) {
-            return res.send("There are no existing users yet");
+            return res.render('usererror', {message: "There are no existing users yet"});
         } else {
             return res.render('users', {users: all_users});
         }
     } catch (err) {
         res.status(400);
-        res.send("Database query failed");
+        return res.render('usererror', {message: "Database query failed"});
     }
 }
 
@@ -33,7 +33,7 @@ const updateUserForm = async (req, res) => {
         if (!users) {
             res.status(400);
             console.log("User not found");
-            return res.send("User not found");
+            return res.render('usererror', {message: "User not found"});
         }
         const user = users[0];
         console.log("Updating user:", user);
@@ -45,16 +45,16 @@ const updateUserForm = async (req, res) => {
     } catch (err) {
         res.status(400);
         console.log(err);
-        return res.send("Edit user failed");
+        return res.render('usererror', {message: "Edit user failed"});
     }
 }
 
 
-// function to modify user by ID
+// function to modify user details
 const updateUser = async (req, res,next) => {
     // checks if the _id is invalid
     if (ObjectId.isValid(req.session.userId) === false) {
-        return res.send("There are no users listed with this id");
+        return res.render('usererror', {message: "There are no users listed with this id"});
     }
 
     // checks if there are no venues listed with that _id
@@ -62,7 +62,7 @@ const updateUser = async (req, res,next) => {
     if (users.length === 0) {
         res.status(400);
         console.log("User not found");
-        return res.send("There are no users listed with this id");
+        return res.render('usererror', {message: "There are no users listed with this id"});
     }
 
     try {
@@ -97,13 +97,12 @@ const updateUser = async (req, res,next) => {
     } catch (err) {
         res.status(400);
         console.log(err);
-        return res.send("Edit user failed");
+        return res.render('usererror', {message: "Edit user failed"});
     }
 };
 
 
 // function to add user
-
 const addUser = async(req, res, next) => {
 
     const {name, email, password, confirmPassword} = req.body;
@@ -169,17 +168,17 @@ const addUser = async(req, res, next) => {
 const getUserByID = async (req, res) => {
     // checks if the _id is invalid
     if (ObjectId.isValid(req.params._id) === false) {
-        return res.send("There are no users listed with this id");
+        return res.render('usererror', {message: "There are no users listed with this id"});
     }
 
     await User.find({_id: req.params._id}, function (err, user) {
         if (user.length === 0) {
-            return res.send("There are no users listed with this id");
+            return res.render('usererror', {message: "There are no users listed with this id"});
         } else if (user) {
             return res.render('userProfile', {user: user[0]});
         } else {
             res.status(400);
-            return res.send("getUserByID function failed");
+            return res.render('usererror', {message: "getUserByID function failed"});
         }
     })
 };
@@ -189,21 +188,21 @@ const getUserByID = async (req, res) => {
 const getUserByEmail = async (req, res) => {
     await User.find({email: req.params.email}, function (req, user) {
         try {
-            return res.redirect("/user/" + user._id);
+            return res.redirect("/user/" + user[0]._id);
         } catch (err) {
             res.status(400);
-            res.send("getUserByEmail function failed");
+            return res.render('usererror', {message: "getUserByEmail function failed"});
         }
     })
 }
 
 
-// function to delete User by ID
+// function to delete User
 const deleteUserByID = async (req, res) => {
 
     // checks if the _id is invalid
     if (ObjectId.isValid(req.session.userId) === false) {
-        return res.send("There are no users listed with this id");
+        return res.render('usererror', {message: "There are no users listed with this id"});
     }
 
     // deletes the reviews associated with the user
