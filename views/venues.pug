@@ -8,8 +8,8 @@ block content
           .col-md-8.col-md-offset-2
               h1 #{title}
               p #{message}
-              h5 
-                a(href="/newvenue") Register a new venue
+              
+              br
               table
                   tr
                       th Name
@@ -24,5 +24,9 @@ block content
                           a(href="/venue/" + venue._id) #{venue.venueName}
                         td #{venue.venueType}
                         td #{address}
+              
+              br
+              h5 
+                a(href="/newvenue") Register a new venue
 
           
