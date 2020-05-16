@@ -38,7 +38,7 @@ block content
                   // State
                   div.form-group.col-md-3
                     label(for="venueState") State
-                    select(name="venueState").form-control#exampleFormControlSelect1
+                    select(name="venueState" value=venue.venueAddress.venueState).form-control#exampleFormControlSelect1
                       option VIC
                       option NSW
                       option QLD
@@ -52,7 +52,7 @@ block content
                   // Postcode
                   div.form-group.col-md-3
                       label(for='venuePostcode') Postcode
-                      input#inputZip.form-control(type='text', placeholder='e.g. 3000' name='venuePostcode' autocomplete="off")
+                      input#inputZip.form-control(type='text', placeholder='e.g. 3000' name='venuePostcode' autocomplete="off" value=venue.venueAddress.venuePostcode)
           
                 // Venue details
                 br
@@ -60,30 +60,50 @@ block content
                 
                 div.form-group
                   label(for="noise") Noise Level
-                  select(name="noise").form-control#exampleFormControlSelect1
+                  select(name="noise" value=venue.venueDetails.noise).form-control#exampleFormControlSelect1
                     option Low
                     option Medium
                     option High
                 div
                 
+                // Wifi
                 div.form-check
-                  input.form-check-input(type="checkbox" value="1" name = "wifi")
+                  if venue.venueDetails.wifi === true
+                    input.form-check-input(type="checkbox" value="1" name = "wifi" checked)
+                  else 
+                    input.form-check-input(type="checkbox" value="1" name = "wifi")
                   label.form-check-label(for="wifi") Wifi
                 
+                // Toilets
                 div.form-check
-                  input.form-check-input(type="checkbox" value="1" name = "toilets")
+                  if venue.venueDetails.toilets === true
+                    input.form-check-input(type="checkbox" value="1" name = "toilets" checked)
+                  else 
+                    input.form-check-input(type="checkbox" value="1" name = "toilets")
                   label.form-check-label(for="toilets") Toilets
                 
+                // Power
                 div.form-check
-                  input.form-check-input(type="checkbox" value="1" name = "power")
+                  if venue.venueDetails.power === true
+                    input.form-check-input(type="checkbox" value="1" name = "power" checked)
+                  else 
+                    input.form-check-input(type="checkbox" value="1" name = "power" )                                  
                   label.form-check-label(for="power") Powerpoints
                 
+                // Discussion Friendly
                 div.form-check
-                  input.form-check-input(type="checkbox" value="1" name = "discussionFriendly")
+                  if venue.venueDetails.discussionFriendly === true
+                    input.form-check-input(type="checkbox" value="1" name = "discussionFriendly" checked)
+                  else 
+                    input.form-check-input(type="checkbox" value="1" name = "discussionFriendly")
                   label.form-check-label(for="discussionFriendly") Discussion friendly
                 
+                // Printers
                 div.form-check
-                  input.form-check-input(type="checkbox" value="1" name = "printer")
+                  if venue.venueDetails.printer === true
+                    input.form-check-input(type="checkbox" value="1" name = "printer" checked)
+                  else 
+                    input.form-check-input(type="checkbox" value="1" name = "printer")
                   label.form-check-label(for="printer") Printing Services
                 
                 // Venue Contact
@@ -97,7 +117,7 @@ block content
                   
                   div.form-group.col-lg-10
                       label(for='phone') Landline Number
-                      input.form-control(type='text', placeholder='e.g. 1234 5678' name='phone' autocomplete="off")
+                      input.form-control(type='text', placeholder='e.g. 1234 5678' name='phone' autocomplete="off" value=venue.venueDetails.phone)
                         
                 div.form-row
                   div.form-group.col-lg-2
@@ -106,15 +126,15 @@ block content
                   
                   div.form-group.col-lg-10
                       label(for='mobile') Mobile Number
-                      input.form-control(type='text', placeholder='e.g. 412 345 678' name='mobile' autocomplete="off")
+                      input.form-control(type='text', placeholder='e.g. 412 345 678' name='mobile' autocomplete="off" value=venue.venueDetails.mobile)
             
                 div.form-group
                   label(for="email") Email address
-                  input.form-control#exampleInputEmail1(type="email" aria-describedby="emailHelp" placeholder="Enter email" name = "email")
+                  input.form-control#exampleInputEmail1(type="email" aria-describedby="emailHelp" placeholder="Enter email" name = "email" value=venue.venueDetails.email)
                     
                 div.form-group
                   label(for="web") Website
-                  input.form-control(type='text' placeholder="Enter website" name = "web")
+                  input.form-control(type='text' placeholder="Enter website" name = "web" value=venue.venueDetails.web)
                 
                 
                 // Venue Hours
@@ -125,42 +145,42 @@ block content
                   //Sunday
                   div.form-group.col-lg-4
                     label(for="sun") Sunday
-                    input.form-control(type='text' placeholder="e.g. 7am-5pm" name = "sun")
+                    input.form-control(type='text' placeholder="e.g. 7am-5pm" name = "sun" value=venue.venueHours.sun)
                     
                   //Thursday
                   div.form-group.col-lg-4.offset-lg-2
                     label(for="thu") Thursday
-                    input.form-control(type='text' placeholder="e.g. 7am-5pm" name = "thu")
+                    input.form-control(type='text' placeholder="e.g. 7am-5pm" name = "thu" value=venue.venueHours.thu)
                 
                 div.form-row
                   //Monday
                   div.form-group.col-lg-4
                     label(for="mon") Monday
-                    input.form-control(type='text' placeholder="e.g. 7am-5pm" name = "mon")                
+                    input.form-control(type='text' placeholder="e.g. 7am-5pm" name = "mon" value=venue.venueHours.mon)                
                   
                   //Friday
                   div.form-group.col-lg-4.offset-lg-2
                     label(for="fri") Friday
-                    input.form-control(type='text' placeholder="e.g. 7am-5pm" name = "fri")
+                    input.form-control(type='text' placeholder="e.g. 7am-5pm" name = "fri" value=venue.venueHours.fri)
 
                 div.form-row
                   
                   //Tuesday
                   div.form-group.col-lg-4
                     label(for="tue") Tuesday
-                    input.form-control(type='text' placeholder="e.g. 7am-5pm" name="tue")
+                    input.form-control(type='text' placeholder="e.g. 7am-5pm" name="tue" value=venue.venueHours.tue)
                     
                   //Saturday
                   div.form-group.col-lg-4.offset-lg-2
                     label(for="sat") Saturday
-                    input.form-control(type='text' placeholder="e.g. 7am-5pm" name="sat")
+                    input.form-control(type='text' placeholder="e.g. 7am-5pm" name="sat" value=venue.venueHours.sat)
                 
                 div.form-row
                 
                   //Wednesday
                   div.form-group.col-lg-4
                     label(for="wed") Wednesday
-                    input.form-control(type='text' placeholder="e.g. 7am-5pm" name = "wed")
+                    input.form-control(type='text' placeholder="e.g. 7am-5pm" name = "wed" value=venue.venueHours.wed)
                 
                 
                 button.btn.btn-primary(type="submit") Submit
