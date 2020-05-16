@@ -77,16 +77,26 @@ const getVenueSuggestionsByID = async (req, res) => {
   }
 };
 
+function convertSuggestions(suggestionRaw) {
+  const suggestionProcessed = {
+    userId: ObjectId(suggestionRaw.userId),
+    venuedId: ObjectId(suggestionRaw.venueId),
+    suggestion: suggestionRaw.suggestion,
+    resolved: false
+  }
+  return suggestionProcessed;
+}
+
 const submitVenueSuggestion = async (req, res) => {
   // extract info. from body
-  console.log("RAW BODY");
-  console.log(req.body)
-  const details = req.body;
+  const suggestionProcessed = convertSuggestions(req.body)
   const db = mongoose.connection;
   try {
-    await db.collection('venueSuggestions').insertOne(details)
-    return res.render('venueSuggestions',{
+    await db.collection('venueSuggestions').insertOne(suggestionProcessed)
+    return res.render('venueSuggestions', {
       completed: "Successfully submitted suggestion!",
+      venue: null,
+      user: null
     });
   } catch(err){
     res.status(400);
@@ -196,12 +206,13 @@ const addVenue = async (req, res) => {
    try {
      await db.collection('venue').insertOne(venueProcessed)
      return res.render('newVenue',{
-       title: "Successfully added user!",
+       title: "Successfully added venue!",
      });
    } catch(err){
      res.status(400);
      return res.send("addVenue failed");
-   }};
+   }
+};
 
 
 // function to modify venue by ID
@@ -271,5 +282,6 @@ module.exports = {
   updateVenue,
   deleteVenue,
   getVenueSuggestionsByID,
-  getVenueUpdateByID
+  getVenueUpdateByID,
+  submitVenueSuggestion
 };
