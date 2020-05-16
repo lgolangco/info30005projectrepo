@@ -36,6 +36,8 @@ router.get("/newvenue", (req, res, next) => {
 // GET venuesuggestions
 router.get("/venuesuggestions/:_id",venueController.getVenueSuggestionsByID);
 
+// GET venueUpdate
+router.get("/venueUpdate/:_id",venueController.getVenueUpdateByID);
 
 // POST newvenue
 router.post("/newvenue", venueController.addVenue);

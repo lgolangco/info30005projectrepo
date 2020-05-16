@@ -64,7 +64,24 @@ const getVenueSuggestionsByID = async (req, res) => {
     }
   } catch (err) {
     res.status(400);
-    return res.send("getVenueByID function failed");
+    return res.send("getVenueSuggestionsByID function failed");
+  }
+};
+
+// function to get venues by id and show venue update page
+const getVenueUpdateByID = async (req, res) => {
+  try {
+    const venue = await Venue.find({_id: req.params._id});
+    if (venue.length === 0){
+      return res.send("There are no venues listed with this id");
+    } else {
+      return res.render('venueUpdate', {
+        venue: venue[0]
+      });
+    }
+  } catch (err) {
+    res.status(400);
+    return res.send("getVenueUpdateByID function failed");
   }
 };
 
@@ -225,5 +242,6 @@ module.exports = {
   addVenue,
   updateVenue,
   deleteVenue,
-  getVenueSuggestionsByID
+  getVenueSuggestionsByID,
+  getVenueUpdateByID
 };
