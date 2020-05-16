@@ -80,6 +80,7 @@ const getVenueUpdateByID = async (req, res) => {
       });
     }
   } catch (err) {
+    console.log(err);
     res.status(400);
     return res.send("getVenueUpdateByID function failed");
   }

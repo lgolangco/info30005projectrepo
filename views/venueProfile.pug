@@ -152,7 +152,8 @@ block content
     .col-md-2.offset-3
       button.btn.btn-danger DELETE VENUE
     .col-md-2
-      button.btn.btn-Warning UPDATE VENUE
+      - const updatelink = "/venueUpdate/" + venue._id
+      a.btn.btn-Warning(href=updatelink) UPDATE VENUE
     
 
           
