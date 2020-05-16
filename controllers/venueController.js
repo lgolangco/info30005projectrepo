@@ -102,18 +102,58 @@ const getVenueByType = async (req, res) => {
 //      return res.send("addVenue failed");
 //    }};
 
+function convertVenue(venueRaw) {
+  const venueProcessed = {
+    venueName: venueRaw.venueName,
+    venueType: venueRaw.venueType,
+    venueAddress: {
+      venueStreetAddress: venueRaw.venueStreetAddress,
+      venueSuburb: venueRaw.venueSuburb,
+      venueState: venueRaw.venueState,
+      venuePostcode: venueRaw.venuePostcode
+    },
+    venueDetails: {
+      noise: venueRaw.noise,
+      wifi: Boolean(venueRaw.wifi),
+      toilets: Boolean(venueRaw.toilets),
+      power: Boolean(venueRaw.power),
+      discussionFriendly: Boolean(venueRaw.discussionFriendly),
+      printer: Boolean(venueRaw.printer)
+    },
+    venueContact: {
+      phone: venueRaw.phonePrefix+ venueRaw.phone,
+      mobile: venueRaw.mobilePrefix+ venueRaw.mobile,
+      email: venueRaw.email,
+      web: venueRaw.web,
+    },
+    venueHours: {
+      sun: venueRaw.sun,
+      mon: venueRaw.mon,
+      tue: venueRaw.tue,
+      wed: venueRaw.wed,
+      thu: venueRaw.thu,
+      fri: venueRaw.fri,
+      sat: venueRaw.sat
+    },
+    venueStreetAddress: venueRaw.venueStreetAddress
+   }
+   return venueProcessed;
+}
+
 // function to add venue
 const addVenue = async (req, res) => {
   // extract info. from body
-   const venue = req.body;
-   const db = mongoose.connection
+   venueProcessed = convertVenue(req.body);
+   const db = mongoose.connection;
+   console.log(venueProcessed);
    try {
-     await db.collection('venue').insertOne(venue);
+     await db.collection('venue').insertOne(venueProcessed)
      return res.render('newVenue',{
        title: "Successfully added user!",
      });
    } catch(err){
      res.status(400);
+     console.log(err);
      return res.send("addVenue failed");
    }};
 

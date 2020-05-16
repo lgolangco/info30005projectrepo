@@ -32,7 +32,8 @@ const venueSchema = new mongoose.Schema({
     thu: {type: String, required: true},
     fri: {type: String, required: true},
     sat: {type: String, required: true}
-  }
+  },
+  venueStreetAddress: {type: String, required: false}
 });
 
 const Venue = mongoose.model("venue", venueSchema, "venue");

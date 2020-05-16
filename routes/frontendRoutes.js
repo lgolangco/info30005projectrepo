@@ -2,6 +2,7 @@ const express = require("express");
 var router = express.Router();
 
 const userController = require("../controllers/userController.js");
+const venueController = require("../controllers/venueController.js");
 const mid = require("../middleware");
 
 
@@ -38,6 +39,9 @@ router.get("/venue/:_id/suggestions", (req, res, next) => {
     title: "Suggest Changes to"
     });
 });
+
+// GET newvenue
+router.post("/newvenue", venueController.addVenue);
 
 // POST Register
 router.post("/register", userController.addUser);
