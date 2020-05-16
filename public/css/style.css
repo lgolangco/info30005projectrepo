@@ -40,7 +40,9 @@ h1 {
 }
 
 .lead {
-    margin-bottom: 2.5rem;
+    font-family: "Montserrat", "sans-serif";
+    margin-top: 20px;
+    margin-bottom: 20px;
 }
 
 .main {
