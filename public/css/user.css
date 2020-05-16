@@ -1,5 +1,7 @@
 /* Users Page */
 
+
+/* List view of users page*/
 .card {
     padding-top: 20px;
     margin: 20px 3px 20px 3px;
@@ -65,9 +67,7 @@
 
 
 
-/* Profile Page */
-
-
+/* Profile and User Page */
 img.profile-background{
     alignment: left;
     z-index: 0;
@@ -87,11 +87,6 @@ img.profile-background{
 
 .profile-details{
     margin: -140px 10px 0px 50px;
-}
-
-
-@media (max-width:768px) {
-
 }
 
 
