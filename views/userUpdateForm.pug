@@ -1,6 +1,7 @@
 extends layout
 
 block content
+    // Forms to update user information or delete user's account
     .main.container
         .row
             .registration.mx-auto.d-block.w-100
@@ -38,3 +39,5 @@ block content
                             label(for="avatar") Profile Photo link:
                             input#avatar.form-control(type="avatar" name="avatar" value=user.avatar)
                         button.btn.btn-primary(type="submit") Update
+                        a(href='/profile/')
+                            button.btn.btn-primary(type='button') Cancel
