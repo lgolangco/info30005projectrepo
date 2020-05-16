@@ -21,7 +21,13 @@ block content
 
   - const gMapsKey = "AIzaSyDw04dJQyETFjfsthXJzhvjAiY9XE9Labc";
   
-
+  
+  center
+    - const imgURL = "https://studyspot.s3.amazonaws.com/venue/header/" + venue._id.toString() + ".1.jpg"
+    img.venue-header(src = imgURL)
+      
+  br
+  br
   .row.venue-profile-page
       
     //main content 
