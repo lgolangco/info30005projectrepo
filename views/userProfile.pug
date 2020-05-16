@@ -4,15 +4,48 @@ block content
     .main.container
         .row
             div
-                div.user-profile
-                    img.profile-background(src="https://66.media.tumblr.com/4e8b11edec6685c16b8967f38c327e12/tumblr_n6v9k5Dfuu1qakm7uo1_500.jpg")
-                    img.profile-thumbnail(src="https://cms-assets.tutsplus.com/uploads/users/107/posts/26101/image/44-x-men-avatars-rogue.jpg")
-                    div.profile-details
-                        h2.display-4.m-b-2 #{user.name}
-                        p Email: #{user.email}
-                        p User ID: #{user._id}
+                // Content
+                div.dashboard-area.col-md-12
+                  .row
+                    user-profile.col-12.mb-2
+                      img.profile-background(src=user.cover)
+                      img.profile-thumbnail(src=user.avatar)
+                  .profile-details.col-md-6.ml-auto.mr-auto
+                    h2 #{user.name}
+                    p Email: #{user.email}
+                    p User ID: #{user._id}
 
-
+                div.col-md-3.pr-md-4.side-bar-left
+                    // Sidebar menu
+                    ul.list-unstyled.sidebar-menu.pl-md-2.pr-md-0
+                        li
+                            a.sidebar-item.d-flex.justify-content-between.align-items-center(href='/dashboard')
+                                | Dashboard
+                                span.fas.fa-tachometer-alt
+                        li
+                            a.sidebar-item.d-flex.justify-content-between.align-items-center(href='/bookmarks')
+                                | Bookmarks
+                                span.fas.fa-heart
+                        li
+                            a.sidebar-item.d-flex.justify-content-between.align-items-center(href='/recently-viewed')
+                                | Recently Viewed
+                                span.fas.fa-clock
+                        li
+                            a.sidebar-item.d-flex.justify-content-between.align-items-center(href='/reviews')
+                                | Reviews
+                                span.fas.fa-comment
+                        li
+                            a.sidebar-item.d-flex.justify-content-between.align-items-center(href='/photos')
+                                | Photos
+                                span.fas.fa-photo-video
+                        li
+                            a.sidebar-item.d-flex.justify-content-between.align-items-center(href='/friends')
+                                | Friends
+                                span.fas.fa-user
+                        li
+                            a.sidebar-item.d-flex.justify-content-between.align-items-center(href='/sspoints')
+                                | SS Points
+                                span.fas.fa-dollar-sign
 
 
 

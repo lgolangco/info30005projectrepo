@@ -22,7 +22,7 @@ router.post("/", userController.addUser);
 // // update a user
 // router.post("/:_id", userController.updateUser);
 
-// delete by user id
-router.delete("/:_id", userController.deleteUserByID);
+// // delete by user id
+// router.delete("/:_id", userController.deleteUserByID);
 
 module.exports = router;

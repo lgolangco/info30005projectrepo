@@ -37,7 +37,10 @@ const updateUserForm = async (req, res) => {
         }
         const user = users[0];
         console.log("Updating user:", user);
-        res.render('userUpdateForm', {user: user});
+        res.render('userUpdateForm', {
+            user: user,
+            toDelete: false
+        });
 
     } catch (err) {
         res.status(400);
@@ -80,6 +83,8 @@ const updateUser = async (req, res,next) => {
             user["name"] = req.body.name;
             user["email"] = req.body.email;
             user["password"] = req.body.password;
+            user["cover"] = req.body.cover;
+            user["avatar"] = req.body.avatar;
 
             await user.save();
             return res.redirect("/profile");
@@ -186,19 +191,25 @@ const getUserByEmail = async (req, res) => {
 const deleteUserByID = async (req, res) => {
 
     // checks if the _id is invalid
-    if (ObjectId.isValid(req.params._id) === false) {
+    if (ObjectId.isValid(req.session.userId) === false) {
         return res.send("There are no users listed with this id");
     }
 
     // deletes the reviews associated with the user
-    Review.deleteMany({userId: req.params._id}, function (err) {
+    Review.deleteMany({userId: req.session.userId}, function (err) {
         res.status(400);
     });
 
     // deletes the user with the following _id
-    await User.deleteOne({_id: req.params._id}, function (err) {
+    await User.deleteOne({_id: req.session.userId}, function (err) {
         try {
-            return res.redirect("/user");
+            req.session.destroy(function(err) {
+                if (err) {
+                    return next(err);
+                } else {
+                    return res.redirect("/");
+                }
+            })
         } catch (err) {
             res.sendStatus(400);
             return res.send("deleteUserByID function failed");

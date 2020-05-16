@@ -2,21 +2,20 @@ extends layout
 
 block content
     .main.container
-        .row
-            .col-md-8.col-md-offset-2
+        div.row
+            .ml-auto.mr-auto.col-md-offset-2
                 h1 Users
-                table
-                    tr
-                        th Name
-                        th Email
-                        th ID
+            .row
+                each user in users
+                    div.col-lg-3.col-sm-6
+                        div.card.hovercard
+                            .cardheader
+                            .avatar2
+                                img(src=user.avatar)
+                            .info
+                                .title
+                                    a(href='/user/' + user._id) #{user.name}
+                                .desc Email: #{user.email}
+                                .desc User ID: #{user._id}
 
-                    each user in users
-                        tr
-                            td
-                                a(href="/user/" + user._id) #{user.name}
-                            td #{user.email}
-                            td #{user._id}
 
-
-                a.btn.btn-info-outline.btn-lg.m-t-1(href="/register") Get Started!

@@ -49,8 +49,16 @@ router.get("/profile", mid.requiresLogin, userController.accessProfile);
 // displays edit form based on user ID
 router.get("/profile/edit", userController.updateUserForm);
 
+// displays delete form based on user ID
+router.get("/profile/delete", function(req, res) {
+    return res.render("userUpdateForm", {toDelete: true})
+});
+
 // update a user
 router.post("/profile", userController.updateUser);
+
+// delete by user id
+router.post("/profile/delete", userController.deleteUserByID);
 
 // GET Logout
 router.get("/logout", userController.logout);
