@@ -34,9 +34,10 @@ router.get("/newvenue", (req, res, next) => {
 });
 
 // GET venueSuggestions
-router.get("/venue/:_id/suggestions", (req, res, next) => {
+router.get("/venuesuggestions/:_id", (req, res, next) => {
   return res.render("venueSuggestions", {
-    title: "Suggest Changes to"
+    title: "Suggest Changes to",
+    venueID: req.params._id
     });
 });
 

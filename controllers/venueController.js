@@ -89,19 +89,6 @@ const getVenueByType = async (req, res) => {
 };
 
 
-// // function to add venue
-// const addVenue = async (req, res) => {
-//   // extract info. from body
-//    const venue = req.body;
-//    const db = mongoose.connection
-//    try {
-//      await db.collection('venue').insertOne(venue);
-//      return res.send("Successfully added a venue");
-//    } catch(err){
-//      res.status(400);
-//      return res.send("addVenue failed");
-//    }};
-
 function convertVenue(venueRaw) {
   const venueProcessed = {
     venueName: venueRaw.venueName,
@@ -145,7 +132,6 @@ const addVenue = async (req, res) => {
   // extract info. from body
    venueProcessed = convertVenue(req.body);
    const db = mongoose.connection;
-   console.log(venueProcessed);
    try {
      await db.collection('venue').insertOne(venueProcessed)
      return res.render('newVenue',{
@@ -153,7 +139,6 @@ const addVenue = async (req, res) => {
      });
    } catch(err){
      res.status(400);
-     console.log(err);
      return res.send("addVenue failed");
    }};
 
