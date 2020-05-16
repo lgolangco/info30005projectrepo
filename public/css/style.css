@@ -192,23 +192,15 @@ header.masthead h1 {
 
 .card {
     padding-top: 20px;
-    margin: 10px 0 20px 0;
+    margin: 20px 3px 20px 3px;
     background-color: rgba(214, 224, 226, 0.2);
     border-top-width: 0;
     border-bottom-width: 2px;
-    -webkit-border-radius: 3px;
-    -moz-border-radius: 3px;
     border-radius: 3px;
-    -webkit-box-shadow: none;
-    -moz-box-shadow: none;
-    box-shadow: none;
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
+    height: 300px;
     box-sizing: border-box;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
 }
-
-
-
 
 .card.hovercard {
     position: relative;
@@ -219,34 +211,30 @@ header.masthead h1 {
 }
 
 .card.hovercard .cardheader {
-    /*background: url("http://lorempixel.com/850/280/nature/4/");*/
-    background-color: #0B5394;
+    background-color: #3d85c6;
     background-size: cover;
-    height: 135px;
+    height: 115px;
 }
 
-.card.hovercard .avatar {
+.card.hovercard .avatar2 {
     position: relative;
     top: -50px;
-    align-self: center;
     margin-bottom: -50px;
+
 }
 
-.card.hovercard .avatar img {
+.card.hovercard .avatar2 img {
+    position: relative;
     width: 100px;
     height: 100px;
+    object-fit: cover;
     max-width: 100px;
     max-height: 100px;
-    horiz-align: center;
-
-    -webkit-border-radius: 50%;
-    -moz-border-radius: 50%;
-    border-radius: 50%;
     border: 5px solid rgba(255,255,255,0.5);
 }
 
 .card.hovercard .info {
-    padding: 4px 8px 10px;
+    padding: 20px 8px 10px;
 }
 
 .card.hovercard .info .title {
@@ -265,10 +253,7 @@ header.masthead h1 {
     text-overflow: ellipsis;
 }
 
-.card.hovercard .bottom {
-    padding: 0 20px;
-    margin-bottom: 17px;
-}
+
 
 
 
