@@ -4,6 +4,8 @@ block content
     .main.container
         .row
             .col-md-8.col-md-offset-2
+                h1.display-4.m-b-2 #{completed}
+                br
                 h1.display-4.m-b-2 Suggest Changes for 
                 h1.display-4.m-b-2 #{venue.venueName}
                 br
@@ -21,14 +23,14 @@ block content
                     div.col-sm-11
                       
                       //ADD USER SCHEMA/EMAIL IN BACKEND so can set value = user.EMAIL or username
-                      input.form-control-plaintext#staticEmail(type="text" readonly value="example@email.com") 
+                      input.form-control-plaintext#staticEmail(type="text" readonly value=user.email) 
                   
                     
                     // Display static venue name
                     label.col-sm-1.col-form-label(for="staticVenueName") Venue:
                     div.col-sm-11
                   
-                      input.form-control-plaintext(type="text" readonly value="Example Venue") 
+                      input.form-control-plaintext(type="text" readonly value=venue.venueName) 
                   
                   // Can do this
                   div.form-group

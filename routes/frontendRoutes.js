@@ -13,15 +13,9 @@ router.get("/", (req, res, next) => {
 
 
 // GET About
-
 router.get("/about", (req, res, next) => {
     return res.render("about", {title: "About"});
 });
-//
-// // GET Venues
-// router.get("/venues", (req, res, next) => {
-//     return res.render("venues", {title: "Study Areas"});
-// });
 
 // GET Register
 router.get("/register", mid.loggedOut, function(req, res, next) {
