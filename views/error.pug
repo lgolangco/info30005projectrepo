@@ -2,12 +2,7 @@ extends layout
 
 block content
     .main.container
-        .row.text-center
-            .col-md
+        .row.text-xs-center
+            .col-md-6.col-md-offset-3.p-t-2
                 i.icn-person.material-icons error
-                p.lead= message
-                a.btn.btn-info(href="/register") Return to sign up
-
-                a.btn.btn-outline-info(href="/login") Return to sign in
-
-
+                p.lead.m-t-2= message
