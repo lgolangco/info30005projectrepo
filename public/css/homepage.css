@@ -33,3 +33,19 @@ header.masthead h1 {
     font-weight: 400;
     text-align: center;
 }
+
+.popular-link-set {
+    color: #adadad;
+    font-size: 16px;
+    line-height: 24px;
+    padding: 30px 30px;
+    vertical-align: baseline;
+}
+
+.fas.fa-chevron-circle-left.fa-2x {
+    padding: 10px;
+}
+
+.carousel-inner {
+    padding: 10px;
+}
