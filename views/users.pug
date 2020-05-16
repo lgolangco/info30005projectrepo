@@ -3,19 +3,20 @@ extends layout
 block content
     .main.container
         div.row
-
-
-            each user in users
-                div.column.col-lg-3.col-sm-6
-                    .card.hovercard
-                        .cardheader
-                        .avatar
-                            img(src="https://cms-assets.tutsplus.com/uploads/users/107/posts/26101/image/44-x-men-avatars-rogue.jpg")
-                        .info
-                            .title
-                                a(href='/user/' + user._id) #{user.name}
-                            .desc Email: #{user.email}
-                            .desc User ID: #{user._id}
+            .ml-auto.mr-auto.col-md-offset-2
+                h1 Users
+            .row
+                each user in users
+                    div.col-lg-3.col-sm-6
+                        div.card.hovercard
+                            .cardheader
+                            .avatar2
+                                img(src="https://cms-assets.tutsplus.com/uploads/users/107/posts/26101/image/44-x-men-avatars-rogue.jpg")
+                            .info
+                                .title
+                                    a(href='/user/' + user._id) #{user.name}
+                                .desc Email: #{user.email}
+                                .desc User ID: #{user._id}
 
 
             //.col-md-8.col-md-offset-2
