@@ -98,53 +98,64 @@ const updateUser = async (req, res,next) => {
 
 
 // function to add user
-const addUser = async (req, res, next) => {
-    if (req.body.email &&
-        req.body.name &&
-        req.body.password &&
-        req.body.confirmPassword) {
 
+const addUser = async(req, res, next) => {
 
-        // confirm that user typed same password twice
-        if (req.body.password !== req.body.confirmPassword) {
-            var err = new Error("Passwords do not match");
-            err.status = 400;
-            return next(err);
-        }
+    const {name, email, password, confirmPassword} = req.body;
 
-        if (req.body.password.length < 8) {
-            var err = new Error("Password must be at least 8 characters");
-            err.status = 400;
-            return next(err);
-        }
-
-        if (User.findOne({email: req.body.email})) {
-            var err = new Error("Email is already registered");
-            err.status = 400;
-            return next(err);
-        }
-
-        // create object with form input
-        var userData = {
-            email: req.body.email,
-            name: req.body.name,
-            password: req.body.password
-        };
-
-        User.create(userData, function(error, user) {
-            if (error) {
-                console.log("failed to create user");
-                return next(error);
-            } else {
-                console.log("Created user");
-                return res.redirect("/login");
-            }
-        });
-
-    } else {
-        var err = new Error("All fields required");
+    let errors = [];
+    if (!name || !email || !confirmPassword) {
+        errors.push({msg: "Please fill in all the fields"});
+        var err = new Error("Please fill in all the fields");
         err.status = 400;
         return next(err);
+    }
+
+    if (password !== confirmPassword) {
+        errors.push({msg: "Passwords do not match"});
+        var err = new Error("Passwords do not match");
+        err.status = 400;
+        return next(err);
+    }
+
+    if (password.length < 8) {
+        errors.push({msg: "Password must be at least 8 characters"});
+        var err = new Error("Password must be at least 8 characters");
+        err.status = 400;
+        return next(err);
+    }
+
+    if (errors.length > 0) {
+        res.render("register", {
+            errors, name, email, password, confirmPassword
+        });
+    } else {
+        User.findOne({email: email})
+            .then(user => {
+                if (user) {
+                    errors.push({msg: "Email is already registered"});
+                    var err = new Error("Email is already registered");
+                    err.status = 400;
+                    return next(err);
+                } else {
+                    const userData = new User( {
+                        name: name,
+                        email: email,
+                        password: password
+                    })
+
+                    User.create(userData, function(error, user) {
+
+                        if (error) {
+                            console.log("failed to create user");
+                            return next(error);
+                        } else {
+                            console.log("Created user");
+                            return res.redirect("/login");
+                        }
+                    });
+                }
+            })
     }
 };
 
