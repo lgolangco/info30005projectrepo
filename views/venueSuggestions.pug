@@ -5,7 +5,7 @@ block content
         .row
             .col-md-8.col-md-offset-2
                 h1.display-4.m-b-2 #{title}
-                p.display-4.m-b-2
+                p
                   | Hi! Thank you for helping us improve StudySpot.
                   | Filling out the form below submits your suggestions to the admin,
                   | who will then update the venues accordingly.
@@ -33,8 +33,6 @@ block content
                     label(for="exampleFormControlTextarea1") Please enter your suggestions for updates to this venue profile here!
                     textarea.form-control#exampleFormControlTextarea1(rows="3" placeholder="Please enter suggestions here.")
                   
-                  // Or maybe this?
-                  input.form-control(type="text" placeholder="Please enter suggestions here.")
 
                 //- // suggest venue changes form
                 //- form(method='POST' action='#')

@@ -17,7 +17,7 @@ router.get("/about", (req, res, next) => {
     return res.render("about", {title: "About"});
 });
 
-// GET Contact
+// GET Venues
 router.get("/venues", (req, res, next) => {
     return res.render("venues", {title: "Study Areas"});
 });
@@ -33,10 +33,10 @@ router.get("/newvenue", (req, res, next) => {
 });
 
 // GET venueSuggestions
-router.get("/venue/:id/suggestions", (req, res, next) => {
+router.get("/venue/:_id/suggestions", (req, res, next) => {
   return res.render("venueSuggestions", {
     title: "Suggest Changes to"
-  });
+    });
 });
 
 // POST Register
