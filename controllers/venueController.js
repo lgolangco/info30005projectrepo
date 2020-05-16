@@ -94,9 +94,7 @@ const submitVenueSuggestion = async (req, res) => {
   try {
     await db.collection('venueSuggestions').insertOne(suggestionProcessed)
     return res.render('venueSuggestions', {
-      completed: true,
-      venue: null,
-      user: null
+      completed: true
     });
   } catch(err){
     res.status(400);

@@ -5,11 +5,11 @@ block content
         .row
             .col-md-8.col-md-offset-2
                 if (completed)
-                  h1.display-4.m-b-2 Successfully submitted your suggestion!
+                  h2.display-4.m-b-2 Successfully submitted your suggestion!
                   br
                   p The admins will review your suggestions and update our database accordingly.
                   
-                if (venue && user)
+                else
                   h1.display-4.m-b-2 Suggest Changes for 
                   h1.display-4.m-b-2 #{venue.venueName}
                   br
