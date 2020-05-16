@@ -17,11 +17,24 @@ block content
                 // Venue Type
                 div.form-group
                   label(for="venueType") Venue Type
-                  select(name="venueType" value=venue.venueType).form-control#exampleFormControlSelect1
-                    option Cafe
-                    option Public Library
-                    option Other
-                div
+                  select(name="venueType").form-control#exampleFormControlSelect1
+                    if venue.venueType === "Cafe"
+                      option(selected) Cafe
+                      option Public Library
+                      option Other
+                    else if venue.venueType === "Public Library"
+                      option Cafe
+                      option(selected) Public Library
+                      option Other
+                  
+                    else if venue.venueType === "Other"
+                      option Cafe
+                      option Public Library
+                      option(selected) Other  
+                    else 
+                      option Cafe
+                      option Public Library
+                      option Other
                 
                 // Venue Address
                 div.form-group
@@ -38,15 +51,88 @@ block content
                   // State
                   div.form-group.col-md-3
                     label(for="venueState") State
-                    select(name="venueState" value=venue.venueAddress.venueState).form-control#exampleFormControlSelect1
-                      option VIC
-                      option NSW
-                      option QLD
-                      option TAS
-                      option ACT
-                      option NT
-                      option SA
-                      option WA
+                    select(name="venueState").form-control#exampleFormControlSelect1
+                      if venue.venueAddress.venueState === "VIC"
+                        option(selected) VIC
+                        option NSW
+                        option QLD
+                        option TAS
+                        option ACT
+                        option NT
+                        option SA
+                        option WA
+                      else if venue.venueAddress.venueState === "NSW"
+                        option VIC
+                        option(selected) NSW
+                        option QLD
+                        option TAS
+                        option ACT
+                        option NT
+                        option SA
+                        option WA
+                      else if venue.venueAddress.venueState === "QLD"
+                        option VIC
+                        option NSW
+                        option(selected) QLD
+                        option TAS
+                        option ACT
+                        option NT
+                        option SA
+                        option WA
+                      else if venue.venueAddress.venueState === "TAS"
+                        option VIC
+                        option NSW
+                        option QLD
+                        option(selected) TAS
+                        option ACT
+                        option NT
+                        option SA
+                        option WA
+                      else if venue.venueAddress.venueState === "ACT"
+                        option VIC
+                        option NSW
+                        option QLD
+                        option TAS
+                        option(selected) ACT
+                        option NT
+                        option SA
+                        option WA
+                      else if venue.venueAddress.venueState === "NT"
+                        option VIC
+                        option NSW
+                        option QLD
+                        option TAS
+                        option ACT
+                        option(selected) NT
+                        option SA
+                        option WA
+                      else if venue.venueAddress.venueState === "SA"
+                        option VIC
+                        option NSW
+                        option QLD
+                        option TAS
+                        option ACT
+                        option NT
+                        option(selected) SA
+                        option WA
+                      else if venue.venueAddress.venueState === "WA"
+                        option VIC
+                        option NSW
+                        option QLD
+                        option TAS
+                        option ACT
+                        option NT
+                        option SA
+                        option(selected) WA
+                      else  
+                        option VIC
+                        option NSW
+                        option QLD
+                        option TAS
+                        option ACT
+                        option NT
+                        option SA
+                        option WA
                   div
                   
                   // Postcode
@@ -60,10 +146,24 @@ block content
                 
                 div.form-group
                   label(for="noise") Noise Level
-                  select(name="noise" value=venue.venueDetails.noise).form-control#exampleFormControlSelect1
-                    option Low
-                    option Medium
-                    option High
+                  select(name="noise").form-control#exampleFormControlSelect1
+                    if venue.venueDetails.noise === "Low"
+                      option(selected) Low
+                      option Medium
+                      option High
+                    else if venue.venueDetails.noise === "Medium"
+                      option Low
+                      option(selected) Medium
+                      option High
+                  
+                    else if venue.venueDetails.noise === "High"
+                      option Low
+                      option Medium
+                      option(selected) High  
+                    else 
+                      option Low
+                      option Medium
+                      option High
                 div
                 
                 // Wifi
