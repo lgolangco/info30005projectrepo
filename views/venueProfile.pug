@@ -99,6 +99,13 @@ block content
                 img.rounded(src="/images/venue/discussion.png", width="50px")
               else
                 img.rounded(src="/images/venue/silence.png", width="50px")
+                  
+            // printer
+            td
+              if venue.venueDetails.printer
+                img.rounded(src="/images/venue/printer.png", width="50px")
+              else
+                img.rounded(src="/images/venue/noprinter.png", width="50px")
              
           // labels
           tr
@@ -116,18 +123,25 @@ block content
               td toilets
             else
               td no toilets
-              //powerpoints
+            // powerpoints
             if venue.venueDetails.power
               td powerpoints
             else
               td no powerpoints
-            //discussion-friendly
+            // discussion-friendly
             if venue.venueDetails.discussionFriendly
               td discussion
                 p friendly
             else
               td silent 
                 p space
+            // printer
+            if venue.venueDetails.discussionFriendly
+              td pringting
+                p available
+            else
+              td no printing 
+                p available
       // reviews
       div.venue-reviews
         h2 Reviews
