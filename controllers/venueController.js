@@ -51,6 +51,23 @@ const getVenueByID = async (req, res) => {
   })
 };
 
+// function to get venues by id and show venue suggestions page
+const getVenueSuggestionsByID = async (req, res) => {
+  try {
+    const venue = await Venue.find({_id: req.params._id});
+    if (venue.length === 0){
+      return res.send("There are no venues listed with this id");
+    } else {
+      return res.render('venueSuggestions', {
+        venue: venue[0]
+      });
+    }
+  } catch (err) {
+    res.status(400);
+    return res.send("getVenueByID function failed");
+  }
+};
+
 // function to get venues by postcode
 const getVenueByPostcode = async (req, res) => {
    await Venue.find({venuePostcode: req.params.venuePostcode}, function(err, venue) {
@@ -207,5 +224,6 @@ module.exports = {
   getVenueByType,
   addVenue,
   updateVenue,
-  deleteVenue
+  deleteVenue,
+  getVenueSuggestionsByID
 };
