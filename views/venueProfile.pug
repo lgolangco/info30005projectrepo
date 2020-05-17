@@ -26,8 +26,9 @@ block content
     h1 Venue successfully deleted.
   else
     center
-      - const imgURL = "https://studyspot.s3.amazonaws.com/venue/header/" + venue._id.toString() + ".1.jpg"
-      img.venue-header(src = imgURL)
+      - const imgURL = "https://studyspot.s3.amazonaws.com/venue/header/" + venue._id.toString() + ".jpg"
+      img.venue-header(src = imgURL
+        onerror="this.src='https://studyspot.s3.amazonaws.com/venue/header/default.jpg'")
         
     br
     br
@@ -41,39 +42,13 @@ block content
           h2 #{message}
           h2 #{venue.venueName}
           p #{venue.venueType} | #{venue.venueAddress.venueSuburb}, #{venue.venueAddress.venueState}
-  
-  center
-    - const imgURL = "https://studyspot.s3.amazonaws.com/venue/header/" + venue._id.toString() + ".jpg"
-    img.venue-header(src = imgURL
-      onerror="this.src='https://studyspot.s3.amazonaws.com/venue/header/default.jpg'")
-      
-  br
-  br
-  .row.venue-profile-page
-      
-    //main content 
-    div.col-lg-8.col-md-12.offset-lg-1.venue-info-div
-    
-      //basic information
-      div
-        h2 #{message}
-        h2 #{venue.venueName}
-        p #{venue.venueType} | #{venue.venueAddress.venueSuburb}, #{venue.venueAddress.venueState}
         
-        
-        p Leave a review
-        - const id = venue._id
-        - const suggestionsPage = '/venuesuggestions/' + id
-        p
-          a(href=suggestionsPage) Suggest changes
->>>>>>> 94a3953b163379aef2584b4caa7fd334a97414a8
-          
           p Leave a review
           - const id = venue._id
           - const suggestionsPage = '/venuesuggestions/' + id
           p
             a(href=suggestionsPage) Suggest changes
-            
+
         //venue details
         div.venue-details-div
           h3 Details
