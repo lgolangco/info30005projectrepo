@@ -19,12 +19,14 @@ block content
       .row
         each venue in venues
           - const address = venue.venueAddress.venueStreetAddress +", "+venue.venueAddress.venueSuburb+", "+venue.venueAddress.venuePostcode;
-          - const imgURL = "https://studyspot.s3.amazonaws.com/venue/header/" + venue._id.toString() + ".1.jpg"
+          - const imgURL = "https://studyspot.s3.amazonaws.com/venue/header/" + venue._id.toString() + ".jpg"
           .col-lg-6
             .card.mb-3.d-flex.align-items-stretch
               .row.no-gutters
                 .col-4
-                  //- img(src=imgURL alt="Venue thumbnail not loading").card-img
+                  a(href="/venue/" + venue._id)
+                    img.venue-thumbnail(src = imgURL
+                    onerror="this.src='https://studyspot.s3.amazonaws.com/venue/header/default.jpg'")
                 .col-8
                   .card-body
                     h5.card-title #[a(href="/venue/" + venue._id) #{venue.venueName}]
