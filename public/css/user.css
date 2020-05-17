@@ -2,7 +2,7 @@
 
 
 /* List view of users page*/
-.card {
+.user-card {
     padding-top: 20px;
     margin: 20px 3px 20px 3px;
     background-color: rgba(214, 224, 226, 0.2);
