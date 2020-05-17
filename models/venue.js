@@ -11,12 +11,12 @@ const venueSchema = new mongoose.Schema({
     venuePostcode: {type: String, required: true}
   },
   venueDetails: {
-    noise: {type: String, required: true},
-    wifi: {type: Boolean, required: true},
-    toilets: {type: Boolean, required: true},
-    power: {type: Boolean, required: true},
-    discussionFriendly: {type: Boolean, required: true},
-    printer: {type: Boolean, required: true}
+    noise: {type: String, required: false},
+    wifi: {type: Boolean, required: false},
+    toilets: {type: Boolean, required: false},
+    power: {type: Boolean, required: false},
+    discussionFriendly: {type: Boolean, required: false},
+    printer: {type: Boolean, required: false}
   },
   venueContact: {
     phone: {type: String, required: false},
@@ -25,15 +25,14 @@ const venueSchema = new mongoose.Schema({
     web: {type: String, required: false}
   },
   venueHours: {
-    sun: {type: String, required: true},
-    mon: {type: String, required: true},
-    tue: {type: String, required: true},
-    wed: {type: String, required: true},
-    thu: {type: String, required: true},
-    fri: {type: String, required: true},
-    sat: {type: String, required: true}
-  },
-  venueStreetAddress: {type: String, required: false}
+    sun: {type: String, required: false},
+    mon: {type: String, required: false},
+    tue: {type: String, required: false},
+    wed: {type: String, required: false},
+    thu: {type: String, required: false},
+    fri: {type: String, required: false},
+    sat: {type: String, required: false}
+  }
 });
 
 const Venue = mongoose.model("venue", venueSchema, "venue");
