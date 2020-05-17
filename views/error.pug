@@ -5,7 +5,15 @@ block content
         .row.text-center
             .col-md
                 i.icn-person.material-icons error
+                br
+                br
+                br  
                 p.lead= message
-                a.btn.btn-info(href="/register") Return to sign up
-
-                a.btn.btn-outline-info(href="/login") Return to sign in
+                br
+                
+                if venueerror
+                  p #{venueerror} #[a(href="/venue") click here]
+                else  
+                  p 
+                    |#[a.btn.btn-info(href="/register") Return to sign up]    
+                    |#[a.btn.btn-outline-info(href="/login") Return to sign in]

@@ -32,13 +32,20 @@ const getAllVenues = async (req, res) => {
 // function to get venues by id and show venue profile
 const getVenueByID = async (req, res) => {
   if (ObjectId.isValid(req.params._id) === false) {
-      return res.send("There are no venues listed with this id");
+    return res.render('error', {
+      error: "There are no venues listed with this id!",
+      message: "There are no venues listed with this id!",
+      venueerror: "For a list of all registered venues,"
+    });
   }
-
   await Venue.find({_id: req.params._id}, function(err, venue) {
     // checks if the _id is invalid or there are no venues listed with that _id
     if (venue.length === 0) {
-      return res.send("There are no venues listed with this id");
+      return res.render('error', {
+        error: "There are no venues listed with this id!",
+        message: "There are no venues listed with this id!",
+        venueerror: "For a list of all registered venues,"
+      });
 
     } else if (venue) {
       return res.render('venueProfile', {
@@ -54,6 +61,13 @@ const getVenueByID = async (req, res) => {
 
 // function to get venues by id and show venue suggestions page
 const getVenueSuggestionsByID = async (req, res) => {
+  if (ObjectId.isValid(req.params._id) === false) {
+    return res.render('error', {
+      error: "There are no venues listed with this id!",
+      message: "There are no venues listed with this id!",
+      venueerror: "For a list of all registered venues,"
+    });
+  }
   const user = await User.findById(req.session.userId);
   if (user === null) {
     return res.render('error', {
@@ -64,7 +78,11 @@ const getVenueSuggestionsByID = async (req, res) => {
   try {
     const venue = await Venue.find({_id: req.params._id});
     if (venue.length === 0){
-      return res.send("There are no venues listed with this id");
+      return res.render('error', {
+        error: "There are no venues listed with this id!",
+        message: "There are no venues listed with this id!",
+        venueerror: "For a list of all registered venues,"
+      });
     } else {
       return res.render('venueSuggestions', {
         venue: venue[0],
@@ -105,10 +123,21 @@ const submitVenueSuggestion = async (req, res) => {
 
 // function to get venues by id and show venue update page
 const getVenueUpdateByID = async (req, res) => {
+  if (ObjectId.isValid(req.params._id) === false) {
+    return res.render('error', {
+      error: "There are no venues listed with this id!",
+      message: "There are no venues listed with this id!",
+      venueerror: "For a list of all registered venues,"
+    });
+  }
   try {
     const venue = await Venue.find({_id: req.params._id});
     if (venue.length === 0){
-      return res.send("There are no venues listed with this id");
+      return res.render('error', {
+        error: "There are no venues listed with this id!",
+        message: "There are no venues listed with this id!",
+        venueerror: "For a list of all registered venues,"
+      });
     } else {
       return res.render("venueUpdate", {
         title: "Update Profile",
@@ -270,13 +299,21 @@ const deleteVenue = async (req, res) => {
 
   // checks if the _id is invalid
   if (ObjectId.isValid(req.params._id) === false) {
-      return res.send("There are no venues listed with this id");
+    return res.render('error', {
+      error: "There are no venues listed with this id!",
+      message: "There are no venues listed with this id!",
+      venueerror: "For a list of all registered venues,"
+    });
   }
 
   // checks if there are no venues listed with that _id
   await Venue.find({_id: req.params._id}, function(err, venue) {
     if (venue.length === 0) {
-      return res.send("There are no venues listed with this id");
+      return res.render('error', {
+        error: "There are no venues listed with this id!",
+        message: "There are no venues listed with this id!",
+        venueerror: "For a list of all registered venues,"
+      });
     }
   })
 
