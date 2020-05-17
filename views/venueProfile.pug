@@ -29,13 +29,12 @@ block content
       - const imgURL = "https://studyspot.s3.amazonaws.com/venue/header/" + venue._id.toString() + ".jpg"
       img.venue-header(src = imgURL
         onerror="this.src='https://studyspot.s3.amazonaws.com/venue/header/default.jpg'")
-        
-    br
+      
     br
     .row.venue-profile-page
         
       //main content 
-      div.col-lg-8.col-md-12.offset-lg-1.venue-info-div
+      div.col-lg-7.col-md-12.offset-lg-1.venue-info-div
       
         //basic information
         div
@@ -140,7 +139,7 @@ block content
                 td silent 
                   p space
               // printer
-              if venue.venueDetails.discussionFriendly
+              if venue.venueDetails.printer
                 td printing
                   p available
               else
@@ -155,6 +154,7 @@ block content
       //side bar
       div.col-lg-3.col-md-12.venue-side-bar
         if venue.venueContact.phone || venue.venueContact.mobile || venue.venueContact.email || venue.venueContact.web
+          br
           h5 Contact Details
           if venue.venueContact.phone
             p phone: #{venue.venueContact.phonePrefix} #{venue.venueContact.phone}
