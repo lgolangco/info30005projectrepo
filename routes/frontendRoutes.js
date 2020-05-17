@@ -57,19 +57,19 @@ router.get("/logout", userController.logout);
 
 // VENUE
 
-// GET newvenue form page
-router.get("/newvenue", (req, res, next) => {
-  return res.render("newvenue", {title: "Register a New Venue"});
+// GET newVenue form page
+router.get("/newVenue", (req, res, next) => {
+  return res.render("newVenue", {title: "Register a New Venue"});
 });
 
-// POST newvenue form
-router.post("/newvenue", venueController.addVenue);
+// POST newVenue form
+router.post("/newVenue", venueController.addVenue);
 
 // GET venuesuggestions form page
-router.get("/venuesuggestions/:_id",venueController.getVenueSuggestionsByID);
+router.get("/venueSuggestions/:_id",venueController.getVenueSuggestionsByID);
 
 // POST venueSuggestion form
-router.post("/venuesuggestions/:_id", venueController.submitVenueSuggestion);
+router.post("/venueSuggestions/:_id", venueController.submitVenueSuggestion);
 
 // GET venueUpdate form page
 router.get("/venueUpdate/:_id",venueController.getVenueUpdateByID);
