@@ -205,12 +205,17 @@ const addVenue = async (req, res) => {
    const db = mongoose.connection;
    try {
      await db.collection('venue').insertOne(venueProcessed)
-     return res.render('newVenue',{
+     return res.render("newVenue",{
        title: "Successfully added venue!",
+       completed: true
      });
    } catch(err){
      res.status(400);
-     return res.send("addVenue failed");
+     console.log(err);
+     return res.render("newVenue",{
+       title: "Failed to add venue.",
+       completed: true
+     });
    }
 };
 
@@ -277,10 +282,13 @@ const deleteVenue = async (req, res) => {
   const result = await Venue.deleteOne({_id: req.params._id}).exec();
   if (result.n === 0) {
     res.status(400);
-    return res.send("deleteVenue function failed");
+    return res.alert("deleteVenue function failed");
   } else {
-    return res.send("Successfully deleted venue");
-  }
+    res.render("venueProfile",{
+      deleted: true
+    });
+    return false;
+    }
 }
 
 

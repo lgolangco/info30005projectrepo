@@ -42,6 +42,8 @@ router.post("/newvenue", venueController.addVenue);
 // POST venueSuggestion
 router.post("/venuesuggestions/:_id", venueController.submitVenueSuggestion);
 
+router.post("/deleteVenue/:_id",venueController.deleteVenue)
+
 // POST Register
 router.post("/register", userController.addUser);
 
