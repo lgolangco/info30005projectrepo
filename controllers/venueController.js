@@ -24,7 +24,11 @@ const getAllVenues = async (req, res) => {
     }
   } catch (err) {
     res.status(400);
-    return res.send("Database query failed");
+    return res.render('error', {
+      error: "Database query failed",
+      message: "Database query failed",
+      functionfailure: "Failed to get all venues"
+    });
   }
 };
 
@@ -54,7 +58,11 @@ const getVenueByID = async (req, res) => {
       // return res.send(venue);
     } else {
       res.status(400);
-      return res.send("getVenueByID function failed");
+      return res.render('error', {
+        error: "Database query failed",
+        message: "Database query failed",
+        functionfailure: "Failed to get venue profile"
+      });
     }
   })
 };
@@ -91,7 +99,11 @@ const getVenueSuggestionsByID = async (req, res) => {
     }
   } catch (err) {
     res.status(400);
-    return res.send("getVenueSuggestionsByID function failed");
+    return res.render('error', {
+      error: "Database query failed",
+      message: "Database query failed",
+      functionfailure: "Failed to get suggestions page"
+    });
   }
 };
 
@@ -116,7 +128,11 @@ const submitVenueSuggestion = async (req, res) => {
     });
   } catch(err){
     res.status(400);
-    return res.send("submitVenueSuggestion failed");
+    return res.render('error', {
+      error: "Database query failed",
+      message: "Database query failed",
+      functionfailure: "Failed to submit suggestions"
+    });
   }
 };
 
@@ -148,46 +164,13 @@ const getVenueUpdateByID = async (req, res) => {
     }
   } catch (err) {
     res.status(400);
-    return res.send("getVenueUpdateByID function failed");
+    return res.render('error', {
+      error: "Database query failed",
+      message: "Database query failed",
+      functionfailure: "Failed to get update venue"
+    });
   }
 };
-
-// function to get venues by postcode
-const getVenueByPostcode = async (req, res) => {
-   await Venue.find({venuePostcode: req.params.venuePostcode}, function(err, venue) {
-
-    // checks if there are no venues listed with that venuePostcode
-     if (venue.length === 0){
-       return res.send("There are no venues listed with this postcode");
-     } else if (venue) {
-        return res.send(venue);
-      } else {
-        res.status(400);
-        return res.send("getVenueByPostcode function failed");
-      }
-    }
-  )
-};
-
-
-// function to get venues by type
-const getVenueByType = async (req, res) => {
-   await Venue.find({venueType: req.params.venueType}, function(err, venue) {
-
-     // checks if there are no venues listed with that venueType
-      if (venue.length === 0){
-        return res.send("There are no venues listed with this type")
-
-      } else if (venue) {
-        return res.send(venue);
-      } else {
-        res.status(400);
-        return res.send("getVenueByType function failed");
-      }
-    }
-  )
-};
-
 
 function convertVenue(venueRaw) {
   const venueProcessed = {
@@ -243,9 +226,10 @@ const addVenue = async (req, res) => {
    } catch(err){
      res.status(400);
      console.log(err);
-     return res.render("newVenue",{
-       title: "Failed to add venue.",
-       completed: true
+     return res.render('error', {
+       error: "Database query failed",
+       message: "Database query failed",
+       functionfailure: "Failed to add venue"
      });
    }
 };
@@ -283,11 +267,11 @@ const updateVenue = async (req, res) => {
         } else {
 
           res.status(400);
-          return res.render("venueUpdate",{
-            title: "Venue update failed",
-            venue: venueProcessed,
-            completed: true
-          })
+          return res.render('error', {
+            error: "Database query failed",
+            message: "Database query failed",
+            functionfailure: "Failed to update venue"
+          });
         }
       }
   )
@@ -321,7 +305,11 @@ const deleteVenue = async (req, res) => {
   const result = await Venue.deleteOne({_id: req.params._id}).exec();
   if (result.n === 0) {
     res.status(400);
-    return res.alert("deleteVenue function failed");
+    return res.render('error', {
+      error: "Database query failed",
+      message: "Database query failed",
+      functionfailure: "Failed to delete venue"
+    });
   } else {
     res.render("venueProfile",{
       deleted: true
@@ -329,6 +317,43 @@ const deleteVenue = async (req, res) => {
     return false;
     }
 }
+
+// not yet implemented on front-end
+// function to get venues by postcode
+const getVenueByPostcode = async (req, res) => {
+   await Venue.find({venuePostcode: req.params.venuePostcode}, function(err, venue) {
+
+    // checks if there are no venues listed with that venuePostcode
+     if (venue.length === 0){
+       return res.send("There are no venues listed with this postcode");
+     } else if (venue) {
+        return res.send(venue);
+      } else {
+        res.status(400);
+        return res.send("getVenueByPostcode function failed");
+      }
+    }
+  )
+};
+
+// not yet implemented on front-end
+// function to get venues by type
+const getVenueByType = async (req, res) => {
+   await Venue.find({venueType: req.params.venueType}, function(err, venue) {
+
+     // checks if there are no venues listed with that venueType
+      if (venue.length === 0){
+        return res.send("There are no venues listed with this type")
+
+      } else if (venue) {
+        return res.send(venue);
+      } else {
+        res.status(400);
+        return res.send("getVenueByType function failed");
+      }
+    }
+  )
+};
 
 
 // remember to export the functions

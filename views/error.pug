@@ -11,6 +11,8 @@ block content
                 p.lead= message
                 br
                 
+                if functionfailure
+                  p #{functionfailure}
                 if venueerror
                   p #{venueerror} #[a(href="/venue") click here]
                 else  
