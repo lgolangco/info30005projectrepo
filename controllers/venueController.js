@@ -179,8 +179,10 @@ function convertVenue(venueRaw) {
       printer: Boolean(venueRaw.printer)
     },
     venueContact: {
-      phone: venueRaw.phonePrefix+ venueRaw.phone,
-      mobile: venueRaw.mobilePrefix+ venueRaw.mobile,
+      phonePrefix: venueRaw.phonePrefix,
+      phone: venueRaw.phone,
+      mobilePrefix: venueRaw.mobilePrefix,
+      mobile: venueRaw.mobile,
       email: venueRaw.email,
       web: venueRaw.web,
     },

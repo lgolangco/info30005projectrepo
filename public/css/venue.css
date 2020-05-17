@@ -26,3 +26,10 @@
 #venues-page{
     background-color: white;
 }
+
+.venue-header{
+  object-fit: cover;
+  object-position: 50% 60%;
+  width:100%;
+  height: 350px;
+}

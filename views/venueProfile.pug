@@ -154,11 +154,19 @@ block content
       
       //side bar
       div.col-lg-3.col-md-12.venue-side-bar
-        h5 Contact Details
-        p(style="white-space:pre;")
-          |#{venue.venueContact.phone}
-          |#{venue.venueContact.email}
-          |#{venue.venueContact.web}
+        if venue.venueContact.phone || venue.venueContact.mobile || venue.venueContact.email || venue.venueContact.web
+          h5 Contact Details
+          if venue.venueContact.phone
+            p phone: #{venue.venueContact.phonePrefix} #{venue.venueContact.phone}
+          if venue.venueContact.mobile
+            p mobile: #{venue.venueContact.mobilePrefix} #{venue.venueContact.mobile}
+          if venue.venueContact.email
+            p #{venue.venueContact.email}
+          if venue.venueContact.web
+            a(href=venue.venueContact.web) #{venue.venueContact.web}
+        
+        br
+        
         h5 Location
         
         - const query = venue.venueAddress.venueStreetAddress + ", " + venue.venueAddress.venueSuburb

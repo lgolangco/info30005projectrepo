@@ -217,28 +217,28 @@ block content
                   div.form-row
                     div.form-group.col-lg-2
                         label(for='phonePrefix') Prefix
-                        input.form-control(type='text', placeholder='(03)' name='phonePrefix' autocomplete="off")
+                        input.form-control(type='text', placeholder='(03)' name='phonePrefix' autocomplete="off" value=venue.venueContact.phonePrefix)
                     
                     div.form-group.col-lg-10
                         label(for='phone') Landline Number
-                        input.form-control(type='text', placeholder='e.g. 1234 5678' name='phone' autocomplete="off" value=venue.venueDetails.phone)
+                        input.form-control(type='text', placeholder='e.g. 1234 5678' name='phone' autocomplete="off" value=venue.venueContact.phone)
                           
                   div.form-row
                     div.form-group.col-lg-2
                         label(for='mobilePrefix') Prefix
-                        input.form-control(type='text', placeholder='+61' name='mobilePrefix' autocomplete="off")
+                        input.form-control(type='text', placeholder='+61' name='mobilePrefix' autocomplete="off" value=venue.venueContact.mobilePrefix)
                     
                     div.form-group.col-lg-10
                         label(for='mobile') Mobile Number
-                        input.form-control(type='text', placeholder='e.g. 412 345 678' name='mobile' autocomplete="off" value=venue.venueDetails.mobile)
+                        input.form-control(type='text', placeholder='e.g. 412 345 678' name='mobile' autocomplete="off" value=venue.venueContact.mobile)
               
                   div.form-group
                     label(for="email") Email address
-                    input.form-control#exampleInputEmail1(type="email" aria-describedby="emailHelp" placeholder="Enter email" name = "email" value=venue.venueDetails.email)
+                    input.form-control#exampleInputEmail1(type="email" aria-describedby="emailHelp" placeholder="Enter email" name = "email" value=venue.venueContact.email)
                       
                   div.form-group
                     label(for="web") Website
-                    input.form-control(type='text' placeholder="Enter website" name = "web" value=venue.venueDetails.web)
+                    input.form-control(type='text' placeholder="Enter website" name = "web" value=venue.venueContact.web)
                   
                   
                   // Venue Hours

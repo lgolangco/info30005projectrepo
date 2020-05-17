@@ -19,7 +19,9 @@ const venueSchema = new mongoose.Schema({
     printer: {type: Boolean, required: true}
   },
   venueContact: {
+    phonePrefix: {type: String, required: false},
     phone: {type: String, required: false},
+    mobilePrefix: {type: String, required: false},
     mobile: {type: String, required: false},
     email: {type: String, required: false},
     web: {type: String, required: false}
