@@ -4,25 +4,19 @@ const router = express.Router();
 // load the user controller
 const venueController = require("../controllers/venueController.js");
 
-// get all venues
+// GET list of all venues
 router.get("/", venueController.getAllVenues);
 
-// get all venues by id
+// GET list of all venues by id
 router.get("/:_id", venueController.getVenueByID);
 
-// get all venues by postcode
+// GET list of all venues by postcode
 router.get("/bypostcode/:venuePostcode", venueController.getVenueByPostcode);
 
-// get all venues by type
+// GET list of all venues by type
 router.get("/bytype/:venueType", venueController.getVenueByType);
 
-// create venues
-router.post("/newvenue", venueController.addVenue);
-
-// update venues
+// PTACH request to update venue
 router.patch("/byid/:_id", venueController.updateVenue);
-
-// delete venue by id
-router.delete("/byid/:_id", venueController.deleteVenue);
 
 module.exports = router;
