@@ -3,7 +3,8 @@ extends layout
 block content
     .text-center
         .main.container-fluid
-
+                
+                // Login Form
                 form(method="POST" action="/login").form-signin
                     h1 Please sign in
                     label.sr-only(for="email") Email
@@ -12,4 +13,3 @@ block content
                     input.form-control(type="password" placeholder="Password" name="password" id="password" required="")
                     button.btn.btn-lg.btn-primary.btn-block(type="submit") Sign in
                     p.mt-5.mb-3.text-muted &copy; 2020
-
