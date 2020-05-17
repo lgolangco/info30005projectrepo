@@ -13,18 +13,19 @@ block content
       
       br
       h5 
-        a(href="/newvenue") Register a new venue
+        a(href="/newvenue") + Register a new venue
       br
       
       .row
         each venue in venues
           - const address = venue.venueAddress.venueStreetAddress +", "+venue.venueAddress.venueSuburb+", "+venue.venueAddress.venuePostcode;
-          .col-md-6
-            .card(style="height:12rem;").mb-3
+          - const imgURL = "https://studyspot.s3.amazonaws.com/venue/header/" + venue._id.toString() + ".1.jpg"
+          .col-lg-6
+            .card.mb-3.d-flex.align-items-stretch
               .row.no-gutters
-                .col-md-4
-                  p img goes here
-                .col-md-8              
+                .col-4
+                  //- img(src=imgURL alt="Venue thumbnail not loading").card-img
+                .col-8
                   .card-body
                     h5.card-title #[a(href="/venue/" + venue._id) #{venue.venueName}]
                     hr
