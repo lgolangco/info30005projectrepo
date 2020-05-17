@@ -5,7 +5,9 @@ const bcrypt =  require("bcrypt");
 const userSchema = new mongoose.Schema({
   name: {type: String, required: true, trim: true},
   email: {type: String, required: true, unique: true, trim: true},
-  password: {type: String, required: true}
+  password: {type: String, required: true},
+  cover: {type: String, default: 'https://tokystorage.s3.amazonaws.com/images/default-cover.png'},
+  avatar: {type: String, default: "https://www.mhcsa.org.au/wp-content/uploads/2016/08/default-non-user-no-photo.jpg"}
 });
 
 // authenticate input against database documents

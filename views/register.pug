@@ -1,11 +1,10 @@
 extends layout
 
 block content
-    .main.container
-        .registration.mx-auto.d-block.w-100
-            .page-header.text-center
+        .container-fluid
+            .page-header
+            form(method="POST" action="/register").form-registration
                 h1 Sign Up
-            form(method="POST" action="/register")
                 .form-group
                     label(for="name") Full name:
                     input#name.form-control(type="text", placeholder="first and last" name="name")
@@ -23,19 +22,3 @@ block content
                         button.btn.btn-primary(type="submit") Submit
                     .form-check.form-group.d-flex.justify-content-end
                         a(href="/login") Sign in instead
-
-
-        //form(method="POST" action="/register")
-        //    div.form-group
-        //        label(for="name") Name:
-        //        input#name.form-control(type="text", placeholder="first and last" name="name" autocomplete="off")
-        //    div.form-group
-        //        label(for="email") Email:
-        //        input#email.form-control(type="email", placeholder="name@email.com" name="email" autocomplete="off")
-        //    div.form-group
-        //        label(for="pw") Password:
-        //        input#pw.form-control(type="password" name="password")
-        //    div.form-group
-        //        label(for="pw2") Confirm Password:
-        //        input#pw2.form-control(type="password" name="confirmPassword")
-        //    button.btn.btn-primary(type="submit") Sign up

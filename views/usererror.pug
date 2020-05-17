@@ -1,11 +1,12 @@
 extends layout
 
 block content
+    // Display error messages related to user or profile
     .main.container
         .row.text-center
             .col-md
                 i.icn-person.material-icons error
-                p.lead= message
+                p #{message}
                 a.btn.btn-info(href="/register") Return to sign up
 
                 a.btn.btn-outline-info(href="/login") Return to sign in

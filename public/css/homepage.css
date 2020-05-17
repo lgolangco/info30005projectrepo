@@ -1,0 +1,51 @@
+.big-heading {
+    color: #ffffff;
+}
+
+header.masthead {
+    position: relative;
+    background: #343a40 url("../images/bg.jpg") no-repeat center;
+    background-size: cover;
+    padding-top: 6rem;
+    padding-bottom: 10rem;
+}
+
+header.masthead .overlay {
+    position: absolute;
+    background-color: #0b5394;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    left: 0;
+    opacity: 0.3;
+}
+
+header.masthead h1 {
+    font-size: 2rem;
+}
+
+.search-bottom-title {
+    font-family: "Open Sans", sans-serif;
+    color: rgb(187, 191, 191);
+    font-size: 14px;
+    line-height: 21px;
+    margin: 20px 0px;
+    font-weight: 400;
+    text-align: center;
+}
+
+.popular-link-set {
+    color: #adadad;
+    font-size: 16px;
+    line-height: 24px;
+    padding: 30px 30px;
+    vertical-align: baseline;
+}
+
+.fas.fa-chevron-circle-left.fa-2x {
+    padding: 10px;
+}
+
+.carousel-inner {
+    padding: 10px;
+}
