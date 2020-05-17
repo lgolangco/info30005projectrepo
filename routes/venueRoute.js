@@ -16,7 +16,4 @@ router.get("/bypostcode/:venuePostcode", venueController.getVenueByPostcode);
 // GET list of all venues by type
 router.get("/bytype/:venueType", venueController.getVenueByType);
 
-// PTACH request to update venue
-router.patch("/byid/:_id", venueController.updateVenue);
-
 module.exports = router;
