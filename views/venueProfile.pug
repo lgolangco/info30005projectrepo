@@ -21,128 +21,166 @@ block content
 
   - const gMapsKey = "AIzaSyDw04dJQyETFjfsthXJzhvjAiY9XE9Labc";
   
-
-  .row.venue-profile-page
-      
-    //main content 
-    div.col-lg-8.col-md-12.offset-lg-1.venue-info-div
-    
-      //basic information
-      div
-        h2 #{venue.venueName}
-        p #{venue.venueType} | #{venue.venueAddress.venueSuburb}, #{venue.venueAddress.venueState}
+  if (deleted)
+    br
+    h1 Venue successfully deleted.
+  else
+    center
+      - const imgURL = "https://studyspot.s3.amazonaws.com/venue/header/" + venue._id.toString() + ".jpg"
+      img.venue-header(src = imgURL
+        onerror="this.src='https://studyspot.s3.amazonaws.com/venue/header/default.jpg'")
         
-        p Leave a review
+    br
+    br
+    .row.venue-profile-page
+        
+      //main content 
+      div.col-lg-8.col-md-12.offset-lg-1.venue-info-div
       
-      //venue details
-      div.venue-details-div
-        h3 Details
-                    
-        table.venue-details-table
-            
-          // icons
-          tr
+        //basic information
+        div
+          h2 #{message}
+          h2 #{venue.venueName}
+          p #{venue.venueType} | #{venue.venueAddress.venueSuburb}, #{venue.venueAddress.venueState}
+        
+          p Leave a review
+          - const id = venue._id
+          - const suggestionsPage = '/venuesuggestions/' + id
+          p
+            a(href=suggestionsPage) Suggest changes
+
+        //venue details
+        div.venue-details-div
+          h3 Details
+                      
+          table.venue-details-table
               
-            // type
-            td
-              if venue.venueType === "Cafe"
-                img.rounded(src="/images/venue/cafe.png", width="50px")
-              else if venue.venueType === "Public Library"
-                img.rounded(src="/images/venue/library.png", width="50px")
-              else
-                img.rounded(src="/images/venue/other.png", width="50px")
-              
-            // noise
-            td
-              if venue.venueDetails.noise === "low"
-                img.rounded(src="/images/venue/low.png", width="40px")
-              else if venue.venueDetails.noise === "med"
-                img.rounded(src="/images/venue/med.png", width="40px")
-              else
-                img.rounded(src="/images/venue/high.png", width="40px")
-              
-            // wifi
-            td
-              if venue.venueDetails.wifi
-                img.rounded(src="/images/venue/wifi.png", width="50px")
-              else
-                img.rounded(src="/images/venue/wifi.png", width="50px")
-              
-            // toilets
-            td
-              if venue.venueDetails.toilets
-                img.rounded(src="/images/venue/toilets.png", width="50px")
-              else
-                img.rounded(src="/images/venue/notoilets.png", width="50px")
+            // icons
+            tr
                 
-            // powerpoints
-            td
-              if venue.venueDetails.power
-                img.rounded(src="/images/venue/power.png", width="50px")
-              else
-                img.rounded(src="/images/venue/nopower.png", width="50px")
+              // type
+              td
+                if venue.venueType === "Cafe"
+                  img.rounded(src="/images/venue/cafe.png", width="50px")
+                else if venue.venueType === "Public Library"
+                  img.rounded(src="/images/venue/library.png", width="50px")
+                else
+                  img.rounded(src="/images/venue/other.png", width="50px")
+                
+              // noise
+              td
+                if venue.venueDetails.noise === "low"
+                  img.rounded(src="/images/venue/low.png", width="40px")
+                else if venue.venueDetails.noise === "med"
+                  img.rounded(src="/images/venue/med.png", width="40px")
+                else
+                  img.rounded(src="/images/venue/high.png", width="40px")
+                
+              // wifi
+              td
+                if venue.venueDetails.wifi
+                  img.rounded(src="/images/venue/wifi.png", width="50px")
+                else
+                  img.rounded(src="/images/venue/nowifi.png", width="50px")
+                
+              // toilets
+              td
+                if venue.venueDetails.toilets
+                  img.rounded(src="/images/venue/toilets.png", width="50px")
+                else
+                  img.rounded(src="/images/venue/notoilets.png", width="50px")
+                  
+              // powerpoints
+              td
+                if venue.venueDetails.power
+                  img.rounded(src="/images/venue/power.png", width="50px")
+                else
+                  img.rounded(src="/images/venue/nopower.png", width="50px")
+                      
+              // discussion-friendly
+              td
+                if venue.venueDetails.discussionFriendly
+                  img.rounded(src="/images/venue/discussion.png", width="50px")
+                else
+                  img.rounded(src="/images/venue/silence.png", width="50px")
                     
-            // discussion-friendly
-            td
-              if venue.venueDetails.discussionFriendly
-                img.rounded(src="/images/venue/discussion.png", width="50px")
+              // printer
+              td
+                if venue.venueDetails.printer
+                  img.rounded(src="/images/venue/printer.png", width="50px")
+                else
+                  img.rounded(src="/images/venue/noprinter.png", width="50px")
+               
+            // labels
+            tr
+              //type
+              td #{venue.venueType}  
+              //noise
+              td #{venue.venueDetails.noise} noise
+              //wifi
+              if venue.venueDetails.wifi
+                td wifi
               else
-                img.rounded(src="/images/venue/silence.png", width="50px")
-             
-          // labels
-          tr
-            //type
-            td #{venue.venueType}  
-            //noise
-            td #{venue.venueDetails.noise} noise
-            //wifi
-            if venue.venueDetails.wifi
-              td wifi
-            else
-              td no wifi
-            // toilets
-            if venue.venueDetails.toilets
-              td toilets
-            else
-              td no toilets
-              //powerpoints
-            if venue.venueDetails.power
-              td powerpoints
-            else
-              td no powerpoints
-            //discussion-friendly
-            if venue.venueDetails.discussionFriendly
-              td discussion
-                p friendly
-            else
-              td silent 
-                p space
-      // reviews
-      div.venue-reviews
-        h2 Reviews
-        p working on this feature!
+                td no wifi
+              // toilets
+              if venue.venueDetails.toilets
+                td toilets
+              else
+                td no toilets
+              // powerpoints
+              if venue.venueDetails.power
+                td powerpoints
+              else
+                td no powerpoints
+              // discussion-friendly
+              if venue.venueDetails.discussionFriendly
+                td discussion
+                  p friendly
+              else
+                td silent 
+                  p space
+              // printer
+              if venue.venueDetails.discussionFriendly
+                td printing
+                  p available
+              else
+                td no printing 
+                  p available
+        // reviews
+        div.venue-reviews
+          h2 Reviews
+          p working on this feature!
 
-    
-    //side bar
-    div.col-lg-3.col-md-12.venue-side-bar
-      h5 Contact Details
-      p(style="white-space:pre;")
-        |#{venue.venueContact.phone}
-        |#{venue.venueContact.email}
-        |#{venue.venueContact.web}
-      h5 Location
       
-      - const query = venue.venueAddress.venueStreetAddress + ", " + venue.venueAddress.venueSuburb
-      +google-map-place(query, gMapsKey)(maptype="roadmap")
-      
-      p #{venue.venueAddress.venueStreetAddress}, 
-        |#{venue.venueAddress.venueSuburb}, #{venue.venueAddress.venueState}, #{venue.venueAddress.venuePostcode}
-      
-      h5 Opening Hours
+      //side bar
+      div.col-lg-3.col-md-12.venue-side-bar
+        h5 Contact Details
+        p(style="white-space:pre;")
+          |#{venue.venueContact.phone}
+          |#{venue.venueContact.email}
+          |#{venue.venueContact.web}
+        h5 Location
+        
+        - const query = venue.venueAddress.venueStreetAddress + ", " + venue.venueAddress.venueSuburb
+        +google-map-place(query, gMapsKey)(maptype="roadmap")
+        
+        p #{venue.venueAddress.venueStreetAddress}, 
+          |#{venue.venueAddress.venueSuburb}, #{venue.venueAddress.venueState}, #{venue.venueAddress.venuePostcode}
+        
+        h5 Opening Hours
 
-      - const venueHours = venue.venueHours.toObject()
-        each timeframe, day in venueHours
-          p= day+ ": " + timeframe
+        - const venueHours = venue.venueHours.toObject()
+          each timeframe, day in venueHours
+            p= day+ ": " + timeframe
+      
+    .row
+      .col-md-2.offset-1
+        - const updateLink = "/venueUpdate/" + venue._id
+        a.btn.btn-Warning(href=updateLink) UPDATE VENUE
+      .col-md-2
+        - const deletePath = "/deleteVenue/" + venue._id
+        form(method="POST" action=deletePath)
+          button.btn.btn-Danger(type="Submit") DELETE VENUE
 
           
 

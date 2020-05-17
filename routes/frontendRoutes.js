@@ -2,6 +2,7 @@ const express = require("express");
 var router = express.Router();
 
 const userController = require("../controllers/userController.js");
+const venueController = require("../controllers/venueController.js");
 const mid = require("../middleware");
 
 
@@ -12,14 +13,8 @@ router.get("/", (req, res, next) => {
 
 
 // GET About
-
 router.get("/about", (req, res, next) => {
     return res.render("about", {title: "About"});
-});
-
-// GET Contact
-router.get("/venues", (req, res, next) => {
-    return res.render("venues", {title: "Study Areas"});
 });
 
 // GET Register
@@ -31,6 +26,23 @@ router.get("/register", mid.loggedOut, function(req, res, next) {
 router.get("/newvenue", (req, res, next) => {
   return res.render("newvenue", {title: "Register a New Venue"});
 });
+
+// GET venuesuggestions
+router.get("/venuesuggestions/:_id",venueController.getVenueSuggestionsByID);
+
+// GET venueUpdate
+router.get("/venueUpdate/:_id",venueController.getVenueUpdateByID);
+
+// POST getVenueUpdate
+router.post("/venueUpdate/:_id",venueController.updateVenue);
+
+// POST newvenue
+router.post("/newvenue", venueController.addVenue);
+
+// POST venueSuggestion
+router.post("/venuesuggestions/:_id", venueController.submitVenueSuggestion);
+
+router.post("/deleteVenue/:_id",venueController.deleteVenue)
 
 // POST Register
 router.post("/register", userController.addUser);

@@ -1,11 +1,12 @@
 const mongoose = require("mongoose");
 
-// import venue model
-const Venue = mongoose.model("venue")
+// import venue, user, and suggestions model
+const Venue = mongoose.model("venue");
+const User = mongoose.model("user");
+const VenueSuggestions = mongoose.model("venueSuggestions");
 
 // import object id type to check if request _id is valid
 const ObjectId = mongoose.Types.ObjectId;
-
 
 // function to handle a request to get all venues
 const getAllVenues = async (req, res) => {
@@ -28,7 +29,7 @@ const getAllVenues = async (req, res) => {
 };
 
 
-// function to get venues by id
+// function to get venues by id and show venue profile
 const getVenueByID = async (req, res) => {
   if (ObjectId.isValid(req.params._id) === false) {
       return res.send("There are no venues listed with this id");
@@ -51,6 +52,76 @@ const getVenueByID = async (req, res) => {
   })
 };
 
+// function to get venues by id and show venue suggestions page
+const getVenueSuggestionsByID = async (req, res) => {
+  const user = await User.findById(req.session.userId);
+  if (user === null) {
+    return res.render('error', {
+      error: "You're not logged in!",
+      message: "You must be logged in to submit a suggestion"
+    });
+  }
+  try {
+    const venue = await Venue.find({_id: req.params._id});
+    if (venue.length === 0){
+      return res.send("There are no venues listed with this id");
+    } else {
+      return res.render('venueSuggestions', {
+        venue: venue[0],
+        user: user
+      });
+    }
+  } catch (err) {
+    res.status(400);
+    return res.send("getVenueSuggestionsByID function failed");
+  }
+};
+
+function convertSuggestions(suggestionRaw) {
+  const suggestionProcessed = {
+    userId: ObjectId(suggestionRaw.userId),
+    venuedId: ObjectId(suggestionRaw.venueId),
+    suggestion: suggestionRaw.suggestion,
+    resolved: false
+  }
+  return suggestionProcessed;
+}
+
+const submitVenueSuggestion = async (req, res) => {
+  // extract info. from body
+  const suggestionProcessed = convertSuggestions(req.body)
+  const db = mongoose.connection;
+  try {
+    await db.collection('venueSuggestions').insertOne(suggestionProcessed)
+    return res.render('venueSuggestions', {
+      completed: true
+    });
+  } catch(err){
+    res.status(400);
+    return res.send("submitVenueSuggestion failed");
+  }
+};
+
+
+// function to get venues by id and show venue update page
+const getVenueUpdateByID = async (req, res) => {
+  try {
+    const venue = await Venue.find({_id: req.params._id});
+    if (venue.length === 0){
+      return res.send("There are no venues listed with this id");
+    } else {
+      return res.render("venueUpdate", {
+        title: "Update Profile",
+        id: req.params._id,
+        venue: venue[0],
+        completed: false
+      });
+    }
+  } catch (err) {
+    res.status(400);
+    return res.send("getVenueUpdateByID function failed");
+  }
+};
 
 // function to get venues by postcode
 const getVenueByPostcode = async (req, res) => {
@@ -89,38 +160,68 @@ const getVenueByType = async (req, res) => {
 };
 
 
-// // function to add venue
-// const addVenue = async (req, res) => {
-//   // extract info. from body
-//    const venue = req.body;
-//    const db = mongoose.connection
-//    try {
-//      await db.collection('venue').insertOne(venue);
-//      return res.send("Successfully added a venue");
-//    } catch(err){
-//      res.status(400);
-//      return res.send("addVenue failed");
-//    }};
+function convertVenue(venueRaw) {
+  const venueProcessed = {
+    venueName: venueRaw.venueName,
+    venueType: venueRaw.venueType,
+    venueAddress: {
+      venueStreetAddress: venueRaw.venueStreetAddress,
+      venueSuburb: venueRaw.venueSuburb,
+      venueState: venueRaw.venueState,
+      venuePostcode: venueRaw.venuePostcode
+    },
+    venueDetails: {
+      noise: venueRaw.noise,
+      wifi: Boolean(venueRaw.wifi),
+      toilets: Boolean(venueRaw.toilets),
+      power: Boolean(venueRaw.power),
+      discussionFriendly: Boolean(venueRaw.discussionFriendly),
+      printer: Boolean(venueRaw.printer)
+    },
+    venueContact: {
+      phone: venueRaw.phonePrefix+ venueRaw.phone,
+      mobile: venueRaw.mobilePrefix+ venueRaw.mobile,
+      email: venueRaw.email,
+      web: venueRaw.web,
+    },
+    venueHours: {
+      sun: venueRaw.sun,
+      mon: venueRaw.mon,
+      tue: venueRaw.tue,
+      wed: venueRaw.wed,
+      thu: venueRaw.thu,
+      fri: venueRaw.fri,
+      sat: venueRaw.sat
+    },
+    venueStreetAddress: venueRaw.venueStreetAddress
+   }
+   return venueProcessed;
+}
 
 // function to add venue
 const addVenue = async (req, res) => {
   // extract info. from body
-   const venue = req.body;
-   const db = mongoose.connection
+   venueProcessed = convertVenue(req.body);
+   const db = mongoose.connection;
    try {
-     await db.collection('venue').insertOne(venue);
-     return res.render('newvenue',{
-       title: "Successfully added user!",
+     await db.collection('venue').insertOne(venueProcessed)
+     return res.render("newVenue",{
+       title: "Successfully added venue!",
+       completed: true
      });
    } catch(err){
      res.status(400);
-     return res.send("addVenue failed");
-   }};
+     console.log(err);
+     return res.render("newVenue",{
+       title: "Failed to add venue.",
+       completed: true
+     });
+   }
+};
 
 
 // function to modify venue by ID
 const updateVenue = async (req, res) => {
-
   // checks if the _id is invalid
   if (ObjectId.isValid(req.params._id) === false) {
       return res.send("There are no venues listed with this id");
@@ -133,16 +234,29 @@ const updateVenue = async (req, res) => {
     }
   })
 
+
+  venueProcessed = convertVenue(req.body);
   // update the venue with the prescribed _id
   await Venue.findOneAndUpdate(
       {_id: req.params._id},
-      {$set: req.body},
+      {$set: venueProcessed},
       function(err) {
         if (!err) {
-          return res.send("Successfully updated venue");
+
+          res.status(200);
+          return res.render("venueUpdate",{
+            title: "Successfully updated venue!",
+            venue: venueProcessed,
+            completed: true
+          });
         } else {
+
           res.status(400);
-          return res.send("updateVenue function failed");
+          return res.render("venueUpdate",{
+            title: "Venue update failed",
+            venue: venueProcessed,
+            completed: true
+          })
         }
       }
   )
@@ -168,10 +282,13 @@ const deleteVenue = async (req, res) => {
   const result = await Venue.deleteOne({_id: req.params._id}).exec();
   if (result.n === 0) {
     res.status(400);
-    return res.send("deleteVenue function failed");
+    return res.alert("deleteVenue function failed");
   } else {
-    return res.send("Successfully deleted venue");
-  }
+    res.render("venueProfile",{
+      deleted: true
+    });
+    return false;
+    }
 }
 
 
@@ -183,5 +300,8 @@ module.exports = {
   getVenueByType,
   addVenue,
   updateVenue,
-  deleteVenue
+  deleteVenue,
+  getVenueSuggestionsByID,
+  getVenueUpdateByID,
+  submitVenueSuggestion
 };

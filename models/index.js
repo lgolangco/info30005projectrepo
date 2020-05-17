@@ -28,3 +28,4 @@ db.once("open", async () => {
 require("./user.js");
 require("./review.js");
 require("./venue.js");
+require("./venueSuggestions.js");
