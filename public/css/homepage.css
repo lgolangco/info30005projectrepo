@@ -4,7 +4,7 @@
 
 header.masthead {
     position: relative;
-    background: #343a40 url("../images/bg.jpg") no-repeat center;
+    background: #343a40 url("../images/homepage/bg.jpg") no-repeat center;
     background-size: cover;
     padding-top: 6rem;
     padding-bottom: 10rem;
@@ -48,4 +48,9 @@ header.masthead h1 {
 
 .carousel-inner {
     padding: 10px;
+}
+
+.card-img-top {
+    object-fit: cover;
+    height: 200px;
 }
