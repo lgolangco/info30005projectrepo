@@ -21,16 +21,16 @@ block content
         | Your browser does not support iframes.
   - const gMapsKey = "AIzaSyDw04dJQyETFjfsthXJzhvjAiY9XE9Labc";
   
-  // Show Heading if Venue has been Deleted
+  //- Show Heading if Venue has been Deleted
   if (deleted)
     br
     h1 Venue successfully deleted.
   
-  // Regular Venue Profile
+  //- Regular Venue Profile
   else
     center
       - const imgURL = "https://studyspot.s3.amazonaws.com/venue/header/" + venue._id.toString() + ".jpg"
-      img.venue-header(src = imgURL
+      img.venue-header(src = imgURL 
         onerror="this.src='https://studyspot.s3.amazonaws.com/venue/header/default.jpg'")
       
     br
