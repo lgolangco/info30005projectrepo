@@ -10,22 +10,19 @@ router.get("/", (req, res, next) => {
     return res.render("index", {title: "Home"});
 });
 
-// GET Contact
-router.get("/venues", (req, res, next) => {
-    return res.render("venues", {title: "Study Areas"});
+// GET About
+router.get("/about", (req, res, next) => {
+    return res.render("about", {title: "About"});
 });
 
-// GET Register
+// USER
+
+// GET Register form page
 router.get("/register", mid.loggedOut, function(req, res, next) {
     return res.render("register", {title: "Sign Up"});
 });
 
-// GET newvenue
-router.get("/newvenue", (req, res, next) => {
-  return res.render("newvenue", {title: "Register a New Venue"});
-});
-
-// POST Register
+// POST Register form
 router.post("/register", userController.addUser);
 
 // GET Login
@@ -39,22 +36,48 @@ router.post("/login", userController.login);
 // GET Profile
 router.get("/profile", mid.requiresLogin, userController.accessProfile);
 
-// displays edit form based on user ID
+// GET Profile edit form based on user ID
 router.get("/profile/edit", userController.updateUserForm);
 
-// displays delete form based on user ID
+// GET Profile delete form based on user ID
 router.get("/profile/delete", function(req, res) {
     return res.render("userUpdateForm", {toDelete: true})
 });
 
-// update a user
+// POST Profile update
 router.post("/profile", userController.updateUser);
 
-// delete by user id
+// POST Profile delete request
 router.post("/profile/delete", userController.deleteUserByID);
 
 // GET Logout
 router.get("/logout", userController.logout);
+
+
+// VENUE
+
+// GET newVenue form page
+router.get("/newVenue", (req, res, next) => {
+  return res.render("newVenue", {title: "Register a New Venue"});
+});
+
+// POST newVenue form
+router.post("/newVenue", venueController.addVenue);
+
+// GET venuesuggestions form page
+router.get("/venueSuggestions/:_id",venueController.getVenueSuggestionsByID);
+
+// POST venueSuggestion form
+router.post("/venueSuggestions/:_id", venueController.submitVenueSuggestion);
+
+// GET venueUpdate form page
+router.get("/venueUpdate/:_id",venueController.getVenueUpdateByID);
+
+// POST getVenueUpdate form
+router.post("/venueUpdate/:_id",venueController.updateVenue);
+
+// POST deleteVenue request
+router.post("/deleteVenue/:_id",venueController.deleteVenue)
 
 
 module.exports = router;

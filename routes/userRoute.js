@@ -4,13 +4,13 @@ const router = express.Router();
 // load the user controller
 const userController = require("../controllers/userController.js");
 
-// get all users
+// GET list of all users
 router.get("/", userController.getAllUsers);
 
-// get user by ID
+// GET user by ID
 router.get("/:_id", userController.getUserByID);
 
-// get user by email
+// GET user by email
 router.get("/email/:email", userController.getUserByEmail);
 
 // // displays edit form based on user ID in the url

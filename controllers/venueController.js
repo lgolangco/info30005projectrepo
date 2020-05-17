@@ -23,7 +23,11 @@ const getAllVenues = async (req, res) => {
     }
   } catch (err) {
     res.status(400);
-    return res.send("Database query failed");
+    return res.render('error', {
+      error: "Database query failed",
+      message: "Database query failed",
+      functionfailure: "Failed to get all venues"
+    });
   }
 };
 
@@ -31,13 +35,20 @@ const getAllVenues = async (req, res) => {
 // function to get venues by id
 const getVenueByID = async (req, res) => {
   if (ObjectId.isValid(req.params._id) === false) {
-      return res.send("There are no venues listed with this id");
+    return res.render('error', {
+      error: "There are no venues listed with this id!",
+      message: "There are no venues listed with this id!",
+      venueerror: "For a list of all registered venues,"
+    });
   }
-
   await Venue.find({_id: req.params._id}, function(err, venue) {
     // checks if the _id is invalid or there are no venues listed with that _id
     if (venue.length === 0) {
-      return res.send("There are no venues listed with this id");
+      return res.render('error', {
+        error: "There are no venues listed with this id!",
+        message: "There are no venues listed with this id!",
+        venueerror: "For a list of all registered venues,"
+      });
 
     } else if (venue) {
       return res.render('venueProfile', {
@@ -46,61 +57,159 @@ const getVenueByID = async (req, res) => {
       // return res.send(venue);
     } else {
       res.status(400);
-      return res.send("getVenueByID function failed");
+      return res.render('error', {
+        error: "Database query failed",
+        message: "Database query failed",
+        functionfailure: "Failed to get venue profile"
+      });
     }
   })
 };
 
-
-// function to get venues by postcode
-const getVenueByPostcode = async (req, res) => {
-   await Venue.find({venuePostcode: req.params.venuePostcode}, function(err, venue) {
-
-    // checks if there are no venues listed with that venuePostcode
-     if (venue.length === 0){
-       return res.send("There are no venues listed with this postcode");
-     } else if (venue) {
-        return res.send(venue);
-      } else {
-        res.status(400);
-        return res.send("getVenueByPostcode function failed");
-      }
+// function to get venues by id and show venue suggestions page
+const getVenueSuggestionsByID = async (req, res) => {
+  if (ObjectId.isValid(req.params._id) === false) {
+    return res.render('error', {
+      error: "There are no venues listed with this id!",
+      message: "There are no venues listed with this id!",
+      venueerror: "For a list of all registered venues,"
+    });
+  }
+  const user = await User.findById(req.session.userId);
+  if (user === null) {
+    return res.render('error', {
+      error: "You're not logged in!",
+      message: "You must be logged in to submit a suggestion"
+    });
+  }
+  try {
+    const venue = await Venue.find({_id: req.params._id});
+    if (venue.length === 0){
+      return res.render('error', {
+        error: "There are no venues listed with this id!",
+        message: "There are no venues listed with this id!",
+        venueerror: "For a list of all registered venues,"
+      });
+    } else {
+      return res.render('venueSuggestions', {
+        venue: venue[0],
+        user: user
+      });
     }
-  )
+  } catch (err) {
+    res.status(400);
+    return res.render('error', {
+      error: "Database query failed",
+      message: "Database query failed",
+      functionfailure: "Failed to get suggestions page"
+    });
+  }
+};
+
+function convertSuggestions(suggestionRaw) {
+  const suggestionProcessed = {
+    userId: ObjectId(suggestionRaw.userId),
+    venuedId: ObjectId(suggestionRaw.venueId),
+    suggestion: suggestionRaw.suggestion,
+    resolved: false
+  }
+  return suggestionProcessed;
+}
+
+const submitVenueSuggestion = async (req, res) => {
+  // extract info. from body
+  const suggestionProcessed = convertSuggestions(req.body)
+  const db = mongoose.connection;
+  try {
+    await db.collection('venueSuggestions').insertOne(suggestionProcessed)
+    return res.render('venueSuggestions', {
+      completed: true
+    });
+  } catch(err){
+    res.status(400);
+    return res.render('error', {
+      error: "Database query failed",
+      message: "Database query failed",
+      functionfailure: "Failed to submit suggestions"
+    });
+  }
 };
 
 
-// function to get venues by type
-const getVenueByType = async (req, res) => {
-   await Venue.find({venueType: req.params.venueType}, function(err, venue) {
-
-     // checks if there are no venues listed with that venueType
-      if (venue.length === 0){
-        return res.send("There are no venues listed with this type")
-
-      } else if (venue) {
-        return res.send(venue);
-      } else {
-        res.status(400);
-        return res.send("getVenueByType function failed");
-      }
+// function to get venues by id and show venue update page
+const getVenueUpdateByID = async (req, res) => {
+  if (ObjectId.isValid(req.params._id) === false) {
+    return res.render('error', {
+      error: "There are no venues listed with this id!",
+      message: "There are no venues listed with this id!",
+      venueerror: "For a list of all registered venues,"
+    });
+  }
+  try {
+    const venue = await Venue.find({_id: req.params._id});
+    if (venue.length === 0){
+      return res.render('error', {
+        error: "There are no venues listed with this id!",
+        message: "There are no venues listed with this id!",
+        venueerror: "For a list of all registered venues,"
+      });
+    } else {
+      return res.render("venueUpdate", {
+        title: "Update Profile",
+        id: req.params._id,
+        venue: venue[0],
+        completed: false
+      });
     }
-  )
+  } catch (err) {
+    res.status(400);
+    return res.render('error', {
+      error: "Database query failed",
+      message: "Database query failed",
+      functionfailure: "Failed to get update venue"
+    });
+  }
 };
 
-
-// // function to add venue
-// const addVenue = async (req, res) => {
-//   // extract info. from body
-//    const venue = req.body;
-//    const db = mongoose.connection
-//    try {
-//      await db.collection('venue').insertOne(venue);
-//      return res.send("Successfully added a venue");
-//    } catch(err){
-//      res.status(400);
-//      return res.send("addVenue failed");
-//    }};
+function convertVenue(venueRaw) {
+  const venueProcessed = {
+    venueName: venueRaw.venueName,
+    venueType: venueRaw.venueType,
+    venueAddress: {
+      venueStreetAddress: venueRaw.venueStreetAddress,
+      venueSuburb: venueRaw.venueSuburb,
+      venueState: venueRaw.venueState,
+      venuePostcode: venueRaw.venuePostcode
+    },
+    venueDetails: {
+      noise: venueRaw.noise,
+      wifi: Boolean(venueRaw.wifi),
+      toilets: Boolean(venueRaw.toilets),
+      power: Boolean(venueRaw.power),
+      discussionFriendly: Boolean(venueRaw.discussionFriendly),
+      printer: Boolean(venueRaw.printer)
+    },
+    venueContact: {
+      phonePrefix: venueRaw.phonePrefix,
+      phone: venueRaw.phone,
+      mobilePrefix: venueRaw.mobilePrefix,
+      mobile: venueRaw.mobile,
+      email: venueRaw.email,
+      web: venueRaw.web,
+    },
+    venueHours: {
+      sun: venueRaw.sun,
+      mon: venueRaw.mon,
+      tue: venueRaw.tue,
+      wed: venueRaw.wed,
+      thu: venueRaw.thu,
+      fri: venueRaw.fri,
+      sat: venueRaw.sat
+    },
+    venueStreetAddress: venueRaw.venueStreetAddress
+   }
+   return venueProcessed;
+}
 
 // function to add venue
 const addVenue = async (req, res) => {
@@ -114,8 +223,14 @@ const addVenue = async (req, res) => {
      });
    } catch(err){
      res.status(400);
-     return res.send("addVenue failed");
-   }};
+     console.log(err);
+     return res.render('error', {
+       error: "Database query failed",
+       message: "Database query failed",
+       functionfailure: "Failed to add venue"
+     });
+   }
+};
 
 
 // function to modify venue by ID
@@ -142,7 +257,11 @@ const updateVenue = async (req, res) => {
           return res.send("Successfully updated venue");
         } else {
           res.status(400);
-          return res.send("updateVenue function failed");
+          return res.render('error', {
+            error: "Database query failed",
+            message: "Database query failed",
+            functionfailure: "Failed to update venue"
+          });
         }
       }
   )
@@ -154,13 +273,21 @@ const deleteVenue = async (req, res) => {
 
   // checks if the _id is invalid
   if (ObjectId.isValid(req.params._id) === false) {
-      return res.send("There are no venues listed with this id");
+    return res.render('error', {
+      error: "There are no venues listed with this id!",
+      message: "There are no venues listed with this id!",
+      venueerror: "For a list of all registered venues,"
+    });
   }
 
   // checks if there are no venues listed with that _id
   await Venue.find({_id: req.params._id}, function(err, venue) {
     if (venue.length === 0) {
-      return res.send("There are no venues listed with this id");
+      return res.render('error', {
+        error: "There are no venues listed with this id!",
+        message: "There are no venues listed with this id!",
+        venueerror: "For a list of all registered venues,"
+      });
     }
   })
 
@@ -168,11 +295,52 @@ const deleteVenue = async (req, res) => {
   const result = await Venue.deleteOne({_id: req.params._id}).exec();
   if (result.n === 0) {
     res.status(400);
-    return res.send("deleteVenue function failed");
+    return res.render('error', {
+      error: "Database query failed",
+      message: "Database query failed",
+      functionfailure: "Failed to delete venue"
+    });
   } else {
     return res.send("Successfully deleted venue");
   }
 }
+
+// not yet implemented on front-end
+// function to get venues by postcode
+const getVenueByPostcode = async (req, res) => {
+   await Venue.find({venuePostcode: req.params.venuePostcode}, function(err, venue) {
+
+    // checks if there are no venues listed with that venuePostcode
+     if (venue.length === 0){
+       return res.send("There are no venues listed with this postcode");
+     } else if (venue) {
+        return res.send(venue);
+      } else {
+        res.status(400);
+        return res.send("getVenueByPostcode function failed");
+      }
+    }
+  )
+};
+
+// not yet implemented on front-end
+// function to get venues by type
+const getVenueByType = async (req, res) => {
+   await Venue.find({venueType: req.params.venueType}, function(err, venue) {
+
+     // checks if there are no venues listed with that venueType
+      if (venue.length === 0){
+        return res.send("There are no venues listed with this type")
+
+      } else if (venue) {
+        return res.send(venue);
+      } else {
+        res.status(400);
+        return res.send("getVenueByType function failed");
+      }
+    }
+  )
+};
 
 
 // remember to export the functions

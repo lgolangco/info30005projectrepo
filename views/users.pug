@@ -9,16 +9,16 @@ block content
             .row
                 each user in users
                     div.col-lg-3.col-sm-6
-                        div.card.hovercard
+                        div.card.hovercard.user-card
                             .cardheader
+                              
                             // Profile photo
                             .avatar2
                                 img(src=user.avatar)
+                                  
                             // Basic user information
                             .info
                                 .title
                                     a(href='/user/' + user._id) #{user.name}
                                 .desc Email: #{user.email}
                                 .desc User ID: #{user._id}
-
-

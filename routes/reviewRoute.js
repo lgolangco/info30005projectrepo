@@ -8,25 +8,25 @@ const reviewController = require("../controllers/reviewController.js");
 
 /* REVIEW ROUTES */
 
-// get all reviews
+// GET list of all reviews
 reviewRouter.get('/', reviewController.getAllReviews);
 
-// update review
+// PATCH update review
 reviewRouter.patch('/:venueId', reviewController.updateReview);
 
-// add review
+// POST review
 reviewRouter.post('/', reviewController.addReview);
 
-// get review by venue and user ID
+// GET review by venue and user ID
 reviewRouter.get('/byids/:venueId/:userId', reviewController.getReviewByIDs);
 
-// get all reviews about a given venue by venue ID
+// GET all reviews about a given venue by venue ID
 reviewRouter.get('/byvenue/:venueId', reviewController.getReviewByVenueID);
 
-// get all reviews about about a given user by user ID
+// GET all reviews about about a given user by user ID
 reviewRouter.get('/byuser/:userId', reviewController.getReviewByUserID);
 
-// delete review by venue and user ID
+// DELETE review by venue and user ID
 reviewRouter.delete('/:venueId', reviewController.deleteReview);
 
 

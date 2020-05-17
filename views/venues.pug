@@ -2,20 +2,36 @@ extends layout
 
 
 block content
+  // View All Venues in With Basic Details Card Format
   
   #venues-page.main.container
-      .row
-          .col-md-8.col-md-offset-2
-              h1 #{title}
-              p #{message}
-              h5 
-                a(href="/newvenue") Register a new venue
-              table
-                  tr
-                      th Name
-                      th Type
-                      th Address
 
+      h1 #{title}
+      p #{message}
+      
+      br
+      h5 
+        a(href="/newVenue") + Register a new venue
+      br
+      
+      .row
+        each venue in venues
+          - const address = venue.venueAddress.venueStreetAddress +", "+venue.venueAddress.venueSuburb+", "+venue.venueAddress.venuePostcode;
+          - const imgURL = "https://studyspot.s3.amazonaws.com/venue/header/" + venue._id.toString() + ".jpg"
+          .col-lg-6
+            .card.mb-3.d-flex.align-items-stretch
+              .row.no-gutters
+                .col-4
+                  a(href="/venue/" + venue._id)
+                    img.venue-thumbnail(src = imgURL
+                    onerror="this.src='https://studyspot.s3.amazonaws.com/venue/header/default.jpg'")
+                .col-8
+                  .card-body
+                    h5.card-title #[a(href="/venue/" + venue._id) #{venue.venueName}]
+                    hr
+                    p.card-text(style='white-space:pre;')
+                      |#{venue.venueType} 
+                      |#{address}
                 
                   each venue in venues
                       - const address = venue.venueAddress.venueStreetAddress +", "+venue.venueAddress.venueSuburb+", "+venue.venueAddress.venuePostcode;
