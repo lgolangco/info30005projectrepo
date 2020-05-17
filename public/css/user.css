@@ -68,25 +68,30 @@
 
 
 /* Profile and User Page */
+
+.dashboard-area{
+    margin-top: -150px;
+}
+
 img.profile-background{
     alignment: left;
     z-index: 0;
     width: 100%;
-    height: 250px;
+    height: 300px;
     margin-bottom: 10px;
     object-fit: cover;
 }
 
 .profile-thumbnail{
-    margin: -90px 10px 0px 50px;
+    margin: -100px 10px 0px 50px;
     z-index: 9;
     width: 200px;
-    height: 200px;
+    height: 220px;
     object-fit: cover;
 }
 
 .profile-details{
-    margin: -140px 10px 0px 50px;
+    margin: -150px 10px 0px 50px;
 }
 
 
