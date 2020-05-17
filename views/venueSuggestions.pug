@@ -1,15 +1,20 @@
 extends layout
 
 block content
+    // Venue Suggestions Form for Users to Suggest Changes to Venue Profile
     .main.container
         .row
             .col-md-8.col-md-offset-2
+                
+                // If suggestion already submitted only show message
                 if (completed)
                   h2.display-4.m-b-2 Successfully submitted your suggestion!
                   br
                   p The admins will review your suggestions and update our database accordingly.
-                  
+                
+                // Else, show suggestion form
                 else
+                
                   h1.display-4.m-b-2 Suggest Changes for 
                   h1.display-4.m-b-2 #{venue.venueName}
                   br

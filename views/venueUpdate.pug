@@ -1,12 +1,15 @@
 extends layout
 
 block content
+    // Venue Update Form for Admins to Update a Venue Profile [all current venue attributes will be pre-loaded into the form]
     .main.container
         .col-md-6.col-md-offset-3
             
-              
+            // If form already submitted show success message
             if (completed)
               h1 #{title}
+              
+            // Else
             else
               h1 #{title}
               

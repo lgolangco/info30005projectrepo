@@ -2,6 +2,7 @@ extends layout
     
 block content
   
+  // Google Maps Mixin to Display Venue Location
   mixin google-map-place(query, key)
     - if ("alt" in attributes)
       - alt = attributes.alt;
@@ -18,12 +19,14 @@ block content
            height="450")&attributes(attributes)
       - if (alt)
         | Your browser does not support iframes.
-
   - const gMapsKey = "AIzaSyDw04dJQyETFjfsthXJzhvjAiY9XE9Labc";
   
+  // Show Heading if Venue has been Deleted
   if (deleted)
     br
     h1 Venue successfully deleted.
+  
+  // Regular Venue Profile
   else
     center
       - const imgURL = "https://studyspot.s3.amazonaws.com/venue/header/" + venue._id.toString() + ".jpg"
@@ -33,10 +36,10 @@ block content
     br
     .row.venue-profile-page
         
-      //main content 
+      // Main Content Div
       div.col-lg-7.col-md-12.offset-lg-1.venue-info-div
       
-        //basic information
+        // Basic Information
         div
           h2 #{message}
           h2 #{venue.venueName}
@@ -48,7 +51,7 @@ block content
           p
             a(href=suggestionsPage) Suggest changes
 
-        //venue details
+        // Venue Details
         div.venue-details-div
           h3 Details
                       
@@ -145,14 +148,17 @@ block content
               else
                 td No printing 
                   p available
-        // reviews
+        
+        // Reviews
         div.venue-reviews
           h2 Reviews
           p Working on this feature!
 
       
-      //side bar
+      // Side Bar
       div.col-lg-3.col-md-12.venue-side-bar
+        
+        // Contacts
         if venue.venueContact.phone || venue.venueContact.mobile || venue.venueContact.email || venue.venueContact.web
           br
           h5 Contact Details
@@ -167,6 +173,7 @@ block content
         
         br
         
+        // Location
         h5 Location
         
         - const query = venue.venueAddress.venueStreetAddress + ", " + venue.venueAddress.venueSuburb
@@ -175,12 +182,14 @@ block content
         p #{venue.venueAddress.venueStreetAddress}, 
           |#{venue.venueAddress.venueSuburb}, #{venue.venueAddress.venueState}, #{venue.venueAddress.venuePostcode}
         
+        // Opening hours
         h5 Opening Hours
 
         - const venueHours = venue.venueHours.toObject()
           each timeframe, day in venueHours
             p= day+ ": " + timeframe
-      
+    
+    // Venue Update and Delete Buttons (Will be only available to users with admin attribute at later date)
     .row
       .col-md-2.offset-1
         - const updateLink = "/venueUpdate/" + venue._id
