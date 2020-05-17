@@ -58,12 +58,12 @@ router.get("/logout", userController.logout);
 // VENUE
 
 // GET newVenue form page
-router.get("/newVenue", (req, res, next) => {
-  return res.render("newVenue", {title: "Register a New Venue"});
+router.get("/newvenue", (req, res, next) => {
+  return res.render("newvenue", {title: "Register a New Venue"});
 });
 
 // POST newVenue form
-router.post("/newVenue", venueController.addVenue);
+router.post("/newvenue", venueController.addVenue);
 
 // GET venuesuggestions form page
 router.get("/venueSuggestions/:_id",venueController.getVenueSuggestionsByID);

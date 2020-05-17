@@ -219,7 +219,7 @@ const addVenue = async (req, res) => {
    const db = mongoose.connection;
    try {
      await db.collection('venue').insertOne(venueProcessed)
-     return res.render("newVenue",{
+     return res.render("newvenue",{
        title: "Successfully added venue!",
        completed: true
      });
