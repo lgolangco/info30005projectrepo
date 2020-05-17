@@ -9,7 +9,7 @@ block content
                 h1 User Profile
 
                 if toDelete
-                    // Delete Form
+                    //- Delete Form
                     div.delete-profile
                         form(method="POST" action="/profile/delete")
                             h5.ml-auto.mr-auto Are you sure you want to delete your account?
@@ -18,7 +18,7 @@ block content
                                 a(href="/profile")
                                     button.btn.btn-primary(type="button") NO
                 else
-                    // register form
+                    //- register form
                     form(method="POST" action="/profile")
                         div.form-group
                             label(for="name") Name:
