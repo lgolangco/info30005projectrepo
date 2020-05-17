@@ -1,11 +1,12 @@
 const mongoose = require("mongoose");
 
-// import venue model
-const Venue = mongoose.model("venue")
+// import venue, user, and suggestions model
+const Venue = mongoose.model("venue");
+const User = mongoose.model("user");
+const VenueSuggestions = mongoose.model("venueSuggestions");
 
 // import object id type to check if request _id is valid
 const ObjectId = mongoose.Types.ObjectId;
-
 
 // function to handle a request to get all venues
 const getAllVenues = async (req, res) => {
@@ -32,7 +33,7 @@ const getAllVenues = async (req, res) => {
 };
 
 
-// function to get venues by id
+// function to get venues by id and show venue profile
 const getVenueByID = async (req, res) => {
   if (ObjectId.isValid(req.params._id) === false) {
     return res.render('error', {
@@ -214,12 +215,13 @@ function convertVenue(venueRaw) {
 // function to add venue
 const addVenue = async (req, res) => {
   // extract info. from body
-   const venue = req.body;
-   const db = mongoose.connection
+   venueProcessed = convertVenue(req.body);
+   const db = mongoose.connection;
    try {
-     await db.collection('venue').insertOne(venue);
-     return res.render('newvenue',{
-       title: "Successfully added user!",
+     await db.collection('venue').insertOne(venueProcessed)
+     return res.render("newVenue",{
+       title: "Successfully added venue!",
+       completed: true
      });
    } catch(err){
      res.status(400);
@@ -235,7 +237,6 @@ const addVenue = async (req, res) => {
 
 // function to modify venue by ID
 const updateVenue = async (req, res) => {
-
   // checks if the _id is invalid
   if (ObjectId.isValid(req.params._id) === false) {
       return res.send("There are no venues listed with this id");
@@ -248,14 +249,23 @@ const updateVenue = async (req, res) => {
     }
   })
 
+
+  venueProcessed = convertVenue(req.body);
   // update the venue with the prescribed _id
   await Venue.findOneAndUpdate(
       {_id: req.params._id},
-      {$set: req.body},
+      {$set: venueProcessed},
       function(err) {
         if (!err) {
-          return res.send("Successfully updated venue");
+
+          res.status(200);
+          return res.render("venueUpdate",{
+            title: "Successfully updated venue!",
+            venue: venueProcessed,
+            completed: true
+          });
         } else {
+
           res.status(400);
           return res.render('error', {
             error: "Database query failed",
@@ -301,8 +311,11 @@ const deleteVenue = async (req, res) => {
       functionfailure: "Failed to delete venue"
     });
   } else {
-    return res.send("Successfully deleted venue");
-  }
+    res.render("venueProfile",{
+      deleted: true
+    });
+    return false;
+    }
 }
 
 // not yet implemented on front-end
@@ -351,5 +364,8 @@ module.exports = {
   getVenueByType,
   addVenue,
   updateVenue,
-  deleteVenue
+  deleteVenue,
+  getVenueSuggestionsByID,
+  getVenueUpdateByID,
+  submitVenueSuggestion
 };

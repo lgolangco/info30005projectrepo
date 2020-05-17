@@ -33,12 +33,5 @@ block content
                       |#{venue.venueType} 
                       |#{address}
                 
-                  each venue in venues
-                      - const address = venue.venueAddress.venueStreetAddress +", "+venue.venueAddress.venueSuburb+", "+venue.venueAddress.venuePostcode;
-                      tr
-                        td
-                          a(href="/venue/" + venue._id) #{venue.venueName}
-                        td #{venue.venueType}
-                        td #{address}
 
           
