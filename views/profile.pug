@@ -1,15 +1,16 @@
 extends layout
 
 block content
-    .main.container.clearfix
+    user-profile.col-12.mb-2
+        img.profile-background(src=user.cover)
+    .main.container
         .row
             div
                 // Content
                 div.dashboard-area.col-md-12
                     .row
-                        // Cover and profile photo
+                        // User's cover and profile photos
                         user-profile.col-12.mb-2
-                            img.profile-background(src=user.cover)
                             img.profile-thumbnail(src=user.avatar)
                     // User's details
                     .profile-details.col-md-6.ml-auto.mr-auto
