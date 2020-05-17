@@ -15,16 +15,17 @@ block content
             
             // Register Form
             form(method='POST' action='newVenue')
+              p Note - all fields with "*" are required.
                 
                 // Venue Name
                 div.form-group
-                    label(for='venueName') Venue Name
-                    input.form-control(type='text', placeholder='e.g. Campos Coffee' name='venueName' autocomplete="off")
+                    label(for='venueName') Venue Name *
+                    input.form-control(type='text', placeholder='e.g. Campos Coffee' name='venueName' autocomplete="off" required)
                 
                 // Venue Type
                 div.form-group
-                  label(for="venueType") Venue Type
-                  select(name="venueType").form-control#exampleFormControlSelect1
+                  label(for="venueType") Venue Type * 
+                  select(name="venueType" required).form-control#exampleFormControlSelect1
                     option Cafe
                     option Public Library
                     option Other
@@ -32,20 +33,20 @@ block content
                 
                 // Venue Address
                 div.form-group
-                    label(for='venueStreetAddress') Street Address
-                    input#inputAddress.form-control(type='text', placeholder='e.g. 123 Study Street' name='venueStreetAddress' autocomplete="off")
+                    label(for='venueStreetAddress') Street Address *
+                    input#inputAddress.form-control(type='text', placeholder='e.g. 123 Study Street' name='venueStreetAddress' autocomplete="off" required)
                 
                 div.form-row
                   
                   // Suburb
                   div.form-group.col-md-6
-                      label(for='venueSuburb') Suburb
-                      input#inputCity.form-control(type='text', placeholder='e.g. Studyville' name='venueSuburb' autocomplete="off")
+                      label(for='venueSuburb') Suburb *
+                      input#inputCity.form-control(type='text', placeholder='e.g. Studyville' name='venueSuburb' autocomplete="off" required)
                   
                   // State
                   div.form-group.col-md-3
-                    label(for="venueState") State
-                    select(name="venueState").form-control#exampleFormControlSelect1
+                    label(for="venueState") State * 
+                    select(name="venueState" required).form-control#exampleFormControlSelect1
                       option VIC
                       option NSW
                       option QLD
@@ -58,16 +59,16 @@ block content
                   
                   // Postcode
                   div.form-group.col-md-3
-                      label(for='venuePostcode') Postcode
-                      input#inputZip.form-control(type='text', placeholder='e.g. 3000' name='venuePostcode' autocomplete="off")
+                      label(for='venuePostcode') Postcode *
+                      input#inputZip.form-control(type='text', placeholder='e.g. 3000' name='venuePostcode' autocomplete="off" required)
           
                 // Venue details
                 br
                 h3 Venue details
                 
                 div.form-group
-                  label(for="noise") Noise Level
-                  select(name="noise").form-control#exampleFormControlSelect1
+                  label(for="noise") Noise Level * 
+                  select(name="noise" required).form-control#exampleFormControlSelect1
                     option Low
                     option Medium
                     option High
@@ -75,7 +76,7 @@ block content
                 
                 div.form-check
                   input.form-check-input(type="checkbox" value="1" name = "wifi")
-                  label.form-check-label(for="wifi") Wifi
+                  label.form-check-label(for="wifi") Wifi 
                 
                 div.form-check
                   input.form-check-input(type="checkbox" value="1" name = "toilets")
@@ -131,43 +132,43 @@ block content
                 div.form-row
                   //Sunday
                   div.form-group.col-lg-4
-                    label(for="sun") Sunday
-                    input.form-control(type='text' placeholder="e.g. 7am-5pm" name = "sun")
+                    label(for="sun") Sunday *
+                    input.form-control(type='text' placeholder="e.g. 7am-5pm" name = "sun" required)
                     
                   //Thursday
                   div.form-group.col-lg-4.offset-lg-2
-                    label(for="thu") Thursday
-                    input.form-control(type='text' placeholder="e.g. 7am-5pm" name = "thu")
+                    label(for="thu") Thursday *
+                    input.form-control(type='text' placeholder="e.g. 7am-5pm" name = "thu" required)
                 
                 div.form-row
                   //Monday
                   div.form-group.col-lg-4
-                    label(for="mon") Monday
-                    input.form-control(type='text' placeholder="e.g. 7am-5pm" name = "mon")                
+                    label(for="mon") Monday *
+                    input.form-control(type='text' placeholder="e.g. 7am-5pm" name = "mon" required)                
                   
                   //Friday
                   div.form-group.col-lg-4.offset-lg-2
-                    label(for="fri") Friday
-                    input.form-control(type='text' placeholder="e.g. 7am-5pm" name = "fri")
+                    label(for="fri") Friday *
+                    input.form-control(type='text' placeholder="e.g. 7am-5pm" name = "fri" required)
 
                 div.form-row
                   
                   //Tuesday
                   div.form-group.col-lg-4
-                    label(for="tue") Tuesday
-                    input.form-control(type='text' placeholder="e.g. 7am-5pm" name="tue")
+                    label(for="tue") Tuesday *
+                    input.form-control(type='text' placeholder="e.g. 7am-5pm" name="tue" required)
                     
                   //Saturday
                   div.form-group.col-lg-4.offset-lg-2
-                    label(for="sat") Saturday
-                    input.form-control(type='text' placeholder="e.g. 7am-5pm" name="sat")
+                    label(for="sat") Saturday *
+                    input.form-control(type='text' placeholder="e.g. 7am-5pm" name="sat" required)
                 
                 div.form-row
                 
                   //Wednesday
                   div.form-group.col-lg-4
-                    label(for="wed") Wednesday
-                    input.form-control(type='text' placeholder="e.g. 7am-5pm" name = "wed")
+                    label(for="wed") Wednesday *
+                    input.form-control(type='text' placeholder="e.g. 7am-5pm" name = "wed" required)
                 
                 br
                 button.btn.btn-primary(type="submit") Submit
