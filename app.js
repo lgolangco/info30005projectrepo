@@ -48,7 +48,7 @@ app.use("/review", reviewRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
-  var err = new Error("File not found");
+  let err = new Error("File not found");
   err.status = 404;
   next(err);
 });

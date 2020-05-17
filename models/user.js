@@ -17,7 +17,7 @@ userSchema.statics.authenticate = function(email, password, callback) {
         if (error) {
           return callback(error);
         } else if (!user) {
-          var err = new Error("User not found");
+          let err = new Error("User not found");
           err.status = 401;
           return callback(err);
         }
@@ -33,7 +33,7 @@ userSchema.statics.authenticate = function(email, password, callback) {
 
 // hash password before saving to the user database
 userSchema.pre("save", function(next) {
-  var user = this;
+  let user = this;
   bcrypt.hash(user.password, 10, function(err, hash) {
     if (err) {
       return next(err);

@@ -45,20 +45,15 @@ If there are no users with that email address, it notifies the client.
 GET /user/email/:email  
 e.g. /user/email/derekshephard@gmail.com  
 
-4. **addUser: POST /user/**  
-This adds a user object with values set as per the request.    
-It takes the following inputs: from body a name, email, and password.  
 
-e.g. /user/    
-
-6. **View User Profile**    
+4. **View User Profile**    
 Once, logged in, the user will be redirected to their user profile, or access it by clicking on "MY Profile".  
 It contains the user's information, other functionalities on the profile page are yet to be implemented.       
 
 GET  /profile/  
 e.g. /profile/  
 
-6. **Update User**  
+5. **Update User**  
 Once, logged in, the user can edit their information by clicking "MY PROFILE"->"Edit".  
 This will redirect the user to a form that allows the to edit their name, email, password, cover photo and profile photo.  
 The user can confirm edits by clicking "Update" or cancel edits by clicking "Cancel", which redirects back to the profile page.    
@@ -66,13 +61,36 @@ The user can confirm edits by clicking "Update" or cancel edits by clicking "Can
 GET  /profile/edit  
 POST /profile/  
 
-7. **Delete User Account**    
+6. **Delete User Account**    
 Once logged in, the user can delete the account by clicking "MY PROFILE"->"Delete".  
 This will delete the user's account from the database and redirect user back to home page.  
 
 GET  /profile/delete/  
 POST  /profile/delete/  
 
+7. **Register user**    
+To register the user account, the user enters in their full name, email and chosen password. 
+Their password will be hashed using the bcrypt package.
+
+GET  /register/  
+POST  /register/ 
+
+8. **Log In**    
+For the user to log into their account, they will need to provide their email and password. 
+The email will act as the unique user identifier. Once user logs into their account, the SIGN UP button disappears. 
+
+GET  /login/  
+POST  /login/ 
+
+9. **Log Out**    
+User can log out of their account using the LOG OUT button in the profile page.
+
+GET  /logout/  
+
+10. **Home Page**    
+User can navigate towards the home page by clicking on the StudySpot logo. 
+
+GET  /
 
 ## Venue
 The venue schema is as follows:

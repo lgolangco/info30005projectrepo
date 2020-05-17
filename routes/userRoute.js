@@ -13,9 +13,6 @@ router.get("/:_id", userController.getUserByID);
 // get user by email
 router.get("/email/:email", userController.getUserByEmail);
 
-// create a user
-router.post("/", userController.addUser);
-
 // // displays edit form based on user ID in the url
 // router.get("/:_id/edit", userController.updateUserForm);
 //

@@ -1,5 +1,5 @@
 const express = require("express");
-var router = express.Router();
+const router = express.Router();
 
 const userController = require("../controllers/userController.js");
 const mid = require("../middleware");
@@ -8,13 +8,6 @@ const mid = require("../middleware");
 // GET home page
 router.get("/", (req, res, next) => {
     return res.render("index", {title: "Home"});
-});
-
-
-// GET About
-
-router.get("/about", (req, res, next) => {
-    return res.render("about", {title: "About"});
 });
 
 // GET Contact

@@ -51,7 +51,7 @@ const updateUserForm = async (req, res) => {
 
 
 // function to modify user details
-const updateUser = async (req, res,next) => {
+const updateUser = async (req, res, next) => {
     // checks if the _id is invalid
     if (ObjectId.isValid(req.session.userId) === false) {
         return res.render('usererror', {message: "There are no users listed with this id"});
@@ -73,7 +73,7 @@ const updateUser = async (req, res,next) => {
 
             // confirm that user typed same password twice
             if (req.body.password !== req.body.confirmPassword) {
-                var err = new Error("Passwords do not match");
+                let err = new Error("Passwords do not match");
                 err.status = 400;
                 return next(err);
             }
@@ -90,7 +90,7 @@ const updateUser = async (req, res,next) => {
             return res.redirect("/profile");
 
         } else {
-            var err = new Error("All fields required");
+            let err = new Error("All fields required");
             err.status = 400;
             return next(err);
         }
@@ -103,28 +103,28 @@ const updateUser = async (req, res,next) => {
 
 
 // function to add user
-const addUser = async(req, res, next) => {
+const addUser = async (req, res, next) => {
 
     const {name, email, password, confirmPassword} = req.body;
 
     let errors = [];
     if (!name || !email || !confirmPassword) {
         errors.push({msg: "Please fill in all the fields"});
-        var err = new Error("Please fill in all the fields");
+        let err = new Error("Please fill in all the fields");
         err.status = 400;
         return next(err);
     }
 
     if (password !== confirmPassword) {
         errors.push({msg: "Passwords do not match"});
-        var err = new Error("Passwords do not match");
+        let err = new Error("Passwords do not match");
         err.status = 400;
         return next(err);
     }
 
     if (password.length < 8) {
         errors.push({msg: "Password must be at least 8 characters"});
-        var err = new Error("Password must be at least 8 characters");
+        let err = new Error("Password must be at least 8 characters");
         err.status = 400;
         return next(err);
     }
@@ -138,17 +138,17 @@ const addUser = async(req, res, next) => {
             .then(user => {
                 if (user) {
                     errors.push({msg: "Email is already registered"});
-                    var err = new Error("Email is already registered");
+                    let err = new Error("Email is already registered");
                     err.status = 400;
                     return next(err);
                 } else {
-                    const userData = new User( {
+                    const userData = new User({
                         name: name,
                         email: email,
                         password: password
                     })
 
-                    User.create(userData, function(error, user) {
+                    User.create(userData, function (error, user) {
 
                         if (error) {
                             console.log("failed to create user");
@@ -213,7 +213,7 @@ const deleteUserByID = async (req, res) => {
     // deletes the user with the following _id
     await User.deleteOne({_id: req.session.userId}, function (err) {
         try {
-            req.session.destroy(function(err) {
+            req.session.destroy(function (err) {
                 if (err) {
                     return next(err);
                 } else {
@@ -227,11 +227,11 @@ const deleteUserByID = async (req, res) => {
     })
 };
 
-const login = async (req, res,next) => {
+const login = async (req, res, next) => {
     if (req.body.email && req.body.password) {
-        User.authenticate(req.body.email, req.body.password, function(error, user) {
+        User.authenticate(req.body.email, req.body.password, function (error, user) {
             if (error || !user) {
-                var err = new Error("Wrong email or password");
+                let err = new Error("Wrong email or password");
                 err.status = 401;
                 return next(err);
             } else {
@@ -240,7 +240,7 @@ const login = async (req, res,next) => {
             }
         });
     } else {
-        var err = new Error("Email and password are required");
+        let err = new Error("Email and password are required");
         err.status = 401;
         return next(err);
     }
@@ -248,7 +248,7 @@ const login = async (req, res,next) => {
 
 const accessProfile = async (req, res, next) => {
     User.findById(req.session.userId)
-        .exec(function(error, user) {
+        .exec(function (error, user) {
             if (error) {
                 return next(error);
             } else {
@@ -260,7 +260,7 @@ const accessProfile = async (req, res, next) => {
 const logout = async (req, res, next) => {
     if (req.session) {
         // delete session object
-        req.session.destroy(function(err) {
+        req.session.destroy(function (err) {
             if (err) {
                 return next(err);
             } else {
