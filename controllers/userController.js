@@ -1,5 +1,8 @@
+/* Extracted from https://github.com/bradtraversy/node_passport_login */
+
 const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
+const passport = require("passport");
 
 // import user and review model
 const User = mongoose.model("user");
@@ -114,14 +117,12 @@ const addUser = async (req, res, next) => {
     }
 
     if (password !== confirmPassword) {
-        console.log("passwords do not match");
         errors.push({msg: "Passwords do not match"});
 
     }
 
     if (password.length < 8) {
         errors.push({msg: "Password must be at least 8 characters"});
-
     }
 
     if (errors.length > 0) {
@@ -153,11 +154,11 @@ const addUser = async (req, res, next) => {
                             // save
                             userData.save()
                                 .then(user => {
-                                    req.flash("success_msg","You are now registered and can log in");
+                                    req.flash("success_msg", "You are now registered and can log in");
                                     res.redirect("/login");
                                 })
                                 .catch(err => console.log(err));
-                    }))
+                        }))
                 }
             })
     }
@@ -227,48 +228,19 @@ const deleteUserByID = async (req, res) => {
     })
 };
 
-// const login = async (req, res, next) => {
-//     if (req.body.email && req.body.password) {
-//         User.authenticate(req.body.email, req.body.password, function (error, user) {
-//             if (error || !user) {
-//                 let err = new Error("Wrong email or password");
-//                 err.status = 401;
-//                 return next(err);
-//             } else {
-//                 req.session.userId = user._id;
-//                 return res.redirect("/profile");
-//             }
-//         });
-//     } else {
-//         let err = new Error("Email and password are required");
-//         err.status = 401;
-//         return next(err);
-//     }
-// }
+const logout = (req, res) => {
+    req.logout();
+    req.flash("success_msg", "You are logged out");
+    res.redirect("/login");
+}
 
-// const accessProfile = async (req, res, next) => {
-//     User.findById(req.session.userId)
-//         .exec(function (error, user) {
-//             if (error) {
-//                 return next(error);
-//             } else {
-//                 return res.render("profile", {title: "Profile", user: user});
-//             }
-//         });
-// }
-
-// const logout = async (req, res, next) => {
-//     if (req.session) {
-//         // delete session object
-//         req.session.destroy(function (err) {
-//             if (err) {
-//                 return next(err);
-//             } else {
-//                 return res.redirect("/");
-//             }
-//         });
-//     }
-// }
+const login = (req, res, next) => {
+    passport.authenticate("local", {
+        successRedirect: "/profile",
+        failureRedirect: "/login",
+        failureFlash: true
+    })(req, res, next);
+}
 
 
 module.exports = {
@@ -279,7 +251,6 @@ module.exports = {
     updateUser,
     deleteUserByID,
     getUserByEmail,
-    // login,
-    // accessProfile,
-    // logout
+    logout,
+    login
 };

@@ -1,3 +1,5 @@
+/* Extracted from https://github.com/bradtraversy/node_passport_login */
+
 const LocalStrategy = require("passport-local").Strategy;
 const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
@@ -5,7 +7,7 @@ const bcrypt = require("bcrypt");
 // Load user model
 const User = require("../models/user");
 
-module.exports = function(passport) {
+module.exports = function (passport) {
     passport.use(
         new LocalStrategy({usernameField: "email"}, (email, password, done) => {
             // Match user

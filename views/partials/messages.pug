@@ -1,4 +1,6 @@
-//- shows all encountered validation errors -//
+// Extracted from https://github.com/voandy/reuser
+
+// shows all encountered validation errors
 if (typeof errors != "undefined")
     each error in errors
         div.alert.alert-warning.alert-dismissible.fade.show(role="alert")
@@ -6,7 +8,7 @@ if (typeof errors != "undefined")
             button.close(type="button", data-dismiss="alert", aria-label="Close")
                 span(aria-hidden="true") ×
 
-//- flash messages -//
+// flash messages
 if (typeof success_msg != "undefined" && success_msg != "")
     div.alert.alert-success.alert-dismissible.fade.show(role="alert")
         a= success_msg

@@ -5,16 +5,18 @@ nav.navbar.navbar-expand-lg.navbar-light.bg-light
             a.navbar-brand(href="/")
                 img.rounded(src="/images/logo.png", width="180px")
             .nav.navbar-nav.ml-auto
-                a.nav-item.nav-link(href="/?about=About#about") About
-                a.nav-item.nav-link(href="/venue") Venues
-                a.nav-item.nav-link(href="/user") Users
-                if !loggedIn
-                    a.nav-item.nav-link(href="/register") Sign Up
 
             if loggedIn
+                a.nav-item.nav-link(href="/venue") Venues
+                a.nav-item.nav-link(href="/user") Users
                 a.nav-item.nav-link(href="/profile") My Profile
                 div
                     //- img.avatar.img-circle.hidden-xs-down(src=user.avatar, alt="avatar")
                     a.btn.btn-outline-dark.pull-md-right(href="/logout", style="margin:10px") Log out
+
             else
+                a.nav-item.nav-link(href="/?about=About#about") About
+                a.nav-item.nav-link(href="/venue") Venues
+                a.nav-item.nav-link(href="/user") Users
+                a.nav-item.nav-link(href="/register") Sign Up
                 a.btn.btn-outline-primary(href="/login", style="margin:0px 20px") Login

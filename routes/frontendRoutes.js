@@ -1,57 +1,36 @@
 const express = require("express");
 const router = express.Router();
-const bcrypt = require("bcrypt");
-const passport = require("passport");
 
-const {ensureAuthenticated} = require("../config/auth");
-
-const User = require("../models/user");
+const {ensureAuthenticated, forwardAuthenticated} = require("../config/auth");
 
 const userController = require("../controllers/userController.js");
 const venueController = require("../controllers/venueController.js");
 
 
 // GET home page
-router.get("/", (req, res, next) => {
+router.get("/", forwardAuthenticated, (req, res, next) => {
     return res.render("index", {title: "Home"});
 });
 
 // GET About
-router.get("/about", (req, res, next) => {
-    return res.render("about", {title: "About"});
-});
+router.get("/about", (req, res, next) => res.render("about", {title: "About"}));
 
 // USER
-
 // GET Register form page
-router.get("/register", function(req, res, next) {
-    return res.render("register", {title: "Sign Up"});
-});
+router.get("/register", forwardAuthenticated, (req, res, next) => res.render("register", {title: "Sign Up"}));
 
 // POST Register form
 router.post("/register", userController.addUser);
 
 // GET Login
-router.get("/login", function(req, res, next) {
-    return res.render("login", {title: "Log In"});
-});
+router.get("/login", forwardAuthenticated, (req, res, next) => res.render("login", {title: "Log In"}));
 
 // POST Login
-// router.post("/login", userController.login);
-router.post("/login", (req, res, next) => {
-    passport.authenticate("local", {
-        successRedirect: "/profile",
-        failureRedirect: "/login",
-        failureFlash: true
-    })(req, res, next);
-});
+router.post("/login", userController.login);
 
 // GET Profile
-// router.get("/profile", userController.accessProfile);
 router.get("/profile", ensureAuthenticated, (req, res) => {
-    res.render("profile", {
-        user: req.user
-    })
+    res.render("profile", {user: req.user})
 });
 
 // GET Profile edit form based on user ID
@@ -69,12 +48,7 @@ router.post("/profile", userController.updateUser);
 router.post("/profile/delete", userController.deleteUserByID);
 
 // GET Logout
-// router.get("/logout", userController.logout);
-router.get("/logout", (req, res) => {
-    req.logout();
-    req.flash("success_msg", "You are logged out");
-    res.redirect("/login");
-});
+router.get("/logout", userController.logout);
 
 // VENUE
 
