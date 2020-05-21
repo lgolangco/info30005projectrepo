@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const bcrypt = require("bcrypt");
 
 // import user and review model
 const User = mongoose.model("user");
@@ -110,23 +111,17 @@ const addUser = async (req, res, next) => {
     let errors = [];
     if (!name || !email || !confirmPassword) {
         errors.push({msg: "Please fill in all the fields"});
-        let err = new Error("Please fill in all the fields");
-        err.status = 400;
-        return next(err);
     }
 
     if (password !== confirmPassword) {
+        console.log("passwords do not match");
         errors.push({msg: "Passwords do not match"});
-        let err = new Error("Passwords do not match");
-        err.status = 400;
-        return next(err);
+
     }
 
     if (password.length < 8) {
         errors.push({msg: "Password must be at least 8 characters"});
-        let err = new Error("Password must be at least 8 characters");
-        err.status = 400;
-        return next(err);
+
     }
 
     if (errors.length > 0) {
@@ -138,26 +133,30 @@ const addUser = async (req, res, next) => {
             .then(user => {
                 if (user) {
                     errors.push({msg: "Email is already registered"});
-                    let err = new Error("Email is already registered");
-                    err.status = 400;
-                    return next(err);
+                    res.render("register", {
+                        errors, name, email, password, confirmPassword
+                    })
+
                 } else {
                     const userData = new User({
                         name: name,
                         email: email,
                         password: password
-                    })
-
-                    User.create(userData, function (error, user) {
-
-                        if (error) {
-                            console.log("failed to create user");
-                            return next(error);
-                        } else {
-                            console.log("Created user");
-                            return res.redirect("/login");
-                        }
                     });
+
+                    // Hash Password
+                    bcrypt.genSalt(10, (err, salt) =>
+                        bcrypt.hash(userData.password, salt, (err, hash) => {
+                            if (err) throw err;
+                            // set password to hash
+                            userData.password = hash;
+                            // save
+                            userData.save()
+                                .then(user => {
+                                    res.redirect("/login");
+                                })
+                                .catch(err => console.log(err));
+                    }))
                 }
             })
     }
@@ -227,48 +226,48 @@ const deleteUserByID = async (req, res) => {
     })
 };
 
-const login = async (req, res, next) => {
-    if (req.body.email && req.body.password) {
-        User.authenticate(req.body.email, req.body.password, function (error, user) {
-            if (error || !user) {
-                let err = new Error("Wrong email or password");
-                err.status = 401;
-                return next(err);
-            } else {
-                req.session.userId = user._id;
-                return res.redirect("/profile");
-            }
-        });
-    } else {
-        let err = new Error("Email and password are required");
-        err.status = 401;
-        return next(err);
-    }
-}
+// const login = async (req, res, next) => {
+//     if (req.body.email && req.body.password) {
+//         User.authenticate(req.body.email, req.body.password, function (error, user) {
+//             if (error || !user) {
+//                 let err = new Error("Wrong email or password");
+//                 err.status = 401;
+//                 return next(err);
+//             } else {
+//                 req.session.userId = user._id;
+//                 return res.redirect("/profile");
+//             }
+//         });
+//     } else {
+//         let err = new Error("Email and password are required");
+//         err.status = 401;
+//         return next(err);
+//     }
+// }
 
-const accessProfile = async (req, res, next) => {
-    User.findById(req.session.userId)
-        .exec(function (error, user) {
-            if (error) {
-                return next(error);
-            } else {
-                return res.render("profile", {title: "Profile", user: user});
-            }
-        });
-}
+// const accessProfile = async (req, res, next) => {
+//     User.findById(req.session.userId)
+//         .exec(function (error, user) {
+//             if (error) {
+//                 return next(error);
+//             } else {
+//                 return res.render("profile", {title: "Profile", user: user});
+//             }
+//         });
+// }
 
-const logout = async (req, res, next) => {
-    if (req.session) {
-        // delete session object
-        req.session.destroy(function (err) {
-            if (err) {
-                return next(err);
-            } else {
-                return res.redirect("/");
-            }
-        });
-    }
-}
+// const logout = async (req, res, next) => {
+//     if (req.session) {
+//         // delete session object
+//         req.session.destroy(function (err) {
+//             if (err) {
+//                 return next(err);
+//             } else {
+//                 return res.redirect("/");
+//             }
+//         });
+//     }
+// }
 
 
 module.exports = {
@@ -279,7 +278,7 @@ module.exports = {
     updateUser,
     deleteUserByID,
     getUserByEmail,
-    login,
-    accessProfile,
-    logout
+    // login,
+    // accessProfile,
+    // logout
 };
