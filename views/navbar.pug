@@ -8,10 +8,10 @@ nav.navbar.navbar-expand-lg.navbar-light.bg-light
                 a.nav-item.nav-link(href="/?about=About#about") About
                 a.nav-item.nav-link(href="/venue") Venues
                 a.nav-item.nav-link(href="/user") Users
-                if !currentUser
+                if !loggedIn
                     a.nav-item.nav-link(href="/register") Sign Up
 
-            if currentUser
+            if loggedIn
                 a.nav-item.nav-link(href="/profile") My Profile
                 div
                     //- img.avatar.img-circle.hidden-xs-down(src=user.avatar, alt="avatar")

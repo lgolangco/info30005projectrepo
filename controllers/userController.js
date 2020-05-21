@@ -153,6 +153,7 @@ const addUser = async (req, res, next) => {
                             // save
                             userData.save()
                                 .then(user => {
+                                    req.flash("success_msg","You are now registered and can log in");
                                     res.redirect("/login");
                                 })
                                 .catch(err => console.log(err));

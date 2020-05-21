@@ -1,5 +1,11 @@
 const express = require("express");
 const router = express.Router();
+const bcrypt = require("bcrypt");
+const passport = require("passport");
+
+const {ensureAuthenticated} = require("../config/auth");
+
+const User = require("../models/user");
 
 const userController = require("../controllers/userController.js");
 const venueController = require("../controllers/venueController.js");
@@ -32,9 +38,21 @@ router.get("/login", function(req, res, next) {
 
 // POST Login
 // router.post("/login", userController.login);
+router.post("/login", (req, res, next) => {
+    passport.authenticate("local", {
+        successRedirect: "/profile",
+        failureRedirect: "/login",
+        failureFlash: true
+    })(req, res, next);
+});
 
 // GET Profile
 // router.get("/profile", userController.accessProfile);
+router.get("/profile", ensureAuthenticated, (req, res) => {
+    res.render("profile", {
+        user: req.user
+    })
+});
 
 // GET Profile edit form based on user ID
 router.get("/profile/edit", userController.updateUserForm);
@@ -52,7 +70,11 @@ router.post("/profile/delete", userController.deleteUserByID);
 
 // GET Logout
 // router.get("/logout", userController.logout);
-
+router.get("/logout", (req, res) => {
+    req.logout();
+    req.flash("success_msg", "You are logged out");
+    res.redirect("/login");
+});
 
 // VENUE
 
