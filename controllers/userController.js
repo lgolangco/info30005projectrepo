@@ -40,7 +40,7 @@ const updateUserForm = async (req, res) => {
             return res.render('usererror', {message: "User not found"});
         }
         const user = users[0];
-        console.log(res.locals.loginId,"Updating user:", user);
+        console.log("Updating user:", user);
         res.render('userUpdateForm', {
             user: user,
             toDelete: false
