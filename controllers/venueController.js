@@ -76,7 +76,7 @@ const getVenueSuggestionsByID = async (req, res) => {
       venueerror: "For a list of all registered venues,"
     });
   }
-  const user = await User.findById(req.session.userId);
+  const user = await User.findById(req.user._id);
   if (user === null) {
     return res.render('error', {
       error: "You're not logged in!",

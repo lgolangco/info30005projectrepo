@@ -8,7 +8,7 @@ const venueController = require("../controllers/venueController.js");
 
 
 // GET home page
-router.get("/", forwardAuthenticated, (req, res, next) => {
+router.get("/", (req, res, next) => {
     return res.render("index", {title: "Home"});
 });
 
