@@ -36,22 +36,32 @@ header.masthead h1 {
 
 .popular-link-set {
     color: #adadad;
-    font-size: 16px;
+    font-size: 14px;
     line-height: 24px;
     padding: 30px 0 10px;
     vertical-align: baseline;
-    margin: 0 30px;
 }
 
-.fas.fa-chevron-circle-left.fa-2x {
-    padding: 10px;
+.popular-link-avatar {
+    margin-top: -4rem;
+    margin-bottom: 5px;
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+
 }
 
-.carousel-inner {
-    padding: 10px;
+.popular-link-avatar-name {
+    font-size: 14px;
+    font-family: "Montserrat", "sans-serif";
+    padding-bottom: 10px;
+}
+
+.card {
+    margin: 5px;
 }
 
 .card-img-top {
+    height: 190px;
     object-fit: cover;
-    height: 200px;
 }
