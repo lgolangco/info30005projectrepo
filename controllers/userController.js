@@ -32,7 +32,7 @@ const getAllUsers = async (req, res) => {
 const updateUserForm = async (req, res) => {
 
     try {
-        const users = await User.find({_id: req.session.userId});
+        const users = await User.find({_id: res.locals.loginId});
 
         if (!users) {
             res.status(400);
@@ -40,7 +40,7 @@ const updateUserForm = async (req, res) => {
             return res.render('usererror', {message: "User not found"});
         }
         const user = users[0];
-        console.log("Updating user:", user);
+        console.log(res.locals.loginId,"Updating user:", user);
         res.render('userUpdateForm', {
             user: user,
             toDelete: false
@@ -57,12 +57,12 @@ const updateUserForm = async (req, res) => {
 // function to modify user details
 const updateUser = async (req, res, next) => {
     // checks if the _id is invalid
-    if (ObjectId.isValid(req.session.userId) === false) {
+    if (ObjectId.isValid(res.locals.loginId) === false) {
         return res.render('usererror', {message: "There are no users listed with this id"});
     }
 
     // checks if there are no venues listed with that _id
-    const users = await User.find({_id: req.session.userId});
+    const users = await User.find({_id: res.locals.loginId});
     if (users.length === 0) {
         res.status(400);
         console.log("User not found");
@@ -90,8 +90,20 @@ const updateUser = async (req, res, next) => {
             user["cover"] = req.body.cover;
             user["avatar"] = req.body.avatar;
 
-            await user.save();
-            return res.redirect("/profile");
+            // Hash Password
+            bcrypt.genSalt(10, (err, salt) =>
+                bcrypt.hash(user.password, salt, (err, hash) => {
+                    if (err) throw err;
+                    // set password to hash
+                    user.password = hash;
+                    // save
+                    user.save()
+                        .then(user => {
+                            return res.redirect("/profile");
+                        })
+                        .catch(err => console.log(err));
+                }))
+
 
         } else {
             let err = new Error("All fields required");
@@ -202,17 +214,17 @@ const getUserByEmail = async (req, res) => {
 const deleteUserByID = async (req, res) => {
 
     // checks if the _id is invalid
-    if (ObjectId.isValid(req.session.userId) === false) {
+    if (ObjectId.isValid(res.locals.loginId) === false) {
         return res.render('usererror', {message: "There are no users listed with this id"});
     }
 
     // deletes the reviews associated with the user
-    Review.deleteMany({userId: req.session.userId}, function (err) {
+    Review.deleteMany({userId: res.locals.loginId}, function (err) {
         res.status(400);
     });
 
     // deletes the user with the following _id
-    await User.deleteOne({_id: req.session.userId}, function (err) {
+    await User.deleteOne({_id: res.locals.loginId}, function (err) {
         try {
             req.session.destroy(function (err) {
                 if (err) {
