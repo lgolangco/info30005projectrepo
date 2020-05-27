@@ -2,29 +2,61 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
 const session = require("express-session");
+const flash = require("connect-flash");
+const passport = require("passport");
+
 const app = express();
+
+require("./models");
+
+// Passport config
+require("./config/passport")(passport);
 
 // session middleware
 app.use(session({
-  secret: "studyspot secret",
-  resave: true,
-  saveUninitialized: false,
+    secret: "studyspot secret",
+    resave: true,
+    saveUninitialized: true
 }));
 
+// Passport middleware
+app.use(passport.initialize());
+app.use(passport.session());
+
+// Connect flash
+app.use(flash());
+
+// Global variables
+app.use((req, res, next) => {
+    res.locals.success_msg = req.flash("success_msg");
+    res.locals.error_msg = req.flash("error_msg");
+    res.locals.error = req.flash("error");
+    next();
+});
+
+// define local variables for logged in user
+app.use((req, res, next) => {
+    res.locals.loggedIn = req.isAuthenticated();
+    if (req.isAuthenticated()) {
+        res.locals.loginId = req.user._id;
+        res.locals.loginName = req.user.name;
+    }
+    next();
+});
+
 // make user ID available in templates
-app.use(function(req, res, next) {
-  // if user is logged in, res.locals.currentUser will hold their user id, else no session and no session id.
-  res.locals.currentUser = req.session.userId;
-  next();
+app.use(function (req, res, next) {
+    // if user is logged in, res.locals.currentUser will hold their user id, else no session and no session id.
+    res.locals.currentUser = req.session.userId;
+    next();
 });
 
 app.use(cors());
 
-require("./models");
 
 // parse incoming requests
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({extended: false}));
 
 // serve static files from /public
 app.use(express.static(__dirname + "/public"));
@@ -32,7 +64,6 @@ app.use(express.static(__dirname + "/public"));
 // view engine setup
 app.set("view engine", "pug");
 app.set("views", __dirname + "/views");
-
 
 // setting up routes
 const frontendRoutes = require("./routes/frontendRoutes");
@@ -47,22 +78,13 @@ app.use("/venue", venueRoute);
 app.use("/review", reviewRouter);
 
 // catch 404 and forward to error handler
-app.use(function(req, res, next) {
-  let err = new Error("File not found");
-  err.status = 404;
-  next(err);
+app.use(function (req, res, next) {
+    let err = new Error("File not found");
+    err.status = 404;
+    next(err);
 });
 
-// error handler
-// define as the last app.use callback
-app.use(function(err, req, res, next) {
-  res.status(err.status || 500);
-  res.render("error", {
-    message: err.message,
-    error:{}
-  });
-});
 
 app.listen(process.env.PORT || 3000, () => {
-  console.log("StudySpot app is running!");
+    console.log("StudySpot app is running!");
 });

@@ -1,41 +1,37 @@
 const express = require("express");
 const router = express.Router();
 
+const {ensureAuthenticated, forwardAuthenticated} = require("../config/auth");
+
 const userController = require("../controllers/userController.js");
 const venueController = require("../controllers/venueController.js");
-const mid = require("../middleware");
 
 
 // GET home page
-router.get("/", (req, res, next) => {
+router.get("/", forwardAuthenticated, (req, res, next) => {
     return res.render("index", {title: "Home"});
 });
 
 // GET About
-router.get("/about", (req, res, next) => {
-    return res.render("about", {title: "About"});
-});
+router.get("/about", (req, res, next) => res.render("about", {title: "About"}));
 
 // USER
-
 // GET Register form page
-router.get("/register", mid.loggedOut, function(req, res, next) {
-    return res.render("register", {title: "Sign Up"});
-});
+router.get("/register", forwardAuthenticated, (req, res, next) => res.render("register", {title: "Sign Up"}));
 
 // POST Register form
 router.post("/register", userController.addUser);
 
 // GET Login
-router.get("/login", mid.loggedOut, function(req, res, next) {
-    return res.render("login", {title: "Log In"});
-});
+router.get("/login", forwardAuthenticated, (req, res, next) => res.render("login", {title: "Log In"}));
 
 // POST Login
 router.post("/login", userController.login);
 
 // GET Profile
-router.get("/profile", mid.requiresLogin, userController.accessProfile);
+router.get("/profile", ensureAuthenticated, (req, res) => {
+    res.render("profile", {user: req.user})
+});
 
 // GET Profile edit form based on user ID
 router.get("/profile/edit", userController.updateUserForm);
@@ -53,7 +49,6 @@ router.post("/profile/delete", userController.deleteUserByID);
 
 // GET Logout
 router.get("/logout", userController.logout);
-
 
 // VENUE
 

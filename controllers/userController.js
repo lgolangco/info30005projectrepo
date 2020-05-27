@@ -1,4 +1,8 @@
+/* Extracted from https://github.com/bradtraversy/node_passport_login */
+
 const mongoose = require("mongoose");
+const bcrypt = require("bcrypt");
+const passport = require("passport");
 
 // import user and review model
 const User = mongoose.model("user");
@@ -28,7 +32,7 @@ const getAllUsers = async (req, res) => {
 const updateUserForm = async (req, res) => {
 
     try {
-        const users = await User.find({_id: req.session.userId});
+        const users = await User.find({_id: res.locals.loginId});
 
         if (!users) {
             res.status(400);
@@ -53,12 +57,12 @@ const updateUserForm = async (req, res) => {
 // function to modify user details
 const updateUser = async (req, res, next) => {
     // checks if the _id is invalid
-    if (ObjectId.isValid(req.session.userId) === false) {
+    if (ObjectId.isValid(res.locals.loginId) === false) {
         return res.render('usererror', {message: "There are no users listed with this id"});
     }
 
     // checks if there are no venues listed with that _id
-    const users = await User.find({_id: req.session.userId});
+    const users = await User.find({_id: res.locals.loginId});
     if (users.length === 0) {
         res.status(400);
         console.log("User not found");
@@ -86,8 +90,20 @@ const updateUser = async (req, res, next) => {
             user["cover"] = req.body.cover;
             user["avatar"] = req.body.avatar;
 
-            await user.save();
-            return res.redirect("/profile");
+            // Hash Password
+            bcrypt.genSalt(10, (err, salt) =>
+                bcrypt.hash(user.password, salt, (err, hash) => {
+                    if (err) throw err;
+                    // set password to hash
+                    user.password = hash;
+                    // save
+                    user.save()
+                        .then(user => {
+                            return res.redirect("/profile");
+                        })
+                        .catch(err => console.log(err));
+                }))
+
 
         } else {
             let err = new Error("All fields required");
@@ -110,23 +126,15 @@ const addUser = async (req, res, next) => {
     let errors = [];
     if (!name || !email || !confirmPassword) {
         errors.push({msg: "Please fill in all the fields"});
-        let err = new Error("Please fill in all the fields");
-        err.status = 400;
-        return next(err);
     }
 
     if (password !== confirmPassword) {
         errors.push({msg: "Passwords do not match"});
-        let err = new Error("Passwords do not match");
-        err.status = 400;
-        return next(err);
+
     }
 
     if (password.length < 8) {
         errors.push({msg: "Password must be at least 8 characters"});
-        let err = new Error("Password must be at least 8 characters");
-        err.status = 400;
-        return next(err);
     }
 
     if (errors.length > 0) {
@@ -138,26 +146,31 @@ const addUser = async (req, res, next) => {
             .then(user => {
                 if (user) {
                     errors.push({msg: "Email is already registered"});
-                    let err = new Error("Email is already registered");
-                    err.status = 400;
-                    return next(err);
+                    res.render("register", {
+                        errors, name, email, password, confirmPassword
+                    })
+
                 } else {
                     const userData = new User({
                         name: name,
                         email: email,
                         password: password
-                    })
-
-                    User.create(userData, function (error, user) {
-
-                        if (error) {
-                            console.log("failed to create user");
-                            return next(error);
-                        } else {
-                            console.log("Created user");
-                            return res.redirect("/login");
-                        }
                     });
+
+                    // Hash Password
+                    bcrypt.genSalt(10, (err, salt) =>
+                        bcrypt.hash(userData.password, salt, (err, hash) => {
+                            if (err) throw err;
+                            // set password to hash
+                            userData.password = hash;
+                            // save
+                            userData.save()
+                                .then(user => {
+                                    req.flash("success_msg", "You are now registered and can log in");
+                                    res.redirect("/login");
+                                })
+                                .catch(err => console.log(err));
+                        }))
                 }
             })
     }
@@ -201,17 +214,17 @@ const getUserByEmail = async (req, res) => {
 const deleteUserByID = async (req, res) => {
 
     // checks if the _id is invalid
-    if (ObjectId.isValid(req.session.userId) === false) {
+    if (ObjectId.isValid(res.locals.loginId) === false) {
         return res.render('usererror', {message: "There are no users listed with this id"});
     }
 
     // deletes the reviews associated with the user
-    Review.deleteMany({userId: req.session.userId}, function (err) {
+    Review.deleteMany({userId: res.locals.loginId}, function (err) {
         res.status(400);
     });
 
     // deletes the user with the following _id
-    await User.deleteOne({_id: req.session.userId}, function (err) {
+    await User.deleteOne({_id: res.locals.loginId}, function (err) {
         try {
             req.session.destroy(function (err) {
                 if (err) {
@@ -227,47 +240,18 @@ const deleteUserByID = async (req, res) => {
     })
 };
 
-const login = async (req, res, next) => {
-    if (req.body.email && req.body.password) {
-        User.authenticate(req.body.email, req.body.password, function (error, user) {
-            if (error || !user) {
-                let err = new Error("Wrong email or password");
-                err.status = 401;
-                return next(err);
-            } else {
-                req.session.userId = user._id;
-                return res.redirect("/profile");
-            }
-        });
-    } else {
-        let err = new Error("Email and password are required");
-        err.status = 401;
-        return next(err);
-    }
+const logout = (req, res) => {
+    req.logout();
+    req.flash("success_msg", "You are logged out");
+    res.redirect("/login");
 }
 
-const accessProfile = async (req, res, next) => {
-    User.findById(req.session.userId)
-        .exec(function (error, user) {
-            if (error) {
-                return next(error);
-            } else {
-                return res.render("profile", {title: "Profile", user: user});
-            }
-        });
-}
-
-const logout = async (req, res, next) => {
-    if (req.session) {
-        // delete session object
-        req.session.destroy(function (err) {
-            if (err) {
-                return next(err);
-            } else {
-                return res.redirect("/");
-            }
-        });
-    }
+const login = (req, res, next) => {
+    passport.authenticate("local", {
+        successRedirect: "/profile",
+        failureRedirect: "/login",
+        failureFlash: true
+    })(req, res, next);
 }
 
 
@@ -279,7 +263,6 @@ module.exports = {
     updateUser,
     deleteUserByID,
     getUserByEmail,
-    login,
-    accessProfile,
-    logout
+    logout,
+    login
 };

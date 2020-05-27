@@ -7,14 +7,19 @@ block content
             // Register User Form
             form(method="POST" action="/register").form-registration
                 h1 Sign Up
+                hr
+                include partials/messages.pug
                 .form-group
                     label(for="name") Full name:
                     input#name.form-control(type="text", placeholder="first and last" name="name")
                 .form-group
                     label(for="email") Email:
+                        //b Email
                     input#email.form-control(type="email", placeholder="name@email.com" name="email")
+                    span.underline
                 .form-group
                     label(for="pw") Password:
+                        //b Password
                     input#pw.form-control(type="password" name="password")
                 .form-group
                     label(for="pw2") Confirm Password:

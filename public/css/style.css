@@ -81,31 +81,18 @@ h1 {
 
 /* Button Styles */
 
-.btn-primary {
-    background: #417aba;
-    border-color: #417aba;
+.btn-outline-primary {
+    border-color: #0b5394;
     margin-right: 20px;
     margin-top: 10px;
+    color: #0b5394;
 }
 
-.btn-info {
+.btn-outline-primary:hover {
     background-color: #0b5394;
-    border-color: #3d8596;
+    border-color: #3d85c6;
 }
 
-.btn-info:hover {
-    background-color: #3d85c6;
-    border-color: #5bc0de;
-}
-
-.btn-light {
-    color: rgba(255, 255, 255, .75);
-    background: rgba(255, 255, 255, .12);
-}
-
-.btn-light:hover {
-    background: rgba(255, 255, 255, .2);
-}
 
 .active,
 .btn {
@@ -147,55 +134,4 @@ h1 {
 }
 .options .material-icons:hover {
     color: initial;
-}
-
-
-
-/* Media Queries */
-
-@media (min-width: 0) and (max-width: 47em) {
-    .navbar {
-        background: #1d2a33;
-    }
-
-    .nav-items .nav-item {
-        float: none;
-    }
-
-    .nav-items .nav-link {
-        padding: .65rem 0;
-        display: block;
-    }
-
-    .nav-items {
-        padding: 1rem 0;
-    }
-
-    .navbar .btn {
-        margin-left: 1rem;
-    }
-
-    .main {
-        padding-top: 6rem;
-    }
-}
-
-@media (min-width: 48em) {
-    .navbar {
-        min-height: 70px;
-    }
-
-    .navbar-nav .container {
-        display: -webkit-flex;
-        display: flex;
-    }
-
-    .nav-items {
-        margin-right: auto;
-        margin-left: auto;
-    }
-
-    .main {
-        padding-top: 8rem;
-    }
 }

@@ -3,10 +3,13 @@ extends layout
 block content
     .text-center
         .main.container-fluid
-                
+
+
                 // Login Form
                 form(method="POST" action="/login").form-signin
                     h1 Please sign in
+                    hr
+                    include partials/messages
                     label.sr-only(for="email") Email
                     input.form-control(type="email" placeholder="Email address" name="email" id="email" required="" autofocus="")
                     label.sr-only(for="password") Password
