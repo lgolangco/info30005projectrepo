@@ -10,27 +10,73 @@ const ObjectId = mongoose.Types.ObjectId;
 
 // function to handle a request to get all venues
 const getAllVenues = async (req, res) => {
-  try {
-    const all_venues = await Venue.find();
-    if (all_venues.length === 0){
-      return res.render('venues', {
-        title: "There are no existing venues yet"
-      })
-    } else {
-      return res.render('venues', {
-        title: "Venue List - All Venues",
-        venues: all_venues
-      });
-    }
-  } catch (err) {
-    res.status(400);
-    return res.render('error', {
-      error: "Database query failed",
-      message: "Database query failed",
-      functionfailure: "Failed to get all venues"
+  var noMatch = null;
+  if(req.query.search) {
+    const regex = new RegExp(escapeRegex(req.query.search), 'gi');
+    // Get all fuzzy match venues from DB
+    Venue.find({
+      $or : [
+        {venueName: regex},
+        {venueType: regex},
+        {venueSuburb:regex},
+        {venuePostcode:regex}
+      ]
+      }, function(err, allVenues){
+      if(err){
+        console.log(err);
+      } else {
+        if (allVenues.length < 1) {
+          noMatch = "No venue match that query, please try again.";
+          res.res.render('error', {
+            error: "Database query failed",
+            message: "Database query failed",
+            functionfailure: "Failed to get all venues"
+        })}
+        res.render('venues', {
+          title: "Venue List - Matching Venues",
+          venues: allVenues
+        })}
     });
-  }
+  } else {
+    Venue.find({}, function(err, allVenues){
+      if(err){
+        console.log(err);
+      } else {
+        res.render('venues', {
+        title: "Venue List - All Venues",
+        venues: allVenues
+      });
+    }})}
 };
+
+function escapeRegex(text) {
+  return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
+}
+
+
+// // function to handle a request to get all venues
+// const getAllVenues = async (req, res) => {
+//   try {
+//     const all_venues = await Venue.find();
+//     if (all_venues.length === 0){
+//       return res.render('venues', {
+//         title: "There are no existing venues yet"
+//       })
+//     } else {
+//       return res.render('venues', {
+//         title: "Venue List - All Venues",
+//         venues: all_venues
+//       });
+//     }
+//   } catch (err) {
+//     res.status(400);
+//     return res.render('error', {
+//       error: "Database query failed",
+//       message: "Database query failed",
+//       functionfailure: "Failed to get all venues"
+//     });
+//   }
+// };
 
 
 // function to get venues by id and show venue profile
