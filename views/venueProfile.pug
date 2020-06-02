@@ -157,16 +157,42 @@ block content
           //- Create New Review
           //- If suggestion already submitted only show message
           if (completed)
-            h2.display-4.m-b-2 Successfully submitted your suggestion!
-            br
-            p The admins will review your suggestions and update our database accordingly.
+            p Successfully added your review
             
           //- If user is not logged in
           if !(user)
             p Please log in to submit a review.
+          
+          each review in venuesReviews
+            if (user._id.toString() == review.userId.toString())
+              
+              h4 Your Review of #{venue.venueName}
+              - date = review.datePosted.toDateString()
+              .col-lg-10
+                .card.mb-3
+                  
+                  .row
+                    .col-2
+                      p user profile image
+                    .col-10
+                      div
+                        //insert user name
+                        h5 #{review.userId}
+                      div
+                        //insert rating
+                        p Rating: #{review.rating}/5
             
+                  .offset-1
+                    //insert review text
+                    p #{review.content}
+                  
+                  .offset-9
+                    //insert date
+                    p #{date}
+              - existingReview = true;
+          
           //- Else, show suggestion form
-          else
+          if (!existingReview)
             
             div.bg-light.border.col-lg-10
               p Submit a review for <strong>#{venue.venueName} </strong>           
@@ -220,31 +246,36 @@ block content
                 br
                 button.btn.btn-primary(type="submit") Submit
             
-          // User's Review
           
           
           // List reviews
-          p #{venuesReviews}
-          
+          h4 Reviews from Other StudySpotters
           each review in venuesReviews
-            .col-lg-10
-              .card.mb-3
-          
-                .row
-                  .col-7
-                    //insert user name
-                    h5 #{review.userId}
-                  .col-5
-                    //insert rating
-                    p Rating: #{review.rating}/5
-          
-                .row
-                  //insert review text
-                  p #{content}
-          
-                .row
-                  //insert date
-                  p #{datePosted}
+
+            if (user._id.toString() != review.userId.toString())
+              
+              - date = review.datePosted.toDateString()
+              .col-lg-10
+                .card.mb-3
+                  
+                  .row
+                    .col-2
+                      p user profile image
+                    .col-10
+                      div
+                        //insert user name
+                        h5 #{review.userId}
+                      div
+                        //insert rating
+                        p Rating: #{review.rating}/5
+            
+                  .offset-1
+                    //insert review text
+                    p #{review.content}
+                  
+                  .offset-9
+                    //insert date
+                    p #{date}
                   
 
       
