@@ -163,13 +163,13 @@ block content
           if !(user)
             p Please log in to submit a review.
           
-          - const existingReview = false;
-          each review in venuesReviews
-            if (user)
+          else
+            - const existingReview = false;
+            each review in venuesReviews
               if (user._id.toString() == review.userId.toString())
                 - const existingReview = true;
                
-                h4 Your Review of #{venue.venueName}o
+                h4 Your Review of #{venue.venueName}
                 - date = review.datePosted.toDateString()
                 
                 .col-lg-10
@@ -204,47 +204,46 @@ block content
                     a(href="#") Edit Review  
                     a(href="#") Delete Review
               
-                  
           
-          //- Else, show suggestion form
-          if !(existingReview)
-            
-            div.bg-light.border.col-lg-10
-              p Submit a review for <strong>#{venue.venueName} </strong>           
-
-              form(method='POST' action='') 
+            //- Else, show suggestion form
+            if (existingReview === false)
                 
-              
-                div.btn-group.btn-group-toggle(data-toggle="buttons")
-                  label.btn.btn-outline-danger
-                    input#option1(type="radio" name="star1" autocomplete="off") 
-                    |1 Star ★
+              div.bg-light.border.col-lg-10
+                p Submit a review for <strong>#{venue.venueName} </strong>           
 
-                  label.btn.btn-outline-warning
-                    input#option2(type="radio" name="star2" autocomplete="off") 
-                    |2 Stars ★
+                form(method='POST' action='') 
                   
-                  label.btn.btn-outline-secondary
-                    input#option2(type="radio" name="star3" autocomplete="off") 
-                    |3 Stars ★
+                
+                  div.btn-group.btn-group-toggle(data-toggle="buttons")
+                    label.btn.btn-outline-danger
+                      input#option1(type="radio" name="star1" autocomplete="off") 
+                      |1 Star ★
+
+                    label.btn.btn-outline-warning
+                      input#option2(type="radio" name="star2" autocomplete="off") 
+                      |2 Stars ★
                     
-                  label.btn.btn-outline-info
-                    input#option2(type="radio" name="star4" autocomplete="off") 
-                    |4 Stars ★
-                    
-                  label.btn.btn-outline-success
-                    input#option2(type="radio" name="star5" autocomplete="off") 
-                    |5 Stars ★
+                    label.btn.btn-outline-secondary
+                      input#option2(type="radio" name="star3" autocomplete="off") 
+                      |3 Stars ★
+                      
+                    label.btn.btn-outline-info
+                      input#option2(type="radio" name="star4" autocomplete="off") 
+                      |4 Stars ★
+                      
+                    label.btn.btn-outline-success
+                      input#option2(type="radio" name="star5" autocomplete="off") 
+                      |5 Stars ★
+                
+                  // Textbox
+                  br
+                  br
+                  textarea.col-lg-11.form-control(rows="3" name="review" placeholder="Please enter review here.")
+                  // Submit 
+                  br
+                  button.btn.btn-primary(type="submit") Submit
               
-                // Textbox
-                br
-                br
-                textarea.col-lg-11.form-control(rows="3" name="review" placeholder="Please enter review here.")
-                // Submit 
-                br
-                button.btn.btn-primary(type="submit") Submit
-            
-          
+
           
           // List reviews
           h4 Reviews from Other StudySpotters
