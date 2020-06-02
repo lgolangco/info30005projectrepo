@@ -10,44 +10,89 @@ const ObjectId = mongoose.Types.ObjectId;
 
 // function to handle a request to get all venues
 const getAllVenues = async (req, res) => {
-  var noMatch = null;
-  if(req.query.search) {
-    const regex = new RegExp(escapeRegex(req.query.search), 'gi');
-    // Get all fuzzy match venues from DB
-    Venue.find({
-      $or : [
-        {venueName: regex},
-        {venueType: regex},
-        {venueSuburb:regex},
-        {venuePostcode:regex}
-      ]
-      }, function(err, allVenues){
-      if(err){
-        console.log(err);
-      } else {
+  var title = "Venue List - Matching Venues";
+
+  try {
+    regexType = new RegExp(escapeRegex(req.query.searchType), 'gi');
+    if (req.query.search && req.query.searchLocation) {
+      regex = new RegExp(escapeRegex(req.query.search), 'gi');
+      regexLocation = new RegExp(escapeRegex(req.query.searchLocation), 'gi');
+      console.log("type",req.query.searchType, "name: ", req.query.search, "loc: ", req.query.searchLocation);
+      // Get all fuzzy match venues from DB
+      Venue.find({
+        $and: [
+          {venueName: regex},
+          {venueType: regexType},
+          {"venueAddress.venueSuburb": regexLocation},
+          // {"venueAddress.venuePostcode": regexLocation}
+        ]
+      }, function (err, allVenues) {
         if (allVenues.length < 1) {
-          noMatch = "No venue match that query, please try again.";
-          res.res.render('error', {
-            error: "Database query failed",
-            message: "Database query failed",
-            functionfailure: "Failed to get all venues"
-        })}
+          title = "No venue match that query, please try again.";
+        }
         res.render('venues', {
-          title: "Venue List - Matching Venues",
+          title: title,
           venues: allVenues
-        })}
-    });
-  } else {
-    Venue.find({}, function(err, allVenues){
-      if(err){
-        console.log(err);
-      } else {
-        res.render('venues', {
-        title: "Venue List - All Venues",
-        venues: allVenues
+        })
       });
-    }})}
-};
+    } else if (req.query.search) {
+      regex = new RegExp(escapeRegex(req.query.search), 'gi');
+      console.log("type",req.query.searchType, "name: ", req.query.search);
+      // Get all fuzzy match venues from DB
+      Venue.find({
+        $and: [
+          {venueName: regex},
+          {venueType: regexType},
+        ]
+      }, function (err, allVenues) {
+        if (allVenues.length < 1) {
+          title = "No venue match that query, please try again.";
+        }
+        res.render('venues', {
+          title: title,
+          venues: allVenues
+        })
+      });
+    } else if (req.query.searchLocation) {
+      regexLocation = new RegExp(escapeRegex(req.query.searchLocation), 'gi');
+      console.log("type",req.query.searchType,"loc: ", req.query.searchLocation);
+      // Get all fuzzy match venues from DB
+      Venue.find({
+        $and: [
+          {venueType: regexType},
+          {"venueAddress.venueSuburb": regexLocation},
+          // {"venueAddress.venuePostcode": regexLocation}
+        ]
+      }, function (err, allVenues) {
+        if (allVenues.length < 1) {
+          title = "No venue match that query, please try again.";
+        }
+        res.render('venues', {
+          title: title,
+          venues: allVenues
+        })
+      });
+    } else {
+      Venue.find({venueType: regexType}, function (err, allVenues) {
+        title = "Venue List - All Venues";
+        if (allVenues.length < 1) {
+          title = "No venue match that query, please try again.";
+        }
+        res.render('venues', {
+          title: title,
+          venues: allVenues
+        })
+      });
+    }
+  } catch(err) {
+    console.log(err);
+    res.res.render('error', {
+      error: "Database query failed",
+      message: "Database query failed",
+      functionfailure: "Failed to get all venues"
+    })
+  }
+}
 
 function escapeRegex(text) {
   return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
