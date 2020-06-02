@@ -1,0 +1,150 @@
+extends layout
+    
+block content
+  
+  .main.container
+      .col-md-6.offset-3
+        
+        if (completed)
+          h1 #{title}
+        else
+          h1 #{title}
+          
+          p Edit your review for <strong>#{venue.venueName} </strong>           
+
+          form(method='POST' action='') 
+            
+            //- div.form-group.row
+              
+              //- // Display static user name
+              //- label.col-sm-1.col-form-label(for="staticUserName") User:
+              //- div.col-sm-11
+              //- 
+              //-   //ADD USER SCHEMA/EMAIL IN BACKEND so can set value = user.EMAIL or username
+              //-   input.form-control-plaintext#staticEmail(type="text" readonly value=user.email) 
+              //-   input.form-control(type="hidden" name='userId' value=user._id) 
+              //- 
+              //- 
+              //- // Display static venue name
+              //- label.col-sm-1.col-form-label(for="staticVenueName") Venue:
+              //- div.col-sm-11
+              //- 
+              //-   input.form-control-plaintext(type="text" readonly value=venue.venueName)
+              //-   input.form-control(type="hidden" name='venueId' value=venue._id)  
+          
+            div.btn-group.btn-group-toggle(data-toggle="buttons")
+            
+              if review.rating == 1
+                label.btn.btn-outline-danger
+                  input#option1(type="radio" name="star1" autocomplete="off" value="on") 
+                  |1 Star ★
+
+                label.btn.btn-outline-warning
+                  input#option2(type="radio" name="star2" autocomplete="off") 
+                  |2 Stars ★
+                
+                label.btn.btn-outline-secondary
+                  input#option2(type="radio" name="star3" autocomplete="off") 
+                  |3 Stars ★
+                  
+                label.btn.btn-outline-info
+                  input#option2(type="radio" name="star4" autocomplete="off") 
+                  |4 Stars ★
+                  
+                label.btn.btn-outline-success
+                  input#option2(type="radio" name="star5" autocomplete="off") 
+                  |5 Stars ★
+              
+              
+              else if review.rating == 2
+                label.btn.btn-outline-danger
+                  input#option1(type="radio" name="star1" autocomplete="off") 
+                  |1 Star ★
+
+                label.btn.btn-outline-warning
+                  input#option2(type="radio" name="star2" autocomplete="off" value="on") 
+                  |2 Stars ★
+                
+                label.btn.btn-outline-secondary
+                  input#option2(type="radio" name="star3" autocomplete="off") 
+                  |3 Stars ★
+                  
+                label.btn.btn-outline-info
+                  input#option2(type="radio" name="star4" autocomplete="off") 
+                  |4 Stars ★
+                  
+                label.btn.btn-outline-success
+                  input#option2(type="radio" name="star5" autocomplete="off") 
+                  |5 Stars ★
+              
+              else if review.rating == 3
+                label.btn.btn-outline-danger
+                  input#option1(type="radio" name="star1" autocomplete="off") 
+                  |1 Star ★
+
+                label.btn.btn-outline-warning
+                  input#option2(type="radio" name="star2" autocomplete="off") 
+                  |2 Stars ★
+                
+                label.btn.btn-outline-secondary
+                  input#option2(type="radio" name="star3" autocomplete="off" value="on") 
+                  |3 Stars ★
+                  
+                label.btn.btn-outline-info
+                  input#option2(type="radio" name="star4" autocomplete="off") 
+                  |4 Stars ★
+                  
+                label.btn.btn-outline-success
+                  input#option2(type="radio" name="star5" autocomplete="off") 
+                  |5 Stars ★
+                  
+              else if review.rating == 4
+                label.btn.btn-outline-danger
+                  input#option1(type="radio" name="star1" autocomplete="off") 
+                  |1 Star ★
+
+                label.btn.btn-outline-warning
+                  input#option2(type="radio" name="star2" autocomplete="off") 
+                  |2 Stars ★
+                
+                label.btn.btn-outline-secondary
+                  input#option2(type="radio" name="star3" autocomplete="off") 
+                  |3 Stars ★
+                  
+                label.btn.btn-outline-info
+                  input#option2(type="radio" name="star4" autocomplete="off" value="on") 
+                  |4 Stars ★
+                  
+                label.btn.btn-outline-success
+                  input#option2(type="radio" name="star5" autocomplete="off") 
+                  |5 Stars ★
+                
+              else 
+                label.btn.btn-outline-danger
+                  input#option1(type="radio" name="star1" autocomplete="off") 
+                  |1 Star ★
+
+                label.btn.btn-outline-warning
+                  input#option2(type="radio" name="star2" autocomplete="off") 
+                  |2 Stars ★
+                
+                label.btn.btn-outline-secondary
+                  input#option2(type="radio" name="star3" autocomplete="off") 
+                  |3 Stars ★
+                  
+                label.btn.btn-outline-info
+                  input#option2(type="radio" name="star4" autocomplete="off") 
+                  |4 Stars ★
+                  
+                label.btn.btn-outline-success
+                  input#option2(type="radio" name="star5" autocomplete="off" value="on") 
+                  |5 Stars ★
+          
+            // Textbox
+            br
+            br
+            textarea.col-lg-11.form-control(rows="3" name="review" placeholder="Please enter review here." value=review.content)
+            // Submit 
+            br
+            button.btn.btn-primary(type="submit") Submit
+          
