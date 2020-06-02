@@ -183,6 +183,7 @@ block content
                           //insert rating
                           p Rating: #{review.rating}/5
               
+<<<<<<< HEAD
                     .offset-1
                       //insert review text
                       p #{review.content}
@@ -192,6 +193,46 @@ block content
                       p #{date}
                 - existingReview = true;
             
+=======
+              h4 Your Review of #{venue.venueName}
+              - date = review.datePosted.toDateString()
+              
+              
+              .col-lg-10
+                .card.mb-3
+                  
+                  .row
+                    .col-lg-2
+                      p user profile image
+                    .col-lg-8
+                      div
+                        //insert user name
+                        h5 #{review.userId}
+                      div
+                        //insert rating
+                        p Rating: #{review.rating}/5
+                    //- .col-lg-2.dropdown
+                    //-   button.btn.btn-outline-secondary.dropdown-toggle#dropdownMenuButton(type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false") ...
+                    //-   div.dropdown-menu(aria-labelledby="dropdownMenuButton")
+                    //-     a.dropdown-item(href="#") Edit 
+                    //-     a.dropdown-item(href="#") Delete
+            
+                  .offset-1
+                    //insert review text
+                    p #{review.content}
+                  
+                  .offset-9
+                    //insert date
+                    p #{date}
+              .row 
+                .offset-1.mb-3
+                  a(href="#") Edit Review  
+                  a(href="#") Delete Review
+              
+                  
+              - existingReview = true;
+          
+>>>>>>> 04d46b40d2832d574b361a9f6c2dd5bbd0090a06
           //- Else, show suggestion form
           if (!existingReview)
             
