@@ -76,13 +76,14 @@ const getVenueSuggestionsByID = async (req, res) => {
       venueerror: "For a list of all registered venues,"
     });
   }
-  const user = await User.findById(req.user._id);
-  if (user === null) {
+  console.log(req.user);
+  if (req.user == null) {
     return res.render('error', {
       error: "You're not logged in!",
       message: "You must be logged in to submit a suggestion"
     });
   }
+  const user = await User.findById(req.user._id);
   try {
     const venue = await Venue.find({_id: req.params._id});
     if (venue.length === 0){
