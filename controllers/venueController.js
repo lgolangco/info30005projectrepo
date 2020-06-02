@@ -54,10 +54,16 @@ const getVenueByID = async (req, res) => {
       });
     } else if (venue) {
       venuesReviews = findVenuesReviews(req.params._id);
-      return res.render('venueProfile', {
-        venue: venue[0],
-        user: req.user,
-        venuesReviews: venuesReviews
+      console.log("FIRST");
+      console.log(venuesReviews);
+      venuesReviews.then(function(result){
+        console.log("SECOND");
+        console.log(result);
+        return res.render('venueProfile', {
+          venue: venue[0],
+          user: req.user,
+          venuesReviews: result
+        });
       });
     } else {
       res.status(400);
