@@ -164,10 +164,10 @@ block content
             p Please log in to submit a review.
           
           else
-            - const existingReview = false;
+            - var existingReview = false
             each review in venuesReviews
               if (user._id.toString() == review.userId.toString())
-                - const existingReview = true;
+                - existingReview = true
                
                 h4 Your Review of #{venue.venueName}
                 - date = review.datePosted.toDateString()
@@ -206,8 +206,7 @@ block content
               
           
             //- Else, show suggestion form
-            if (existingReview === false)
-                
+            if !(existingReview)
               div.bg-light.border.col-lg-10
                 p Submit a review for <strong>#{venue.venueName} </strong>           
 
