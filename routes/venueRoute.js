@@ -20,6 +20,6 @@ router.get("/bypostcode/:venuePostcode", venueController.getVenueByPostcode);
 router.get("/bytype/:venueType", venueController.getVenueByType);
 
 // POST new review
-router.post("/venue/:_id", reviewController.addReview);
+router.post("/:_id", reviewController.addReview);
 
 module.exports = router;
