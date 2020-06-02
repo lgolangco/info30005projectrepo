@@ -53,9 +53,9 @@ const getVenueByID = async (req, res) => {
 
     } else if (venue) {
       return res.render('venueProfile', {
-        venue: venue[0]
+        venue: venue[0],
+        user: req.user
       });
-      // return res.send(venue);
     } else {
       res.status(400);
       return res.render('error', {
@@ -76,7 +76,6 @@ const getVenueSuggestionsByID = async (req, res) => {
       venueerror: "For a list of all registered venues,"
     });
   }
-  console.log(req.user);
   if (req.user == null) {
     return res.render('error', {
       error: "You're not logged in!",

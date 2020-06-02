@@ -149,10 +149,55 @@ block content
                 td No printing 
                   p available
         
+        br
         // Reviews
         div.venue-reviews
           h2 Reviews
-          p Working on this feature!
+          
+          //- Create New Review
+          //- If suggestion already submitted only show message
+          if (completed)
+            h2.display-4.m-b-2 Successfully submitted your suggestion!
+            br
+            p The admins will review your suggestions and update our database accordingly.
+            
+          //- If user is not logged in
+          if !(user)
+            p Please log in to submit a review.
+          
+          //- Else, show suggestion form
+          else
+          
+            p Submit a review for <strong>#{venue.venueName} </strong> 
+            br
+            
+            form(method='POST' action='') 
+              div.form-group.row
+            
+                // Display static user name
+                label.col-sm-1.col-form-label(for="staticUserName") User:
+                div.col-sm-11
+            
+                  //ADD USER SCHEMA/EMAIL IN BACKEND so can set value = user.EMAIL or username
+                  input.form-control-plaintext#staticEmail(type="text" readonly value=user.email) 
+                  input.form-control(type="hidden" name='userId' value=user._id) 
+            
+            
+                // Display static venue name
+                label.col-sm-1.col-form-label(for="staticVenueName") Venue:
+                div.col-sm-11
+            
+                  input.form-control-plaintext(type="text" readonly value=venue.venueName)
+                  input.form-control(type="hidden" name='venueId' value=venue._id)  
+            
+              // Textbox
+              div.form-group.row
+                label(for="exampleFormControlTextarea1") Please enter your review here:
+                textarea.form-control(rows="3" name="review" placeholder="Please enter review here.")                  
+            
+              // Submit 
+              br
+              button.btn.btn-primary(type="submit") Submit
 
       
       // Side Bar
