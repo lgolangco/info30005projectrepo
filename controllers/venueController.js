@@ -54,14 +54,18 @@ const getVenueByID = async (req, res) => {
       });
     } else if (venue) {
       venuesReviews = findVenuesReviews(req.params._id);
-      console.log("FIRST");
-      console.log(venuesReviews);
       venuesReviews.then(function(result){
-        console.log("SECOND");
-        console.log(result);
+        console.log("USER:");
+        console.log(req.user);
+        if (req.user === undefined){
+          user = null;
+        } else {
+          user = req.user;
+        }
+        console.log(user);
         return res.render('venueProfile', {
           venue: venue[0],
-          user: req.user,
+          user: user,
           venuesReviews: result
         });
       });
@@ -78,8 +82,6 @@ const getVenueByID = async (req, res) => {
 
 const findVenuesReviews = async (venueId) => {
   const venuesReviews = await Review.find({venueId: venueId});
-  console.log("HERE");
-  console.log(venuesReviews);
   if (venuesReviews.length === 0){
     console.log("no reviews found");
     return false

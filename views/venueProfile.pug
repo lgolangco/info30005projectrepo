@@ -164,33 +164,34 @@ block content
             p Please log in to submit a review.
           
           each review in venuesReviews
-            if (user._id.toString() == review.userId.toString())
+            if (user)
+              if (user._id.toString() == review.userId.toString())
+                
+                h4 Your Review of #{venue.venueName}
+                - date = review.datePosted.toDateString()
+                .col-lg-10
+                  .card.mb-3
+                    
+                    .row
+                      .col-2
+                        p user profile image
+                      .col-10
+                        div
+                          //insert user name
+                          h5 #{review.userId}
+                        div
+                          //insert rating
+                          p Rating: #{review.rating}/5
               
-              h4 Your Review of #{venue.venueName}
-              - date = review.datePosted.toDateString()
-              .col-lg-10
-                .card.mb-3
-                  
-                  .row
-                    .col-2
-                      p user profile image
-                    .col-10
-                      div
-                        //insert user name
-                        h5 #{review.userId}
-                      div
-                        //insert rating
-                        p Rating: #{review.rating}/5
+                    .offset-1
+                      //insert review text
+                      p #{review.content}
+                    
+                    .offset-9
+                      //insert date
+                      p #{date}
+                - existingReview = true;
             
-                  .offset-1
-                    //insert review text
-                    p #{review.content}
-                  
-                  .offset-9
-                    //insert date
-                    p #{date}
-              - existingReview = true;
-          
           //- Else, show suggestion form
           if (!existingReview)
             
@@ -252,7 +253,7 @@ block content
           h4 Reviews from Other StudySpotters
           each review in venuesReviews
 
-            if (user._id.toString() != review.userId.toString())
+            if (user) && (user._id.toString() != review.userId.toString())
               
               - date = review.datePosted.toDateString()
               .col-lg-10
