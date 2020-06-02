@@ -117,17 +117,31 @@ const addReview = async (req, res) => {
   console.log(req.body)
   const reviewProcessed = convertReviews(req.body)
   console.log(reviewProcessed)
-
-    // await review.save(function (err, newReview) {
-    //     if (newReview) {
-    //         console.log("Successfully added review");
-    //         return res.send(newReview);
-    //     } else {
-    //         console.log("Failed to addReview for venueId %s and userId %s", req.body.venueId, req.body.userId);
-    //         res.status(400);
-    //         return res.send("Failed to addReview for venueId " + req.body.venueId + " and userId " + req.body.userId);
-    //     }
-    // })
+  const db = mongoose.connection;
+  try {
+    await db.collection('review').insertOne(reviewProcessed)
+    const venue = await Venue.find({_id: req.params._id});
+    if (venue.length === 0){
+      return res.render('error', {
+        error: "There are no venues listed with this id!",
+        message: "There are no venues listed with this id!",
+        venueerror: "For a list of all registered venues,"
+      });
+    } else {
+      return res.render('venueProfile', {
+        venue: venue[0],
+        user: req.user,
+        completed: true
+      });
+    }
+  } catch(err){
+    res.status(400);
+    return res.render('error', {
+      error: "Database query failed",
+      message: "Database query failed",
+      functionfailure: "Failed to submit suggestions"
+    });
+  }
 };
 
 
