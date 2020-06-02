@@ -219,6 +219,33 @@ block content
                 // Submit 
                 br
                 button.btn.btn-primary(type="submit") Submit
+            
+            // User's Review
+            
+            
+            // List reviews
+            p #{venuesReviews}
+            
+            each review in venuesReviews
+              .col-lg-10
+                .card.mb-3
+            
+                  .row
+                    .col-7
+                      //insert user name
+                      h5 #{review.userId}
+                    .col-5
+                      //insert rating
+                      p Rating: #{review.rating}/5
+            
+                  .row
+                    //insert review text
+                    p #{content}
+            
+                  .row
+                    //insert date
+                    p #{datePosted}
+                  
 
       
       // Side Bar
