@@ -163,27 +163,35 @@ block content
           if !(user)
             p Please log in to submit a review.
           
+          - const existingReview = false;
           each review in venuesReviews
             if (user)
               if (user._id.toString() == review.userId.toString())
-                
-                h4 Your Review of #{venue.venueName}
+                - const existingReview = true;
+               
+                h4 Your Review of #{venue.venueName}o
                 - date = review.datePosted.toDateString()
+                
                 .col-lg-10
                   .card.mb-3
                     
                     .row
-                      .col-2
+                        .col-lg-2
                         p user profile image
-                      .col-10
+                        .col-lg-8
                         div
                           //insert user name
                           h5 #{review.userId}
                         div
                           //insert rating
                           p Rating: #{review.rating}/5
-              
-<<<<<<< HEAD
+                          
+                          //- .col-lg-2.dropdown
+                          //-   button.btn.btn-outline-secondary.dropdown-toggle#dropdownMenuButton(type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false") ...
+                          //-   div.dropdown-menu(aria-labelledby="dropdownMenuButton")
+                          //-     a.dropdown-item(href="#") Edit 
+                          //-     a.dropdown-item(href="#") Delete
+                  
                     .offset-1
                       //insert review text
                       p #{review.content}
@@ -191,73 +199,21 @@ block content
                     .offset-9
                       //insert date
                       p #{date}
-                - existingReview = true;
-            
-=======
-              h4 Your Review of #{venue.venueName}
-              - date = review.datePosted.toDateString()
-              
-              
-              .col-lg-10
-                .card.mb-3
-                  
-                  .row
-                    .col-lg-2
-                      p user profile image
-                    .col-lg-8
-                      div
-                        //insert user name
-                        h5 #{review.userId}
-                      div
-                        //insert rating
-                        p Rating: #{review.rating}/5
-                    //- .col-lg-2.dropdown
-                    //-   button.btn.btn-outline-secondary.dropdown-toggle#dropdownMenuButton(type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false") ...
-                    //-   div.dropdown-menu(aria-labelledby="dropdownMenuButton")
-                    //-     a.dropdown-item(href="#") Edit 
-                    //-     a.dropdown-item(href="#") Delete
-            
-                  .offset-1
-                    //insert review text
-                    p #{review.content}
-                  
-                  .offset-9
-                    //insert date
-                    p #{date}
-              .row 
-                .offset-1.mb-3
-                  a(href="#") Edit Review  
-                  a(href="#") Delete Review
+                .row 
+                  .offset-1.mb-3
+                    a(href="#") Edit Review  
+                    a(href="#") Delete Review
               
                   
-              - existingReview = true;
           
->>>>>>> 04d46b40d2832d574b361a9f6c2dd5bbd0090a06
           //- Else, show suggestion form
-          if (!existingReview)
+          if !(existingReview)
             
             div.bg-light.border.col-lg-10
               p Submit a review for <strong>#{venue.venueName} </strong>           
 
               form(method='POST' action='') 
                 
-                //- div.form-group.row
-                  
-                  //- // Display static user name
-                  //- label.col-sm-1.col-form-label(for="staticUserName") User:
-                  //- div.col-sm-11
-                  //- 
-                  //-   //ADD USER SCHEMA/EMAIL IN BACKEND so can set value = user.EMAIL or username
-                  //-   input.form-control-plaintext#staticEmail(type="text" readonly value=user.email) 
-                  //-   input.form-control(type="hidden" name='userId' value=user._id) 
-                  //- 
-                  //- 
-                  //- // Display static venue name
-                  //- label.col-sm-1.col-form-label(for="staticVenueName") Venue:
-                  //- div.col-sm-11
-                  //- 
-                  //-   input.form-control-plaintext(type="text" readonly value=venue.venueName)
-                  //-   input.form-control(type="hidden" name='venueId' value=venue._id)  
               
                 div.btn-group.btn-group-toggle(data-toggle="buttons")
                   label.btn.btn-outline-danger
@@ -294,7 +250,7 @@ block content
           h4 Reviews from Other StudySpotters
           each review in venuesReviews
 
-            if (user) && (user._id.toString() != review.userId.toString())
+            if !(user) || (user._id.toString() != review.userId.toString())
               
               - date = review.datePosted.toDateString()
               .col-lg-10
