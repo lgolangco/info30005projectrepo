@@ -3,6 +3,7 @@ const mongoose = require("mongoose");
 // import venue, user, and suggestions model
 const Venue = mongoose.model("venue");
 const User = mongoose.model("user");
+const Review = mongoose.model("review");
 const VenueSuggestions = mongoose.model("venueSuggestions");
 
 // import object id type to check if request _id is valid
@@ -42,6 +43,7 @@ const getVenueByID = async (req, res) => {
       venueerror: "For a list of all registered venues,"
     });
   }
+
   await Venue.find({_id: req.params._id}, function(err, venue) {
     // checks if the _id is invalid or there are no venues listed with that _id
     if (venue.length === 0) {
@@ -50,11 +52,12 @@ const getVenueByID = async (req, res) => {
         message: "There are no venues listed with this id!",
         venueerror: "For a list of all registered venues,"
       });
-
     } else if (venue) {
+      venuesReviews = findVenuesReviews(req.params._id);
       return res.render('venueProfile', {
         venue: venue[0],
-        user: req.user
+        user: req.user,
+        venuesReviews: venuesReviews
       });
     } else {
       res.status(400);
@@ -66,6 +69,21 @@ const getVenueByID = async (req, res) => {
     }
   })
 };
+
+const findVenuesReviews = async (venueId) => {
+  const venuesReviews = await Review.find({venueId: venueId});
+  console.log("HERE");
+  console.log(venuesReviews);
+  if (venuesReviews.length === 0){
+    console.log("no reviews found");
+    return false
+  } else {
+    console.log("success")
+    return venuesReviews;
+  }
+}
+
+
 
 // function to get venues by id and show venue suggestions page
 const getVenueSuggestionsByID = async (req, res) => {
