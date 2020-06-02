@@ -170,7 +170,30 @@ block content
           
             p Submit a review for <strong>#{venue.venueName} </strong> 
             br
-            
+              
+            div.btn-group.btn-group-toggle(data-toggle="buttons")
+              label.btn.btn-outline-danger
+                input#option1(type="radio" name="options" autocomplete="off") 
+                |1 Star ★
+
+              label.btn.btn-outline-warning
+                input#option2(type="radio" name="options" autocomplete="off") 
+                |2 Stars ★
+              
+              label.btn.btn-outline-secondary
+                input#option2(type="radio" name="options" autocomplete="off") 
+                |3 Stars ★
+                
+              label.btn.btn-outline-info
+                input#option2(type="radio" name="options" autocomplete="off") 
+                |4 Stars ★
+                
+              label.btn.btn-outline-success
+                input#option2(type="radio" name="options" autocomplete="off") 
+                |5 Stars ★
+
+
+
             form(method='POST' action='') 
               div.form-group.row
             
