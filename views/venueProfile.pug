@@ -167,52 +167,30 @@ block content
           
           //- Else, show suggestion form
           else
-          
-            p Submit a review for <strong>#{venue.venueName} </strong> 
-            br
+            
+            div.bg-light.border.col-lg-10
+              p Submit a review for <strong>#{venue.venueName} </strong>           
+
+              form(method='POST' action='') 
+                
+                //- div.form-group.row
+                  
+                  //- // Display static user name
+                  //- label.col-sm-1.col-form-label(for="staticUserName") User:
+                  //- div.col-sm-11
+                  //- 
+                  //-   //ADD USER SCHEMA/EMAIL IN BACKEND so can set value = user.EMAIL or username
+                  //-   input.form-control-plaintext#staticEmail(type="text" readonly value=user.email) 
+                  //-   input.form-control(type="hidden" name='userId' value=user._id) 
+                  //- 
+                  //- 
+                  //- // Display static venue name
+                  //- label.col-sm-1.col-form-label(for="staticVenueName") Venue:
+                  //- div.col-sm-11
+                  //- 
+                  //-   input.form-control-plaintext(type="text" readonly value=venue.venueName)
+                  //-   input.form-control(type="hidden" name='venueId' value=venue._id)  
               
-            //- div.btn-group.btn-group-toggle(data-toggle="buttons")
-            //-   label.btn.btn-outline-danger
-            //-     input#option1(type="radio" name="options" autocomplete="off") 
-            //-     |1 Star ★
-            //- 
-            //-   label.btn.btn-outline-warning
-            //-     input#option2(type="radio" name="options" autocomplete="off") 
-            //-     |2 Stars ★
-            //- 
-            //-   label.btn.btn-outline-secondary
-            //-     input#option2(type="radio" name="options" autocomplete="off") 
-            //-     |3 Stars ★
-            //- 
-            //-   label.btn.btn-outline-info
-            //-     input#option2(type="radio" name="options" autocomplete="off") 
-            //-     |4 Stars ★
-            //- 
-            //-   label.btn.btn-outline-success
-            //-     input#option2(type="radio" name="options" autocomplete="off") 
-            //-     |5 Stars ★
-
-
-
-            form(method='POST' action='') 
-              div.form-group.row
-            
-                // Display static user name
-                label.col-sm-1.col-form-label(for="staticUserName") User:
-                div.col-sm-11
-            
-                  //ADD USER SCHEMA/EMAIL IN BACKEND so can set value = user.EMAIL or username
-                  input.form-control-plaintext#staticEmail(type="text" readonly value=user.email) 
-                  input.form-control(type="hidden" name='userId' value=user._id) 
-            
-            
-                // Display static venue name
-                label.col-sm-1.col-form-label(for="staticVenueName") Venue:
-                div.col-sm-11
-            
-                  input.form-control-plaintext(type="text" readonly value=venue.venueName)
-                  input.form-control(type="hidden" name='venueId' value=venue._id)  
-            
                 div.btn-group.btn-group-toggle(data-toggle="buttons")
                   label.btn.btn-outline-danger
                     input#option1(type="radio" name="star1" autocomplete="off") 
@@ -233,15 +211,14 @@ block content
                   label.btn.btn-outline-success
                     input#option2(type="radio" name="star5" autocomplete="off") 
                     |5 Stars ★
-            
-              // Textbox
-              div.form-group.row
-                label.col-lg-12(for="exampleFormControlTextarea1") Please enter your review here:
-                  textarea.col-lg-9.form-control(rows="3" name="review" placeholder="Please enter review here.")                  
-            
-              // Submit 
-              br
-              button.btn.btn-primary(type="submit") Submit
+              
+                // Textbox
+                br
+                br
+                textarea.col-lg-11.form-control(rows="3" name="review" placeholder="Please enter review here.")
+                // Submit 
+                br
+                button.btn.btn-primary(type="submit") Submit
 
       
       // Side Bar
