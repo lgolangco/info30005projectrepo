@@ -26,27 +26,27 @@ const getAllReviews = async (req, res) => {
 };
 
 
-// function to modify review by venue and user
-const updateReview = async (req, res) => {
-    if (!(ObjectId.isValid(req.body.userId) && ObjectId.isValid(req.params.venueId))) {
-        console.log("Failed to updateReview due to invalid venueId %s or userId %s", req.params.venueId, req.body.userId);
-        res.status(400);
-        return res.send("Failed to updateReview due to invalid venueId " + req.params.venueId + " or userId " + req.body.userId);
-    }
-    await Review.findOneAndUpdate(
-    {venueId: req.params.venueId, userId: req.body.userId},
-    {$set: {content: req.body.content, rating: req.body.rating}},
-    function (err, updatedReview) {
-        if (updatedReview) {
-            console.log("Successfully updated review for venueId %s", req.params.venueId);
-            return res.send(updatedReview);
-        } else {
-            console.log("Failed to updateReview for venueId %s", req.params.venueId);
-            res.status(400);
-            return res.send("Failed to updateReview for venueId " + req.params.venueId);
-        }
-    })
-};
+// // function to modify review by venue and user
+// const updateReview = async (req, res) => {
+//     if (!(ObjectId.isValid(req.body.userId) && ObjectId.isValid(req.params.venueId))) {
+//         console.log("Failed to updateReview due to invalid venueId %s or userId %s", req.params.venueId, req.body.userId);
+//         res.status(400);
+//         return res.send("Failed to updateReview due to invalid venueId " + req.params.venueId + " or userId " + req.body.userId);
+//     }
+//     await Review.findOneAndUpdate(
+//     {venueId: req.params.venueId, userId: req.body.userId},
+//     {$set: {content: req.body.content, rating: req.body.rating}},
+//     function (err, updatedReview) {
+//         if (updatedReview) {
+//             console.log("Successfully updated review for venueId %s", req.params.venueId);
+//             return res.send(updatedReview);
+//         } else {
+//             console.log("Failed to updateReview for venueId %s", req.params.venueId);
+//             res.status(400);
+//             return res.send("Failed to updateReview for venueId " + req.params.venueId);
+//         }
+//     })
+// };
 
 
 // // function to add review
@@ -90,25 +90,13 @@ const updateReview = async (req, res) => {
 
 function convertReviews(reviewRaw) {
 
-  if (reviewRaw.star1 === "on") {
-    var rating = 1
-  } else if (reviewRaw.star2 === "on") {
-    var rating = 2
-  } else if (reviewRaw.star3 === "on") {
-    var rating = 3
-  } else if (reviewRaw.star4 === "on") {
-    var rating = 4
-  } else {
-    var rating = 5
-  }
-
   const reviewProcessed = {
     venueId: ObjectId(reviewRaw.venueId),
     userId: ObjectId(reviewRaw.userId),
     userName: reviewRaw.userName,
     datePosted:new Date(),
     content: reviewRaw.review,
-    rating: rating
+    rating: parseInt(reviewRaw.star)
   }
 
   return reviewProcessed;
@@ -135,7 +123,8 @@ const addReview = async (req, res) => {
       return res.render('venueProfile', {
         venue: venue[0],
         user: req.user,
-        completed: true
+        completed: true,
+        newReview: reviewProcessed
       });
     }
   } catch(err){
@@ -208,6 +197,99 @@ const getReviewByUserID = async (req, res) => {
     })
 };
 
+// function to get update review page by review ID
+const getUpdateReviewPage = async (req, res) => {
+  if (ObjectId.isValid(req.params._id) === false) {
+    return res.render('error', {
+      error: "There are no reviews with this id!",
+      message: "There are no reviews with this id!",
+      reviewerror: "To see a list of all registered venues, and access the reviews for each,"
+    });
+  }
+  if (req.user == null) {
+    return res.render('error', {
+      error: "You're not logged in!",
+      message: "You must be logged in to delete your review"
+    });
+  }
+  const user = await User.findById(req.user._id);
+  try {
+    const review = await Review.findById(req.params._id);
+    if (review === null){
+      return res.render('error', {
+        error: "There are no reviews with this id!",
+        message: "There are no reviews with this id!",
+        reviewerror: "To see a list of all registered venues, and access the reviews for each,"
+      });
+    } else if (user._id.toString() !== review.userId.toString()){
+      return res.render('error', {
+        error: "You are not authorised to delete this review!",
+        message: "You are not authorised to delete this review - users can only delete their own reviews!",
+        reviewerror: "To see a list of all registered venues, and access the reviews for each,"
+      });
+    } else {
+      const venue = await Venue.findById(review.venueId);
+      return res.render("reviewUpdate", {
+        venue: venue,
+        user: user,
+        review: review
+      });
+    }
+  } catch (err) {
+    res.status(400);
+    return res.render('error', {
+      error: "Database query failed",
+      message: err,
+      functionfailure: "Failed to get delete review page"
+    });
+  }
+};
+
+// function to modify review by ID
+const updateReview = async (req, res) => {
+  // checks if the _id is invalid
+  if (ObjectId.isValid(req.params._id) === false) {
+      return res.send("There are no venues listed with this id");
+  }
+
+  // checks if there are no venues listed with that _id
+  await Review.find({_id: req.params._id}, function(err, review) {
+    if (review.length === 0) {
+      return res.send("There are no reviews listed with this id");
+    }
+  })
+
+  console.log("REQ.BODY");
+  console.log(req.body);
+  reviewProcessed = convertReviews(req.body);
+  // update the venue with the prescribed _id
+  await Review.findOneAndUpdate(
+      {_id: req.params._id},
+      {$set: reviewProcessed},
+      function(err) {
+        if (!err) {
+          venue = Venue.findById(reviewProcessed.venueId);
+          venue.then(function(result){
+            res.status(200);
+            return res.render("reviewUpdate",{
+              review: reviewProcessed,
+              venue: result,
+              completed: true
+            });
+          });
+        } else {
+
+          res.status(400);
+          return res.render('error', {
+            error: "Database query failed",
+            message: "Database query failed",
+            functionfailure: "Failed to update review"
+          });
+        }
+      }
+  )
+};
+
 
 // function to get venues by id and show venue suggestions page
 const getDeleteReviewByID = async (req, res) => {
@@ -227,8 +309,7 @@ const getDeleteReviewByID = async (req, res) => {
   const user = await User.findById(req.user._id);
   try {
     const review = await Review.findById(req.params._id);
-    const venue = await Venue.findById(review.venueId);
-    if (review.length === 0){
+    if (review === null){
       return res.render('error', {
         error: "There are no reviews with this id!",
         message: "There are no reviews with this id!",
@@ -241,6 +322,7 @@ const getDeleteReviewByID = async (req, res) => {
         reviewerror: "To see a list of all registered venues, and access the reviews for each,"
       });
     } else {
+      const venue = await Venue.findById(review.venueId);
       return res.render("deleteReview", {
         venue: venue,
         user: user,
@@ -251,44 +333,62 @@ const getDeleteReviewByID = async (req, res) => {
     res.status(400);
     return res.render('error', {
       error: "Database query failed",
-      message: "Database query failed",
+      message: err,
       functionfailure: "Failed to get delete review page"
     });
   }
 };
 
-
-// function to delete review by venue and user ID
+// function to delete venue by ID
 const deleteReview = async (req, res) => {
-    if (!(ObjectId.isValid(req.body.userId) && ObjectId.isValid(req.params.venueId))) {
-        console.log("Failed to deleteReview due to invalid venueId %s or userId %s", req.params.venueId, req.body.userId);
-        res.status(400);
-        return res.send("Failed to deleteReview due to invalid venueId " + req.params.venueId + " or userId " + req.body.userId);
+
+  // checks if the _id is invalid
+  if (ObjectId.isValid(req.params._id) === false) {
+    return res.render('error', {
+      error: "There are no reviews with this id!",
+      message: "There are no reviews with this id!",
+      reviewerror: "To see a list of all registered venues, and access the reviews for each,"
+    });
+  }
+
+  // checks if there are no reviews listed with that _id
+  await Review.find({_id: req.params._id}, function(err, review) {
+    if (review.length === 0) {
+      return res.render('error', {
+        error: "There are no reviews with this id!",
+        message: "There are no reviews with this id!",
+        reviewerror: "To see a list of all registered venues, and access the reviews for each,"
+      });
     }
-    const review = await Review.find({venueId: req.params.venueId, userId: req.body.userId});
-        await Review.deleteOne(
-    {venueId: req.params.venueId, userId: req.body.userId},
-    function() {
-        if (review.length) {
-            console.log("Successfully deleted review with venueId %s and userId %s", req.params.venueId, req.body.userId);
-            return res.send("Successfully deleted review with venueId " + req.params.venueId);
-        } else {
-            console.log("Failed to deleteReview for venueId %s", req.params.venueId);
-            res.status(400);
-            return res.send("Failed to deleteReview for venueId " + req.params.venueId);
-        }
-    })
-};
+  })
+
+  // delete the review with the prescribed _id
+  const result = await Review.deleteOne({_id: req.params._id}).exec();
+  if (result.n === 0) {
+    res.status(400);
+    return res.render('error', {
+      error: "Database query failed",
+      message: "Database query failed",
+      functionfailure: "Failed to delete review"
+    });
+  } else {
+    res.render("deleteReview",{
+      deleted: true
+    });
+    return false;
+  }
+}
 
 
 // export functions
 module.exports = {
     getAllReviews,
-    updateReview,
     addReview,
     getReviewByIDs,
     getReviewByVenueID,
     getReviewByUserID,
+    getUpdateReviewPage,
+    updateReview,
     getDeleteReviewByID,
-    deleteReview
+    deleteReview,
 };
