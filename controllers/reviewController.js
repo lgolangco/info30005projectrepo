@@ -209,7 +209,6 @@ const getReviewByUserID = async (req, res) => {
     })
 };
 
-
 // function to get venues by id and show venue suggestions page
 const getDeleteReviewByID = async (req, res) => {
   if (ObjectId.isValid(req.params._id) === false) {
@@ -228,8 +227,7 @@ const getDeleteReviewByID = async (req, res) => {
   const user = await User.findById(req.user._id);
   try {
     const review = await Review.findById(req.params._id);
-    const venue = await Venue.findById(review.venueId);
-    if (review.length === 0){
+    if (review === null){
       return res.render('error', {
         error: "There are no reviews with this id!",
         message: "There are no reviews with this id!",
@@ -242,6 +240,7 @@ const getDeleteReviewByID = async (req, res) => {
         reviewerror: "To see a list of all registered venues, and access the reviews for each,"
       });
     } else {
+      const venue = await Venue.findById(review.venueId);
       return res.render("deleteReview", {
         venue: venue,
         user: user,
@@ -252,34 +251,75 @@ const getDeleteReviewByID = async (req, res) => {
     res.status(400);
     return res.render('error', {
       error: "Database query failed",
-      message: "Database query failed",
+      message: err,
       functionfailure: "Failed to get delete review page"
     });
   }
 };
 
-
-// function to delete review by venue and user ID
+// function to delete venue by ID
 const deleteReview = async (req, res) => {
-    if (!(ObjectId.isValid(req.body.userId) && ObjectId.isValid(req.params.venueId))) {
-        console.log("Failed to deleteReview due to invalid venueId %s or userId %s", req.params.venueId, req.body.userId);
-        res.status(400);
-        return res.send("Failed to deleteReview due to invalid venueId " + req.params.venueId + " or userId " + req.body.userId);
+
+  // checks if the _id is invalid
+  if (ObjectId.isValid(req.params._id) === false) {
+    return res.render('error', {
+      error: "There are no reviews with this id!",
+      message: "There are no reviews with this id!",
+      reviewerror: "To see a list of all registered venues, and access the reviews for each,"
+    });
+  }
+
+  // checks if there are no reviews listed with that _id
+  await Review.find({_id: req.params._id}, function(err, review) {
+    if (review.length === 0) {
+      return res.render('error', {
+        error: "There are no reviews with this id!",
+        message: "There are no reviews with this id!",
+        reviewerror: "To see a list of all registered venues, and access the reviews for each,"
+      });
     }
-    const review = await Review.find({venueId: req.params.venueId, userId: req.body.userId});
-        await Review.deleteOne(
-    {venueId: req.params.venueId, userId: req.body.userId},
-    function() {
-        if (review.length) {
-            console.log("Successfully deleted review with venueId %s and userId %s", req.params.venueId, req.body.userId);
-            return res.send("Successfully deleted review with venueId " + req.params.venueId);
-        } else {
-            console.log("Failed to deleteReview for venueId %s", req.params.venueId);
-            res.status(400);
-            return res.send("Failed to deleteReview for venueId " + req.params.venueId);
-        }
-    })
-};
+  })
+
+  // delete the review with the prescribed _id
+  const result = await Review.deleteOne({_id: req.params._id}).exec();
+  if (result.n === 0) {
+    res.status(400);
+    return res.render('error', {
+      error: "Database query failed",
+      message: "Database query failed",
+      functionfailure: "Failed to delete review"
+    });
+  } else {
+    res.render("deleteReview",{
+      deleted: true
+    });
+    return false;
+  }
+}
+
+//
+//
+// // function to delete review by venue and user ID
+// const deleteReview = async (req, res) => {
+//     if (!(ObjectId.isValid(req.body.userId) && ObjectId.isValid(req.params.venueId))) {
+//         console.log("Failed to deleteReview due to invalid venueId %s or userId %s", req.params.venueId, req.body.userId);
+//         res.status(400);
+//         return res.send("Failed to deleteReview due to invalid venueId " + req.params.venueId + " or userId " + req.body.userId);
+//     }
+//     const review = await Review.find({venueId: req.params.venueId, userId: req.body.userId});
+//         await Review.deleteOne(
+//     {venueId: req.params.venueId, userId: req.body.userId},
+//     function() {
+//         if (review.length) {
+//             console.log("Successfully deleted review with venueId %s and userId %s", req.params.venueId, req.body.userId);
+//             return res.send("Successfully deleted review with venueId " + req.params.venueId);
+//         } else {
+//             console.log("Failed to deleteReview for venueId %s", req.params.venueId);
+//             res.status(400);
+//             return res.send("Failed to deleteReview for venueId " + req.params.venueId);
+//         }
+//     })
+// };
 
 
 // export functions

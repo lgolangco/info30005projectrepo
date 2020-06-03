@@ -8,7 +8,7 @@ block content
             .col-md-8.offset-2
                 
                 //- If suggestion already submitted only show message
-                if (completed)
+                if (deleted)
                   h2.display-4.m-b-2 Successfully deleted your review!
                 
                 //- Else, show suggestion form
@@ -46,8 +46,7 @@ block content
                         //- insert date
                         p #{reviewDate}
                   
-                  form(method="" action="")
+                  form(method="POST" action="")
                     button.btn.btn-Danger(type="Submit") Yes, DELETE Review
-                  
                   
                   
