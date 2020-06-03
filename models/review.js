@@ -3,6 +3,7 @@ const mongoose = require("mongoose");
 const reviewSchema = new mongoose.Schema({
     venueId: {type: mongoose.Types.ObjectId, ref: 'venue'},
     userId: {type: mongoose.Types.ObjectId, ref: 'user'},
+    userName: {type: String, required:true},
     datePosted: {type: Date, default: Date.now},
     content: {type: String},
     rating: {type: Number, min:1, max:5, required: true}
