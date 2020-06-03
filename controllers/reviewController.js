@@ -103,19 +103,23 @@ function convertReviews(reviewRaw) {
   }
 
   const reviewProcessed = {
-    venuedId: ObjectId(reviewRaw.venueId),
+    venueId: ObjectId(reviewRaw.venueId),
     userId: ObjectId(reviewRaw.userId),
+    userName: reviewRaw.userName,
     datePosted:new Date(),
     content: reviewRaw.review,
     rating: rating
   }
+
   return reviewProcessed;
 }
 
 // function to add review
 const addReview = async (req, res) => {
+  console.log("RAW REViEW")
   console.log(req.body)
   const reviewProcessed = convertReviews(req.body)
+  console.log("PROCESSED REVIEW")
   console.log(reviewProcessed)
   const db = mongoose.connection;
   try {

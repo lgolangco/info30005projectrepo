@@ -53,16 +53,15 @@ const getVenueByID = async (req, res) => {
         venueerror: "For a list of all registered venues,"
       });
     } else if (venue) {
+      console.log("LOOKING FOR ID");
+      console.log(req.params._id);
       venuesReviews = findVenuesReviews(req.params._id);
       venuesReviews.then(function(result){
-        console.log("USER:");
-        console.log(req.user);
         if (req.user === undefined){
           user = null;
         } else {
           user = req.user;
         }
-        console.log(user);
         return res.render('venueProfile', {
           venue: venue[0],
           user: user,
@@ -82,6 +81,8 @@ const getVenueByID = async (req, res) => {
 
 const findVenuesReviews = async (venueId) => {
   const venuesReviews = await Review.find({venueId: venueId});
+  console.log("venuesReviews");
+  console.log(venuesReviews);
   if (venuesReviews.length === 0){
     console.log("no reviews found");
     return false
@@ -89,8 +90,7 @@ const findVenuesReviews = async (venueId) => {
     console.log("success")
     return venuesReviews;
   }
-}
-
+};
 
 
 // function to get venues by id and show venue suggestions page
@@ -136,7 +136,7 @@ const getVenueSuggestionsByID = async (req, res) => {
 function convertSuggestions(suggestionRaw) {
   const suggestionProcessed = {
     userId: ObjectId(suggestionRaw.userId),
-    venuedId: ObjectId(suggestionRaw.venueId),
+    venueId: ObjectId(suggestionRaw.venueId),
     suggestion: suggestionRaw.suggestion,
     resolved: false
   }

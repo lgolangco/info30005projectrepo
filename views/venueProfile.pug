@@ -183,21 +183,21 @@ block content
                             //insert user name
                             h5 #[a(href="/user/"+review.userId) #{review.userName}]
                           div
-                            //insert rating
+                            //- insert rating
                             p Rating: #{review.rating}/5
                           
-                          //- .col-lg-2.dropdown
-                          //-   button.btn.btn-outline-secondary.dropdown-toggle#dropdownMenuButton(type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false") ...
-                          //-   div.dropdown-menu(aria-labelledby="dropdownMenuButton")
-                          //-     a.dropdown-item(href="#") Edit 
-                          //-     a.dropdown-item(href="#") Delete
-                  
+                            //- .col-lg-2.dropdown
+                              //-  button.btn.btn-outline-secondary.dropdown-toggle#dropdownMenuButton(type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false") ...
+                              //- div.dropdown-menu(aria-labelledby="dropdownMenuButton")
+                              //- a.dropdown-item(href="#") Edit 
+                              //- a.dropdown-item(href="#") Delete
+                        
                     .offset-1
-                      //insert review text
+                      //- insert review text
                       p #{review.content}
                     
                     .offset-9
-                      //insert date
+                      //- insert date
                       p #{date}
                 .row 
                   .offset-1.mb-3
@@ -215,6 +215,12 @@ block content
 
                 form(method='POST' action='') 
                   
+                  input.form-control(type="hidden" name='userId' value=user._id) 
+                  
+                  input.form-control(type="hidden" name='userName' value=user.name) 
+              
+                  input.form-control(type="hidden" name='venueId' value=venue._id)  
+            
                 
                   div.btn-group.btn-group-toggle(data-toggle="buttons")
                     label.btn.btn-outline-danger
@@ -237,17 +243,17 @@ block content
                       input#option2(type="radio" name="star5" autocomplete="off") 
                       |5 Stars ★
                 
-                  // Textbox
+                  //- Textbox
                   br
                   br
                   textarea.col-lg-11.form-control(rows="3" name="review" placeholder="Please enter review here.")
-                  // Submit 
+                  //- Submit 
                   br
                   button.btn.btn-primary(type="submit") Submit
               
 
           
-          // List reviews
+          //- List reviews
           h4 Reviews from Other StudySpotters
           each review in venuesReviews
 
@@ -278,10 +284,10 @@ block content
                   
 
       
-      // Side Bar
+      //- Side Bar
       div.col-lg-3.col-md-12.venue-side-bar
         
-        // Contacts
+        //- Contacts
         if venue.venueContact.phone || venue.venueContact.mobile || venue.venueContact.email || venue.venueContact.web
           br
           h5 Contact Details
@@ -296,7 +302,7 @@ block content
         
         br
         
-        // Location
+        //- Location
         h5 Location
         
         - const query = venue.venueAddress.venueStreetAddress + ", " + venue.venueAddress.venueSuburb
@@ -305,7 +311,7 @@ block content
         p #{venue.venueAddress.venueStreetAddress}, 
           |#{venue.venueAddress.venueSuburb}, #{venue.venueAddress.venueState}, #{venue.venueAddress.venuePostcode}
         
-        // Opening hours
+        //- Opening hours
         h5 Opening Hours
 
         - const venueHours = venue.venueHours.toObject()
