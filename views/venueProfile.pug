@@ -177,7 +177,9 @@ block content
                     
                     .row
                         .col-2
-                          p user profile image
+                          - const imgURL = "https://studyspot.s3.amazonaws.com/venue/header/" + review.userId.toString() + ".jpg"
+                          img.venue-thumbnail(src = imgURL 
+                            onerror="this.src='https://studyspot.s3.amazonaws.com/venue/header/default.jpg'")
                         .col-8
                           div
                             //insert user name
@@ -265,7 +267,9 @@ block content
                   
                   .row
                     .col-2
-                      p user profile image
+                      - const imgURL = "https://studyspot.s3.amazonaws.com/venue/header/" + review.userId.toString() + ".jpg"
+                      img.venue-thumbnail(src = imgURL 
+                        onerror="this.src='https://studyspot.s3.amazonaws.com/venue/header/default.jpg'")
                     .col-10
                       div
                         //insert user name
