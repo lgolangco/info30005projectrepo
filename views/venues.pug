@@ -3,7 +3,22 @@ extends layout
 
 block content
   // View All Venues in With Basic Details Card Format
-  
+  br
+  br
+  .col-md-10.col-lg-8.col-xl-7.mx-auto
+      form(method="GET" action="/venue")
+          .input-group
+              select.form-control(name="searchType")
+                  option(value='' selected='') Any Type
+                  option(value='Cafe') Cafe
+                  option(value='Library') Library
+                  option(value='Other') Other
+              input.form-control(type="text",name="search" , placeholder="Search for cafes, libraries or hidden spots")
+              input.form-control(type="text",name="searchLocation" , placeholder="Search for suburb")
+              .input-group-append
+                  button.btn.btn-warning(type="submit", value="Search")
+                      i.fa.fa-search
+      //br
   #venues-page.main.container
 
       h1 #{title}
@@ -12,8 +27,69 @@ block content
       br
       h5 
         a(href="/newvenue") + Register a new venue
+
       br
-      
+      div.card.col-md-3
+          article.card-group-item
+              form(method="GET" action="/venue")
+                  header.card-header
+                      h6.title Venue Type
+                  .filter-content
+                      .card-body
+                          label.form-check
+                              input.form-check-input(type='radio' name='type' value='cafe')
+                              span.form-check-label
+                                  | Cafe
+                          label.form-check
+                              input.form-check-input(type='radio' name='type' value='library')
+                              span.form-check-label
+                                  | Library
+                          label.form-check
+                              input.form-check-input(type='radio' name='type' value='others')
+                              span.form-check-label
+                                  | Others
+                  header.card-header
+                      h6.title Features
+                  .filter-content
+                      .card-body
+                          label.form-check
+                              input.form-check-input(type='checkbox' name='noise' value='noise')
+                              span.form-check-label
+                                  | Noise Level
+                          // form-check.//
+                          label.form-check
+                              input.form-check-input(type='checkbox' name= 'discussionFriendly' value='true')
+                              span.form-check-label
+                                  | Discussion Friendly
+                  header.card-header
+                      h6.title Amenities
+                  .filter-content
+                      .card-body
+                          label.form-check
+                              input.form-check-input(type='checkbox' name='wifi' value='true')
+                              span.form-check-label
+                                  | Wifi
+                          // form-check.//
+                          label.form-check
+                              input.form-check-input(type='checkbox' name='toilets' value='true')
+                              span.form-check-label
+                                  | Toilets
+                          // form-check.//
+                          label.form-check
+                              input.form-check-input(type='checkbox' name='power' value='true')
+                              span.form-check-label
+                                  | Power Outlets
+                          // form-check.//
+                          label.form-check
+                              input.form-check-input(type='checkbox' name='printer' value='true')
+                              span.form-check-label
+                                  | Printers
+                      center
+                          button.btn.btn-outline-primary(type="submit" value="Filter")
+                            | Apply
+      br
+
+
       .row
         each venue in venues
           - const address = venue.venueAddress.venueStreetAddress +", "+venue.venueAddress.venueSuburb+", "+venue.venueAddress.venuePostcode;
