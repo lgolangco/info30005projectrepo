@@ -6,11 +6,19 @@
     background: linear-gradient(45deg, #599fd9, #f9eadf);
     min-height: 100vh;
     overflow-x: hidden;
+    padding-bottom: 20px;
 }
 
 .form-registration {
     width: 100%;
     max-width: 330px;
     padding: 70px 15px 15px;
+    margin: auto;
+}
+
+.form-update-profile {
+    width: 100%;
+    max-width: 450px;
+    padding: 40px 10px 20px;
     margin: auto;
 }

@@ -9,8 +9,11 @@ block content
                 hr
                 include partials/messages.pug
                 .form-group
-                    label(for="name") Full name:
-                    input#name.form-control(type="text", placeholder="first and last" name="name")
+                    label(for="first_name") First name:
+                    input#first_name.form-control(type="text", placeholder="First name" name="first_name")
+                .form-group
+                    label(for="last_name") Last name:
+                    input#last_name.form-control(type="text", placeholder="Last name" name="last_name")
                 .form-group
                     label(for="email") Email:
                         //b Email
