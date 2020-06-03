@@ -112,6 +112,7 @@ h1 {
     border: solid 2px;
     padding: .5rem;
 }
+
 .avatar {
     width: 35px;
     height: 35px;
@@ -120,18 +121,22 @@ h1 {
     border: solid 2px rgba(255,255,255, .75);
 
 }
+
 .options {
     display: none;
 }
+
 .list-group-item:hover .options {
     display: block;
 }
+
 .options .material-icons {
     font-size: 1.25rem;
     cursor: pointer;
     margin-left: 1rem;
     color: rgba(0,0,0, .35);
 }
+
 .options .material-icons:hover {
     color: initial;
 }
