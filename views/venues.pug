@@ -21,6 +21,11 @@ block content
       //br
   #venues-page.main.container
 
+      //script(src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js")
+      //script(src='http://code.jquery.com/jquery-1.11.0.min.js')
+      link(rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/ion-rangeslider/2.3.0/css/ion.rangeSlider.min.css')
+      script(src='https://cdnjs.cloudflare.com/ajax/libs/ion-rangeslider/2.3.0/js/ion.rangeSlider.min.js')
+
       h1 #{title}
       p #{message}
       
@@ -31,36 +36,54 @@ block content
       br
       div.card.col-md-3
           article.card-group-item
-              form(method="GET" action="/venue")
+              form#filterValues(method="GET" action="/venue")
+                  //input(type='hidden' name='filters' value='applied')
+                  //input(type='hidden' name='searchType' value=typeV)
+                  //input(type='hidden' name='search' value=nameV)
+                  //input(type='hidden' name='searchLocation' value=locV)
+
                   header.card-header
                       h6.title Venue Type
                   .filter-content
                       .card-body
                           label.form-check
-                              input.form-check-input(type='radio' name='type' value='cafe')
+                              input.form-check-input(type='radio' name='type' value='cafe' onChange="this.form.submit()")
                               span.form-check-label
                                   | Cafe
                           label.form-check
-                              input.form-check-input(type='radio' name='type' value='library')
+                              input.form-check-input(type='radio' name='type' value='library' onChange="this.form.submit()")
                               span.form-check-label
                                   | Library
                           label.form-check
-                              input.form-check-input(type='radio' name='type' value='others')
+                              input.form-check-input(type='radio' name='type' value='others' onChange="this.form.submit()")
                               span.form-check-label
                                   | Others
+
                   header.card-header
                       h6.title Features
                   .filter-content
                       .card-body
-                          label.form-check
-                              input.form-check-input(type='checkbox' name='noise' value='noise')
-                              span.form-check-label
-                                  | Noise Level
                           // form-check.//
                           label.form-check
                               input.form-check-input(type='checkbox' name= 'discussionFriendly' value='true')
                               span.form-check-label
                                   | Discussion Friendly
+
+                  header.card-header
+                      h6.title Noise Level
+                  .filter-content
+                      .card-body
+                          input.js-range-slider(type='text' name='noise' value='')
+                          script.
+                              $(".js-range-slider").ionRangeSlider({
+                                  skin: "round",
+                                  type: 'single',
+                                  grid: true,
+                                  from: 4,
+                                  hide_min_max: true,
+                                  values: ['Low', 'Med', 'High', 'Any']
+                              });
+
                   header.card-header
                       h6.title Amenities
                   .filter-content
