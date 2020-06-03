@@ -205,6 +205,55 @@ const getReviewByUserID = async (req, res) => {
 };
 
 
+// function to get venues by id and show venue suggestions page
+const getDeleteReviewByID = async (req, res) => {
+  if (ObjectId.isValid(req.params._id) === false) {
+    return res.render('error', {
+      error: "There are no reviews with this id!",
+      message: "There are no reviews with this id!",
+      reviewerror: "To see a list of all registered venues, and access the reviews for each,"
+    });
+  }
+  if (req.user == null) {
+    return res.render('error', {
+      error: "You're not logged in!",
+      message: "You must be logged in to delete your review"
+    });
+  }
+  const user = await User.findById(req.user._id);
+  try {
+    const review = await Review.findById(req.params._id);
+    const venue = await Venue.findById(review.venueId);
+    if (review.length === 0){
+      return res.render('error', {
+        error: "There are no reviews with this id!",
+        message: "There are no reviews with this id!",
+        reviewerror: "To see a list of all registered venues, and access the reviews for each,"
+      });
+    } else if (user._id.toString() !== review.userId.toString()){
+      return res.render('error', {
+        error: "You are not authorised to delete this review!",
+        message: "You are not authorised to delete this review - users can only delete their own reviews!",
+        reviewerror: "To see a list of all registered venues, and access the reviews for each,"
+      });
+    } else {
+      return res.render("deleteReview", {
+        venue: venue,
+        user: user,
+        review: review
+      });
+    }
+  } catch (err) {
+    res.status(400);
+    return res.render('error', {
+      error: "Database query failed",
+      message: "Database query failed",
+      functionfailure: "Failed to get delete review page"
+    });
+  }
+};
+
+
 // function to delete review by venue and user ID
 const deleteReview = async (req, res) => {
     if (!(ObjectId.isValid(req.body.userId) && ObjectId.isValid(req.params.venueId))) {
@@ -236,5 +285,6 @@ module.exports = {
     getReviewByIDs,
     getReviewByVenueID,
     getReviewByUserID,
+    getDeleteReviewByID,
     deleteReview
 };

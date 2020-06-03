@@ -26,8 +26,11 @@ reviewRouter.get('/byvenue/:venueId', reviewController.getReviewByVenueID);
 // GET all reviews about about a given user by user ID
 reviewRouter.get('/byuser/:userId', reviewController.getReviewByUserID);
 
-// DELETE review by venue and user ID
-reviewRouter.delete('/:venueId', reviewController.deleteReview);
+// // DELETE review by venue and user ID
+// reviewRouter.delete('/:venueId', reviewController.deleteReview);
+
+// GET delete review page
+reviewRouter.get('/delete/:_id', reviewController.getDeleteReviewByID);
 
 
 // export the router

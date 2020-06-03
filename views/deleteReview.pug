@@ -1,0 +1,51 @@
+extends layout
+
+block content
+
+    // Delete Review page
+    .main.container
+        .row
+            .col-md-8.offset-2
+                
+                //- If suggestion already submitted only show message
+                if (completed)
+                  h2.display-4.m-b-2 Successfully deleted your review!
+                
+                //- Else, show suggestion form
+                else
+                
+                  h1.display-4.m-b-2 Delete your review for 
+                  h1.display-4.m-b-2 #{venue.venueName}
+                  br
+                  p Are you sure you want to delete your review?
+                  p <strong> This action cannot be undone. </strong>
+                  //- 
+                  //- form(method='POST' action='') 
+                  //-   div.form-group.row
+                  //- 
+                  //-     // Display static user name
+                  //-     label.col-sm-1.col-form-label(for="staticUserName") User:
+                  //-     div.col-sm-11
+                  //- 
+                  //-       //ADD USER SCHEMA/EMAIL IN BACKEND so can set value = user.EMAIL or username
+                  //-       input.form-control-plaintext#staticEmail(type="text" readonly value=user.email) 
+                  //-       input.form-control(type="hidden" name='userId' value=user._id) 
+                  //- 
+                  //- 
+                  //-     // Display static venue name
+                  //-     label.col-sm-1.col-form-label(for="staticVenueName") Venue:
+                  //-     div.col-sm-11
+                  //- 
+                  //-       input.form-control-plaintext(type="text" readonly value=venue.venueName)
+                  //-       input.form-control(type="hidden" name='venueId' value=venue._id)  
+                  //- 
+                  //-   // Textbox
+                  //-   div.form-group.row
+                  //-     label(for="exampleFormControlTextarea1") Please enter your suggestions for updates to this venue profile here:
+                  //-     textarea.form-control(rows="3" name="suggestion" placeholder="Please enter suggestions here.")
+                  //- 
+                  //-   // Submit 
+                  //-   br
+                  //-   button.btn.btn-primary(type="submit") Submit
+                  
+                  

@@ -202,7 +202,10 @@ block content
                 .row 
                   .offset-1.mb-3
                     a(href="#") Edit Review  
-                    a(href="#") Delete Review
+                    
+                    - const deleteReview = "/review/delete/" + review._id
+                    - console.log(deleteReview)
+                    a(href=deleteReview) Delete Review
               
           
             //- Else, show suggestion form
