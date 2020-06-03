@@ -3,147 +3,172 @@ extends layout
 block content
   
   .main.container
-      .col-md-6.offset-3
+      .col-md-8.offset-2
         
         if (completed)
-          h1 #{title}
+          h1 Review successfully updated!
+          
+          h5 Your Review of #{venue.venueName}
+          - reviewDate = review.datePosted.toDateString()
+          
+          div
+            .card.mb-3
+              
+              .row
+                  .col-2
+                    p user profile image
+                  .col-8
+                    div
+                      //insert user name
+                      h5 #[a(href="/user/"+review.userId) #{review.userName}]
+                    div
+                      //- insert rating
+                      p Rating: #{review.rating}/5
+                    
+
+              .offset-1
+                //- insert review text
+                p #{review.content}
+              
+              .offset-9
+                //- insert date
+                p #{reviewDate}
+          
+          - const backToVenue = "/venue/" + review.venueId.toString()
+          a(href=backToVenue) Back to venue page
+          
         else
-          h1 #{title}
+          
+          h4 Update your review
           
           p Edit your review for <strong>#{venue.venueName} </strong>           
 
           form(method='POST' action='') 
-            
-            //- div.form-group.row
               
-              //- // Display static user name
-              //- label.col-sm-1.col-form-label(for="staticUserName") User:
-              //- div.col-sm-11
-              //- 
-              //-   //ADD USER SCHEMA/EMAIL IN BACKEND so can set value = user.EMAIL or username
-              //-   input.form-control-plaintext#staticEmail(type="text" readonly value=user.email) 
-              //-   input.form-control(type="hidden" name='userId' value=user._id) 
-              //- 
-              //- 
-              //- // Display static venue name
-              //- label.col-sm-1.col-form-label(for="staticVenueName") Venue:
-              //- div.col-sm-11
-              //- 
-              //-   input.form-control-plaintext(type="text" readonly value=venue.venueName)
-              //-   input.form-control(type="hidden" name='venueId' value=venue._id)  
+            input.form-control(type="hidden" name='userId' value=user._id) 
+            
+            input.form-control(type="hidden" name='userName' value=user.name) 
+            
+            input.form-control(type="hidden" name='venueId' value=venue._id)  
+        
           
-            div.btn-group.btn-group-toggle(data-toggle="buttons")
+
             
-              if review.rating == 1
+            if review.rating == 1
+              .btn-group.btn-group-toggle(data-toggle="buttons")
                 label.btn.btn-outline-danger
-                  input#option1(type="radio" name="star1" autocomplete="off" value="on") 
+                  input#option1(type="radio" name="star" value=1 autocomplete="off" checked) 
                   |1 Star ★
 
                 label.btn.btn-outline-warning
-                  input#option2(type="radio" name="star2" autocomplete="off") 
+                  input#option2(type="radio" name="star" value=2 autocomplete="off") 
                   |2 Stars ★
                 
                 label.btn.btn-outline-secondary
-                  input#option2(type="radio" name="star3" autocomplete="off") 
+                  input#option3(type="radio" name="star" value=3 autocomplete="off") 
                   |3 Stars ★
                   
                 label.btn.btn-outline-info
-                  input#option2(type="radio" name="star4" autocomplete="off") 
+                  input#option4(type="radio" name="star" value=4 autocomplete="off") 
                   |4 Stars ★
                   
                 label.btn.btn-outline-success
-                  input#option2(type="radio" name="star5" autocomplete="off") 
+                  input#option5(type="radio" name="star" value=5 autocomplete="off") 
+                  |5 Stars ★
+            
+            
+            else if review.rating == 2
+              .btn-group.btn-group-toggle(data-toggle="buttons")
+                label.btn.btn-outline-danger
+                  input#option1(type="radio" name="star" value=1 autocomplete="off") 
+                  |1 Star ★
+
+                label.btn.btn-outline-warning
+                  input#option2(type="radio" name="star" value=2 autocomplete="off" checked) 
+                  |2 Stars ★
+                
+                label.btn.btn-outline-secondary
+                  input#option3(type="radio" name="star" value=3 autocomplete="off") 
+                  |3 Stars ★
+                  
+                label.btn.btn-outline-info
+                  input#option4(type="radio" name="star" value=4 autocomplete="off") 
+                  |4 Stars ★
+                  
+                label.btn.btn-outline-success
+                  input#option5(type="radio" name="star" value=5 autocomplete="off") 
+                  |5 Stars ★
+            
+            else if review.rating == 3
+              .btn-group.btn-group-toggle(data-toggle="buttons")
+                label.btn.btn-outline-danger
+                  input#option1(type="radio" name="star" value=1 autocomplete="off") 
+                  |1 Star ★
+
+                label.btn.btn-outline-warning
+                  input#option2(type="radio" name="star" value=2 autocomplete="off") 
+                  |2 Stars ★
+                
+                label.btn.btn-outline-secondary
+                  input#option3(type="radio" name="star" value=3 autocomplete="off" checked) 
+                  |3 Stars ★
+                  
+                label.btn.btn-outline-info
+                  input#option4(type="radio" name="star" value=4 autocomplete="off") 
+                  |4 Stars ★
+                  
+                label.btn.btn-outline-success
+                  input#option5(type="radio" name="star" value=5 autocomplete="off") 
+                  |5 Stars ★
+                
+            else if review.rating == 4
+              .btn-group.btn-group-toggle(data-toggle="buttons")
+                label.btn.btn-outline-danger
+                  input#option1(type="radio" name="star" value=1 autocomplete="off") 
+                  |1 Star ★
+
+                label.btn.btn-outline-warning
+                  input#option2(type="radio" name="star" value=2 autocomplete="off") 
+                  |2 Stars ★
+                
+                label.btn.btn-outline-secondary
+                  input#option3(type="radio" name="star" value=3 autocomplete="off") 
+                  |3 Stars ★
+                  
+                label.btn.btn-outline-info
+                  input#option4(type="radio" name="star" value=4 autocomplete="off" checked) 
+                  |4 Stars ★
+                  
+                label.btn.btn-outline-success
+                  input#option5(type="radio" name="star" value=5 autocomplete="off") 
                   |5 Stars ★
               
-              
-              else if review.rating == 2
+            else
+              .btn-group.btn-group-toggle(data-toggle="buttons")
                 label.btn.btn-outline-danger
-                  input#option1(type="radio" name="star1" autocomplete="off") 
+                  input#option1(type="radio" name="star" value=1 autocomplete="off") 
                   |1 Star ★
 
                 label.btn.btn-outline-warning
-                  input#option2(type="radio" name="star2" autocomplete="off" value="on") 
+                  input#option2(type="radio" name="star" value=2 autocomplete="off") 
                   |2 Stars ★
                 
                 label.btn.btn-outline-secondary
-                  input#option2(type="radio" name="star3" autocomplete="off") 
+                  input#option3(type="radio" name="star" value=3 autocomplete="off") 
                   |3 Stars ★
                   
                 label.btn.btn-outline-info
-                  input#option2(type="radio" name="star4" autocomplete="off") 
+                  input#option4(type="radio" name="star" value=4 autocomplete="off") 
                   |4 Stars ★
                   
                 label.btn.btn-outline-success
-                  input#option2(type="radio" name="star5" autocomplete="off") 
-                  |5 Stars ★
-              
-              else if review.rating == 3
-                label.btn.btn-outline-danger
-                  input#option1(type="radio" name="star1" autocomplete="off") 
-                  |1 Star ★
-
-                label.btn.btn-outline-warning
-                  input#option2(type="radio" name="star2" autocomplete="off") 
-                  |2 Stars ★
-                
-                label.btn.btn-outline-secondary
-                  input#option2(type="radio" name="star3" autocomplete="off" value="on") 
-                  |3 Stars ★
-                  
-                label.btn.btn-outline-info
-                  input#option2(type="radio" name="star4" autocomplete="off") 
-                  |4 Stars ★
-                  
-                label.btn.btn-outline-success
-                  input#option2(type="radio" name="star5" autocomplete="off") 
-                  |5 Stars ★
-                  
-              else if review.rating == 4
-                label.btn.btn-outline-danger
-                  input#option1(type="radio" name="star1" autocomplete="off") 
-                  |1 Star ★
-
-                label.btn.btn-outline-warning
-                  input#option2(type="radio" name="star2" autocomplete="off") 
-                  |2 Stars ★
-                
-                label.btn.btn-outline-secondary
-                  input#option2(type="radio" name="star3" autocomplete="off") 
-                  |3 Stars ★
-                  
-                label.btn.btn-outline-info
-                  input#option2(type="radio" name="star4" autocomplete="off" value="on") 
-                  |4 Stars ★
-                  
-                label.btn.btn-outline-success
-                  input#option2(type="radio" name="star5" autocomplete="off") 
-                  |5 Stars ★
-                
-              else 
-                label.btn.btn-outline-danger
-                  input#option1(type="radio" name="star1" autocomplete="off") 
-                  |1 Star ★
-
-                label.btn.btn-outline-warning
-                  input#option2(type="radio" name="star2" autocomplete="off") 
-                  |2 Stars ★
-                
-                label.btn.btn-outline-secondary
-                  input#option2(type="radio" name="star3" autocomplete="off") 
-                  |3 Stars ★
-                  
-                label.btn.btn-outline-info
-                  input#option2(type="radio" name="star4" autocomplete="off") 
-                  |4 Stars ★
-                  
-                label.btn.btn-outline-success
-                  input#option2(type="radio" name="star5" autocomplete="off" value="on") 
+                  input#option5(type="radio" name="star" value=5 autocomplete="off" checked) 
                   |5 Stars ★
           
             // Textbox
             br
             br
-            textarea.col-lg-11.form-control(rows="3" name="review" placeholder="Please enter review here." value=review.content)
+            textarea.col-lg-11.form-control(rows="3" name="review" placeholder="Please enter review here.") #{review.content}
             // Submit 
             br
             button.btn.btn-primary(type="submit") Submit

@@ -29,10 +29,16 @@ const reviewController = require("../controllers/reviewController.js");
 // // DELETE review by venue and user ID
 // reviewRouter.delete('/:venueId', reviewController.deleteReview);
 
-// GET delete review page
+// GET update review page by review ID
+reviewRouter.get('/update/:_id', reviewController.getUpdateReviewPage);
+
+// Update review by review ID
+reviewRouter.post('/update/:_id', reviewController.updateReview);
+
+// GET delete review page by review ID
 reviewRouter.get('/delete/:_id', reviewController.getDeleteReviewByID);
 
-// DELETE review
+// DELETE review by review ID
 reviewRouter.post('/delete/:_id', reviewController.deleteReview);
 
 
