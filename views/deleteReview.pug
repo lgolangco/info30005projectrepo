@@ -46,7 +46,17 @@ block content
                         //- insert date
                         p #{reviewDate}
                   
+                  br
+                  - const venuePage = "/venue/" + review.venueId
+                  a.btn.btn-Info(href=venuePage) Back to the venue page
+                  
+                  br
+                  br
+                  - const updateReview = "/review/update/" + review._id
+                  a.btn.btn-Warning(href=updateReview) UPDATE review 
+                  
+                  br
                   form(method="POST" action="")
-                    button.btn.btn-Danger(type="Submit") Yes, DELETE Review
+                    button.btn.btn-Danger(type="Submit") DELETE Review
                   
                   
