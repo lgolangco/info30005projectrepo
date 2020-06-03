@@ -11,91 +11,84 @@ const ObjectId = mongoose.Types.ObjectId;
 // function to handle a request to get all venues
 const getAllVenues = async (req, res) => {
   var title = "Venue List - Matching Venues";
+  const search = [];
 
   try {
-    regexType = new RegExp(escapeRegex(req.query.searchType), 'gi');
-    if (req.query.search && req.query.searchLocation) {
-      regex = new RegExp(escapeRegex(req.query.search), 'gi');
-      regexLocation = new RegExp(escapeRegex(req.query.searchLocation), 'gi');
-      console.log("type",req.query.searchType, "name: ", req.query.search, "loc: ", req.query.searchLocation);
-      // Get all fuzzy match venues from DB
-      Venue.find({
-        $and: [
-          {venueName: regex},
-          {venueType: regexType},
-          {"venueAddress.venueSuburb": regexLocation},
-          // {"venueAddress.venuePostcode": regexLocation}
-        ]
-      }, function (err, allVenues) {
-        if (allVenues.length < 1) {
-          title = "No venue match that query, please try again.";
-        }
-        res.render('venues', {
-          title: title,
-          venues: allVenues
-        })
-      });
-    } else if (req.query.search) {
-      regex = new RegExp(escapeRegex(req.query.search), 'gi');
-      console.log("type",req.query.searchType, "name: ", req.query.search);
-      // Get all fuzzy match venues from DB
-      Venue.find({
-        $and: [
-          {venueName: regex},
-          {venueType: regexType},
-        ]
-      }, function (err, allVenues) {
-        if (allVenues.length < 1) {
-          title = "No venue match that query, please try again.";
-        }
-        res.render('venues', {
-          title: title,
-          venues: allVenues
-        })
-      });
-    } else if (req.query.searchLocation) {
-      regexLocation = new RegExp(escapeRegex(req.query.searchLocation), 'gi');
-      console.log("type",req.query.searchType,"loc: ", req.query.searchLocation);
-      // Get all fuzzy match venues from DB
-      Venue.find({
-        $and: [
-          {venueType: regexType},
-          {"venueAddress.venueSuburb": regexLocation},
-          // {"venueAddress.venuePostcode": regexLocation}
-        ]
-      }, function (err, allVenues) {
-        if (allVenues.length < 1) {
-          title = "No venue match that query, please try again.";
-        }
-        res.render('venues', {
-          title: title,
-          venues: allVenues
-        })
-      });
+    if(req.query.length>=1) {
+      if (req.query.type) {
+        const regexType = new RegExp(escapeRegex(req.query.type), 'gi');
+        search.push({venueType: regexType});
+      }
+      if (req.query.discussionFriendly) {
+        search.push({"venueDetails.discussionFriendly": req.query.discussionFriendly});
+      }
+      if (req.query.wifi) {
+        search.push({"venueDetails.wifi": req.query.wifi});
+      }
+      if (req.query.toilets) {
+        search.push({"venueDetails.toilets": req.query.toilets});
+      }
+      if (req.query.power) {
+        search.push({"venueDetails.power": req.query.power});
+      }
+      if (req.query.printer) {
+        search.push({"venueDetails.printer": req.query.printer});
+      }
+
+      if (req.query.searchType) {
+        const regexType = new RegExp(escapeRegex(req.query.searchType), 'gi');
+        search.push({venueType: regexType});
+      }
+
+      if (req.query.search && req.query.searchLocation) {
+        const regex = new RegExp(escapeRegex(req.query.search), 'gi');
+        const regexLocation = new RegExp(escapeRegex(req.query.searchLocation), 'gi');
+        search.push({venueName: regex}, {"venueAddress.venueSuburb": regexLocation});
+      } else if (req.query.search) {
+        const regex = new RegExp(escapeRegex(req.query.search), 'gi');
+        search.push({venueName: regex})
+      } else if (req.query.searchLocation) {
+        const regexLocation = new RegExp(escapeRegex(req.query.searchLocation), 'gi');
+        search.push({"venueAddress.venueSuburb": regexLocation})
+      }
     } else {
-      Venue.find({venueType: regexType}, function (err, allVenues) {
-        title = "Venue List - All Venues";
-        if (allVenues.length < 1) {
-          title = "No venue match that query, please try again.";
-        }
-        res.render('venues', {
-          title: title,
-          venues: allVenues
-        })
-      });
+      title = "Venue List - All Venues";
+        search.push({})
     }
+
+    console.log(search);
+    // Get all fuzzy match venues from DB
+    Venue.find({
+      $and: search
+    }, function (err, allVenues) {
+      if (allVenues.length < 1) {
+        title = "No venue match that query, please try again.";
+      }
+      res.render('venues', {
+        title: title,
+        venues: allVenues
+      })
+    });
   } catch(err) {
     console.log(err);
-    res.res.render('error', {
-      error: "Database query failed",
-      message: "Database query failed",
-      functionfailure: "Failed to get all venues"
-    })
+    Venue.find({}, function (err, allVenues) {
+      if (allVenues.length < 1) {
+        title = "Database query failed.";
+      }
+      res.render('venues', {
+        title: title,
+        venues: allVenues
+      })
+    });
   }
 }
 
 function escapeRegex(text) {
-  return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
+  try{
+    return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
+  } catch(err) {
+    return text
+  }
 }
 
 
