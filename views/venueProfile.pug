@@ -345,11 +345,12 @@ block content
             p= day+ ": " + timeframe
     
     // Venue Update and Delete Buttons (Will be only available to users with admin attribute at later date)
-    .row
-      .col-md-2.offset-1
-        - const updateLink = "/venueUpdate/" + venue._id
-        a.btn.btn-Warning(href=updateLink) UPDATE VENUE
-      .col-md-2
-        - const deletePath = "/deleteVenue/" + venue._id
-        form(method="POST" action=deletePath)
-          button.btn.btn-Danger(type="Submit") DELETE VENUE
+    if (user)
+      .row
+        .col-md-2.offset-1
+          - const updateVenue = "/venueUpdate/" + venue._id
+          a.btn.btn-Warning(href=updateVenue) UPDATE VENUE
+        .col-md-2
+          
+          - const deleteVenue = "/deleteVenue/" + venue._id
+          a.btn.btn-Danger(href=deleteVenue) DELETE VENUE

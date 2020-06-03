@@ -1,0 +1,36 @@
+extends layout
+
+block content
+
+    // Delete Venue Profile page
+    .main.container
+        .row
+            .col-md-8.offset-2
+                
+                //- If suggestion already submitted only show message
+                if (deleted)
+                  h2.display-4.m-b-2 Successfully deleted the venue!
+                  
+                  a(href="/venue/") Back to venue list
+                
+                //- Else, show suggestion form
+                else
+                
+                  h1.display-4.m-b-2 Delete #{venue.venueName}
+                  br
+                  p Are you sure you want to delete this venue?
+                  p <strong> This action cannot be undone. </strong>
+                  
+                  br
+                  - const venuePage = "/venue/" + venue._id
+                  a.btn.btn-Info(href=venuePage) Back to the venue profile
+                  
+                  br
+                  br
+                  - const updateReview = "/venueUpdate/" + venue._id
+                  a.btn.btn-Warning(href=updateReview) UPDATE Venue 
+                  
+                  
+                  br
+                  form(method="POST" action="")
+                    button.btn.btn-Danger(type="Submit") DELETE Venue  

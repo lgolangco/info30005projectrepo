@@ -303,6 +303,48 @@ const updateVenue = async (req, res) => {
   )
 };
 
+// function to render delete venue confirmation page
+const getDeleteVenueConfirmationPage = async (req, res) => {
+
+  if (ObjectId.isValid(req.params._id) === false) {
+    return res.render('error', {
+      error: "There are no venues with this id!",
+      message: "There are no venues with this id!",
+      venueerror: "To see a list of all registered venues,"
+    });
+  }
+  if (req.user == null) {
+    return res.render('error', {
+      error: "You're not logged in!",
+      message: "You must be logged in to delete this venue"
+    });
+  }
+
+  const user = await User.findById(req.user._id);
+
+  try {
+    const venue = await Venue.findById(req.params._id);
+    if (venue === null){
+      return res.render('error', {
+        error: "There are no venues with this id!",
+        message: "There are no venues with this id!",
+        venueerror: "To see a list of all registered venues,"
+      });
+
+    } else {
+      return res.render("venueDelete", {
+        venue: venue
+      });
+    }
+  } catch (err) {
+    res.status(400);
+    return res.render('error', {
+      error: "Database query failed",
+      message: err,
+      functionfailure: "Failed to get delete venue page"
+    });
+  }
+};
 
 // function to delete venue by ID
 const deleteVenue = async (req, res) => {
@@ -337,7 +379,7 @@ const deleteVenue = async (req, res) => {
       functionfailure: "Failed to delete venue"
     });
   } else {
-    res.render("venueProfile",{
+    res.render("venueDelete",{
       deleted: true
     });
     return false;
@@ -390,6 +432,7 @@ module.exports = {
   getVenueByType,
   addVenue,
   updateVenue,
+  getDeleteVenueConfirmationPage,
   deleteVenue,
   getVenueSuggestionsByID,
   getVenueUpdateByID,
