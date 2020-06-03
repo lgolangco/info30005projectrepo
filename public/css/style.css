@@ -6,6 +6,7 @@ html {
 body {
     font-family: "Open Sans", sans-serif;
     background-color: #ffffff;
+    padding-top: 62px;
 }
 
 a {
@@ -15,7 +16,7 @@ a {
 }
 
 a:hover {
-    color: rgba(49, 176, 213, .7);
+    color: #3d85c6;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -48,14 +49,12 @@ h1 {
     min-height: calc(100vh - 34px);
 }
 
-.foot {
-    font-size: .85rem;
-    padding: .5rem 0;
-    color: #343a40;
+footer {
+    font-family: "Montserrat","Poppins",sans-serif;
 }
 
 
-/**********************/
+/* Navigation */
 
 .nav-items .nav-link {
     margin: 0 1rem;
