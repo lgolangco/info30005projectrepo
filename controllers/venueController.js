@@ -14,7 +14,7 @@ const getAllVenues = async (req, res) => {
   const search = [];
 
   try {
-    if(req.query.length>=1) {
+    if(req.query) {
       if (req.query.type) {
         const regexType = new RegExp(escapeRegex(req.query.type), 'gi');
         search.push({venueType: regexType});
@@ -53,11 +53,11 @@ const getAllVenues = async (req, res) => {
       }
     } else {
       title = "Venue List - All Venues";
-        search.push({})
+      search.push({})
     }
 
     console.log(search);
-    // Get all fuzzy match venues from DB
+    search.push({})
     Venue.find({
       $and: search
     }, function (err, allVenues) {
