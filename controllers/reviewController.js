@@ -135,7 +135,8 @@ const addReview = async (req, res) => {
       return res.render('venueProfile', {
         venue: venue[0],
         user: req.user,
-        completed: true
+        completed: true,
+        newReview: reviewProcessed
       });
     }
   } catch(err){

@@ -159,6 +159,33 @@ block content
           if (completed)
             p Successfully added your review
             
+            br
+            h4 Your Review of #{venue.venueName}
+            - newReviewDate = newReview.datePosted.toDateString()
+            
+            .col-10
+              .card.mb-3
+                
+                .row
+                    .col-2
+                      p user profile image
+                    .col-8
+                      div
+                        //insert user name
+                        h5 #[a(href="/user/"+newReview.userId) #{newReview.userName}]
+                      div
+                        //- insert rating
+                        p Rating: #{newReview.rating}/5
+                      
+
+                .offset-1
+                  //- insert review text
+                  p #{newReview.content}
+                
+                .offset-9
+                  //- insert date
+                  p #{newReviewDate}
+          
           //- If user is not logged in
           if !(user)
             p Please log in to submit a review.
@@ -185,12 +212,6 @@ block content
                           div
                             //- insert rating
                             p Rating: #{review.rating}/5
-                          
-                            //- .col-lg-2.dropdown
-                              //-  button.btn.btn-outline-secondary.dropdown-toggle#dropdownMenuButton(type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false") ...
-                              //- div.dropdown-menu(aria-labelledby="dropdownMenuButton")
-                              //- a.dropdown-item(href="#") Edit 
-                              //- a.dropdown-item(href="#") Delete
                         
                     .offset-1
                       //- insert review text
@@ -209,7 +230,7 @@ block content
               
           
             //- Else, show suggestion form
-            if !(existingReview)
+            if !(existingReview) && !(completed)
               div.bg-light.border.col-lg-10
                 p Submit a review for <strong>#{venue.venueName} </strong>           
 
