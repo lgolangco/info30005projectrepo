@@ -3,6 +3,7 @@ const mongoose = require("mongoose");
 // import venue, user, and suggestions model
 const Venue = mongoose.model("venue");
 const User = mongoose.model("user");
+const Review = mongoose.model("review");
 const VenueSuggestions = mongoose.model("venueSuggestions");
 
 // import object id type to check if request _id is valid
@@ -108,79 +109,6 @@ const getAllVenues = async (req, res) => {
   }
 }
 
-// // function to handle a request to get all venues
-// const getAllVenues = async (req, res) => {
-//   var title = "Venue List - Matching Venues";
-//   const search = [];
-//
-//   try {
-//     // var checkboxValues = filters['checkboxValues'] || {};
-//     // var $checkboxes = jsdom.window.document.getElementById("#filterValues :checkbox");
-//     //
-//     // $checkboxes.on("change", function(){
-//     //   $checkboxes.each(function(){
-//     //     checkboxValues[this.id] = this.checked;
-//     //   });
-//     //   filters["checkboxValues"] = checkboxValues;
-//     // });
-//     // $.each(checkboxValues, function(key, value) {
-//     //   $("#" + key).prop('checked', value);
-//     // });
-//
-//     // $("#111").prop('checked', true);
-//
-//     if(req.query) {
-//       console.log(req.query);
-//
-//       if (req.query.searchType) {
-//         const regexType = new RegExp(escapeRegex(req.query.searchType), 'gi');
-//         search.push({venueType: regexType});
-//       }
-//
-//       if (req.query.search && req.query.searchLocation) {
-//         const regex = new RegExp(escapeRegex(req.query.search), 'gi');
-//         const regexLocation = new RegExp(escapeRegex(req.query.searchLocation), 'gi');
-//         search.push({venueName: regex}, {"venueAddress.venueSuburb": regexLocation});
-//       } else if (req.query.search) {
-//         const regex = new RegExp(escapeRegex(req.query.search), 'gi');
-//         search.push({venueName: regex})
-//       } else if (req.query.searchLocation) {
-//         const regexLocation = new RegExp(escapeRegex(req.query.searchLocation), 'gi');
-//         search.push({"venueAddress.venueSuburb": regexLocation})
-//       }
-//     } else {
-//       title = "Venue List - All Venues";
-//       search.push({})
-//     }
-//
-//     console.log(search);
-//     search.push({})
-//     Venue.find({
-//       $and: search
-//     }, function (err, allVenues) {
-//       if (allVenues.length < 1) {
-//         title = "No venue match that query, please try again.";
-//       }
-//       res.render('venues', {
-//         title: title,
-//         venues: allVenues
-//       })
-//     });
-//   } catch(err) {
-//     console.log(err);
-//     Venue.find({}, function (err, allVenues) {
-//       if (allVenues.length < 1) {
-//         title = "Database query failed.";
-//       }
-//       res.render('venues', {
-//         title: title,
-//         venues: allVenues
-//       })
-//     });
-//   }
-// }
-
-
 
 function escapeRegex(text) {
   try{
@@ -189,31 +117,6 @@ function escapeRegex(text) {
     return text
   }
 }
-
-
-// // function to handle a request to get all venues
-// const getAllVenues = async (req, res) => {
-//   try {
-//     const all_venues = await Venue.find();
-//     if (all_venues.length === 0){
-//       return res.render('venues', {
-//         title: "There are no existing venues yet"
-//       })
-//     } else {
-//       return res.render('venues', {
-//         title: "Venue List - All Venues",
-//         venues: all_venues
-//       });
-//     }
-//   } catch (err) {
-//     res.status(400);
-//     return res.render('error', {
-//       error: "Database query failed",
-//       message: "Database query failed",
-//       functionfailure: "Failed to get all venues"
-//     });
-//   }
-// };
 
 
 // function to get venues by id and show venue profile
@@ -225,6 +128,7 @@ const getVenueByID = async (req, res) => {
       venueerror: "For a list of all registered venues,"
     });
   }
+
   await Venue.find({_id: req.params._id}, function(err, venue) {
     // checks if the _id is invalid or there are no venues listed with that _id
     if (venue.length === 0) {
@@ -233,12 +137,22 @@ const getVenueByID = async (req, res) => {
         message: "There are no venues listed with this id!",
         venueerror: "For a list of all registered venues,"
       });
-
     } else if (venue) {
-      return res.render('venueProfile', {
-        venue: venue[0]
+      console.log("LOOKING FOR ID");
+      console.log(req.params._id);
+      venuesReviews = findVenuesReviews(req.params._id);
+      venuesReviews.then(function(result){
+        if (req.user === undefined){
+          user = null;
+        } else {
+          user = req.user;
+        }
+        return res.render('venueProfile', {
+          venue: venue[0],
+          user: user,
+          venuesReviews: result
+        });
       });
-      // return res.send(venue);
     } else {
       res.status(400);
       return res.render('error', {
@@ -250,6 +164,20 @@ const getVenueByID = async (req, res) => {
   })
 };
 
+const findVenuesReviews = async (venueId) => {
+  const venuesReviews = await Review.find({venueId: venueId});
+  console.log("venuesReviews");
+  console.log(venuesReviews);
+  if (venuesReviews.length === 0){
+    console.log("no reviews found");
+    return false
+  } else {
+    console.log("success")
+    return venuesReviews;
+  }
+};
+
+
 // function to get venues by id and show venue suggestions page
 const getVenueSuggestionsByID = async (req, res) => {
   if (ObjectId.isValid(req.params._id) === false) {
@@ -259,13 +187,13 @@ const getVenueSuggestionsByID = async (req, res) => {
       venueerror: "For a list of all registered venues,"
     });
   }
-  const user = await User.findById(req.user._id);
-  if (user === null) {
+  if (req.user == null) {
     return res.render('error', {
       error: "You're not logged in!",
       message: "You must be logged in to submit a suggestion"
     });
   }
+  const user = await User.findById(req.user._id);
   try {
     const venue = await Venue.find({_id: req.params._id});
     if (venue.length === 0){
@@ -293,7 +221,7 @@ const getVenueSuggestionsByID = async (req, res) => {
 function convertSuggestions(suggestionRaw) {
   const suggestionProcessed = {
     userId: ObjectId(suggestionRaw.userId),
-    venuedId: ObjectId(suggestionRaw.venueId),
+    venueId: ObjectId(suggestionRaw.venueId),
     suggestion: suggestionRaw.suggestion,
     resolved: false
   }
@@ -460,6 +388,48 @@ const updateVenue = async (req, res) => {
   )
 };
 
+// function to render delete venue confirmation page
+const getDeleteVenueConfirmationPage = async (req, res) => {
+
+  if (ObjectId.isValid(req.params._id) === false) {
+    return res.render('error', {
+      error: "There are no venues with this id!",
+      message: "There are no venues with this id!",
+      venueerror: "To see a list of all registered venues,"
+    });
+  }
+  if (req.user == null) {
+    return res.render('error', {
+      error: "You're not logged in!",
+      message: "You must be logged in to delete this venue"
+    });
+  }
+
+  const user = await User.findById(req.user._id);
+
+  try {
+    const venue = await Venue.findById(req.params._id);
+    if (venue === null){
+      return res.render('error', {
+        error: "There are no venues with this id!",
+        message: "There are no venues with this id!",
+        venueerror: "To see a list of all registered venues,"
+      });
+
+    } else {
+      return res.render("venueDelete", {
+        venue: venue
+      });
+    }
+  } catch (err) {
+    res.status(400);
+    return res.render('error', {
+      error: "Database query failed",
+      message: err,
+      functionfailure: "Failed to get delete venue page"
+    });
+  }
+};
 
 // function to delete venue by ID
 const deleteVenue = async (req, res) => {
@@ -494,7 +464,7 @@ const deleteVenue = async (req, res) => {
       functionfailure: "Failed to delete venue"
     });
   } else {
-    res.render("venueProfile",{
+    res.render("venueDelete",{
       deleted: true
     });
     return false;
@@ -538,6 +508,50 @@ const getVenueByType = async (req, res) => {
   )
 };
 
+const getRequestNew = async (req, res) => {
+  try {
+    if (req.user == null) {
+      return res.render ("error", {
+        error: "You must be logged in to request a new venue!",
+        message: "You must be logged in to request a new venue!"
+      });
+    } else {
+      const user = await User.findById(req.user._id);
+      return res.render("venueRequestNew", {user: user});
+    };
+  } catch (err) {
+    res.status(400);
+    return res.render('error', {
+      error: "Failed to load venueRequestNew page",
+      message: "Failed to load venueRequestNew page",
+    });
+
+  }
+};
+
+const addRequestNew = async (req, res) => {
+  // extract info. from body
+   newVenueProcessed = convertVenue(req.body);
+   newVenueProcessed.userId = ObjectId(req.body.userId);
+   newVenueProcessed.userFirstName = req.body.userFirstName;
+   newVenueProcessed.userLastName = req.body.userLastName;
+   const db = mongoose.connection;
+   try {
+     await db.collection('venueRequests').insertOne(newVenueProcessed)
+     return res.render("venueRequestNew",{
+       completed: true,
+       newVenue: newVenueProcessed
+     });
+   } catch(err){
+     res.status(400);
+     console.log(err);
+     return res.render('error', {
+       error: "Database query failed",
+       message: "Database query failed",
+       functionfailure: "Failed to post new venue request"
+     });
+   }
+};
 
 // remember to export the functions
 module.exports = {
@@ -547,8 +561,11 @@ module.exports = {
   getVenueByType,
   addVenue,
   updateVenue,
+  getDeleteVenueConfirmationPage,
   deleteVenue,
   getVenueSuggestionsByID,
   getVenueUpdateByID,
-  submitVenueSuggestion
+  submitVenueSuggestion,
+  getRequestNew,
+  addRequestNew
 };

@@ -72,8 +72,16 @@ router.get("/venueUpdate/:_id",venueController.getVenueUpdateByID);
 // POST getVenueUpdate form
 router.post("/venueUpdate/:_id",venueController.updateVenue);
 
-// POST deleteVenue request
-router.post("/deleteVenue/:_id",venueController.deleteVenue)
+// GET deleteVenue confirmation page
+router.get("/deleteVenue/:_id",venueController.getDeleteVenueConfirmationPage);
 
+// POST deleteVenue request
+router.post("/deleteVenue/:_id",venueController.deleteVenue);
+
+// GET requestNew venue page
+router.get("/requestNew/", venueController.getRequestNew);
+
+// POST requestNew venue
+router.post("/requestNew/", venueController.addRequestNew);
 
 module.exports = router;

@@ -9,25 +9,37 @@ const reviewController = require("../controllers/reviewController.js");
 /* REVIEW ROUTES */
 
 // GET list of all reviews
-reviewRouter.get('/', reviewController.getAllReviews);
+// reviewRouter.get('/', reviewController.getAllReviews);
+//
+// // PATCH update review
+// reviewRouter.patch('/:venueId', reviewController.updateReview);
+//
+// // POST review
+// reviewRouter.post('/', reviewController.addReview);
+//
+// // GET review by venue and user ID
+// reviewRouter.get('/byids/:venueId/:userId', reviewController.getReviewByIDs);
+//
+// // GET all reviews about a given venue by venue ID
+// reviewRouter.get('/byvenue/:venueId', reviewController.getReviewByVenueID);
+//
+// // GET all reviews about about a given user by user ID
+// reviewRouter.get('/byuser/:userId', reviewController.getReviewByUserID);
 
-// PATCH update review
-reviewRouter.patch('/:venueId', reviewController.updateReview);
+// // DELETE review by venue and user ID
+// reviewRouter.delete('/:venueId', reviewController.deleteReview);
 
-// POST review
-reviewRouter.post('/', reviewController.addReview);
+// GET update review page by review ID
+reviewRouter.get('/update/:_id', reviewController.getUpdateReviewPage);
 
-// GET review by venue and user ID
-reviewRouter.get('/byids/:venueId/:userId', reviewController.getReviewByIDs);
+// Update review by review ID
+reviewRouter.post('/update/:_id', reviewController.updateReview);
 
-// GET all reviews about a given venue by venue ID
-reviewRouter.get('/byvenue/:venueId', reviewController.getReviewByVenueID);
+// GET delete review page by review ID
+reviewRouter.get('/delete/:_id', reviewController.getDeleteReviewByID);
 
-// GET all reviews about about a given user by user ID
-reviewRouter.get('/byuser/:userId', reviewController.getReviewByUserID);
-
-// DELETE review by venue and user ID
-reviewRouter.delete('/:venueId', reviewController.deleteReview);
+// DELETE review by review ID
+reviewRouter.post('/delete/:_id', reviewController.deleteReview);
 
 
 // export the router

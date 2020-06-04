@@ -28,10 +28,7 @@ block content
 
       h1 #{title}
       p #{message}
-      
-      br
-      h5 
-        a(href="/newvenue") + Register a new venue
+   
 
       br
       div.card.col-md-3
@@ -196,7 +193,18 @@ block content
                             | Apply
       br
 
-
+      if (user && user.admin)
+        br
+        h5 
+          a(href="/newvenue") + Register a new venue
+        br
+      else if (user)
+        br
+        h5
+          a(href="/requestNew/") + Request a new StudySpot
+        br
+      
+      
       .row
         each venue in venues
           - const address = venue.venueAddress.venueStreetAddress +", "+venue.venueAddress.venueSuburb+", "+venue.venueAddress.venuePostcode;
