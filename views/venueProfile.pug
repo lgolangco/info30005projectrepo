@@ -172,7 +172,7 @@ block content
                     .col-8
                       div
                         //insert user name
-                        h5 #[a(href="/user/"+newReview.userId) #{newReview.userName}]
+                        h5 #[a(href="/user/"+newReview.userId) #{newReview.userFirstName} #{newReview.userLastName}]
                       div
                         //- insert rating
                         p Rating: #{newReview.rating}/5
@@ -210,7 +210,7 @@ block content
                         .col-8
                           div
                             //insert user name
-                            h5 #[a(href="/user/"+review.userId) #{review.userName}]
+                            h5 #[a(href="/user/"+review.userId) #{review.userFirstName} #{review.userLastName}]
                           div
                             //- insert rating
                             p Rating: #{review.rating}/5
@@ -241,7 +241,8 @@ block content
                   
                   input.form-control(type="hidden" name='userId' value=user._id) 
                   
-                  input.form-control(type="hidden" name='userName' value=user.name) 
+                  input.form-control(type="hidden" name='userFirstName' value=user.first_name) 
+                  input.form-control(type="hidden" name='userLastName' value=user.last_name) 
               
                   input.form-control(type="hidden" name='venueId' value=venue._id)  
             
@@ -295,7 +296,7 @@ block content
                     .col-10
                       div
                         //insert user name
-                        h5 #[a(href="/user/"+review.userId) #{review.userName}]
+                        h5 #[a(href="/user/"+review.userId) #{review.userFirstName} #{review.userLastName}]
                       div
                         //insert rating
                         p Rating: #{review.rating}/5

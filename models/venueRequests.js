@@ -3,7 +3,8 @@ const mongoose = require("mongoose");
 
 const venueRequestsSchema = new mongoose.Schema({
   userId: {type: mongoose.Types.ObjectId, ref: 'user'},
-  userName: {type: String, required: true},
+  userFirstName: {type: String, required:true, trim: true},
+  userLastName: {type: String, required:true, trim: true},
   venueName: {type: String, required: true},
   venueType: {type: String, required: true},
   venueAddress: {

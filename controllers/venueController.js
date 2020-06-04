@@ -449,7 +449,8 @@ const addRequestNew = async (req, res) => {
   // extract info. from body
    newVenueProcessed = convertVenue(req.body);
    newVenueProcessed.userId = ObjectId(req.body.userId);
-   newVenueProcessed.userName = req.body.userName;
+   newVenueProcessed.userFirstName = req.body.userFirstName;
+   newVenueProcessed.userLastName = req.body.userLastName;
    const db = mongoose.connection;
    try {
      await db.collection('venueRequests').insertOne(newVenueProcessed)

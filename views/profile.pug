@@ -14,7 +14,8 @@ block content
                             img.profile-thumbnail(src=user.avatar)
                     // User's details
                     .profile-details.col-md-6.ml-auto.mr-auto
-                        h2 #{user.name}
+                        - var userName = user.first_name + " " + user.last_name
+                        h2 #{userName}
                         p Email: #{user.email}
                         p User ID: #{user._id}
 
