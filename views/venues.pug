@@ -38,24 +38,24 @@ block content
           article.card-group-item
               form#filterValues(method="GET" action="/venue")
                   //input(type='hidden' name='filters' value='applied')
-                  //input(type='hidden' name='searchType' value=typeV)
-                  //input(type='hidden' name='search' value=nameV)
-                  //input(type='hidden' name='searchLocation' value=locV)
+                  input(type='hidden' name='searchType' value=typeV)
+                  input(type='hidden' name='search' value=nameV)
+                  input(type='hidden' name='searchLocation' value=locV)
 
                   header.card-header
                       h6.title Venue Type
                   .filter-content
                       .card-body
                           label.form-check
-                              input.form-check-input(type='radio' name='type' value='cafe' onChange="this.form.submit()")
+                              input.form-check-input(type='radio' name='type' value='cafe')
                               span.form-check-label
                                   | Cafe
                           label.form-check
-                              input.form-check-input(type='radio' name='type' value='library' onChange="this.form.submit()")
+                              input.form-check-input(type='radio' name='type' value='library')
                               span.form-check-label
                                   | Library
                           label.form-check
-                              input.form-check-input(type='radio' name='type' value='others' onChange="this.form.submit()")
+                              input.form-check-input(type='radio' name='type' value='others')
                               span.form-check-label
                                   | Others
 
