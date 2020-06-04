@@ -161,33 +161,6 @@ block content
           if (completed)
             p Successfully added your review
             
-            br
-            h4 Your Review of #{venue.venueName}
-            - newReviewDate = newReview.datePosted.toDateString()
-            
-            .col-10
-              .card.mb-3
-                
-                .row
-                    .col-2
-                      p user profile image
-                    .col-8
-                      div
-                        //insert user name
-                        h5 #[a(href="/user/"+newReview.userId) #{newReview.userFirstName} #{newReview.userLastName}]
-                      div
-                        //- insert rating
-                        p Rating: #{newReview.rating}/5
-                      
-
-                .offset-1
-                  //- insert review text
-                  p #{newReview.content}
-                
-                .offset-9
-                  //- insert date
-                  p #{newReviewDate}
-          
           //- If user is not logged in
           if !(user)
             p Please #[a(href="/login") log in] or #[a(href="/register") sign up] to leave a review.
