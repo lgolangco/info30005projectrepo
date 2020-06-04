@@ -88,18 +88,21 @@ const updateUser = async (req, res, next) => {
             req.body.password &&
             req.body.last_name) {
 
+
             const user = users[0]
 
             if(user["password"] !== req.body.password) {
-                console.log('password updated');
                 // Hash Password
                 bcrypt.genSalt(10, (err, salt) =>
-                    bcrypt.hash(req.body.password, salt, (err, hash) => {
+                     bcrypt.hash(req.body.password, salt, async (err, hash) => {
                         if (err) throw err;
                         // set password to hash
-                        user["password"] = hash;
-                    })
-                );
+                        const users2 = await User.find({_id: req.user._id});
+                        const user2 = users2[0];
+                        user2.password = hash;
+                        user2.save()
+                            .catch(err => console.log(err));
+                    }));
             }
 
             // update the venue with the following _id
