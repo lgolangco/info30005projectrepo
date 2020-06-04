@@ -45,11 +45,13 @@ block content
           h2 #{venue.venueName}
           p #{venue.venueType} | #{venue.venueAddress.venueSuburb}, #{venue.venueAddress.venueState}
         
-          p Leave a review (working on this feature!)
-          - const id = venue._id
-          - const suggestionsPage = '/venueSuggestions/' + id
-          p
-            a(href=suggestionsPage) Suggest changes
+          if (user)
+            - const id = venue._id
+            - const suggestionsPage = '/venueSuggestions/' + id
+            p
+              a(href=suggestionsPage) Suggest changes
+          else
+            p Please #[a(href="/login") log in] or #[a(href="/register") sign up] to suggest changes to this venue.
 
         // Venue Details
         div.venue-details-div
@@ -188,7 +190,7 @@ block content
           
           //- If user is not logged in
           if !(user)
-            p Please log in to submit a review.
+            p Please #[a(href="/login") log in] or #[a(href="/register") sign up] to leave a review.
           
           else
             - var existingReview = false
