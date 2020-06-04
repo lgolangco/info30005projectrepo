@@ -112,11 +112,14 @@ img.profile-background {
 .sidebar-menu {
     border-bottom: 1px solid #e6e7e9;
     border-top: 1px solid #e6e7e9;
-    border-right: 1px solid #e6e7e9;
     padding-bottom: 1rem;
     padding-top: 1rem;
-    background-color: #f4f4f4;
-    width: 199px;
+    width: 200px;
+    font-size: 14px;
+}
+
+.sidebar-menu .card {
+    margin: 0px;
 }
 
 .sidebar-item {

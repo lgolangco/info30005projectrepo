@@ -13,26 +13,22 @@ block content
                     p User ID: #{user._id}
                     p Bio: #{user.biography}
 
-    .bg-light.p-4
-        .container.d-flex.align-items-center.justify-content-between.mb-3
-            ul.list-unstyled.sidebar-menu
-                li
-                    a.sidebar-item(href='/dashboard')
-                        | Dashboard
-                        span.fas.fa-tachometer-alt.ml-5
-                li
-                    a.sidebar-item(href='/bookmarks')
-                        | Bookmarks
-                        span.fas.fa-heart.ml-5
-                li
-                    a.sidebar-item(href='/reviews')
-                        | Reviews
-                        span.far.fa-comment(style="margin-left: 73px")
-                li
-                    a.sidebar-item(href='/photos')
-                        | Photos
-                        span.fas.fa-photo-video(style="margin-left: 77px")
-                li
-                    a.sidebar-item(href='/friends')
-                        | Friends
-                        span.fas.fa-user-friends(style="margin-left: 75px")
+    .main.container
+        .row
+            .col-md-4.col-xl-3
+                .card.mt-3.mb-3(style="; margin-left: 0px; width: 199px; font-size: 14px")
+                    .card-header
+                        h5.card-title.mb-0.text-center Profile
+                    .list-group.list-group-flush(role='tablist')
+                        a.list-group-item.list-group-item-action(data-toggle='list', href='#bookmarks', role='tab')
+                            span.fas.fa-heart.pr-4
+                            | Bookmarks
+                        a.list-group-item.list-group-item-actsion(data-toggle='list', href='#', role='tab')
+                            span.far.fa-comment.pr-4
+                            | Reviews
+                        a.list-group-item.list-group-item-action(data-toggle='list', href='#', role='tab')
+                            span.fas.fa-photo-video.pr-4
+                            | Photos
+                        a.list-group-item.list-group-item-action(data-toggle='list', href='#', role='tab')
+                            span.fas.fa-user-friends.pr-4
+                            | Friends
