@@ -1,5 +1,7 @@
 /* Extracted from https://github.com/bradtraversy/node_passport_login */
 
+// middleware for user authentication
+
 ensureAuthenticated = function (req, res, next) {
     if (req.isAuthenticated()) {
         return next();

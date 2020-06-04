@@ -1,58 +1,49 @@
 extends layout
 
 block content
-    user-profile.col-12.mb-2
-        img.profile-background(src=user.cover)
-    .main.container
-        .row
-            div
-                // Content
-                div.dashboard-area.col-md-12
-                    .row
-                        // User's cover and profile photos
-                        user-profile.col-12.mb-2
-                            img.profile-thumbnail(src=user.avatar)
-                    // User's details
-                    .profile-details.col-md-6.ml-auto.mr-auto
-                        h2 #{user.name}
-                        p Email: #{user.email}
-                        p User ID: #{user._id}
 
-                        // Redirect to edit or delete user
-                        a(href="/profile/edit")
-                            button.btn.btn-primary(type='button') Edit
-                        a(href="/profile/delete")
-                            button.btn.btn-primary(type='button') Delete
+    .px-4.py-4.bg-info
+        .container
+            .media.align-items-end.profile-header
+                .profile.mr-3
+                    img.rounded.mb-2.profile-background(src=user.avatar, width='130px')
+                    a.btn.btn-light.btn-sm.btn-block(href="/profile/edit") Edit profile
+                    a.btn.btn-danger.btn-sm.btn-block(href="/profile/delete") Delete my account
+                .media-body.mb-5.text-white
+                    h4.my-4 #{user.first_name} #{user.last_name}
+                    p.mb-0 Email: #{user.email}
+                    p User ID: #{user._id}
+
+    .bg-light.p-4.d-flex.text-center
+        .container.d-flex.align-items-center.justify-content-between.mb-3
+            ul.list-unstyled.sidebar-menu.pl-md-2.pr-md-0
+                li
+                    a.sidebar-item.d-flex.justify-content-between.align-items-center(href='/dashboard')
+                        | Dashboard
+                        span.fas.fa-tachometer-alt
+                li
+                    a.sidebar-item.d-flex.justify-content-between.align-items-center(href='/bookmarks')
+                        | Bookmarks
+                        span.fas.fa-heart
+                li
+                    a.sidebar-item.d-flex.justify-content-between.align-items-center(href='/recently-viewed')
+                        | Recently Viewed
+                        span.fas.fa-clock
+                li
+                    a.sidebar-item.d-flex.justify-content-between.align-items-center(href='/reviews')
+                        | Reviews
+                        span.far.fa-comment
+                li
+                    a.sidebar-item.d-flex.justify-content-between.align-items-center(href='/photos')
+                        | Photos
+                        span.fas.fa-photo-video
+                li
+                    a.sidebar-item.d-flex.justify-content-between.align-items-center(href='/friends')
+                        | Friends
+                        span.fas.fa-user-friends
+                li
+                    a.sidebar-item.d-flex.justify-content-between.align-items-center(href='/sspoints')
+                        | SS Points
+                        span.fas.fa-dollar-sign
 
 
-                div.col-md-3.pr-md-4.side-bar-left
-                    // Sidebar menu
-                    ul.list-unstyled.sidebar-menu.pl-md-2.pr-md-0
-                        li
-                            a.sidebar-item.d-flex.justify-content-between.align-items-center(href='/dashboard')
-                                | Dashboard
-                                span.fas.fa-tachometer-alt
-                        li
-                            a.sidebar-item.d-flex.justify-content-between.align-items-center(href='/bookmarks')
-                                | Bookmarks
-                                span.fas.fa-heart
-                        li
-                            a.sidebar-item.d-flex.justify-content-between.align-items-center(href='/recently-viewed')
-                                | Recently Viewed
-                                span.fas.fa-clock
-                        li
-                            a.sidebar-item.d-flex.justify-content-between.align-items-center(href='/reviews')
-                                | Reviews
-                                span.fas.fa-comment
-                        li
-                            a.sidebar-item.d-flex.justify-content-between.align-items-center(href='/photos')
-                                | Photos
-                                span.fas.fa-photo-video
-                        li
-                            a.sidebar-item.d-flex.justify-content-between.align-items-center(href='/friends')
-                                | Friends
-                                span.fas.fa-user
-                        li
-                            a.sidebar-item.d-flex.justify-content-between.align-items-center(href='/sspoints')
-                                | SS Points
-                                span.fas.fa-dollar-sign
