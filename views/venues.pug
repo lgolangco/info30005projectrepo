@@ -9,7 +9,7 @@ block content
       form(method="GET" action="/venue")
           .input-group
               select.form-control(name="searchType")
-                  option(value='' selected='') Any Type
+                  option(value='Any' selected='') Any Type
                   option(value='Cafe') Cafe
                   option(value='Library') Library
                   option(value='Others') Others
@@ -43,6 +43,17 @@ block content
                       h6.title Venue Type
                   .filter-content
                       .card-body
+                          if typeV === 'Any'
+                              label.form-check
+                                  input.form-check-input(type='radio' name='type' value='Any' checked)
+                                  span.form-check-label
+                                      | Any Type
+                          else
+                              label.form-check
+                                  input.form-check-input(type='radio' name='type' value='Any')
+                                  span.form-check-label
+                                      | Any Type
+
                           if typeV === 'Cafe'
                               label.form-check
                                   input.form-check-input(type='radio' name='type' value='Cafe' checked)
