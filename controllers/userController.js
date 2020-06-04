@@ -31,7 +31,7 @@ const getAllUsers = async (req, res) => {
 const loadProfile = async(req, res) => {
     try {
         const bookmarks = await Venue.find({_id: { $in :req.user.bookmarks}});
-        console.log(req.user.bookmarks,bookmarks);
+        console.log(req.user.bookmarks);
         return res.render("profile", {user: req.user, bookmarks: bookmarks});
     } catch (err) {
         res.status(400);
@@ -97,27 +97,32 @@ const updateUser = async (req, res, next) => {
             }
             const user = users[0]
 
+            if(user["password"] !== req.body.password) {
+                console.log('password updated');
+                // Hash Password
+                bcrypt.genSalt(10, (err, salt) =>
+                    bcrypt.hash(req.body.password, salt, (err, hash) => {
+                        if (err) throw err;
+                        // set password to hash
+                        user["password"] = hash;
+                    })
+                );
+            }
+
             // update the venue with the following _id
             user["first_name"] = req.body.first_name;
             user["last_name"] = req.body.last_name;
             user["email"] = req.body.email;
-            user["password"] = req.body.password;
             user["cover"] = req.body.cover;
             user["avatar"] = req.body.avatar;
 
-            // Hash Password
-            bcrypt.genSalt(10, (err, salt) =>
-                bcrypt.hash(user.password, salt, (err, hash) => {
-                    if (err) throw err;
-                    // set password to hash
-                    user.password = hash;
-                    // save
-                    user.save()
-                        .then(user => {
-                            return res.redirect("/profile");
-                        })
-                        .catch(err => console.log(err));
-                }))
+            // save
+            user.save()
+                .then(user => {
+                    return res.redirect("/profile");
+                })
+                .catch(err => console.log(err));
+
 
 
         } else {
