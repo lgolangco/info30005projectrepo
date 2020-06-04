@@ -10,11 +10,19 @@ block content
                     .col-xl-9.mx-auto
                         h6.mb-5 Discover the best study spots in Australia
                     .col-md-10.col-lg-8.col-xl-7.mx-auto
-                        .input-group
-                            input.form-control(type="text", placeholder="Search for cafes, libraries or hidden spots")
-                            .input-group-append
-                                button.btn.btn-warning(type="button")
-                                    i.fa.fa-search
+                        form(method="GET" action="/venue")
+                            //input(type='hidden' name='filters' value='none')
+                            .input-group
+                                select.form-control(name="searchType")
+                                    option(value='' selected='') Any Type
+                                    option(value='Cafe') Cafe
+                                    option(value='Library') Library
+                                    option(value='Others') Other
+                                input.form-control(type="text",name="search" , placeholder="Search for cafes, libraries or hidden spots")
+                                input.form-control(type="text",name="searchLocation" , placeholder="Search for suburb")
+                                .input-group-append
+                                    button.btn.btn-warning(type="submit", value="Search")
+                                        i.fa.fa-search
                         p.search-bottom-title
                             | By using this website, you are agreeing to our 
                             a(href="#") terms and conditions

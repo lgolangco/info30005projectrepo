@@ -9,30 +9,114 @@ const VenueSuggestions = mongoose.model("venueSuggestions");
 // import object id type to check if request _id is valid
 const ObjectId = mongoose.Types.ObjectId;
 
+
 // function to handle a request to get all venues
 const getAllVenues = async (req, res) => {
+  var title = "Venue List - Matching Venues";
+  const search = [];
+  filters = [];
+  var noise = 'Any';
+  var typeV = '';
+  var nameV = '';
+  var locV = '';
+
   try {
-    const all_venues = await Venue.find();
-    if (all_venues.length === 0){
-      return res.render('venues', {
-        title: "There are no existing venues yet"
-      })
+    if(req.query) {
+      console.log(req.query,filters,noise,req.query.noise);
+      if (req.query.type) {
+        const regexType = new RegExp(escapeRegex(req.query.type), 'gi');
+        search.splice(0,1);
+        search.push({venueType: regexType});
+        typeV = req.query.type;
+      } else if (req.query.searchType) {
+        const regexType = new RegExp(escapeRegex(req.query.searchType), 'gi');
+        search.push({venueType: regexType});
+        typeV = req.query.searchType;
+      }
+      if (req.query.discussionFriendly) {
+        search.push({"venueDetails.discussionFriendly": req.query.discussionFriendly});
+        filters.push('discussionFriendly');
+      }
+      if (req.query.noise && req.query.noise !== 'Any') {
+        search.push({"venueDetails.noise": req.query.noise});
+        noise = req.query.noise;
+      }
+      if (req.query.wifi) {
+        search.push({"venueDetails.wifi": req.query.wifi});
+        filters.push('wifi');
+      }
+      if (req.query.toilets) {
+        search.push({"venueDetails.toilets": req.query.toilets});
+        filters.push('toilets');
+      }
+      if (req.query.power) {
+        search.push({"venueDetails.power": req.query.power});
+        filters.push('power');
+      }
+      if (req.query.printer) {
+        search.push({"venueDetails.printer": req.query.printer});
+        filters.push('printer');
+      }
+      if (req.query.search && req.query.searchLocation) {
+        const regex = new RegExp(escapeRegex(req.query.search), 'gi');
+        const regexLocation = new RegExp(escapeRegex(req.query.searchLocation), 'gi');
+        search.push({venueName: regex}, {"venueAddress.venueSuburb": regexLocation});
+        nameV = req.query.search;
+        locV = req.query.searchLocation;
+      } else if (req.query.search) {
+        const regex = new RegExp(escapeRegex(req.query.search), 'gi');
+        search.push({venueName: regex});
+        nameV = req.query.search;
+      } else if (req.query.searchLocation) {
+        const regexLocation = new RegExp(escapeRegex(req.query.searchLocation), 'gi');
+        search.push({"venueAddress.venueSuburb": regexLocation})
+        locV = req.query.searchLocation;
+      }
     } else {
-      return res.render('venues', {
-        title: "Venue List - All Venues",
-        venues: all_venues,
-        user: req.user
-      });
+      title = "Venue List - All Venues";
+      search.push({})
     }
-  } catch (err) {
-    res.status(400);
-    return res.render('error', {
-      error: "Database query failed",
-      message: "Database query failed",
-      functionfailure: "Failed to get all venues"
+
+    console.log(search);
+    search.push({});
+    Venue.find({
+      $and: search
+    }, function (err, allVenues) {
+      if (allVenues.length < 1) {
+        title = "No venue match that query, please try again.";
+      }
+      res.render('venues', {
+        title: title,
+        venues: allVenues,
+        filters: filters,
+        noise: noise,
+        typeV: typeV,
+        nameV: nameV,
+        locV: locV
+      })
+    });
+  } catch(err) {
+    console.log(err);
+    Venue.find({}, function (err, allVenues) {
+      if (allVenues.length < 1) {
+        title = "Database query failed.";
+      }
+      res.render('venues', {
+        title: title,
+        venues: allVenues
+      })
     });
   }
-};
+}
+
+
+function escapeRegex(text) {
+  try{
+    return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
+  } catch(err) {
+    return text
+  }
+}
 
 
 // function to get venues by id and show venue profile

@@ -2,26 +2,27 @@ extends layout
 
 block content
     // Forms to update user information or delete user's account
-    .container-fluid.page-header
-        .row
-            .registration.mx-auto.w-100
-                h1 User Profile
-
+    .main.container-fluid.registration
                 if toDelete
                     //- Delete Form
                     div.delete-profile
-                        form(method="POST" action="/profile/delete")
+                        form(method="POST" action="/profile/delete").form-registration
                             h5.ml-auto.mr-auto Are you sure you want to delete your account?
                             row
-                                button.btn.btn-primary(type="submit") YES
+                                button.btn.btn-dark.mx-2.btn-lg.my-4(type="submit")   YES
                                 a(href="/profile")
-                                    button.btn.btn-primary(type="button") NO
+                                    button.btn.btn-light.btn-lg.mx-2.my-4(type="button")   NO  
                 else
                     //- register form
-                    form(method="POST" action="/profile")
+                    form(method="POST" action="/profile").form-update-profile
+                        h1 User Profile
+                        hr
                         div.form-group
-                            label(for="name") Name:
-                            input#name.form-control(type="text", placeholder="first and last" name="name" autocomplete="off" value=user.name)
+                            label(for="first_name") First Name:
+                            input#name.form-control(type="text", placeholder="first name" name="first_name" autocomplete="off" value=user.first_name)
+                        div.form-group
+                            label(for="last_name") Last Name:
+                            input#name.form-control(type="text", placeholder="last name" name="last_name" autocomplete="off" value=user.last_name)
                         div.form-group
                             label(for="email") Email:
                             input#email.form-control(type="email", placeholder="name@email.com" name="email" autocomplete="off" value=user.email)

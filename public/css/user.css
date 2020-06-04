@@ -69,20 +69,20 @@
 
 /* Profile and User Page */
 
-.dashboard-area{
+.dashboard-area {
     margin-top: -150px;
 }
 
-img.profile-background{
+img.profile-background {
     alignment: left;
     z-index: 0;
-    width: 100%;
-    height: 300px;
-    margin-bottom: 10px;
+    width: 197px;
+    height: 190px;
     object-fit: cover;
+    margin: 10px 0px;
 }
 
-.profile-thumbnail{
+.profile-thumbnail {
     margin: -100px 10px 0px 50px;
     z-index: 9;
     width: 200px;

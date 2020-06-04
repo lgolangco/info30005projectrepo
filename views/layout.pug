@@ -23,11 +23,13 @@ head
     script(src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js", integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6", crossorigin="anonymous")
 
 body
-    // load navbar.jade
+
     include navbar
 
-    // content block
     block content
 
-        // footer
-footer.text-center.bg-light &copy; Cosmos Team 2020
+
+footer
+    .bg-light.py-4
+        .text-center
+            p.text-muted.mb-0.py-2 © 2020 Cosmos Team All rights reserved.

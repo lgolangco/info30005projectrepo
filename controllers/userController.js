@@ -71,7 +71,8 @@ const updateUser = async (req, res, next) => {
 
     try {
         if (req.body.email &&
-            req.body.name &&
+            req.body.first_name &&
+            req.body.last_name &&
             req.body.password &&
             req.body.confirmPassword) {
 
@@ -84,7 +85,8 @@ const updateUser = async (req, res, next) => {
             const user = users[0]
 
             // update the venue with the following _id
-            user["name"] = req.body.name;
+            user["first_name"] = req.body.first_name;
+            user["last_name"] = req.body.last_name;
             user["email"] = req.body.email;
             user["password"] = req.body.password;
             user["cover"] = req.body.cover;
@@ -121,10 +123,10 @@ const updateUser = async (req, res, next) => {
 // function to add user
 const addUser = async (req, res, next) => {
 
-    const {name, email, password, confirmPassword} = req.body;
+    const {first_name, last_name, email, password, confirmPassword} = req.body;
 
     let errors = [];
-    if (!name || !email || !confirmPassword) {
+    if (!first_name || !last_name || !email || !confirmPassword) {
         errors.push({msg: "Please fill in all the fields"});
     }
 
@@ -139,7 +141,7 @@ const addUser = async (req, res, next) => {
 
     if (errors.length > 0) {
         res.render("register", {
-            errors, name, email, password, confirmPassword
+            errors, first_name, last_name, email, password, confirmPassword
         });
     } else {
         User.findOne({email: email})
@@ -147,12 +149,13 @@ const addUser = async (req, res, next) => {
                 if (user) {
                     errors.push({msg: "Email is already registered"});
                     res.render("register", {
-                        errors, name, email, password, confirmPassword
+                        errors, first_name, last_name, email, password, confirmPassword
                     })
 
                 } else {
                     const userData = new User({
-                        name: name,
+                        first_name: first_name,
+                        last_name: last_name,
                         email: email,
                         password: password
                     });
