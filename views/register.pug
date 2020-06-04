@@ -1,33 +1,52 @@
 extends layout
 
 block content
-        .main.container-fluid.registration
-              
-            // Register User Form
-            form(method="POST" action="/register").form-registration
-                h1 Sign Up
-                hr
-                include partials/messages.pug
-                .form-group
-                    label(for="first_name") First name:
-                    input#first_name.form-control(type="text", placeholder="First name" name="first_name")
-                .form-group
-                    label(for="last_name") Last name:
-                    input#last_name.form-control(type="text", placeholder="Last name" name="last_name")
-                .form-group
-                    label(for="email") Email:
-                        //b Email
-                    input#email.form-control(type="email", placeholder="name@email.com" name="email")
-                    span.underline
-                .form-group
-                    label(for="pw") Password:
-                        //b Password
-                    input#pw.form-control(type="password" name="password")
-                .form-group
-                    label(for="pw2") Confirm Password:
-                    input#pw2.form-control(type="password" name="confirmPassword")
-                .d-flex.justify-content-between.align-items-center
-                    .form-group.d-flex.justify-content-start
-                        button.btn.btn-primary(type="submit") Submit
-                    .form-check.form-group.d-flex.justify-content-end
-                        a(href="/login") Sign in instead
+    .main.registration
+        .row.py-5.mt-4.align-items-center
+
+                form(method="POST" action="/register").form-registration
+                    h1 Sign Up
+                    hr
+                    include partials/messages.pug
+                    .row
+                        // First name
+                        .input-group.col-lg-12.mb-4
+                            .input-group-prepend
+                                span.input-group-text.bg-white.px-4.border-right-0
+                                    i.fa.fa-user.text-muted
+                            input#first_name.form-control.bg-white.border-left-0.border-md(type="text", placeholder="First name" name="first_name")
+                        // Last name
+                        .input-group.col-lg-12.mb-4
+                            .input-group-prepend
+                                span.input-group-text.bg-white.px-4.border-md.border-right-0
+                                    i.fa.fa-user.text-muted
+                            input#last_name.form-control.bg-white.border-left-0.border-md(type="text", placeholder="Last name" name="last_name")
+                        // Email
+                        .input-group.col-lg-12.mb-4
+                            .input-group-prepend
+                                span.input-group-text.bg-white.px-4.border-md.border-right-0
+                                    i.fa.fa-envelope.text-muted
+                            input#email.form-control.bg-white.border-left-0.border-md(type="email", placeholder="Email address" name="email")
+                        // Password
+                        .input-group.col-lg-12.mb-4
+                            .input-group-prepend
+                                span.input-group-text.bg-white.px-4.border-md.border-right-0
+                                    i.fa.fa-lock.text-muted
+                            input#pw.form-control.bg-white.border-left-0.border-md(type="password", placeholder="Password", name="password")
+                        // Confirm password
+                        .input-group.col-lg-12.mb-4
+                            .input-group-prepend
+                                span.input-group-text.bg-white.px-4.border-md.border-right-0
+                                    i.fa.fa-lock.text-muted
+                            input#pw2.form-control.bg-white.border-left-0.border-md(type="password", placeholder="Confirm password", name="confirmPassword")
+
+                        // Create account
+                        .form-group.col-lg-12.mx-auto.mb-0
+                            button.btn.btn-primary.btn-block(type="submit")
+                                span.font-weight-bold Create your account
+
+                        // Login
+                        .text-center.w-100.py-3
+                            p.text-muted.font-weight-bold
+                                | Already Registered?
+                                a.text-dark.ml-2(href="/login") Login
