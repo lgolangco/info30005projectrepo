@@ -1,0 +1,45 @@
+extends layout
+
+block content
+  
+  h3 Pending New Venue Requests
+  .row
+    each request in venueRequests
+      
+      - const address = request.venueAddress.venueStreetAddress +", "+request.venueAddress.venueSuburb+", "+request.venueAddress.venuePostcode;
+      - const imgURL = "https://studyspot.s3.amazonaws.com/venue/header/" + request._id.toString() + ".jpg"
+      .col-9
+        .card.mb-3.d-flex.align-items-stretch
+          .row.no-gutters
+            .col-4
+              img.venue-thumbnail(src = imgURL
+              onerror="this.src='https://studyspot.s3.amazonaws.com/venue/header/default.jpg'")
+              
+            .col-8
+              .card-body
+                h5.card-title #{request.venueName}
+                hr
+                p.card-text(style='white-space:pre;')
+                  |#{request.venueType} 
+                  |#{address}
+                
+                //BUTTON TO "EDIT AND APPROVE REQUEST" - copy of update page
+                
+                //BUTTON TO "DELETE REQUEST" - leads to 'are you sure you want to delete' page
+                
+  h3 Pending venueSuggestions
+  .row
+    each suggestion in venueSuggestions
+      
+      .col-9
+        .card.mb-3.d-flex.align-items-stretch
+          .card-body
+            h4.card-title #{suggestion.venueName}
+            h5 #{suggestion.userName}
+            hr
+            p.card-text(style='white-space:pre;')
+              |#{suggestion.suggestion} 
+            
+            // BUTTON TO UPDATE VENUE - actual venue update page [SHOW SUGGESTION AT TOP OF UPDATE form]
+            
+            // BUTTON TO DELETE SUGGESTION - leads to 'are you sure you want to delete' page
