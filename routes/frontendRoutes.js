@@ -84,4 +84,7 @@ router.get("/requestNew/", venueController.getRequestNew);
 // POST requestNew venue
 router.post("/requestNew/", venueController.addRequestNew);
 
+// GET venueImage page by venue Id
+router.get("/venueImage/:_id", venueController.getVenueImagePage);
+
 module.exports = router;

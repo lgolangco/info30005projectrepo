@@ -1,0 +1,43 @@
+extends layout
+
+block content
+    // Venue Suggestions Form for Users to Suggest Changes to Venue Profile
+    .main.container
+        .row
+            .col-md-8.offset-2
+                
+                //- If suggestion already submitted only show message
+                if (completed)
+                  h2.display-4.m-b-2 Successfully submitted your image!
+                  br
+                  p Thank you for your StudySpot contribution!
+                  p The admins will review your image and update our database accordingly.
+                
+                //- Else, show suggestion form
+                else
+                
+                  h1.display-4.m-b-2 Upload an image for
+                  h1.display-4.m-b-2 VENUE NAME
+                  //- h1.display-4.m-b-2 #{venue.venueName}
+                  br
+                  p
+                    | Hi! Thank you for helping us improve StudySpot.
+                    | Uploading an image below will allow the admins to review your image,
+                    | who will then update the venues accordingly.
+                    
+                  form(method='POST' action='') 
+                    div.custom-file
+                      
+                      input.custom-file-input#customFile(type="file")
+                      label.custom-file-label(for = "customFile") Choose an Image to Upload
+                      
+                      script.
+                        $(".custom-file-input").on("change", function() {
+                          var fileName = $(this).val().split("\\").pop();
+                          $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+                        });
+                    
+                    br  
+                    button.btn.btn-primary(type="submit") Submit
+                  
+                  

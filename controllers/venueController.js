@@ -555,6 +555,47 @@ const addRequestNew = async (req, res) => {
    }
 };
 
+const getVenueImagePage = async (req, res) => {
+  if (ObjectId.isValid(req.params._id) === false) {
+    return res.render('error', {
+      error: "There are no venues listed with this id!",
+      message: "There are no venues listed with this id!",
+      venueerror: "For a list of all registered venues,"
+    });
+  }
+  if (req.user == null) {
+    return res.render('error', {
+      error: "You're not logged in!",
+      message: "You must be logged in to submit a suggestion"
+    });
+  }
+  const user = await User.findById(req.user._id);
+  try {
+    const venue = await Venue.find({_id: req.params._id});
+    if (venue.length === 0){
+      return res.render('error', {
+        error: "There are no venues listed with this id!",
+        message: "There are no venues listed with this id!",
+        venueerror: "For a list of all registered venues,"
+      });
+    } else {
+      return res.render('venueImage', {
+        venue: venue[0],
+        user: user
+      });
+    }
+  } catch (err) {
+    res.status(400);
+    return res.render('error', {
+      error: "Database query failed",
+      message: "Database query failed",
+      functionfailure: "Failed to get suggestions page"
+    });
+  }
+};
+
+
+
 // remember to export the functions
 module.exports = {
   getAllVenues,
@@ -569,5 +610,6 @@ module.exports = {
   getVenueUpdateByID,
   submitVenueSuggestion,
   getRequestNew,
-  addRequestNew
+  addRequestNew,
+  getVenueImagePage
 };
