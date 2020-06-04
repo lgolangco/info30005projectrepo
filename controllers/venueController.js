@@ -20,7 +20,8 @@ const getAllVenues = async (req, res) => {
     } else {
       return res.render('venues', {
         title: "Venue List - All Venues",
-        venues: all_venues
+        venues: all_venues,
+        user: req.user
       });
     }
   } catch (err) {

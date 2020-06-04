@@ -9,10 +9,16 @@ block content
       h1 #{title}
       p #{message}
       
-      br
-      h5 
-        a(href="/newvenue") + Register a new venue
-      br
+      if (user && user.admin)
+        br
+        h5 
+          a(href="/newvenue") + Register a new venue
+        br
+      else if (user)
+        br
+        p Request a new StudySpot
+        br
+      
       
       .row
         each venue in venues
