@@ -27,11 +27,11 @@ block content
                             label(for="email") Email:
                             input#email.form-control(type="email", placeholder="name@email.com" name="email" autocomplete="off" value=user.email)
                         div.form-group
+                            label(for="biography") Bio:
+                            input#email.form-control(type="text", placeholder="Student? Entrepreneur?" name="biography" autocomplete="off" value=user.biography)
+                        div.form-group
                             label(for="pw") Password:
                             input#pw.form-control(type="password" name="password" value=user.password)
-                        div.form-group
-                            label(for="pw2") Confirm Password:
-                            input#pw2.form-control(type="password" name="confirmPassword" value=user.password)
                         div.form-group
                             label(for="cover") Cover Photo Link:
                             input#cover.form-control(type="cover" name="cover" value=user.cover)

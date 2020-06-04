@@ -40,6 +40,8 @@ app.use((req, res, next) => {
     if (req.isAuthenticated()) {
         res.locals.loginId = req.user._id;
         res.locals.loginName = req.user.name;
+        res.locals.biography = req.user.biography;
+        res.locals.bookmarks = req.user.bookmarks;
     }
     next();
 });
@@ -82,6 +84,16 @@ app.use(function (req, res, next) {
     let err = new Error("File not found");
     err.status = 404;
     next(err);
+});
+
+// error handler
+// define as the last app.use callback
+app.use(function(err, req, res, next) {
+    res.status(err.status || 500);
+    res.render('error', {
+        message: err.message,
+        error: {}
+    });
 });
 
 
