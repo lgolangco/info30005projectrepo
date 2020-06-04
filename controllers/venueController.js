@@ -8,14 +8,6 @@ const VenueSuggestions = mongoose.model("venueSuggestions");
 // import object id type to check if request _id is valid
 const ObjectId = mongoose.Types.ObjectId;
 
-// var filters = {};
-// const $ = require("jquery");
-// const jsdom = require("jsdom");
-// const { JSDOM } = jsdom;
-// global.document = new jsdom(html).window.document;
-
-
-
 
 // function to handle a request to get all venues
 const getAllVenues = async (req, res) => {
@@ -23,29 +15,14 @@ const getAllVenues = async (req, res) => {
   const search = [];
 
   try {
-    // var checkboxValues = filters['checkboxValues'] || {};
-    // var $checkboxes = jsdom.window.document.getElementById("#filterValues :checkbox");
-    //
-    // $checkboxes.on("change", function(){
-    //   $checkboxes.each(function(){
-    //     checkboxValues[this.id] = this.checked;
-    //   });
-    //   filters["checkboxValues"] = checkboxValues;
-    // });
-    // $.each(checkboxValues, function(key, value) {
-    //   $("#" + key).prop('checked', value);
-    // });
-
-    // $("#111").prop('checked', true);
-
     if(req.query) {
-      console.log(req.query,req.body);
+      console.log(req.query);
       // if(req.query.filters == 'none') {
       //   const typeV = '';
       //   const nameV = '';
       //   const locV = '';
       // }
-      if (req.query.type) {
+      if (req.query.type&&!req.query.searchType) {
         const regexType = new RegExp(escapeRegex(req.query.type), 'gi');
         search.push({venueType: regexType});
       }
@@ -71,25 +48,25 @@ const getAllVenues = async (req, res) => {
       if (req.query.searchType) {
         const regexType = new RegExp(escapeRegex(req.query.searchType), 'gi');
         search.push({venueType: regexType});
-        // typeV = req.query.searchType;
+        typeV = req.query.searchType;
       }
 
       if (req.query.search && req.query.searchLocation) {
         const regex = new RegExp(escapeRegex(req.query.search), 'gi');
         const regexLocation = new RegExp(escapeRegex(req.query.searchLocation), 'gi');
         search.push({venueName: regex}, {"venueAddress.venueSuburb": regexLocation});
-        // nameV = req.query.search;
-        // locV = req.query.searchLocation;
+        nameV = req.query.search;
+        locV = req.query.searchLocation;
       } else if (req.query.search) {
         const regex = new RegExp(escapeRegex(req.query.search), 'gi');
-        search.push({venueName: regex})
-        // nameV = req.query.search;
+        search.push({venueName: regex});
+        nameV = req.query.search;
       } else if (req.query.searchLocation) {
         const regexLocation = new RegExp(escapeRegex(req.query.searchLocation), 'gi');
         search.push({"venueAddress.venueSuburb": regexLocation})
-        // locV = req.query.searchLocation;
+        locV = req.query.searchLocation;
       }
-    } else {
+    } if(search.length === 0) {
       title = "Venue List - All Venues";
       search.push({})
     }
@@ -102,14 +79,13 @@ const getAllVenues = async (req, res) => {
       if (allVenues.length < 1) {
         title = "No venue match that query, please try again.";
       }
-      if(req.query.filter == 'applied')
-        res.render('venues', {
-          title: title,
-          venues: allVenues,
-          // typeV: typeV,
-          // nameV: nameV,
-          // locV: locV
-        })
+      res.render('venues', {
+        title: title,
+        venues: allVenues,
+        // typeV: typeV,
+        // nameV: nameV,
+        // locV: locV
+      })
     });
   } catch(err) {
     console.log(err);
