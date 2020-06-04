@@ -345,7 +345,7 @@ block content
             p= day+ ": " + timeframe
     
     // Venue Update and Delete Buttons (Will be only available to users with admin attribute at later date)
-    if (user)
+    if (user && user.admin)
       .row
         .col-md-2.offset-1
           - const updateVenue = "/venueUpdate/" + venue._id
