@@ -9,10 +9,10 @@ block content
       form(method="GET" action="/venue")
           .input-group
               select.form-control(name="searchType")
-                  option(value='' selected='') Any Type
+                  option(value='Any' selected='') Any Type
                   option(value='Cafe') Cafe
                   option(value='Library') Library
-                  option(value='Others') Other
+                  option(value='Others') Others
               input.form-control(type="text",name="search" , placeholder="Search for cafes, libraries or hidden spots")
               input.form-control(type="text",name="searchLocation" , placeholder="Search for suburb")
               .input-group-append
@@ -43,6 +43,17 @@ block content
                       h6.title Venue Type
                   .filter-content
                       .card-body
+                          if typeV === 'Any'
+                              label.form-check
+                                  input.form-check-input(type='radio' name='type' value='Any' checked)
+                                  span.form-check-label
+                                      | Any Type
+                          else
+                              label.form-check
+                                  input.form-check-input(type='radio' name='type' value='Any')
+                                  span.form-check-label
+                                      | Any Type
+
                           if typeV === 'Cafe'
                               label.form-check
                                   input.form-check-input(type='radio' name='type' value='Cafe' checked)
@@ -75,22 +86,6 @@ block content
                                   input.form-check-input(type='radio' name='type' value='Others')
                                   span.form-check-label
                                       | Others
-
-                  header.card-header
-                      h6.title Features
-                  .filter-content
-                      .card-body
-                          // form-check.//
-                          if filters.includes('discussionFriendly')
-                              label.form-check
-                                  input.form-check-input(type='checkbox' name= 'discussionFriendly' value='true' checked)
-                                  span.form-check-label
-                                      | Discussion Friendly
-                          else
-                              label.form-check
-                                  input.form-check-input(type='checkbox' name= 'discussionFriendly' value='true')
-                                  span.form-check-label
-                                      | Discussion Friendly
 
                   header.card-header
                       h6.title Noise Level
@@ -142,9 +137,21 @@ block content
                                   });
 
                   header.card-header
-                      h6.title Amenities
+                      h6.title Features
                   .filter-content
                       .card-body
+                          // form-check.//
+                          if filters.includes('discussionFriendly')
+                              label.form-check
+                                  input.form-check-input(type='checkbox' name= 'discussionFriendly' value='true' checked)
+                                  span.form-check-label
+                                      | Discussion Friendly
+                          else
+                              label.form-check
+                                  input.form-check-input(type='checkbox' name= 'discussionFriendly' value='true')
+                                  span.form-check-label
+                                      | Discussion Friendly
+
                           if filters.includes('wifi')
                               label.form-check
                                   input.form-check-input(type='checkbox' name='wifi' value='true' checked)
@@ -188,7 +195,7 @@ block content
                                   span.form-check-label
                                       | Printers
 
-                      center
+                          br
                           button.btn.btn-outline-primary(type="submit" value="Filter")
                             | Apply
       br
