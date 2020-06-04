@@ -13,44 +13,49 @@ const ObjectId = mongoose.Types.ObjectId;
 const getAllVenues = async (req, res) => {
   var title = "Venue List - Matching Venues";
   const search = [];
+  filters = [];
+  var noise = 'Any';
+  var typeV = '';
+  var nameV = '';
+  var locV = '';
 
   try {
     if(req.query) {
-      console.log(req.query);
-      // if(req.query.filters == 'none') {
-      //   const typeV = '';
-      //   const nameV = '';
-      //   const locV = '';
-      // }
-      if (req.query.type&&!req.query.searchType) {
+      console.log(req.query,filters,noise,req.query.noise);
+      if (req.query.type) {
         const regexType = new RegExp(escapeRegex(req.query.type), 'gi');
+        search.splice(0,1);
         search.push({venueType: regexType});
-      }
-      if (req.query.discussionFriendly) {
-        search.push({"venueDetails.discussionFriendly": req.query.discussionFriendly});
-      }
-      if (req.query.noise && req.query.noise !== "Any") {
-        search.push({"venueDetails.noise": req.query.noise});
-      }
-      if (req.query.wifi) {
-        search.push({"venueDetails.wifi": req.query.wifi});
-      }
-      if (req.query.toilets) {
-        search.push({"venueDetails.toilets": req.query.toilets});
-      }
-      if (req.query.power) {
-        search.push({"venueDetails.power": req.query.power});
-      }
-      if (req.query.printer) {
-        search.push({"venueDetails.printer": req.query.printer});
-      }
-
-      if (req.query.searchType) {
+        typeV = req.query.type;
+      } else if (req.query.searchType) {
         const regexType = new RegExp(escapeRegex(req.query.searchType), 'gi');
         search.push({venueType: regexType});
         typeV = req.query.searchType;
       }
-
+      if (req.query.discussionFriendly) {
+        search.push({"venueDetails.discussionFriendly": req.query.discussionFriendly});
+        filters.push('discussionFriendly');
+      }
+      if (req.query.noise && req.query.noise !== 'Any') {
+        search.push({"venueDetails.noise": req.query.noise});
+        noise = req.query.noise;
+      }
+      if (req.query.wifi) {
+        search.push({"venueDetails.wifi": req.query.wifi});
+        filters.push('wifi');
+      }
+      if (req.query.toilets) {
+        search.push({"venueDetails.toilets": req.query.toilets});
+        filters.push('toilets');
+      }
+      if (req.query.power) {
+        search.push({"venueDetails.power": req.query.power});
+        filters.push('power');
+      }
+      if (req.query.printer) {
+        search.push({"venueDetails.printer": req.query.printer});
+        filters.push('printer');
+      }
       if (req.query.search && req.query.searchLocation) {
         const regex = new RegExp(escapeRegex(req.query.search), 'gi');
         const regexLocation = new RegExp(escapeRegex(req.query.searchLocation), 'gi');
@@ -66,13 +71,13 @@ const getAllVenues = async (req, res) => {
         search.push({"venueAddress.venueSuburb": regexLocation})
         locV = req.query.searchLocation;
       }
-    } if(search.length === 0) {
+    } else {
       title = "Venue List - All Venues";
       search.push({})
     }
 
     console.log(search);
-    search.push({})
+    search.push({});
     Venue.find({
       $and: search
     }, function (err, allVenues) {
@@ -82,9 +87,11 @@ const getAllVenues = async (req, res) => {
       res.render('venues', {
         title: title,
         venues: allVenues,
-        // typeV: typeV,
-        // nameV: nameV,
-        // locV: locV
+        filters: filters,
+        noise: noise,
+        typeV: typeV,
+        nameV: nameV,
+        locV: locV
       })
     });
   } catch(err) {
