@@ -84,6 +84,16 @@ app.use(function (req, res, next) {
     next(err);
 });
 
+// error handler
+// define as the last app.use callback
+app.use(function(err, req, res, next) {
+    res.status(err.status || 500);
+    res.render('error', {
+        message: err.message,
+        error: {}
+    });
+});
+
 
 app.listen(process.env.PORT || 3000, () => {
     console.log("StudySpot app is running!");

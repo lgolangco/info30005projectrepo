@@ -72,16 +72,9 @@ const updateUser = async (req, res, next) => {
     try {
         if (req.body.email &&
             req.body.first_name &&
-            req.body.last_name &&
             req.body.password &&
-            req.body.confirmPassword) {
+            req.body.last_name) {
 
-            // confirm that user typed same password twice
-            if (req.body.password !== req.body.confirmPassword) {
-                let err = new Error("Passwords do not match");
-                err.status = 400;
-                return next(err);
-            }
             const user = users[0]
 
             // update the venue with the following _id
@@ -91,6 +84,7 @@ const updateUser = async (req, res, next) => {
             user["password"] = req.body.password;
             user["cover"] = req.body.cover;
             user["avatar"] = req.body.avatar;
+            user["biography"] = req.body.biography;
 
             // Hash Password
             bcrypt.genSalt(10, (err, salt) =>
@@ -123,16 +117,11 @@ const updateUser = async (req, res, next) => {
 // function to add user
 const addUser = async (req, res, next) => {
 
-    const {first_name, last_name, email, password, confirmPassword} = req.body;
+    const {first_name, last_name, email, password, biography} = req.body;
 
     let errors = [];
-    if (!first_name || !last_name || !email || !confirmPassword) {
-        errors.push({msg: "Please fill in all the fields"});
-    }
-
-    if (password !== confirmPassword) {
-        errors.push({msg: "Passwords do not match"});
-
+    if (!first_name || !last_name || !email) {
+        errors.push({msg: "Please fill in all the fields required"});
     }
 
     if (password.length < 8) {
@@ -141,7 +130,7 @@ const addUser = async (req, res, next) => {
 
     if (errors.length > 0) {
         res.render("register", {
-            errors, first_name, last_name, email, password, confirmPassword
+            errors, first_name, last_name, email, password, biography
         });
     } else {
         User.findOne({email: email})
@@ -149,7 +138,7 @@ const addUser = async (req, res, next) => {
                 if (user) {
                     errors.push({msg: "Email is already registered"});
                     res.render("register", {
-                        errors, first_name, last_name, email, password, confirmPassword
+                        errors, first_name, last_name, email, password, biography
                     })
 
                 } else {
@@ -157,7 +146,8 @@ const addUser = async (req, res, next) => {
                         first_name: first_name,
                         last_name: last_name,
                         email: email,
-                        password: password
+                        password: password,
+                        biography: biography
                     });
 
                     // Hash Password
