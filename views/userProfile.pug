@@ -1,43 +1,38 @@
 extends layout
 
 block content
-    user-profile.col-12.mb-2
-        img.profile-background(src=user.cover)
-    .main.container
-        .row
-            div
-                // Content
-                div.dashboard-area.col-md-12
-                  .row
-                    // User's cover and profile photos
-                    user-profile.col-12.mb-2
-                      img.profile-thumbnail(src=user.avatar)
-                  // User's details
-                  .profile-details.col-md-6.ml-auto.mr-auto
-                    h2 #{user.name}
-                    p Email: #{user.email}
+
+    .profile-cover.px-4.py-4.bg-info.col-lg-12
+        .container
+            .media.align-items-end.profile-header
+                .profile.mr-5
+                    img.rounded.mb-2.profile-background(src=user.avatar, width='130px')
+                .media-body.mb-3.text-white
+                    h4.my-4 #{user.first_name} #{user.last_name}
+                    p.mb-0 Email: #{user.email}
                     p User ID: #{user._id}
+                    p Bio: #{user.biography}
 
-                div.col-md-3.pr-md-4.side-bar-left
-                    // Sidebar menu
-                    ul.list-unstyled.sidebar-menu.pl-md-2.pr-md-0
-                        li
-                            a.sidebar-item.d-flex.justify-content-between.align-items-center(href='/bookmarks')
-                                | Bookmarks
-                                span.fas.fa-heart
-                        li
-                            a.sidebar-item.d-flex.justify-content-between.align-items-center(href='/reviews')
-                                | Reviews
-                                span.fas.fa-comment
-                        li
-                            a.sidebar-item.d-flex.justify-content-between.align-items-center(href='/photos')
-                                | Photos
-                                span.fas.fa-photo-video
-                        li
-                            a.sidebar-item.d-flex.justify-content-between.align-items-center(href='/friends')
-                                | Friends
-                                span.fas.fa-user
-
-
-
-
+    .bg-light.p-4
+        .container.d-flex.align-items-center.justify-content-between.mb-3
+            ul.list-unstyled.sidebar-menu
+                li
+                    a.sidebar-item(href='/dashboard')
+                        | Dashboard
+                        span.fas.fa-tachometer-alt.ml-5
+                li
+                    a.sidebar-item(href='/bookmarks')
+                        | Bookmarks
+                        span.fas.fa-heart.ml-5
+                li
+                    a.sidebar-item(href='/reviews')
+                        | Reviews
+                        span.far.fa-comment(style="margin-left: 73px")
+                li
+                    a.sidebar-item(href='/photos')
+                        | Photos
+                        span.fas.fa-photo-video(style="margin-left: 77px")
+                li
+                    a.sidebar-item(href='/friends')
+                        | Friends
+                        span.fas.fa-user-friends(style="margin-left: 75px")

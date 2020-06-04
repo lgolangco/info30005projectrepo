@@ -32,7 +32,7 @@ const loadProfile = async(req, res) => {
     try {
         const bookmarks = await Venue.find({_id: { $in :req.user.bookmarks}});
         console.log(req.user.bookmarks);
-        return res.render("profile", {user: req.user, bookmarks: bookmarks});
+        return res.render("profile", {user: req.user, bookmarks: bookmarks, title: "Profile"});
     } catch (err) {
         res.status(400);
         console.log(req.user.bookmarks,err);

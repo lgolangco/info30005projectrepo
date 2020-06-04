@@ -2,10 +2,10 @@ extends layout
 
 block content
 
-    .px-4.py-4.bg-info.col-lg-12
+    .profile-cover.px-4.py-4.col-lg-12
         .container
             .media.align-items-end.profile-header
-                .profile.mr-3
+                .profile.mr-5
                     img.rounded.mb-2.profile-background(src=user.avatar, width='130px')
                     a.btn.btn-light.btn-sm.btn-block(href="/profile/edit") Edit profile
                     a.btn.btn-danger.btn-sm.btn-block(href="/profile/delete") Delete my account
@@ -13,7 +13,8 @@ block content
                     h4.my-4 #{user.first_name} #{user.last_name}
                     p.mb-0 Email: #{user.email}
                     p User ID: #{user._id}
-                    p Bio: #{user.biography}
+                    if biography
+                        p Bio: #{user.biography}
 
     .bg-light.p-4
         .container.d-flex.align-items-center.justify-content-between.mb-3
@@ -52,7 +53,7 @@ block content
         div
             br
             br
-            if bookmarks !== "none"
+            if bookmarks
                 .row
                     each venue in bookmarks
                         - const address = venue.venueAddress.venueStreetAddress +", "+venue.venueAddress.venueSuburb+", "+venue.venueAddress.venuePostcode;

@@ -69,8 +69,8 @@
 
 /* Profile and User Page */
 
-.dashboard-area {
-    margin-top: -150px;
+.profile-cover {
+    background: linear-gradient(-35deg , #60c3c0, #0b5394);
 }
 
 img.profile-background {
@@ -80,6 +80,7 @@ img.profile-background {
     height: 190px;
     object-fit: cover;
     margin: 10px 0px;
+    background-color: white;
 }
 
 .profile-thumbnail {
@@ -115,6 +116,7 @@ img.profile-background {
     padding-bottom: 1rem;
     padding-top: 1rem;
     background-color: #f4f4f4;
+    width: 199px;
 }
 
 .sidebar-item {
