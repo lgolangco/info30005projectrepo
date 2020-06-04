@@ -149,16 +149,172 @@ block content
                 td No printing 
                   p available
         
+        br
         // Reviews
         div.venue-reviews
           h2 Reviews
-          p Working on this feature!
+          
+          //- Create New Review
+          //- If suggestion already submitted only show message
+          if (completed)
+            p Successfully added your review
+            
+            br
+            h4 Your Review of #{venue.venueName}
+            - newReviewDate = newReview.datePosted.toDateString()
+            
+            .col-10
+              .card.mb-3
+                
+                .row
+                    .col-2
+                      p user profile image
+                    .col-8
+                      div
+                        //insert user name
+                        h5 #[a(href="/user/"+newReview.userId) #{newReview.userFirstName} #{newReview.userLastName}]
+                      div
+                        //- insert rating
+                        p Rating: #{newReview.rating}/5
+                      
+
+                .offset-1
+                  //- insert review text
+                  p #{newReview.content}
+                
+                .offset-9
+                  //- insert date
+                  p #{newReviewDate}
+          
+          //- If user is not logged in
+          if !(user)
+            p Please log in to submit a review.
+          
+          else
+            - var existingReview = false
+            each review in venuesReviews
+              if (user._id.toString() == review.userId.toString())
+                - existingReview = true
+               
+                h4 Your Review of #{venue.venueName}
+                - date = review.datePosted.toDateString()
+                
+                .col-10
+                  .card.mb-3
+                    
+                    .row
+                        .col-2
+                          - const imgURL = "https://studyspot.s3.amazonaws.com/venue/header/" + review.userId.toString() + ".jpg"
+                          img.venue-thumbnail(src = imgURL 
+                            onerror="this.src='https://studyspot.s3.amazonaws.com/venue/header/default.jpg'")
+                        .col-8
+                          div
+                            //insert user name
+                            h5 #[a(href="/profile") #{review.userFirstName} #{review.userLastName}]
+                          div
+                            //- insert rating
+                            p Rating: #{review.rating}/5
+                        
+                    .offset-1
+                      //- insert review text
+                      p #{review.content}
+                    
+                    .offset-9
+                      //- insert date
+                      p #{date}
+                .row 
+                  .offset-1.mb-3
+                    
+                    - const updateReview = "/review/update/" + review._id
+                    a(href=updateReview) Edit Review  
+                    
+                    - const deleteReview = "/review/delete/" + review._id
+                    a(href=deleteReview) Delete Review
+              
+          
+            //- Else, show suggestion form
+            if !(existingReview) && !(completed)
+              div.bg-light.border.col-lg-10
+                p Submit a review for <strong>#{venue.venueName} </strong>           
+
+                form(method='POST' action='') 
+                  
+                  input.form-control(type="hidden" name='userId' value=user._id) 
+                  
+                  input.form-control(type="hidden" name='userFirstName' value=user.first_name) 
+                  input.form-control(type="hidden" name='userLastName' value=user.last_name) 
+              
+                  input.form-control(type="hidden" name='venueId' value=venue._id)  
+            
+                
+                  div.btn-group.btn-group-toggle(data-toggle="buttons")
+                    label.btn.btn-outline-danger
+                      input#option1(type="radio" name="star" value=1 autocomplete="off") 
+                      |1 Star ★
+
+                    label.btn.btn-outline-warning
+                      input#option2(type="radio" name="star" value=2 autocomplete="off") 
+                      |2 Stars ★
+                    
+                    label.btn.btn-outline-secondary
+                      input#option3(type="radio" name="star" value=3 autocomplete="off") 
+                      |3 Stars ★
+                      
+                    label.btn.btn-outline-info
+                      input#option4(type="radio" name="star" value=4 autocomplete="off") 
+                      |4 Stars ★
+                      
+                    label.btn.btn-outline-success
+                      input#option5(type="radio" name="star" value=5 autocomplete="off") 
+                      |5 Stars ★
+                
+                  //- Textbox
+                  br
+                  br
+                  textarea.col-lg-11.form-control(rows="3" name="review" placeholder="Please enter review here.")
+                  //- Submit 
+                  br
+                  button.btn.btn-primary(type="submit") Submit
+              
+
+          
+          //- List reviews
+          h4 Reviews from Other StudySpotters
+          each review in venuesReviews
+
+            if !(user) || (user._id.toString() != review.userId.toString())
+              
+              - date = review.datePosted.toDateString()
+              .col-lg-10
+                .card.mb-3
+                  
+                  .row
+                    .col-2
+                      - const imgURL = "https://studyspot.s3.amazonaws.com/venue/header/" + review.userId.toString() + ".jpg"
+                      img.venue-thumbnail(src = imgURL 
+                        onerror="this.src='https://studyspot.s3.amazonaws.com/venue/header/default.jpg'")
+                    .col-10
+                      div
+                        //insert user name
+                        h5 #[a(href="/user/"+review.userId) #{review.userFirstName} #{review.userLastName}]
+                      div
+                        //insert rating
+                        p Rating: #{review.rating}/5
+            
+                  .offset-1
+                    //insert review text
+                    p #{review.content}
+                  
+                  .offset-9
+                    //insert date
+                    p #{date}
+                  
 
       
-      // Side Bar
+      //- Side Bar
       div.col-lg-3.col-md-12.venue-side-bar
         
-        // Contacts
+        //- Contacts
         if venue.venueContact.phone || venue.venueContact.mobile || venue.venueContact.email || venue.venueContact.web
           br
           h5 Contact Details
@@ -173,7 +329,7 @@ block content
         
         br
         
-        // Location
+        //- Location
         h5 Location
         
         - const query = venue.venueAddress.venueStreetAddress + ", " + venue.venueAddress.venueSuburb
@@ -182,7 +338,7 @@ block content
         p #{venue.venueAddress.venueStreetAddress}, 
           |#{venue.venueAddress.venueSuburb}, #{venue.venueAddress.venueState}, #{venue.venueAddress.venuePostcode}
         
-        // Opening hours
+        //- Opening hours
         h5 Opening Hours
 
         - const venueHours = venue.venueHours.toObject()
@@ -190,11 +346,12 @@ block content
             p= day+ ": " + timeframe
     
     // Venue Update and Delete Buttons (Will be only available to users with admin attribute at later date)
-    .row
-      .col-md-2.offset-1
-        - const updateLink = "/venueUpdate/" + venue._id
-        a.btn.btn-Warning(href=updateLink) UPDATE VENUE
-      .col-md-2
-        - const deletePath = "/deleteVenue/" + venue._id
-        form(method="POST" action=deletePath)
-          button.btn.btn-Danger(type="Submit") DELETE VENUE
+    if (user && user.admin)
+      .row
+        .col-md-2.offset-1
+          - const updateVenue = "/venueUpdate/" + venue._id
+          a.btn.btn-Warning(href=updateVenue) UPDATE VENUE
+        .col-md-2
+          
+          - const deleteVenue = "/deleteVenue/" + venue._id
+          a.btn.btn-Danger(href=deleteVenue) DELETE VENUE
