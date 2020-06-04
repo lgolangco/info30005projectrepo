@@ -92,7 +92,8 @@ const getAllVenues = async (req, res) => {
         noise: noise,
         typeV: typeV,
         nameV: nameV,
-        locV: locV
+        locV: locV,
+        user: req.user
       })
     });
   } catch(err) {
@@ -103,7 +104,8 @@ const getAllVenues = async (req, res) => {
       }
       res.render('venues', {
         title: title,
-        venues: allVenues
+        venues: allVenues,
+        user: req.user
       })
     });
   }
