@@ -77,22 +77,6 @@ block content
                                       | Others
 
                   header.card-header
-                      h6.title Features
-                  .filter-content
-                      .card-body
-                          // form-check.//
-                          if filters.includes('discussionFriendly')
-                              label.form-check
-                                  input.form-check-input(type='checkbox' name= 'discussionFriendly' value='true' checked)
-                                  span.form-check-label
-                                      | Discussion Friendly
-                          else
-                              label.form-check
-                                  input.form-check-input(type='checkbox' name= 'discussionFriendly' value='true')
-                                  span.form-check-label
-                                      | Discussion Friendly
-
-                  header.card-header
                       h6.title Noise Level
                   .filter-content
                       .card-body
@@ -142,9 +126,21 @@ block content
                                   });
 
                   header.card-header
-                      h6.title Amenities
+                      h6.title Features
                   .filter-content
                       .card-body
+                          // form-check.//
+                          if filters.includes('discussionFriendly')
+                              label.form-check
+                                  input.form-check-input(type='checkbox' name= 'discussionFriendly' value='true' checked)
+                                  span.form-check-label
+                                      | Discussion Friendly
+                          else
+                              label.form-check
+                                  input.form-check-input(type='checkbox' name= 'discussionFriendly' value='true')
+                                  span.form-check-label
+                                      | Discussion Friendly
+
                           if filters.includes('wifi')
                               label.form-check
                                   input.form-check-input(type='checkbox' name='wifi' value='true' checked)
@@ -188,7 +184,7 @@ block content
                                   span.form-check-label
                                       | Printers
 
-                      center
+                          br
                           button.btn.btn-outline-primary(type="submit" value="Filter")
                             | Apply
       br
