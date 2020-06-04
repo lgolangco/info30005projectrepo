@@ -2,7 +2,7 @@ extends layout
 
 block content
 
-    .px-4.py-4.bg-info
+    .px-4.py-4.bg-info.col-lg-12
         .container
             .media.align-items-end.profile-header
                 .profile.mr-3
@@ -14,9 +14,9 @@ block content
                     p.mb-0 Email: #{user.email}
                     p User ID: #{user._id}
 
-    .bg-light.p-4.d-flex.text-center
+    .bg-light.p-4
         .container.d-flex.align-items-center.justify-content-between.mb-3
-            ul.list-unstyled.sidebar-menu.pl-md-2.pr-md-0
+            ul.list-unstyled.sidebar-menu
                 li
                     a.sidebar-item.d-flex.justify-content-between.align-items-center(href='/dashboard')
                         | Dashboard
@@ -46,4 +46,29 @@ block content
                         | SS Points
                         span.fas.fa-dollar-sign
 
+        h1 Bookmarks
 
+        div
+            br
+            br
+            if bookmarks !== "none"
+                .row
+                    each venue in bookmarks
+                        - const address = venue.venueAddress.venueStreetAddress +", "+venue.venueAddress.venueSuburb+", "+venue.venueAddress.venuePostcode;
+                        - const imgURL = "https://studyspot.s3.amazonaws.com/venue/header/" + venue._id.toString() + ".jpg"
+                        .col-lg-6
+                            .card.mb-3.d-flex.align-items-stretch
+                                .row.no-gutters
+                                    .col-4
+                                        a(href="/venue/" + venue._id)
+                                            img.venue-thumbnail(src = imgURL
+                                                onerror="this.src='https://studyspot.s3.amazonaws.com/venue/header/default.jpg'")
+                                    .col-8
+                                        .card-body
+                                            h5.card-title #[a(href="/venue/" + venue._id) #{venue.venueName}]
+                                            hr
+                                            p.card-text(style='white-space:pre;')
+                                                | #{venue.venueType}
+                                                | #{address}
+            else
+                p There are no bookmarks
