@@ -62,10 +62,6 @@ header.masthead h1 {
     margin-bottom: 30px;
 }
 
-.card {
-    margin: 10px;
-}
-
 .card-img-top {
     height: 190px;
     object-fit: cover;

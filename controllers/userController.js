@@ -7,6 +7,7 @@ const passport = require("passport");
 // import user and review model
 const User = mongoose.model("user");
 const Review = mongoose.model("review");
+const Venue = mongoose.model("venue");
 
 // import object id type to check if request _id is valid
 const ObjectId = mongoose.Types.ObjectId;
@@ -27,12 +28,24 @@ const getAllUsers = async (req, res) => {
     }
 }
 
+const loadProfile = async(req, res) => {
+    try {
+        const bookmarks = await Venue.find({_id: { $in :req.user.bookmarks}});
+        console.log(req.user.bookmarks);
+        return res.render("profile", {user: req.user, bookmarks: bookmarks, title: "Profile"});
+    } catch (err) {
+        res.status(400);
+        console.log(req.user.bookmarks,err);
+        return res.render("profile", {user: req.user, bookmarks: "none"});
+    }
+}
+
 
 // function to render update user by id form
 const updateUserForm = async (req, res) => {
 
     try {
-        const users = await User.find({_id: res.locals.loginId});
+        const users = await User.find({_id: req.user._id});
 
         if (!users) {
             res.status(400);
@@ -57,12 +70,12 @@ const updateUserForm = async (req, res) => {
 // function to modify user details
 const updateUser = async (req, res, next) => {
     // checks if the _id is invalid
-    if (ObjectId.isValid(res.locals.loginId) === false) {
+    if (ObjectId.isValid(req.user._id) === false) {
         return res.render('usererror', {message: "There are no users listed with this id"});
     }
 
     // checks if there are no venues listed with that _id
-    const users = await User.find({_id: res.locals.loginId});
+    const users = await User.find({_id: req.user._id});
     if (users.length === 0) {
         res.status(400);
         console.log("User not found");
@@ -72,39 +85,38 @@ const updateUser = async (req, res, next) => {
     try {
         if (req.body.email &&
             req.body.first_name &&
-            req.body.last_name &&
             req.body.password &&
-            req.body.confirmPassword) {
+            req.body.last_name) {
 
-            // confirm that user typed same password twice
-            if (req.body.password !== req.body.confirmPassword) {
-                let err = new Error("Passwords do not match");
-                err.status = 400;
-                return next(err);
-            }
             const user = users[0]
+
+            if(user["password"] !== req.body.password) {
+                console.log('password updated');
+                // Hash Password
+                bcrypt.genSalt(10, (err, salt) =>
+                    bcrypt.hash(req.body.password, salt, (err, hash) => {
+                        if (err) throw err;
+                        // set password to hash
+                        user["password"] = hash;
+                    })
+                );
+            }
 
             // update the venue with the following _id
             user["first_name"] = req.body.first_name;
             user["last_name"] = req.body.last_name;
             user["email"] = req.body.email;
-            user["password"] = req.body.password;
             user["cover"] = req.body.cover;
             user["avatar"] = req.body.avatar;
+            user["biography"] = req.body.biography;
 
-            // Hash Password
-            bcrypt.genSalt(10, (err, salt) =>
-                bcrypt.hash(user.password, salt, (err, hash) => {
-                    if (err) throw err;
-                    // set password to hash
-                    user.password = hash;
-                    // save
-                    user.save()
-                        .then(user => {
-                            return res.redirect("/profile");
-                        })
-                        .catch(err => console.log(err));
-                }))
+            // save
+            user.save()
+                .then(user => {
+                    return res.redirect("/profile");
+                })
+                .catch(err => console.log(err));
+
 
 
         } else {
@@ -123,16 +135,11 @@ const updateUser = async (req, res, next) => {
 // function to add user
 const addUser = async (req, res, next) => {
 
-    const {first_name, last_name, email, password, confirmPassword} = req.body;
+    const {first_name, last_name, email, password, biography} = req.body;
 
     let errors = [];
-    if (!first_name || !last_name || !email || !confirmPassword) {
-        errors.push({msg: "Please fill in all the fields"});
-    }
-
-    if (password !== confirmPassword) {
-        errors.push({msg: "Passwords do not match"});
-
+    if (!first_name || !last_name || !email) {
+        errors.push({msg: "Please fill in all the fields required"});
     }
 
     if (password.length < 8) {
@@ -141,7 +148,7 @@ const addUser = async (req, res, next) => {
 
     if (errors.length > 0) {
         res.render("register", {
-            errors, first_name, last_name, email, password, confirmPassword
+            errors, first_name, last_name, email, password, biography
         });
     } else {
         User.findOne({email: email})
@@ -149,7 +156,7 @@ const addUser = async (req, res, next) => {
                 if (user) {
                     errors.push({msg: "Email is already registered"});
                     res.render("register", {
-                        errors, first_name, last_name, email, password, confirmPassword
+                        errors, first_name, last_name, email, password, biography
                     })
 
                 } else {
@@ -157,7 +164,8 @@ const addUser = async (req, res, next) => {
                         first_name: first_name,
                         last_name: last_name,
                         email: email,
-                        password: password
+                        password: password,
+                        biography: biography
                     });
 
                     // Hash Password
@@ -217,17 +225,17 @@ const getUserByEmail = async (req, res) => {
 const deleteUserByID = async (req, res) => {
 
     // checks if the _id is invalid
-    if (ObjectId.isValid(res.locals.loginId) === false) {
+    if (ObjectId.isValid(req.user._id) === false) {
         return res.render('usererror', {message: "There are no users listed with this id"});
     }
 
     // deletes the reviews associated with the user
-    Review.deleteMany({userId: res.locals.loginId}, function (err) {
+    Review.deleteMany({userId: req.user._id}, function (err) {
         res.status(400);
     });
 
     // deletes the user with the following _id
-    await User.deleteOne({_id: res.locals.loginId}, function (err) {
+    await User.deleteOne({_id: req.user._id}, function (err) {
         try {
             req.session.destroy(function (err) {
                 if (err) {
@@ -259,6 +267,7 @@ const login = (req, res, next) => {
 
 
 module.exports = {
+    loadProfile,
     getAllUsers,
     getUserByID,
     addUser,

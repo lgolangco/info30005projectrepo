@@ -9,10 +9,10 @@ block content
       form(method="GET" action="/venue")
           .input-group
               select.form-control(name="searchType")
-                  option(value='' selected='') Any Type
+                  option(value='Any' selected='') Any Type
                   option(value='Cafe') Cafe
                   option(value='Library') Library
-                  option(value='Others') Other
+                  option(value='Others') Others
               input.form-control(type="text",name="search" , placeholder="Search for cafes, libraries or hidden spots")
               input.form-control(type="text",name="searchLocation" , placeholder="Search for suburb")
               .input-group-append
@@ -28,8 +28,183 @@ block content
 
       h1 #{title}
       p #{message}
+
+   
+
+      br
+      div.card.col-md-3
+          article.card-group-item
+              form#filterValues(method="GET" action="/venue")
+                  //input(type='hidden' name='filters' value='applied')
+                  input(type='hidden' name='searchType' value=typeV)
+                  input(type='hidden' name='search' value=nameV)
+                  input(type='hidden' name='searchLocation' value=locV)
+
+                  header.card-header
+                      h6.title Venue Type
+                  .filter-content
+                      .card-body
+                          if typeV === 'Any'
+                              label.form-check
+                                  input.form-check-input(type='radio' name='type' value='Any' checked)
+                                  span.form-check-label
+                                      | Any Type
+                          else
+                              label.form-check
+                                  input.form-check-input(type='radio' name='type' value='Any')
+                                  span.form-check-label
+                                      | Any Type
+
+                          if typeV === 'Cafe'
+                              label.form-check
+                                  input.form-check-input(type='radio' name='type' value='Cafe' checked)
+                                  span.form-check-label
+                                      | Cafe
+                          else
+                              label.form-check
+                                  input.form-check-input(type='radio' name='type' value='Cafe')
+                                  span.form-check-label
+                                      | Cafe
+
+                          if typeV === 'Library'
+                              label.form-check
+                                  input.form-check-input(type='radio' name='type' value='Library' checked)
+                                  span.form-check-label
+                                      | Library
+                          else
+                              label.form-check
+                                  input.form-check-input(type='radio' name='type' value='Library')
+                                  span.form-check-label
+                                      | Library
+
+                          if typeV === 'Others'
+                              label.form-check
+                                  input.form-check-input(type='radio' name='type' value='Others' checked)
+                                  span.form-check-label
+                                      | Others
+                          else
+                              label.form-check
+                                  input.form-check-input(type='radio' name='type' value='Others')
+                                  span.form-check-label
+                                      | Others
+
+                  header.card-header
+                      h6.title Noise Level
+                  .filter-content
+                      .card-body
+                          if noise === 'Low'
+                              input.js-range-slider(type='text' name='noise' value='')
+                              script.
+                                  $(".js-range-slider").ionRangeSlider({
+                                      skin: "round",
+                                      type: 'single',
+                                      grid: true,
+                                      from: 0,
+                                      hide_min_max: true,
+                                      values: ['Low', 'Med', 'High', 'Any']
+                                  });
+                          else if noise === 'Med'
+                              input.js-range-slider(type='text' name='noise' value='')
+                              script.
+                                  $(".js-range-slider").ionRangeSlider({
+                                      skin: "round",
+                                      type: 'single',
+                                      grid: true,
+                                      from: 1,
+                                      hide_min_max: true,
+                                      values: ['Low', 'Med', 'High', 'Any']
+                                  });
+                          else if noise === 'High'
+                              input.js-range-slider(type='text' name='noise' value='')
+                              script.
+                                  $(".js-range-slider").ionRangeSlider({
+                                      skin: "round",
+                                      type: 'single',
+                                      grid: true,
+                                      from: 2,
+                                      hide_min_max: true,
+                                      values: ['Low', 'Med', 'High', 'Any']
+                                  });
+                          else
+                              input.js-range-slider(type='text' name='noise' value='')
+                              script.
+                                  $(".js-range-slider").ionRangeSlider({
+                                      skin: "round",
+                                      type: 'single',
+                                      grid: true,
+                                      from: 3,
+                                      hide_min_max: true,
+                                      values: ['Low', 'Med', 'High', 'Any']
+                                  });
+
+                  header.card-header
+                      h6.title Features
+                  .filter-content
+                      .card-body
+                          // form-check.//
+                          if filters.includes('discussionFriendly')
+                              label.form-check
+                                  input.form-check-input(type='checkbox' name= 'discussionFriendly' value='true' checked)
+                                  span.form-check-label
+                                      | Discussion Friendly
+                          else
+                              label.form-check
+                                  input.form-check-input(type='checkbox' name= 'discussionFriendly' value='true')
+                                  span.form-check-label
+                                      | Discussion Friendly
+
+                          if filters.includes('wifi')
+                              label.form-check
+                                  input.form-check-input(type='checkbox' name='wifi' value='true' checked)
+                                  span.form-check-label
+                                      | Wifi
+                          else
+                              label.form-check
+                                  input.form-check-input(type='checkbox' name='wifi' value='true')
+                                  span.form-check-label
+                                      | Wifi
+
+                          if filters.includes('toilets')
+                              label.form-check
+                                  input.form-check-input(type='checkbox' name='toilets' value='true' checked)
+                                  span.form-check-label
+                                      | Toilets
+                          else
+                              label.form-check
+                                  input.form-check-input(type='checkbox' name='toilets' value='true')
+                                  span.form-check-label
+                                      | Toilets
+                          if filters.includes('power')
+                              label.form-check
+                                  input.form-check-input(type='checkbox' name='power' value='true' checked)
+                                  span.form-check-label
+                                      | Power Outlets
+                          else
+                              label.form-check
+                                  input.form-check-input(type='checkbox' name='power' value='true')
+                                  span.form-check-label
+                                      | Power Outlets
+
+                          if filters.includes('printer')
+                              label.form-check
+                                  input.form-check-input(type='checkbox' name='printer' value='true' checked)
+                                  span.form-check-label
+                                      | Printers
+                          else
+                              label.form-check
+                                  input.form-check-input(type='checkbox' name='printer' value='true')
+                                  span.form-check-label
+                                      | Printers
+
+                          br
+                          button.btn.btn-outline-primary(type="submit" value="Filter")
+                            | Apply
+      br
+
+
       
       // Register/Request a new Venue
+
       if (user && user.admin)
         br
         h5 

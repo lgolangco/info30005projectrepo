@@ -16,14 +16,17 @@ const getAllVenues = async (req, res) => {
   const search = [];
   filters = [];
   var noise = 'Any';
-  var typeV = '';
+  var typeV = 'Any';
   var nameV = '';
   var locV = '';
 
   try {
     if(req.query) {
       console.log(req.query,filters,noise,req.query.noise);
-      if (req.query.type) {
+      if (req.query.type === "Any") {
+        search.splice(0,1);
+        typeV = req.query.type;
+      } else if (req.query.type) {
         const regexType = new RegExp(escapeRegex(req.query.type), 'gi');
         search.splice(0,1);
         search.push({venueType: regexType});
@@ -555,6 +558,61 @@ const addRequestNew = async (req, res) => {
    }
 };
 
+
+// function to add venue to user's bookmarks
+const bookmark = async (req, res) => {
+  try {
+    const user = await User.findById(req.user._id);
+    if (user.length === 0){
+      return res.render('error', {
+        error: "There are no venues listed with this id!",
+        message: "There are no venues listed with this id!",
+        venueerror: "For a list of all registered venues,"
+      });
+    } else {
+      console.log("added to bookmarks");
+      user.bookmarks.push(req.params._id);
+      user.save();
+      return res.redirect("/venue/"+req.params._id);
+    }
+  } catch (err) {
+    console.log(err);
+    res.status(400);
+    return res.render('error', {
+      error: "Database query failed",
+      message: "You're not logged in yet",
+      functionfailure: "Failed to add bookmark"
+    });
+  }
+}
+
+// function to add venue to user's bookmarks
+const removeBookmark = async (req, res) => {
+  try {
+    const user = await User.findById(req.user._id);
+    if (user.length === 0){
+      return res.render('error', {
+        error: "There are no venues listed with this id!",
+        message: "There are no venues listed with this id!",
+        venueerror: "For a list of all registered venues,"
+      });
+    } else {
+      console.log("added to bookmarks");
+      user.bookmarks.pull(req.params._id);
+      user.save();
+      return res.redirect("/venue/"+req.params._id);
+    }
+  } catch (err) {
+    console.log(err);
+    res.status(400);
+    return res.render('error', {
+      error: "Database query failed",
+      message: "You're not logged in yet",
+      functionfailure: "Failed to add bookmark"
+    });
+  }
+}
+
 // remember to export the functions
 module.exports = {
   getAllVenues,
@@ -569,5 +627,7 @@ module.exports = {
   getVenueUpdateByID,
   submitVenueSuggestion,
   getRequestNew,
-  addRequestNew
+  addRequestNew,
+  bookmark,
+  removeBookmark
 };

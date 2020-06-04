@@ -288,7 +288,19 @@ block content
       
       //- Side Bar
       div.col-lg-3.col-md-12.venue-side-bar
-        
+
+        // Bookmark Venue
+        if user
+          if user.bookmarks.includes(venue._id)
+            form(method="POST" action="/venue/" + venue._id + "/remove")
+              button.btn.btn-lg.btn-outline-dark(type="submit") Remove bookmark
+          else
+            form(method="POST" action="/venue/" + venue._id + "/bookmark")
+              button.btn.btn-lg.btn-warning(type="submit") Add to Bookmarks
+        else
+          form(method="POST" action="/venue/"+venue._id+"/bookmark")
+            button.btn.btn-lg.btn-warning(type="submit") Add to Bookmarks
+
         //- Contacts
         if venue.venueContact.phone || venue.venueContact.mobile || venue.venueContact.email || venue.venueContact.web
           br
