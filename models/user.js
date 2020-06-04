@@ -8,7 +8,8 @@ const userSchema = new mongoose.Schema({
   password: {type: String, required: true},
   cover: {type: String, default: 'https://tokystorage.s3.amazonaws.com/images/default-cover.png'},
   avatar: {type: String, default: "https://www.mhcsa.org.au/wp-content/uploads/2016/08/default-non-user-no-photo.jpg"},
-  admin: {type: Boolean, default: false}
+  admin: {type: Boolean, default: false},
+  bookmarks: {type: [mongoose.Types.ObjectId], ref: 'venue'}
 });
 
 const User = mongoose.model("user", userSchema, "user");
