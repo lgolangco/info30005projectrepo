@@ -424,6 +424,49 @@ const getVenueByType = async (req, res) => {
   )
 };
 
+const getRequestNew = async (req, res) => {
+  try {
+    if (req.user == null) {
+      return res.render ("error", {
+        error: "You must be logged in to request a new venue!",
+        message: "You must be logged in to request a new venue!"
+      });
+    } else {
+      const user = await User.findById(req.user._id);
+      return res.render("venueRequestNew", {user: user});
+    };
+  } catch (err) {
+    res.status(400);
+    return res.render('error', {
+      error: "Failed to load venueRequestNew page",
+      message: "Failed to load venueRequestNew page",
+    });
+
+  }
+};
+
+const addRequestNew = async (req, res) => {
+  // extract info. from body
+   newVenueProcessed = convertVenue(req.body);
+   newVenueProcessed.userId = ObjectId(req.body.userId);
+   newVenueProcessed.userName = req.body.userName;
+   const db = mongoose.connection;
+   try {
+     await db.collection('venueRequests').insertOne(newVenueProcessed)
+     return res.render("venueRequestNew",{
+       completed: true,
+       newVenue: newVenueProcessed
+     });
+   } catch(err){
+     res.status(400);
+     console.log(err);
+     return res.render('error', {
+       error: "Database query failed",
+       message: "Database query failed",
+       functionfailure: "Failed to post new venue request"
+     });
+   }
+};
 
 // remember to export the functions
 module.exports = {
@@ -437,5 +480,7 @@ module.exports = {
   deleteVenue,
   getVenueSuggestionsByID,
   getVenueUpdateByID,
-  submitVenueSuggestion
+  submitVenueSuggestion,
+  getRequestNew,
+  addRequestNew
 };

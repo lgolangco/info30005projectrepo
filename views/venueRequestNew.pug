@@ -6,7 +6,7 @@ block content
       if (completed)
         br
         h1.display-4.m-b-2 Thank you!
-        p The admins will review your Request for a new StudySpot!
+        p The admins will review your request to make #{newVenue.venueName} a new StudySpot!
         
       else
         .col-md-6.offset-3
@@ -15,6 +15,11 @@ block content
 
             // Register Form
             form(method='POST' action='')
+            
+              input.form-control(type="hidden" name='userId' value=user._id) 
+              
+              input.form-control(type="hidden" name='userName' value=user.name) 
+            
               p(style="color:red") Note - all fields with "*" are required.
               br
                 
