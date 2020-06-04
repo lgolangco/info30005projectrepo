@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 
-// load the user controller
+// load the venue controller
 const venueController = require("../controllers/venueController.js");
 
 // load the review controller

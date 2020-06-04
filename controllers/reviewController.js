@@ -40,13 +40,23 @@ function convertReviews(reviewRaw) {
   return reviewProcessed;
 }
 
+// function to find all reviews for a venue
+const findVenuesReviews = async (venueId) => {
+  const venuesReviews = await Review.find({venueId: venueId});
+  console.log("venuesReviews");
+  console.log(venuesReviews);
+  if (venuesReviews.length === 0){
+    console.log("no reviews found");
+    return false
+  } else {
+    console.log("success")
+    return venuesReviews;
+  }
+};
+
 // function to add review
 const addReview = async (req, res) => {
-  console.log("RAW REViEW")
-  console.log(req.body)
   const reviewProcessed = convertReviews(req.body)
-  console.log("PROCESSED REVIEW")
-  console.log(reviewProcessed)
   const db = mongoose.connection;
   try {
     await db.collection('review').insertOne(reviewProcessed)
@@ -58,12 +68,31 @@ const addReview = async (req, res) => {
         venueerror: "For a list of all registered venues,"
       });
     } else {
-      return res.render('venueProfile', {
-        venue: venue[0],
-        user: req.user,
-        completed: true,
-        newReview: reviewProcessed
+
+
+      venuesReviews = findVenuesReviews(req.params._id);
+      venuesReviews.then(function(result){
+
+        if (req.user === undefined){
+          user = null;
+        } else {
+          user = req.user;
+        }
+        return res.render('venueProfile', {
+          venue: venue[0],
+          user: user,
+          venuesReviews: result,
+          completed: true,
+          newReview: reviewProcessed
+        });
       });
+
+      // return res.render('venueProfile', {
+      //   venue: venue[0],
+      //   user: req.user,
+      //   completed: true,
+      //   newReview: reviewProcessed
+      // });
     }
   } catch(err){
     res.status(400);
