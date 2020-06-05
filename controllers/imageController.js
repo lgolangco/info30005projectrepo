@@ -176,10 +176,181 @@ const uploadUserAvatarImage = async (req, res) => {
 
 };
 
+function extractURL(images) {
+  console.log("images");
+  console.log(images);
+  var imageLinks = [];
+  var i = 0;
+  while (i < images.length){
+    console.log("images[i]");
+    console.log(images[i]);
+    console.log("image[i].Key");
+    console.log(images[i].Key);
+    imageLinks.push(images[i].Key);
+    i += 1;
+  }
+
+  console.log(imageLinks)
+
+  return imageLinks;
+}
+
+
+const getVenueGalleryPage = async (req, res) => {
+  if (ObjectId.isValid(req.params._id) === false) {
+    return res.render('error', {
+      error: "There are no venues listed with this id!",
+      message: "There are no venues listed with this id!",
+      venueerror: "For a list of all registered venues,"
+    });
+  }
+  try {
+    const venue = await Venue.find({_id: req.params._id});
+    if (venue.length === 0){
+      return res.render('error', {
+        error: "There are no venues listed with this id!",
+        message: "There are no venues listed with this id!",
+        venueerror: "For a list of all registered venues,"
+      });
+    } else {
+      const prefix = "venue/fromUsers/" + req.params._id.toString();
+      console.log("prefix");
+      console.log(prefix);
+      var params = {
+        Bucket: 'studyspot',
+        Delimiter: '',
+        Prefix: prefix
+      }
+      s3.listObjects(params, function (err, data) {
+        if(err)throw err;
+        console.log("DATA");
+        console.log(data.Contents);
+        imageLinks = extractURL(data.Contents);
+        console.log(imageLinks);
+        return res.render('venueGallery', {
+          venue: venue[0],
+          currentUser: req.user,
+          galleryImages: imageLinks
+        });
+      });
+    }
+  } catch (err) {
+    res.status(400);
+    return res.render('error', {
+      error: "Database query failed",
+      message: "Database query failed",
+      functionfailure: "Failed to get 'venue gallery' page"
+    });
+  }
+};
+
+const getVenueHeaderPage = async (req, res) => {
+  if (ObjectId.isValid(req.params._id) === false) {
+    return res.render('error', {
+      error: "There are no venues listed with this id!",
+      message: "There are no venues listed with this id!",
+      venueerror: "For a list of all registered venues,"
+    });
+  }
+  if (req.user == null) {
+    return res.render('error', {
+      error: "You're not logged in!",
+      message: "You must be an admin to upload a venue header"
+    });
+  }
+  if (req.admin == false) {
+    return res.render('error', {
+      error: "You're not an adin!",
+      message: "You must be an admin to upload a venue header"
+    });
+  }
+  const user = await User.findById(req.user._id);
+  try {
+    const venue = await Venue.find({_id: req.params._id});
+    if (venue.length === 0){
+      return res.render('error', {
+        error: "There are no venues listed with this id!",
+        message: "There are no venues listed with this id!",
+        venueerror: "For a list of all registered venues,"
+      });
+    } else {
+      return res.render('venueHeader', {
+        venue: venue[0],
+        user: user
+      });
+    }
+  } catch (err) {
+    res.status(400);
+    return res.render('error', {
+      error: "Database query failed",
+      message: "Database query failed",
+      functionfailure: "Failed to get 'upload venue header' page"
+    });
+  }
+};
+
+
+const uploadVenueHeaderImage = async (req, res) => {
+
+  if (req.user == null){
+    return res.render('error', {
+      error: "You're not logged in!",
+      message: "You must be an admin to upload a venue header."
+    });
+  }
+
+  if (req.user.admin == false){
+    return res.render('error', {
+      error: "You're not an adin!",
+      message: "You must be an admin to upload a venue header."
+    });
+  }
+
+    // Binary data base64
+    const fileContent  = Buffer.from(req.files.venueHeader.data, 'binary');
+
+    const imageKey = "venue/header/" + req.params._id.toString() + ".jpg"
+
+    // Setting up S3 upload parameters
+    const params = {
+        Bucket: 'studyspot',
+        Key: imageKey, // File name you want to save as in S3
+        Body: fileContent,
+        ACL: 'public-read',
+    };
+
+    // Uploading files to the bucket
+    s3.upload(params, function(err, data) {
+        if (err) {
+            throw err;
+            return res.render('error', {
+              error: "Database query failed",
+              message: "Failed to upload image.",
+              imageerror: "To return to the venue profile page, ",
+              venueId: req.params._id
+            });
+        }
+        const venue = Venue.findById(req.params._id);
+        venue.then(function(result){
+          res.status(200);
+          return res.render("venueHeader",{
+            venue: result,
+            completed: true
+          });
+        });
+    });
+
+};
+
+
+
 // export functions
 module.exports = {
       getVenueImagePage,
       uploadVenueImage,
       getUserAvatarImagePage,
       uploadUserAvatarImage,
+      getVenueGalleryPage,
+      getVenueHeaderPage,
+      uploadVenueHeaderImage
 };
