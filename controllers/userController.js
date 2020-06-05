@@ -412,11 +412,100 @@ const getResolveRequestPage = async (req,res) => {
 
 };
 
+function convertVenue(venueRaw) {
+  const venueProcessed = {
+    venueName: venueRaw.venueName,
+    venueType: venueRaw.venueType,
+    venueAddress: {
+      venueStreetAddress: venueRaw.venueStreetAddress,
+      venueSuburb: venueRaw.venueSuburb,
+      venueState: venueRaw.venueState,
+      venuePostcode: venueRaw.venuePostcode
+    },
+    venueDetails: {
+      noise: venueRaw.noise,
+      wifi: Boolean(venueRaw.wifi),
+      toilets: Boolean(venueRaw.toilets),
+      power: Boolean(venueRaw.power),
+      discussionFriendly: Boolean(venueRaw.discussionFriendly),
+      printer: Boolean(venueRaw.printer)
+    },
+    venueContact: {
+      phonePrefix: venueRaw.phonePrefix,
+      phone: venueRaw.phone,
+      mobilePrefix: venueRaw.mobilePrefix,
+      mobile: venueRaw.mobile,
+      email: venueRaw.email,
+      web: venueRaw.web,
+    },
+    venueHours: {
+      sun: venueRaw.sun,
+      mon: venueRaw.mon,
+      tue: venueRaw.tue,
+      wed: venueRaw.wed,
+      thu: venueRaw.thu,
+      fri: venueRaw.fri,
+      sat: venueRaw.sat
+    },
+    venueStreetAddress: venueRaw.venueStreetAddress
+   }
+   return venueProcessed;
+}
+
+const postResolveRequest = async (req, res) => {
+  if (ObjectId.isValid(req.params._id) === false) {
+    return res.render('error', {
+      error: "There are no venue requests with this id!",
+      message: "There are no venue requests with this id!",
+      venueRequesterror: "To return to admin page,"
+    });
+  }
+  if (req.user == null) {
+    return res.render('error', {
+      error: "You're not logged in!",
+      message: "You must be logged in to delete this venue request"
+    });
+  }
+  else if (req.user.admin == false) {
+    return res.render('error', {
+      error: "You're not an admin!",
+      message: "You must be an admin to delete this venue request"
+    });
+  }
+
+  venueProcessed = convertVenue(req.body);
+  const db = mongoose.connection;
+
+  try {
+    await db.collection('venue').insertOne(venueProcessed);
+    const result = await VenueRequests.deleteOne({_id: req.params._id}).exec();
+
+    if (result.n === 0) {
+      res.status(400);
+      return res.render('error', {
+        error: "Database query failed",
+        message: "Database query failed",
+        functionfailure: "Failed to delete venue request after posting"
+      });
+
+    } else {
+      res.render("adminResolveRequest", {
+        completed: true
+      })
+    }
+  } catch (err) {
+    res.status(400);
+    return res.render('error', {
+      error: "Database query failed",
+      message: err,
+      functionfailure: "Failed to get resolve venue request page"
+    });
+  }
+};
 
 
 
 const getDeleteSuggestionPage = async (req, res) => {
-  console.log("juan");
 
   if (ObjectId.isValid(req.params._id) === false) {
     return res.render('error', {
@@ -439,12 +528,9 @@ const getDeleteSuggestionPage = async (req, res) => {
   }
 
   try {
-    console.log("doo");
 
     const venueSuggestion = await VenueSuggestions.findById(req.params._id);
-    console.log("doo point 5");
     if (venueSuggestion === null){
-      console.log("doo point 6");
       return res.render('error', {
         error: "There are no venue suggestions with this id!",
         message: "There are no venue suggestions with this id!",
@@ -452,14 +538,12 @@ const getDeleteSuggestionPage = async (req, res) => {
       });
 
     } else {
-      console.log("sree");
       return res.render("adminDeleteSuggestion", {
         venueSuggestion: venueSuggestion,
         deleted: false
       });
     }
   } catch (err) {
-    console.log("faw");
     res.status(400);
     return res.render('error', {
       error: "Database query failed",
@@ -575,6 +659,7 @@ module.exports = {
     getDeleteRequestPage,
     postDeleteRequest,
     getResolveRequestPage,
+    postResolveRequest,
     getDeleteSuggestionPage,
     postDeleteSuggestionPage,
     getResolveSuggestionPage
