@@ -9,6 +9,8 @@ block content
     .mb-3
       h3 Pending New Venue Requests
       .row
+        if (venueRequests.length == 0)
+          p There are no pending venue requests. 
         each request in venueRequests
           
           - const address = request.venueAddress.venueStreetAddress +", "+request.venueAddress.venueSuburb+", "+request.venueAddress.venuePostcode;
@@ -41,8 +43,10 @@ block content
                     
                     
     .mb-3
-      h3 Pending venueSuggestions
+      h3 Pending Venue Suggestions
       .row
+        if (venueSuggestions.length == 0)
+          p There are no pending venue suggestions. 
         each suggestion in venueSuggestions
           
           .col-8.offset-1.mb-3

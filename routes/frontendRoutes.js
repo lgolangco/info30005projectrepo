@@ -43,7 +43,7 @@ router.post("/admin/deleteSuggestion/:_id", userController.postDeleteSuggestionP
 router.get("/admin/resolveSuggestion/:_id", userController.getResolveSuggestionPage);
 
 // POST Admin Resolve Suggestion form
-
+router.post("/admin/resolveSuggestion/:_id", userController.postResolveSuggestionPage);
 
 
 

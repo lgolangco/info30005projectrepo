@@ -374,6 +374,7 @@ const updateVenue = async (req, res) => {
 
 
   venueProcessed = convertVenue(req.body);
+  console.log(venueProcessed);
   // update the venue with the prescribed _id
   await Venue.findOneAndUpdate(
       {_id: req.params._id},
