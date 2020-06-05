@@ -594,7 +594,19 @@ const getVenueImagePage = async (req, res) => {
   }
 };
 
-
+// const upload = multer({
+//   storage: multerS3({
+//     s3: s3,
+//     bucket: 'studyspot',
+//     acl: 'public-read',
+//     metadata: function (req, file, cb) {
+//       cb(null, {fieldName: file.fieldname});
+//     },
+//     key: function (req, file, cb) {
+//       cb(null, Date.now().toString())
+//     }
+//   })
+// });
 
 // remember to export the functions
 module.exports = {

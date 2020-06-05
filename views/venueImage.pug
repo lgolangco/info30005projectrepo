@@ -8,9 +8,12 @@ block content
                 
                 //- If suggestion already submitted only show message
                 if (completed)
+                  br
+                  br
+                  br
                   h2.display-4.m-b-2 Successfully submitted your image!
                   br
-                  p Thank you for your StudySpot contribution!
+                  p Thank you for uploading an image for #{venue.venueName}!
                   p The admins will review your image and update our database accordingly.
                 
                 //- Else, show suggestion form
@@ -24,19 +27,13 @@ block content
                     | Uploading an image below will allow the admins to review your image,
                     | who will then update the venues accordingly.
                     
-                  form(method='POST' action='') 
-                    div.custom-file
-                      
-                      input.custom-file-input#customFile(type="file")
-                      label.custom-file-label(for = "customFile") Choose an Image to Upload
-                      
-                      script.
-                        $(".custom-file-input").on("change", function() {
-                          var fileName = $(this).val().split("\\").pop();
-                          $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
-                        });
+                  form(enctype='multipart/form-data' method='POST' action='')
                     
-                    br  
+                    label(for="venueImage") Upload an Image for this Venue
+                    br
+                    input(type="file" id="venueImage" name="venueImage" accept=".jpg,.jpeg,.png")
+                    
+                    br
                     button.btn.btn-primary(type="submit") Submit
                   
                   
