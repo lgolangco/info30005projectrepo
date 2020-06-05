@@ -131,6 +131,10 @@ button.btn.btn-primary {
     border: solid 2px rgba(255, 255, 255, 0.75);
 }
 
+.avatar-profile {
+  object-fit: cover;
+}
+
 .options {
     display: none;
 }
