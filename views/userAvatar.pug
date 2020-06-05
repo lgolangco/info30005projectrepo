@@ -1,7 +1,7 @@
 extends layout
 
 block content
-    // Venue Image Page for Users to Add photos for a Venue Profile
+    // User Avatar page for Users to Change their Avatar
     .main.container
         .row
             .col-md-8.offset-2
@@ -11,23 +11,22 @@ block content
                   br
                   br
                   br
-                  h2.display-4.m-b-2 Successfully submitted your image!
+                  h2.display-4.m-b-2 Successfully changed your avatar!
                   br
-                  p Thank you for uploading an image for #{venue.venueName}!
-                  p The admins will review your image and update our database accordingly.
+                  p To return to your profile page and see your new avatar, #[a(href="/profile") click here].
+                  //- p Thank you for uploading an image for #{venue.venueName}!
+                  //- p The admins will review your image and update our database accordingly.
                 
                 //- Else, show suggestion form
                 else
                   br
                   br
                   br
-                  h1.display-4.m-b-2 Upload an image for
-                  h1.display-4.m-b-2 #{venue.venueName}
+                  h1.display-4.m-b-2 Change your avatar
                   br
-                  p
-                    | Hi! Thank you for helping us improve StudySpot.
-                    | Uploading an image below will allow the admins to review your image,
-                    | who will then update the venues accordingly.
+                  p user: #{user.first_name} #{user.last_name}
+                  br
+                  p Upload an image below to change your avatar (profile picture).
                   
                   p Please note that we can only accept images in <strong> .jpeg, .jpg, or .png </strong> format.
                     
@@ -35,9 +34,9 @@ block content
                     .row
                     
                       .row
-                      label(for="venueImage") Upload an Image for this Venue
+                      label(for="userAvatar") Upload your new avatar photo
                         .row
-                        input(type="file" id="venueImage" name="venueImage" accept=".jpg,.jpeg,.png" required)
+                        input(type="file" id="userAvatar" name="userAvatar" accept=".jpg,.jpeg,.png" required)
                   
                     
                     .row
