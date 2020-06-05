@@ -7,14 +7,13 @@ nav.navbar.navbar-expand-lg.navbar-light.bg-light.shadow-sm.fixed-top
             .nav.navbar-nav.mr-auto.mt-2.mt-lg-0
             
             
-            if (user && user.admin)
+            if (user && user.admin && loggedIn)
               a.nav-item.nav-link(href="/?about=About#about") About
               a.nav-item.nav-link(href="/venue") Venues
               a.nav-item.nav-link(href="/user") Users
               a.nav-item.nav-link(href="/profile") My Profile
               a.nav-item.nav-link(href="/admin") Admin
               div
-                  //a.btn.btn-outline-dark.pull-md-right(href="/logout", style="margin:0px 10px") Log out
                   a.i.fas.fa-sign-out-alt.fa-lg(href="/logout", style="margin-left:20px; text-decoration: none")
                   
             else if loggedIn
@@ -23,7 +22,6 @@ nav.navbar.navbar-expand-lg.navbar-light.bg-light.shadow-sm.fixed-top
                 a.nav-item.nav-link(href="/user") Users
                 a.nav-item.nav-link(href="/profile") My Profile
                 div
-                    //a.btn.btn-outline-dark.pull-md-right(href="/logout", style="margin:0px 10px") Log out
                     a.i.fas.fa-sign-out-alt.fa-lg(href="/logout", style="margin-left:20px; text-decoration: none")
 
             else
