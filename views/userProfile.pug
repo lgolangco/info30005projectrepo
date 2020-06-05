@@ -26,7 +26,7 @@ block content
                         a.list-group-item.list-group-item-action(data-toggle='list', href='#bookmarks', role='tab')
                             span.fas.fa-heart.pr-4
                             | Bookmarks
-                        a.list-group-item.list-group-item-actsion(data-toggle='list', href='#', role='tab')
+                        a.list-group-item.list-group-item-actsion(data-toggle='list', href='#reviews', role='tab')
                             span.far.fa-comment.pr-4
                             | Reviews
                         a.list-group-item.list-group-item-action(data-toggle='list', href='#', role='tab')
@@ -35,3 +35,83 @@ block content
                         a.list-group-item.list-group-item-action(data-toggle='list', href='#', role='tab')
                             span.fas.fa-user-friends.pr-4
                             | Friends
+
+            .col-md-8.col-xl-9
+                .tab-content
+
+                    #bookmarks.tab-pane.fade(role='tabpanel')
+                        .card.mt-3.mb-3
+                            .card-body
+                                h3.card-title Bookmarks
+                                br
+                                br
+                                if bookmarks
+                                
+                                    .row
+                                        each venue in bookmarks
+                                            - const address = venue.venueAddress.venueStreetAddress +", "+venue.venueAddress.venueSuburb+", "+venue.venueAddress.venuePostcode;
+                                            - const imgURL = "https://studyspot.s3.amazonaws.com/venue/header/" + venue._id.toString() + ".jpg"
+                                            .col-lg-6
+                                                .card.mb-3.d-flex.align-items-stretch
+                                                    .row.no-gutters
+                                                        .col-4
+                                                            a(href="/venue/" + venue._id)
+                                                                img.venue-thumbnail(src = imgURL
+                                                                    onerror="this.src='https://studyspot.s3.amazonaws.com/venue/header/default.jpg'")
+                                                        .col-8
+                                                            .card-body
+                                                                h5.card-title #[a(href="/venue/" + venue._id) #{venue.venueName}]
+                                                                hr
+                                                                p.card-text(style='white-space:pre; font-size: 12px')
+                                                                    | #{venue.venueType}
+                                                                    | #{address}
+
+                                else 
+                                  p There are no bookmarks
+
+
+
+                    #reviews.tab-pane.fade(role='tabpanel')
+                        .card.mt-3.mb-3
+                            .card-body
+                                h3.card-title Reviews
+                                br
+                                br
+                                
+                                if reviews
+                                    .row
+                                      
+                                      each review in reviews
+                                          
+                                          - date = review.datePosted.toDateString()
+                                          .col-lg-10
+                                            .card.mb-3
+                                              
+                                              .row
+                                                .col-2
+                                                  - var userAvatarURL = "https://studyspot.s3.amazonaws.com/user/avatar/" + review.userId.toString() + ".jpg"
+                                                  img.rounded.mb-2.profile-background(src = userAvatarURL, width='50px'
+                                                    onerror="this.src='https://studyspot.s3.amazonaws.com/user/avatar/default.jpg'")
+                                                .col-10
+                                                  div
+                                                    //insert user name
+                                                    h5 #[a(href="/user/"+review.userId) #{review.userFirstName} #{review.userLastName}]
+                                                  div
+                                                    //insert rating
+                                                    p Rating: #{review.rating}/5
+                                        
+                                              .offset-1
+                                                //insert review text
+                                                p #{review.content}
+                                              
+                                              .offset-9
+                                                //insert date
+                                                p #{date}
+                                        
+                                                                  
+                                else
+                                  p You have not left any reviews.
+                                    
+                                    
+                                    
+                                                    
