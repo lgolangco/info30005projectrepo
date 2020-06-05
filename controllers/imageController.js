@@ -143,8 +143,6 @@ const uploadUserAvatarImage = async (req, res) => {
     const fileContent  = Buffer.from(req.files.userAvatar.data, 'binary');
 
 
-    // var fileType = "." + (req.files.userAvatar.mimetype).slice(6)
-
     const imageKey = "user/avatar/" + req.user._id.toString() + ".jpg"
 
     // Setting up S3 upload parameters
@@ -175,10 +173,85 @@ const uploadUserAvatarImage = async (req, res) => {
 
 };
 
+const getUserCoverImagePage = async (req, res) => {
+  console.log("s3");
+  console.log(s3);
+  if (ObjectId.isValid(req.params._id) === false || req.user == null) {
+    return res.render('error', {
+      error: "You're not logged in!",
+      message: "You must be logged in to change your cover photo"
+    });
+  }
+  const user = await User.findById(req.user._id);
+  try {
+    if (user == null){
+      return res.render('error', {
+        error: "You're not logged in!",
+        message: "You must be logged in to change your cover photo"
+      });
+    } else {
+      return res.render('userCover', {
+        user: user
+      });
+    }
+  } catch (err) {
+    res.status(400);
+    return res.render('error', {
+      error: "Database query failed",
+      message: "Database query failed",
+      functionfailure: "Failed to get 'upload cover' page"
+    });
+  }
+};
+
+const uploadUserCoverImage = async (req, res) => {
+  if (req.user == null){
+    return res.render('error', {
+      error: "You're not logged in!",
+      message: "You must be logged in to upload a cover photo."
+    });
+  }
+
+    // Binary data base64
+    const fileContent  = Buffer.from(req.files.userCover.data, 'binary');
+
+
+    const imageKey = "user/cover/" + req.user._id.toString() + ".jpg"
+
+    // Setting up S3 upload parameters
+    const params = {
+        Bucket: 'studyspot',
+        Key: imageKey, // File name you want to save as in S3
+        Body: fileContent,
+        ACL: 'public-read',
+    };
+
+    // Uploading files to the bucket
+    s3.upload(params, function(err, data) {
+        if (err) {
+            throw err;
+            return res.render('error', {
+              error: "Database query failed",
+              message: "Failed to upload image.",
+              avatarerror: "To return to your profile page, ",
+            });
+        } else{
+          res.status(200);
+          return res.render("userCover",{
+            user: req.user,
+            completed: true
+          });
+        }
+    });
+
+};
+
 // export functions
 module.exports = {
       getVenueImagePage,
       uploadVenueImage,
       getUserAvatarImagePage,
-      uploadUserAvatarImage
+      uploadUserAvatarImage,
+      getUserCoverImagePage,
+      uploadUserCoverImage
 };

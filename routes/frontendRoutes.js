@@ -95,4 +95,11 @@ router.get("/profile/uploadAvatar/:_id", imageController.getUserAvatarImagePage)
 // POST userAvatarImage by user Id
 router.post("/profile/uploadAvatar/:_id", imageController.uploadUserAvatarImage);
 
+// GET userCoverImage page by user Id
+router.get("/profile/uploadCover/:_id", imageController.getUserCoverImagePage);
+
+// POST userCoverImage by user Id
+router.post("/profile/uploadCover/:_id", imageController.uploadUserCoverImage);
+
+
 module.exports = router;
