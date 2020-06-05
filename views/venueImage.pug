@@ -18,7 +18,9 @@ block content
                 
                 //- Else, show suggestion form
                 else
-                
+                  br
+                  br
+                  br
                   h1.display-4.m-b-2 Upload an image for
                   h1.display-4.m-b-2 #{venue.venueName}
                   br
@@ -26,14 +28,19 @@ block content
                     | Hi! Thank you for helping us improve StudySpot.
                     | Uploading an image below will allow the admins to review your image,
                     | who will then update the venues accordingly.
+                  
+                  p Please note that we can only accept images in <strong> .jpeg, .jpg, or .png </strong> format.
                     
                   form(enctype='multipart/form-data' method='POST' action='')
+                    .row
                     
-                    label(for="venueImage") Upload an Image for this Venue
-                    br
-                    input(type="file" id="venueImage" name="venueImage" accept=".jpg,.jpeg,.png")
+                      .row
+                      label(for="venueImage") Upload an Image for this Venue
+                        .row
+                        input(type="file" id="venueImage" name="venueImage" accept=".jpg,.jpeg,.png" required)
+                  
                     
-                    br
-                    button.btn.btn-primary(type="submit") Submit
+                    .row
+                      button.mb-3.btn.btn-primary(type="submit") Submit
                   
                   

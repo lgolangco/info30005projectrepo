@@ -1,63 +1,65 @@
-// const aws = require('aws-sdk');
-// const multer = require('multer');
-// const multerS3 = require('multer-s3');
-//
-// aws.config.update({
-//   secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
-//   accessKeyID: process.env.AWS_ACCESS_KEY_ID,
-//   region: "region=us-east-1"
-// });
-//
-// const s3 = new aws.S3();
+const mongoose = require('mongoose');
+const Venue = mongoose.model("venue");
 
-// const upload = multer({
-//   storage: multerS3({
-//     s3: s3,
-//     bucket: 'studyspot',
-//     acl: 'public-read',
-//     metadata: function (req, file, cb) {
-//       cb(null, {fieldName: file.fieldname});
-//     },
-//     key: function (req, file, cb) {
-//       cb(null, Date.now().toString())
-//     }
-//   })
-// });
-//
-// const singleUpload = upload.single('image');
-//
-// const venueImageUpload = async (req, res) => {
-//   try {
-//     console.log("SUCCESS");
-//     console.log("req.files");
-//     console.log(req.files);
-//     // upload.single(req.files.venueImage)
-//     // console.log("UPLOAD SUCCESS");
-//     // return res.render('venueImage', {
-//     //   completed: true
-//     // });
-//     console.log("req.files.venueImage");
-//     console.log(req.files.venueImage);
-//     // const venueImage = req.files.venueImage;
-//     singleUpload(req, res, function(err){
-//       console.log("UPLOAD SUCCESS");
-//       console.log("req.files.location");
-//       console.log(req.files.location);
-//       return res.render('venueImage', {
-//         completed: true
-//       });
-//     });
-//   } catch(err) {
-//     res.status(400);
-//     console.log(err);
-//     return res.render('error', {
-//       error: "Database query failed",
-//       message: "Database query failed",
-//       functionfailure: "Failed to add venue image"
-//     });
-//   };
-// };
-//
-// module.exports = {
-//   venueImageUpload
-// };
+const AWS = require('aws-sdk');
+
+const uploadVenueImage = async (req, res) => {
+
+  if (req.user == null){
+    return res.render('error', {
+      error: "You're not logged in!",
+      message: "You must be logged in to submit a suggestion"
+    });
+  }
+    const s3 = new AWS.S3({
+      accessKeyId: process.env.AWS_ACCESS_KEY_ID, // Access key ID
+      secretAccesskey: process.env.AWS_SECRET_ACCESS_KEY, // Secret access key
+      region: "us-east-1" //Region
+    });
+
+    // Binary data base64
+    const fileContent  = Buffer.from(req.files.venueImage.data, 'binary');
+
+    const date = new Date();
+    const dateInfo = date.getFullYear().toString() + date.getMonth().toString() + date.getDate().toString()
+    + date.getHours().toString() + date.getMinutes().toString() + date.getSeconds().toString();
+
+    var fileType = "." + (req.files.venueImage.mimetype).slice(6)
+
+    const imageKey = "venue/fromUsers/" + req.params._id.toString() + "/" + req.user._id.toString() + dateInfo + fileType
+
+    // Setting up S3 upload parameters
+    const params = {
+        Bucket: 'studyspot',
+        Key: imageKey, // File name you want to save as in S3
+        Body: fileContent,
+        ACL: 'public-read',
+    };
+
+    // Uploading files to the bucket
+    s3.upload(params, function(err, data) {
+        if (err) {
+            throw err;
+            return res.render('error', {
+              error: "Database query failed",
+              message: "Failed to upload image.",
+              imageerror: "To return to the venue profile page, ",
+              venueId: req.params._id
+            });
+        }
+        const venue = Venue.findById(req.params._id);
+        venue.then(function(result){
+          res.status(200);
+          return res.render("venueImage",{
+            venue: result,
+            completed: true
+          });
+        });
+    });
+
+};
+
+// export functions
+module.exports = {
+    uploadVenueImage,
+};

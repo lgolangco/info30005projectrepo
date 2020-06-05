@@ -18,7 +18,8 @@ block content
                 if reviewerror
                   p #{reviewerror} #[a(href="/venue") click here]
                 if imageerror
-                  p #{imageerror}
+                  - const venueProfile = "/venue/" + venueId
+                  p #{imageerror} #[a(href=venueProfile) click here]
                 else  
                   p 
                     |#[a.btn.btn-info(href="/register") Return to sign up]    
