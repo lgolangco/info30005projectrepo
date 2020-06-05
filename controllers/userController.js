@@ -506,8 +506,59 @@ const postDeleteSuggestionPage = async (req, res) => {
     return false;
     }
 
+};
 
+const getResolveSuggestionPage = async (req,res) => {
+
+
+
+console.log("un");
+// checks if the _id is invalid
+if (ObjectId.isValid(req.params._id) === false) {
+  return res.render('error', {
+    error: "There are no venue suggestions with this id!",
+    message: "There are no venue suggestions with this id!",
+    venueRequesterror: "To return to admin page,"
+  });
 }
+try {
+  // checks if there are no venues listed with that _id
+  console.log("deux");
+
+  await VenueSuggestions.find({_id: req.params._id}, function(err, venueSuggestion) {
+    if (venueSuggestion.length === 0) {
+      return res.render('error', {
+        error: "There are no venue suggestions with this id!",
+        message: "There are no venue suggestions with this id!",
+        venueRequesterror: "To return to admin page,"
+      });
+    } else {
+
+      venueData = Venue.findById(venueSuggestion[0].venueId);
+      venueData.then(function(result){
+        if (req.user === undefined){
+          user = null;
+        } else {
+          return res.render("adminResolveSuggestion", {
+            venueSuggestion: venueSuggestion[0],
+            venue: result,
+            completed: false
+
+          });
+        }
+      })
+    }
+  })
+} catch (err) {
+  res.status(400);
+  return res.render('error', {
+    error: "Database query failed",
+    message: "Database query failed",
+    functionfailure: "Failed to get update venue"
+  });
+}
+
+};
 
 module.exports = {
     loadProfile,
@@ -525,5 +576,6 @@ module.exports = {
     postDeleteRequest,
     getResolveRequestPage,
     getDeleteSuggestionPage,
-    postDeleteSuggestionPage
+    postDeleteSuggestionPage,
+    getResolveSuggestionPage
 };
