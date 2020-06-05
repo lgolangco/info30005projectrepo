@@ -42,7 +42,7 @@ block content
                         a.list-group-item.list-group-item-action(data-toggle='list', href='#', role='tab')
                             span.fas.fa-clock.pr-4
                             | Recently viewed
-                        a.list-group-item.list-group-item-action(data-toggle='list', href='#', role='tab')
+                        a.list-group-item.list-group-item-action(data-toggle='list', href='#reviews', role='tab')
                             span.far.fa-comment.pr-4
                             | Reviews
                         a.list-group-item.list-group-item-action(data-toggle='list', href='#', role='tab')
@@ -85,3 +85,50 @@ block content
                                                                     | #{address}
                                 else
                                     p There are no bookmarks
+
+
+
+                    #reviews.tab-pane.fade(role='tabpanel')
+                        .card.mt-3.mb-3
+                            .card-body
+                                h3.card-title Reviews
+                                br
+                                br
+                                
+                                if reviews
+                                    .row
+                                      
+                                      each review in reviews
+                                          
+                                          - date = review.datePosted.toDateString()
+                                          .col-lg-10
+                                            .card.mb-3
+                                              
+                                              .row
+                                                .col-2
+                                                  - var userAvatarURL = "https://studyspot.s3.amazonaws.com/user/avatar/" + review.userId.toString() + ".jpg"
+                                                  img.rounded.mb-2.profile-background(src = userAvatarURL, width='50px'
+                                                    onerror="this.src='https://studyspot.s3.amazonaws.com/user/avatar/default.jpg'")
+                                                .col-10
+                                                  div
+                                                    //insert user name
+                                                    h5 #[a(href="/user/"+review.userId) #{review.userFirstName} #{review.userLastName}]
+                                                  div
+                                                    //insert rating
+                                                    p Rating: #{review.rating}/5
+                                        
+                                              .offset-1
+                                                //insert review text
+                                                p #{review.content}
+                                              
+                                              .offset-9
+                                                //insert date
+                                                p #{date}
+                                        
+                                                                  
+                                else
+                                  p You have not left any reviews.
+                                    
+                                    
+                                    
+                                    
