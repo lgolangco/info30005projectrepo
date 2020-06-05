@@ -29,3 +29,4 @@ require("./user.js");
 require("./review.js");
 require("./venue.js");
 require("./venuesuggestions.js");
+require("./venueRequests")

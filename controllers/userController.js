@@ -8,6 +8,8 @@ const passport = require("passport");
 const User = mongoose.model("user");
 const Review = mongoose.model("review");
 const Venue = mongoose.model("venue");
+const VenueRequests = mongoose.model("venueRequests");
+const VenueSuggestions = mongoose.model("venueSuggestions");
 
 // import object id type to check if request _id is valid
 const ObjectId = mongoose.Types.ObjectId;
@@ -221,7 +223,7 @@ const getUserByEmail = async (req, res) => {
             return res.render('usererror', {message: "getUserByEmail function failed"});
         }
     })
-}
+};
 
 
 // function to delete User
@@ -258,7 +260,7 @@ const logout = (req, res) => {
     req.logout();
     req.flash("success_msg", "You are logged out");
     res.redirect("/login");
-}
+};
 
 const login = (req, res, next) => {
     passport.authenticate("local", {
@@ -266,7 +268,24 @@ const login = (req, res, next) => {
         failureRedirect: "/login",
         failureFlash: true
     })(req, res, next);
-}
+};
+
+// function to get admin page
+const getAdminPage = async (req, res) => {
+  console.log("juan")
+  if (req.user && req.user.admin) {
+    console.log("too")
+    const allRequests = await VenueRequests.find();
+    console.log("fwee")
+    const allSuggestions = await VenueSuggestions.find();
+    console.log("fow")
+    return res.render("admin", {
+      venueRequests: allRequests,
+      venueSuggestions: allSuggestions
+    });
+  }
+
+};
 
 
 module.exports = {
@@ -279,5 +298,6 @@ module.exports = {
     deleteUserByID,
     getUserByEmail,
     logout,
-    login
+    login,
+    getAdminPage
 };

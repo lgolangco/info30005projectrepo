@@ -15,6 +15,9 @@ router.get("/", (req, res, next) => {
 // GET About
 router.get("/about", (req, res, next) => res.render("about", {title: "About"}));
 
+// GET Admin page
+router.get("/admin", userController.getAdminPage);
+
 // USER
 // GET Register form page
 router.get("/register", forwardAuthenticated, (req, res, next) => res.render("register", {title: "Sign Up"}));
