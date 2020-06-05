@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 
-const {ensureAuthenticated, forwardAuthenticated} = require("../config/auth");
+const {ensureAuthenticated, forwardAuthenticated, forwardAuthenticatedAdmin} = require("../config/auth");
 
 const userController = require("../controllers/userController.js");
 const venueController = require("../controllers/venueController.js");
@@ -11,7 +11,7 @@ const imageController = require("../controllers/imageController.js");
 
 // GET home page
 router.get("/", (req, res, next) => {
-    return res.render("index", {title: "Home"});
+    return res.render("index", {title: "Home", user: req.user});
 });
 
 // GET About
@@ -21,28 +21,28 @@ router.get("/about", (req, res, next) => res.render("about", {title: "About"}));
 // ADMIN
 
 // GET Admin page
-router.get("/admin", ensureAuthenticated, adminController.getAdminPage);
+router.get("/admin", forwardAuthenticatedAdmin, adminController.getAdminPage);
 
 // GET Admin Delete Request Page
-router.get("/admin/deleteRequest/:_id",ensureAuthenticated, adminController.getDeleteRequestPage);
+router.get("/admin/deleteRequest/:_id",forwardAuthenticatedAdmin, adminController.getDeleteRequestPage);
 
 // POST Admin Delete Request
 router.post("/admin/deleteRequest/:_id", adminController.postDeleteRequest);
 
 // GET Admin Resolve Request page
-router.get("/admin/resolveRequest/:_id",ensureAuthenticated, adminController.getResolveRequestPage);
+router.get("/admin/resolveRequest/:_id",forwardAuthenticatedAdmin, adminController.getResolveRequestPage);
 
 // POST Admin Resolve Request form
 router.post("/admin/resolveRequest/:_id", adminController.postResolveRequest);
 
 // GET Admin Delete Suggestion page
-router.get("/admin/deleteSuggestion/:_id",ensureAuthenticated, adminController.getDeleteSuggestionPage);
+router.get("/admin/deleteSuggestion/:_id",forwardAuthenticatedAdmin, adminController.getDeleteSuggestionPage);
 
 // POST Admin Delete Suggestion
 router.post("/admin/deleteSuggestion/:_id", adminController.postDeleteSuggestionPage);
 
 // GET Admin Resolve Suggestion page
-router.get("/admin/resolveSuggestion/:_id",ensureAuthenticated, adminController.getResolveSuggestionPage);
+router.get("/admin/resolveSuggestion/:_id",forwardAuthenticatedAdmin, adminController.getResolveSuggestionPage);
 
 // POST Admin Resolve Suggestion form
 router.post("/admin/resolveSuggestion/:_id", adminController.postResolveSuggestionPage);
@@ -50,6 +50,7 @@ router.post("/admin/resolveSuggestion/:_id", adminController.postResolveSuggesti
 
 
 // USER
+
 // GET Register form page
 router.get("/register", forwardAuthenticated, (req, res, next) => res.render("register", {title: "Sign Up"}));
 
@@ -81,6 +82,8 @@ router.post("/profile/delete", userController.deleteUserByID);
 
 // GET Logout
 router.get("/logout", userController.logout);
+
+
 
 // VENUE
 

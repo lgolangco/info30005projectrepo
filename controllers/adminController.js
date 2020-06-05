@@ -20,7 +20,9 @@ const getAdminPage = async (req, res) => {
 
     return res.render("admin", {
       venueRequests: allRequests,
-      venueSuggestions: allSuggestions
+      venueSuggestions: allSuggestions,
+      user: req.user,
+      admin: req.user.admin
     });
   }
 };
@@ -59,8 +61,8 @@ const getDeleteRequestPage = async (req, res) => {
 
     } else {
       return res.render("adminDeleteRequest", {
-        venueRequest: venueRequest,
-
+        user: req.user,
+        venueRequest: venueRequest
       });
     }
   } catch (err) {
@@ -133,6 +135,7 @@ const getResolveRequestPage = async (req,res) => {
       } else {
         console.log(venueRequest);
         return res.render("adminResolveRequest", {
+          user: req.user,
           venueRequest: venueRequest[0],
           completed: false
         })

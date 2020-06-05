@@ -281,6 +281,7 @@ const getVenueUpdateByID = async (req, res) => {
       return res.render("venueUpdate", {
         title: "Update Profile",
         id: req.params._id,
+        user: req.user,
         venue: venue[0],
         completed: false
       });
