@@ -64,7 +64,7 @@ block content
                                 h3.card-title Bookmarks
                                 br
                                 br
-                                if bookmarks
+                                if bookmarks.length > 0
                                     .row
                                         each venue in bookmarks
                                             - const address = venue.venueAddress.venueStreetAddress +", "+venue.venueAddress.venueSuburb+", "+venue.venueAddress.venuePostcode;
@@ -84,7 +84,7 @@ block content
                                                                     | #{venue.venueType}
                                                                     | #{address}
                                 else
-                                    p There are no bookmarks
+                                    p You have not bookmarked any StudySpots.
 
 
 
@@ -95,7 +95,7 @@ block content
                                 br
                                 br
                                 
-                                if reviews
+                                if reviews.length > 0
                                     .row
                                       
                                       each review in reviews
