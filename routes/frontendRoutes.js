@@ -30,6 +30,22 @@ router.post("/admin/deleteRequest/:_id", userController.postDeleteRequest);
 // GET Admin Resolve Request page
 router.get("/admin/resolveRequest/:_id", userController.getResolveRequestPage);
 
+// POST Admin Resolve Request form
+
+
+// GET Admin Delete Suggestion page
+router.get("/admin/deleteSuggestion/:_id", userController.getDeleteSuggestionPage);
+
+// POST Admin Delete Suggestion
+router.post("/admin/deleteSuggestion/:_id", userController.postDeleteSuggestionPage);
+
+// GET Admin Resolve Suggestion page
+
+
+// POST Admin Resolve Suggestion form
+
+
+
 
 // USER
 // GET Register form page

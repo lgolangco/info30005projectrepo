@@ -58,4 +58,7 @@ block content
                 
             //BUTTON TO "EDIT AND RESOLVE SUGGESTION" - copy of update page
             //BUTTON TO "DELETE SUGGESTION" - leads to 'are you sure you want to delete' page
-            p #[a(href="") Update Venue and Resolve Suggestion] | #[a(href="") Delete Suggestion]
+            - const updateLink = "/admin/resolveSuggestion/" + suggestion._id.toString();
+            - const deleteLink = "/admin/deleteSuggestion/" + suggestion._id.toString();
+            
+            p #[a(href="") Update Venue and Resolve Suggestion] | #[a(href=deleteLink) Delete Suggestion]

@@ -287,7 +287,6 @@ const getAdminPage = async (req, res) => {
 
 //function to get Delete Venue Request page
 const getDeleteRequestPage = async (req, res) => {
-  console.log("uno")
 
   if (ObjectId.isValid(req.params._id) === false) {
     return res.render('error', {
@@ -297,14 +296,12 @@ const getDeleteRequestPage = async (req, res) => {
     });
   }
   if (req.user == null) {
-    console.log("duo")
     return res.render('error', {
       error: "You're not logged in!",
       message: "You must be logged in to delete this venue request"
     });
   }
   else if (req.user.admin == false) {
-    console.log("tre")
     return res.render('error', {
       error: "You're not an admin!",
       message: "You must be an admin to delete this venue request"
@@ -312,10 +309,8 @@ const getDeleteRequestPage = async (req, res) => {
   }
 
   try {
-    console.log("quattro")
     const venueRequest = await VenueRequests.findById(req.params._id);
     if (venueRequest === null){
-      console.log("cinque")
       return res.render('error', {
         error: "There are no venue requests with this id!",
         message: "There are no venue requests with this id!",
@@ -323,7 +318,6 @@ const getDeleteRequestPage = async (req, res) => {
       });
 
     } else {
-      console.log("SEICESS")
       return res.render("adminDeleteRequest", {
         venueRequest: venueRequest,
 
@@ -421,6 +415,100 @@ const getResolveRequestPage = async (req,res) => {
 
 
 
+const getDeleteSuggestionPage = async (req, res) => {
+  console.log("juan");
+
+  if (ObjectId.isValid(req.params._id) === false) {
+    return res.render('error', {
+      error: "There are no venue suggestions with this id!",
+      message: "There are no venue suggestions with this id!",
+      venueRequesterror: "To return to admin page,"
+    });
+  }
+  if (req.user == null) {
+    return res.render('error', {
+      error: "You're not logged in!",
+      message: "You must be logged in to delete this venue suggestion"
+    });
+  }
+  else if (req.user.admin == false) {
+    return res.render('error', {
+      error: "You're not an admin!",
+      message: "You must be an admin to delete this venue suggestion"
+    });
+  }
+
+  try {
+    console.log("doo");
+
+    const venueSuggestion = await VenueSuggestions.findById(req.params._id);
+    console.log("doo point 5");
+    if (venueSuggestion === null){
+      console.log("doo point 6");
+      return res.render('error', {
+        error: "There are no venue suggestions with this id!",
+        message: "There are no venue suggestions with this id!",
+        venueRequesterror: "To return to admin page,"
+      });
+
+    } else {
+      console.log("sree");
+      return res.render("adminDeleteSuggestion", {
+        venueSuggestion: venueSuggestion,
+        deleted: false
+      });
+    }
+  } catch (err) {
+    console.log("faw");
+    res.status(400);
+    return res.render('error', {
+      error: "Database query failed",
+      message: err,
+      functionfailure: "Failed to get delete venue suggestions page"
+    });
+  }
+};
+
+const postDeleteSuggestionPage = async (req, res) => {
+  // checks if the _id is invalid
+  if (ObjectId.isValid(req.params._id) === false) {
+    return res.render('error', {
+      error: "There are no venue suggestions with this id!",
+      message: "There are no venue suggestions with this id!",
+      venueRequesterror: "To return to admin page,"
+    });
+  }
+
+  // checks if there are no venues listed with that _id
+  await VenueSuggestions.find({_id: req.params._id}, function(err, venue) {
+    if (venue.length === 0) {
+      return res.render('error', {
+        error: "There are no venue suggestions with this id!",
+        message: "There are no venue suggestions with this id!",
+        venueRequesterror: "To return to admin page,"
+      });
+    }
+  })
+
+  // delete the venue with the prescribed _id
+  const result = await VenueSuggestions.deleteOne({_id: req.params._id}).exec();
+  if (result.n === 0) {
+    res.status(400);
+    return res.render('error', {
+      error: "Database query failed",
+      message: "Database query failed",
+      functionfailure: "Failed to delete venue request"
+    });
+  } else {
+    res.render("adminDeleteSuggestion",{
+      deleted: true
+    });
+    return false;
+    }
+
+
+}
+
 module.exports = {
     loadProfile,
     getAllUsers,
@@ -435,5 +523,7 @@ module.exports = {
     getAdminPage,
     getDeleteRequestPage,
     postDeleteRequest,
-    getResolveRequestPage
+    getResolveRequestPage,
+    getDeleteSuggestionPage,
+    postDeleteSuggestionPage
 };
