@@ -176,10 +176,80 @@ const uploadUserAvatarImage = async (req, res) => {
 
 };
 
+function extractURL(images) {
+  console.log("images");
+  console.log(images);
+  var imageLinks = [];
+  var i = 0;
+  while (i < images.length){
+    console.log("images[i]");
+    console.log(images[i]);
+    console.log("image[i].Key");
+    console.log(images[i].Key);
+    imageLinks.push(images[i].Key);
+    i += 1;
+  }
+
+  console.log(imageLinks)
+
+  return imageLinks;
+}
+
+
+const getVenueGalleryPage = async (req, res) => {
+  if (ObjectId.isValid(req.params._id) === false) {
+    return res.render('error', {
+      error: "There are no venues listed with this id!",
+      message: "There are no venues listed with this id!",
+      venueerror: "For a list of all registered venues,"
+    });
+  }
+  try {
+    const venue = await Venue.find({_id: req.params._id});
+    if (venue.length === 0){
+      return res.render('error', {
+        error: "There are no venues listed with this id!",
+        message: "There are no venues listed with this id!",
+        venueerror: "For a list of all registered venues,"
+      });
+    } else {
+      const prefix = "venue/fromUsers/" + req.params._id.toString();
+      console.log("prefix");
+      console.log(prefix);
+      var params = {
+        Bucket: 'studyspot',
+        Delimiter: '',
+        Prefix: prefix
+      }
+      s3.listObjects(params, function (err, data) {
+        if(err)throw err;
+        console.log("DATA");
+        console.log(data.Contents);
+        imageLinks = extractURL(data.Contents);
+        console.log(imageLinks);
+        return res.render('venueGallery', {
+          venue: venue[0],
+          currentUser: req.user,
+          galleryImages: imageLinks
+        });
+      });
+    }
+  } catch (err) {
+    res.status(400);
+    return res.render('error', {
+      error: "Database query failed",
+      message: "Database query failed",
+      functionfailure: "Failed to get 'venue gallery' page"
+    });
+  }
+};
+
+
 // export functions
 module.exports = {
       getVenueImagePage,
       uploadVenueImage,
       getUserAvatarImagePage,
       uploadUserAvatarImage,
+      getVenueGalleryPage
 };

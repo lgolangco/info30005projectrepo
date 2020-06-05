@@ -44,13 +44,17 @@ block content
           h2 #{message}
           h2 #{venue.venueName}
           p #{venue.venueType} | #{venue.venueAddress.venueSuburb}, #{venue.venueAddress.venueState}
+          
+          - const id = venue._id
+          - const galleryPage = "/venueGallery/" + id
+          
+            a(href=galleryPage) View Gallery
         
           if (user)
             
-            - const id = venue._id
             - const imagePage = '/venueImage/' + id
             p 
-              a(href=imagePage) Upload an image for this venue
+              a(href=imagePage) + Upload an image for this venue
             
             - const suggestionsPage = '/venueSuggestions/' + id
             p

@@ -15,6 +15,15 @@ block content
                   br
                   p Thank you for uploading an image for #{venue.venueName}!
                   p The admins will review your image and update our database accordingly.
+                  
+                  br
+                  - const returnPage = "/venue/" + venue._id
+                  p To <strong> return </strong> to the #{venue.venueName} profile page, #[a(href=returnPage) click here].
+                  p To <strong> upload another image </strong>  for #{venue.venueName}, #[a(href="") click here].
+                  
+                  - const id = venue._id
+                  - const galleryPage = "/venueGallery/" + id
+                  p Or, to <strong> view #{venue.venueName}'s photo gallery </strong> #[a(href=galleryPage) click here].
                 
                 //- Else, show suggestion form
                 else

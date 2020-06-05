@@ -95,5 +95,8 @@ router.get("/profile/uploadAvatar/:_id", imageController.getUserAvatarImagePage)
 // POST userAvatarImage by user Id
 router.post("/profile/uploadAvatar/:_id", imageController.uploadUserAvatarImage);
 
+// GET userAvatarImage page by user Id
+router.get("/venueGallery/:_id", imageController.getVenueGalleryPage);
+
 
 module.exports = router;
