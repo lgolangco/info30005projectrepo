@@ -22,6 +22,9 @@ block content
                             // Basic user information
                             .info
                                 .title
-                                    a(href='/user/' + user._id) #{user.first_name} #{user.last_name}
+                                    if (currentUser && currentUser._id.toString() == user._id.toString())
+                                      a(href='/profile/') #{user.first_name} #{user.last_name}
+                                    else
+                                      a(href='/user/' + user._id) #{user.first_name} #{user.last_name}
                                 .desc Email: #{user.email}
                                 .desc User ID: #{user._id}

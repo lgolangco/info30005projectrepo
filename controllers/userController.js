@@ -20,7 +20,7 @@ const getAllUsers = async (req, res) => {
         if (all_users.length === 0) {
             return res.render('usererror', {message: "There are no existing users yet"});
         } else {
-            return res.render('users', {users: all_users});
+            return res.render('users', {users: all_users, currentUser: req.user});
         }
     } catch (err) {
         res.status(400);
