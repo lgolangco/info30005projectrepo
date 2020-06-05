@@ -10,20 +10,17 @@ block content
                     - const userAvatarURL = "https://studyspot.s3.amazonaws.com/user/avatar/" + user._id.toString() + ".jpg"
                     img.rounded.mb-2.profile-background.avatar-profile(src = userAvatarURL, width='130px'
                       onerror="this.src='https://studyspot.s3.amazonaws.com/user/avatar/default.jpg'")
-                      
-                      
-                      
-                      //- img.rounded.mb-2.profile-background(src=user.avatar, width='130px')
+
+
                     
                     a.btn.btn-warning.btn-sm.btn-block(href="/profile/edit") Edit profile
                     a.btn.btn-light.btn-sm.btn-block(href="/profile/uploadAvatar/" + user._id) Change your avatar
                     a.btn.btn-danger.btn-sm.btn-block(href="/profile/delete") Delete my account
                 .media-body.mb-5.text-white
-                    h4.my-4 #{user.first_name} #{user.last_name}
-                    p.mb-0 Email: #{user.email}
-                    p User ID: #{user._id}
+                    h3.my-4 #{user.first_name} #{user.last_name}
+                    h6.mb-2(style="font-weight: light") Email: #{user.email}
                     if biography
-                        p #{user.biography}
+                        h6 #{user.biography}
 
     .container
         .row
@@ -32,7 +29,7 @@ block content
                     .card-header
                         h5.card-title.mb-0.text-center Profile
                     .list-group.list-group-flush(role='tablist')
-                        a.list-group-item.list-group-item-action.active(data-toggle='list', href='#dashboard', role='tab')
+                        a.list-group-item.list-group-item-action(data-toggle='list', href='#dashboard', role='tab')
                             span.fas.fa-tachometer-alt.pr-4
                             | Dashboard
                         a.list-group-item.list-group-item-action(data-toggle='list', href='#bookmarks', role='tab')

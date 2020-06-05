@@ -10,11 +10,10 @@ block content
                     img.rounded.mb-2.profile-background(src = userAvatarURL, width='130px'
                     onerror="this.src='https://studyspot.s3.amazonaws.com/user/avatar/default.jpg'")
                 .media-body.mb-3.text-white
-                    h4.my-4 #{user.first_name} #{user.last_name}
-                    p.mb-0 Email: #{user.email}
-                    p User ID: #{user._id}
+                    h3.my-4 #{user.first_name} #{user.last_name}
+                    h6.mb-0 Email: #{user.email}
                     if(user.biography)
-                      p #{user.biography}
+                      h6 #{user.biography}
 
     .main.container
         .row

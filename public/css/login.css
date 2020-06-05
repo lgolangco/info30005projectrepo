@@ -1,9 +1,7 @@
 /* Login page */
 
 .login {
-    background: #599fd9;
-    background: -webkit-linear-gradient(to right, #599fd9, #f9eadf);
-    background: linear-gradient(to right, #599fd9, #f9eadf);
+    background: #ffffff;
     min-height: 100vh;
     overflow-x: hidden;
 }
