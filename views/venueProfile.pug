@@ -46,6 +46,14 @@ block content
           p #{venue.venueType} | #{venue.venueAddress.venueSuburb}, #{venue.venueAddress.venueState}
           
           - const id = venue._id
+          
+          if (user && user.admin && loggedIn)
+            - const headerPage = "/venueHeader/" + id
+            p 
+              a(href=headerPage) + Upload a header image for this venue
+          
+          
+          
           - const galleryPage = "/venueGallery/" + id
           
             a(href=galleryPage) View Gallery

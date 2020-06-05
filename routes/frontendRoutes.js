@@ -95,8 +95,14 @@ router.get("/profile/uploadAvatar/:_id", imageController.getUserAvatarImagePage)
 // POST userAvatarImage by user Id
 router.post("/profile/uploadAvatar/:_id", imageController.uploadUserAvatarImage);
 
-// GET userAvatarImage page by user Id
+// GET userVenueGallery page by venye Id
 router.get("/venueGallery/:_id", imageController.getVenueGalleryPage);
+
+// GET venueHeader page by venue Id
+router.get("/venueHeader/:_id", imageController.getVenueHeaderPage);
+
+// POST venueHeader image by venue Id
+router.post("/venueHeader/:_id", imageController.uploadVenueHeaderImage);
 
 
 module.exports = router;
