@@ -3,7 +3,7 @@ extends layout
 block content
 
     .profile-cover.px-4.py-4.col-lg-12
-      
+    
         .container
             .media.align-items-end.profile-header
                 .profile.mr-5
@@ -16,15 +16,14 @@ block content
                       //- img.rounded.mb-2.profile-background(src=user.avatar, width='130px')
                     
                     a.btn.btn-warning.btn-sm.btn-block(href="/profile/edit") Edit profile
-                    a.btn.btn-light.btn-sm.btn-block(href="profile/uploadAvatar/" + user._id) Change your avatar
-                    a.btn.btn-light.btn-sm.btn-block(href="profile/uploadCover/" + user._id) Change your cover photo
+                    a.btn.btn-light.btn-sm.btn-block(href="/profile/uploadAvatar/" + user._id) Change your avatar
                     a.btn.btn-danger.btn-sm.btn-block(href="/profile/delete") Delete my account
                 .media-body.mb-5.text-white
                     h4.my-4 #{user.first_name} #{user.last_name}
                     p.mb-0 Email: #{user.email}
                     p User ID: #{user._id}
                     if biography
-                        p Bio: #{user.biography}
+                        p #{user.biography}
 
     .container
         .row

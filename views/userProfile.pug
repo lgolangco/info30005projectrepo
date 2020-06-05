@@ -9,12 +9,12 @@ block content
                   - const userAvatarURL = "https://studyspot.s3.amazonaws.com/user/avatar/" + user._id.toString() + ".jpg"
                     img.rounded.mb-2.profile-background(src = userAvatarURL, width='130px'
                     onerror="this.src='https://studyspot.s3.amazonaws.com/user/avatar/default.jpg'")
-                    //- img.rounded.mb-2.profile-background(src=user.avatar, width='130px')
                 .media-body.mb-3.text-white
                     h4.my-4 #{user.first_name} #{user.last_name}
                     p.mb-0 Email: #{user.email}
                     p User ID: #{user._id}
-                    p Bio: #{user.biography}
+                    if(user.biography)
+                      p #{user.biography}
 
     .main.container
         .row
