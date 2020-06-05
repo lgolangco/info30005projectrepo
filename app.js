@@ -5,12 +5,16 @@ const session = require("express-session");
 const flash = require("connect-flash");
 const passport = require("passport");
 
+const fileUpload = require('express-fileupload');
+
 const app = express();
 
 require("./models");
 
 // Passport config
 require("./config/passport")(passport);
+
+app.use(fileUpload());
 
 // session middleware
 app.use(session({

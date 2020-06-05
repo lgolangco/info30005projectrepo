@@ -29,8 +29,8 @@ block content
   //- Regular Venue Profile
   else
     center
-      - const imgURL = "https://studyspot.s3.amazonaws.com/venue/header/" + venue._id.toString() + ".jpg"
-      img.venue-header(src = imgURL 
+      - const venueHeaderURL = "https://studyspot.s3.amazonaws.com/venue/header/" + venue._id.toString() + ".jpg"
+      img.venue-header(src = venueHeaderURL 
         onerror="this.src='https://studyspot.s3.amazonaws.com/venue/header/default.jpg'")
       
     br
@@ -46,13 +46,20 @@ block content
           p #{venue.venueType} | #{venue.venueAddress.venueSuburb}, #{venue.venueAddress.venueState}
         
           if (user)
+            
             - const id = venue._id
+            - const imagePage = '/venueImage/' + id
+            p 
+              a(href=imagePage) Upload an image for this venue
+            
             - const suggestionsPage = '/venueSuggestions/' + id
             p
               a(href=suggestionsPage) Suggest changes
-          else
-            p Please #[a(href="/login") log in] or #[a(href="/register") sign up] to suggest changes to this venue.
 
+              
+          else
+            p Please #[a(href="/login") log in] or #[a(href="/register") sign up] to suggest changes or upload images for this venue.
+            
         // Venue Details
         div.venue-details-div
           h3 Details
@@ -179,9 +186,12 @@ block content
                     
                     .row
                         .col-2
-                          - const imgURL = "https://studyspot.s3.amazonaws.com/venue/header/" + review.userId.toString() + ".jpg"
-                          img.venue-thumbnail(src = imgURL 
-                            onerror="this.src='https://studyspot.s3.amazonaws.com/venue/header/default.jpg'")
+                          //- - const imgURL = "https://studyspot.s3.amazonaws.com/venue/header/" + review.userId.toString() + ".jpg"
+                          //- img.venue-thumbnail(src = imgURL 
+                          //-   onerror="this.src='https://studyspot.s3.amazonaws.com/venue/header/default.jpg'")
+                          - var userAvatarURL = "https://studyspot.s3.amazonaws.com/user/avatar/" + review.userId.toString() + ".jpg"
+                          img.rounded.mb-2.profile-background(src = userAvatarURL, width='50px'
+                            onerror="this.src='https://studyspot.s3.amazonaws.com/user/avatar/default.jpg'")
                         .col-8
                           div
                             //insert user name
@@ -265,9 +275,9 @@ block content
                   
                   .row
                     .col-2
-                      - const imgURL = "https://studyspot.s3.amazonaws.com/venue/header/" + review.userId.toString() + ".jpg"
-                      img.venue-thumbnail(src = imgURL 
-                        onerror="this.src='https://studyspot.s3.amazonaws.com/venue/header/default.jpg'")
+                      - var userAvatarURL = "https://studyspot.s3.amazonaws.com/user/avatar/" + review.userId.toString() + ".jpg"
+                      img.rounded.mb-2.profile-background(src = userAvatarURL, width='50px'
+                        onerror="this.src='https://studyspot.s3.amazonaws.com/user/avatar/default.jpg'")
                     .col-10
                       div
                         //insert user name

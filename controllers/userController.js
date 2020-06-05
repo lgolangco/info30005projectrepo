@@ -20,7 +20,7 @@ const getAllUsers = async (req, res) => {
         if (all_users.length === 0) {
             return res.render('usererror', {message: "There are no existing users yet"});
         } else {
-            return res.render('users', {users: all_users});
+            return res.render('users', {users: all_users, currentUser: req.user});
         }
     } catch (err) {
         res.status(400);
@@ -32,7 +32,10 @@ const loadProfile = async(req, res) => {
     try {
         const bookmarks = await Venue.find({_id: { $in :req.user.bookmarks}});
         console.log(req.user.bookmarks);
-        return res.render("profile", {user: req.user, bookmarks: bookmarks, title: "Profile"});
+        const reviews = await Review.find({userId: req.user._id});
+        console.log("REVIEWS");
+        console.log(reviews);
+        return res.render("profile", {user: req.user, bookmarks: bookmarks, title: "Profile", reviews: reviews});
     } catch (err) {
         res.status(400);
         console.log(req.user.bookmarks,err);
@@ -202,7 +205,16 @@ const getUserByID = async (req, res) => {
         if (user.length === 0) {
             return res.render('usererror', {message: "There are no users listed with this id"});
         } else if (user) {
-            return res.render('userProfile', {user: user[0]});
+            const bookmarks = Venue.find({_id: { $in : user[0].bookmarks}});
+            bookmarks.then(function(bookmarksresult){
+              console.log(bookmarksresult);
+              const reviews = Review.find({userId: user[0]._id});
+              reviews.then(function(reviewsresult){
+                console.log("REVIEWS");
+                console.log(reviewsresult);
+                return res.render('userProfile', {user: user[0], bookmarks: bookmarksresult, reviews: reviewsresult});
+              });
+            });
         } else {
             res.status(400);
             return res.render('usererror', {message: "getUserByID function failed"});

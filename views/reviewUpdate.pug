@@ -16,7 +16,9 @@ block content
               
               .row
                   .col-2
-                    p user profile image
+                    - var userAvatarURL = "https://studyspot.s3.amazonaws.com/user/avatar/" + review.userId.toString() + ".jpg"
+                    img.rounded.mb-2.profile-background(src = userAvatarURL, width='50px'
+                      onerror="this.src='https://studyspot.s3.amazonaws.com/user/avatar/default.jpg'")
                   .col-8
                     div
                       //insert user name

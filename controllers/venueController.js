@@ -566,7 +566,6 @@ const addRequestNew = async (req, res) => {
    }
 };
 
-
 // function to add venue to user's bookmarks
 const bookmark = async (req, res) => {
   try {
