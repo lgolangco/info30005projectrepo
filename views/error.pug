@@ -16,6 +16,8 @@ block content
                   p #{venueerror} #[a(href="/venue") click here]
                 if reviewerror
                   p #{reviewerror} #[a(href="/venue") click here]
+                if venueRequesterror
+                  p #{venueRequesterror} #[a(href="/admin") click here]
                 else  
                   p 
                     |#[a.btn.btn-info(href="/register") Return to sign up]    

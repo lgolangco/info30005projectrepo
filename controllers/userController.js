@@ -272,21 +272,72 @@ const login = (req, res, next) => {
 
 // function to get admin page
 const getAdminPage = async (req, res) => {
-  console.log("juan")
+
   if (req.user && req.user.admin) {
-    console.log("too")
+
     const allRequests = await VenueRequests.find();
-    console.log("fwee")
     const allSuggestions = await VenueSuggestions.find();
-    console.log("fow")
+
     return res.render("admin", {
       venueRequests: allRequests,
       venueSuggestions: allSuggestions
     });
   }
-
 };
 
+//function to get Delete Venue Request page
+const getDeleteRequestPage = async (req, res) => {
+  console.log("uno")
+
+  if (ObjectId.isValid(req.params._id) === false) {
+    return res.render('error', {
+      error: "There are no venue requests with this id!",
+      message: "There are no venue requests with this id!",
+      venueRequesterror: "To return to admin page,"
+    });
+  }
+  if (req.user == null) {
+    console.log("duo")
+    return res.render('error', {
+      error: "You're not logged in!",
+      message: "You must be logged in to delete this venue request"
+    });
+  }
+  else if (req.user.admin == false) {
+    console.log("tre")
+    return res.render('error', {
+      error: "You're not an admin!",
+      message: "You must be an admin to delete this venue request"
+    });
+  }
+
+  try {
+    console.log("quattro")
+    const venueRequest = await VenueRequests.findById(req.params._id);
+    if (venueRequest === null){
+      console.log("cinque")
+      return res.render('error', {
+        error: "There are no venue requests with this id!",
+        message: "There are no venue requests with this id!",
+        venueRequesterror: "To return to admin page,"
+      });
+
+    } else {
+      console.log("SEICESS")
+      return res.render("adminDeleteRequest", {
+        venueRequest: venueRequest,
+
+      });
+    }
+  } catch (err) {
+    res.status(400);
+    return res.render('error', {
+      error: "Database query failed",
+      message: err,
+      functionfailure: "Failed to get delete venue Request page"
+    });
+  }
+};
 
 module.exports = {
     loadProfile,
@@ -299,5 +350,6 @@ module.exports = {
     getUserByEmail,
     logout,
     login,
-    getAdminPage
+    getAdminPage,
+    getDeleteRequestPage
 };

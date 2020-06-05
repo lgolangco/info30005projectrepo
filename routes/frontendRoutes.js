@@ -18,6 +18,12 @@ router.get("/about", (req, res, next) => res.render("about", {title: "About"}));
 // GET Admin page
 router.get("/admin", userController.getAdminPage);
 
+// GET Admin Delete Request Page
+router.get("/admin/deleteRequest/:_id", userController.getDeleteRequestPage);
+
+// POST Admin Delete Request
+// router.post("/admin/deleteRequest/:_id", userController.postDeleteRequest);
+
 // USER
 // GET Register form page
 router.get("/register", forwardAuthenticated, (req, res, next) => res.render("register", {title: "Sign Up"}));
