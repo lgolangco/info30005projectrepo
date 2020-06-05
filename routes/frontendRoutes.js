@@ -5,6 +5,7 @@ const {ensureAuthenticated, forwardAuthenticated} = require("../config/auth");
 
 const userController = require("../controllers/userController.js");
 const venueController = require("../controllers/venueController.js");
+const adminController = require("../controllers/adminController.js");
 
 
 // GET home page
@@ -19,31 +20,31 @@ router.get("/about", (req, res, next) => res.render("about", {title: "About"}));
 // ADMIN
 
 // GET Admin page
-router.get("/admin", userController.getAdminPage);
+router.get("/admin", adminController.getAdminPage);
 
 // GET Admin Delete Request Page
-router.get("/admin/deleteRequest/:_id", userController.getDeleteRequestPage);
+router.get("/admin/deleteRequest/:_id", adminController.getDeleteRequestPage);
 
 // POST Admin Delete Request
-router.post("/admin/deleteRequest/:_id", userController.postDeleteRequest);
+router.post("/admin/deleteRequest/:_id", adminController.postDeleteRequest);
 
 // GET Admin Resolve Request page
-router.get("/admin/resolveRequest/:_id", userController.getResolveRequestPage);
+router.get("/admin/resolveRequest/:_id", adminController.getResolveRequestPage);
 
 // POST Admin Resolve Request form
-router.post("/admin/resolveRequest/:_id", userController.postResolveRequest);
+router.post("/admin/resolveRequest/:_id", adminController.postResolveRequest);
 
 // GET Admin Delete Suggestion page
-router.get("/admin/deleteSuggestion/:_id", userController.getDeleteSuggestionPage);
+router.get("/admin/deleteSuggestion/:_id", adminController.getDeleteSuggestionPage);
 
 // POST Admin Delete Suggestion
-router.post("/admin/deleteSuggestion/:_id", userController.postDeleteSuggestionPage);
+router.post("/admin/deleteSuggestion/:_id", adminController.postDeleteSuggestionPage);
 
 // GET Admin Resolve Suggestion page
-router.get("/admin/resolveSuggestion/:_id", userController.getResolveSuggestionPage);
+router.get("/admin/resolveSuggestion/:_id", adminController.getResolveSuggestionPage);
 
 // POST Admin Resolve Suggestion form
-router.post("/admin/resolveSuggestion/:_id", userController.postResolveSuggestionPage);
+router.post("/admin/resolveSuggestion/:_id", adminController.postResolveSuggestionPage);
 
 
 
