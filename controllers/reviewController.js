@@ -78,12 +78,25 @@ const addReview = async (req, res) => {
         } else {
           user = req.user;
         }
+
+        reviewCount = 0;
+        totalRating = 0;
+        aveRating = 0;
+
+        result.forEach(function(reviews) {
+          reviewCount ++;
+          totalRating += reviews.rating;
+        });
+        aveRating = totalRating / reviewCount;
+        console.log(reviewCount, aveRating);
         return res.render('venueProfile', {
           venue: venue[0],
           user: user,
           venuesReviews: result,
           completed: true,
-          newReview: reviewProcessed
+          newReview: reviewProcessed,
+          reviewCount: reviewCount,
+          aveRating: aveRating
         });
       });
 

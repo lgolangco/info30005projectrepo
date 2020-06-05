@@ -155,7 +155,10 @@ block content
         // Reviews
         div.venue-reviews
           h2 Reviews
-          
+          br
+          h5 Total #{reviewCount} reviews
+          h5 Average rating #{aveRating}
+          br
           //- Create New Review
           //- If suggestion already submitted only show message
           if (completed)

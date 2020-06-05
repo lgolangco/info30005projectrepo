@@ -146,7 +146,19 @@ const getVenueByID = async (req, res) => {
       console.log("LOOKING FOR ID");
       console.log(req.params._id);
       venuesReviews = findVenuesReviews(req.params._id);
+
       venuesReviews.then(function(result){
+        reviewCount = 0;
+        totalRating = 0;
+        aveRating = 0;
+
+        result.forEach(function(reviews) {
+          reviewCount ++;
+          totalRating += reviews.rating;
+        });
+        aveRating = totalRating / reviewCount;
+        console.log(reviewCount, aveRating);
+
         if (req.user === undefined){
           user = null;
         } else {
@@ -155,7 +167,9 @@ const getVenueByID = async (req, res) => {
         return res.render('venueProfile', {
           venue: venue[0],
           user: user,
-          venuesReviews: result
+          venuesReviews: result,
+          reviewCount: reviewCount,
+          aveRating: aveRating
         });
       });
     } else {
