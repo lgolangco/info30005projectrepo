@@ -233,7 +233,7 @@ const getUserByEmail = async (req, res) => {
             return res.render('usererror', {message: "getUserByEmail function failed"});
         }
     })
-}
+};
 
 
 // function to delete User
@@ -270,7 +270,7 @@ const logout = (req, res) => {
     req.logout();
     req.flash("success_msg", "You are logged out");
     res.redirect("/login");
-}
+};
 
 const login = (req, res, next) => {
     passport.authenticate("local", {
@@ -278,7 +278,8 @@ const login = (req, res, next) => {
         failureRedirect: "/login",
         failureFlash: true
     })(req, res, next);
-}
+};
+
 
 
 module.exports = {

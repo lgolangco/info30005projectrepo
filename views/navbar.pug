@@ -5,8 +5,19 @@ nav.navbar.navbar-expand-lg.navbar-light.bg-light.shadow-sm.fixed-top
         button.navbar-toggler.hidden-md-up.pull-xs-right(type="button" data-toggle="collapse" data-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation") &#x2630;
         #navbar.collapse.navbar-collapse.navbar-toggleable-sm
             .nav.navbar-nav.mr-auto.mt-2.mt-lg-0
-
-            if loggedIn
+            
+            
+            if (user && user.admin)
+              a.nav-item.nav-link(href="/?about=About#about") About
+              a.nav-item.nav-link(href="/venue") Venues
+              a.nav-item.nav-link(href="/user") Users
+              a.nav-item.nav-link(href="/profile") My Profile
+              a.nav-item.nav-link(href="/admin") Admin
+              div
+                  //a.btn.btn-outline-dark.pull-md-right(href="/logout", style="margin:0px 10px") Log out
+                  a.i.fas.fa-sign-out-alt.fa-lg(href="/logout", style="margin-left:20px; text-decoration: none")
+                  
+            else if loggedIn
                 a.nav-item.nav-link(href="/?about=About#about") About
                 a.nav-item.nav-link(href="/venue") Venues
                 a.nav-item.nav-link(href="/user") Users
