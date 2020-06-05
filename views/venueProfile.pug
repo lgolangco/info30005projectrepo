@@ -46,13 +46,20 @@ block content
           p #{venue.venueType} | #{venue.venueAddress.venueSuburb}, #{venue.venueAddress.venueState}
         
           if (user)
+            
             - const id = venue._id
+            - const imagePage = '/venueImage/' + id
+            p 
+              a(href=imagePage) Upload an image for this venue
+            
             - const suggestionsPage = '/venueSuggestions/' + id
             p
               a(href=suggestionsPage) Suggest changes
-          else
-            p Please #[a(href="/login") log in] or #[a(href="/register") sign up] to suggest changes to this venue.
 
+              
+          else
+            p Please #[a(href="/login") log in] or #[a(href="/register") sign up] to suggest changes or upload images for this venue.
+            
         // Venue Details
         div.venue-details-div
           h3 Details

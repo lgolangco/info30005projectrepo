@@ -5,6 +5,7 @@ const {ensureAuthenticated, forwardAuthenticated} = require("../config/auth");
 
 const userController = require("../controllers/userController.js");
 const venueController = require("../controllers/venueController.js");
+const imageController = require("../controllers/imageController.js");
 
 
 // GET home page
@@ -81,5 +82,14 @@ router.get("/requestNew/", venueController.getRequestNew);
 
 // POST requestNew venue
 router.post("/requestNew/", venueController.addRequestNew);
+
+// GET venueImage page by venue Id
+router.get("/venueImage/:_id", venueController.getVenueImagePage);
+
+router.post('/venueImage/:_id', imageController.uploadVenueImage);
+
+
+
+
 
 module.exports = router;

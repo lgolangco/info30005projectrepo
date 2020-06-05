@@ -1,0 +1,46 @@
+extends layout
+
+block content
+    // Venue Suggestions Form for Users to Suggest Changes to Venue Profile
+    .main.container
+        .row
+            .col-md-8.offset-2
+                
+                //- If suggestion already submitted only show message
+                if (completed)
+                  br
+                  br
+                  br
+                  h2.display-4.m-b-2 Successfully submitted your image!
+                  br
+                  p Thank you for uploading an image for #{venue.venueName}!
+                  p The admins will review your image and update our database accordingly.
+                
+                //- Else, show suggestion form
+                else
+                  br
+                  br
+                  br
+                  h1.display-4.m-b-2 Upload an image for
+                  h1.display-4.m-b-2 #{venue.venueName}
+                  br
+                  p
+                    | Hi! Thank you for helping us improve StudySpot.
+                    | Uploading an image below will allow the admins to review your image,
+                    | who will then update the venues accordingly.
+                  
+                  p Please note that we can only accept images in <strong> .jpeg, .jpg, or .png </strong> format.
+                    
+                  form(enctype='multipart/form-data' method='POST' action='')
+                    .row
+                    
+                      .row
+                      label(for="venueImage") Upload an Image for this Venue
+                        .row
+                        input(type="file" id="venueImage" name="venueImage" accept=".jpg,.jpeg,.png" required)
+                  
+                    
+                    .row
+                      button.mb-3.btn.btn-primary(type="submit") Submit
+                  
+                  
