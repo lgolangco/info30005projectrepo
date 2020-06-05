@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 
-// load the user controller
+// load the venue controller
 const venueController = require("../controllers/venueController.js");
 
 // load the review controller
@@ -12,6 +12,12 @@ router.get("/", venueController.getAllVenues);
 
 // GET list of all venues by id
 router.get("/:_id", venueController.getVenueByID);
+
+// POST bookmark to user data
+router.post("/:_id/bookmark", venueController.bookmark);
+
+// POST to remove bookmark from user data
+router.post("/:_id/remove", venueController.removeBookmark);
 
 // GET list of all venues by postcode
 router.get("/bypostcode/:venuePostcode", venueController.getVenueByPostcode);

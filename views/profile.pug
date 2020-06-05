@@ -2,10 +2,10 @@ extends layout
 
 block content
 
-    .px-4.py-4.bg-info
+    .profile-cover.px-4.py-4.col-lg-12
         .container
             .media.align-items-end.profile-header
-                .profile.mr-3
+                .profile.mr-5
                     img.rounded.mb-2.profile-background(src=user.avatar, width='130px')
                     a.btn.btn-light.btn-sm.btn-block(href="/profile/edit") Edit profile
                     a.btn.btn-danger.btn-sm.btn-block(href="/profile/delete") Delete my account
@@ -13,37 +13,66 @@ block content
                     h4.my-4 #{user.first_name} #{user.last_name}
                     p.mb-0 Email: #{user.email}
                     p User ID: #{user._id}
+                    if biography
+                        p Bio: #{user.biography}
 
-    .bg-light.p-4.d-flex.text-center
-        .container.d-flex.align-items-center.justify-content-between.mb-3
-            ul.list-unstyled.sidebar-menu.pl-md-2.pr-md-0
-                li
-                    a.sidebar-item.d-flex.justify-content-between.align-items-center(href='/dashboard')
-                        | Dashboard
-                        span.fas.fa-tachometer-alt
-                li
-                    a.sidebar-item.d-flex.justify-content-between.align-items-center(href='/bookmarks')
-                        | Bookmarks
-                        span.fas.fa-heart
-                li
-                    a.sidebar-item.d-flex.justify-content-between.align-items-center(href='/recently-viewed')
-                        | Recently Viewed
-                        span.fas.fa-clock
-                li
-                    a.sidebar-item.d-flex.justify-content-between.align-items-center(href='/reviews')
-                        | Reviews
-                        span.far.fa-comment
-                li
-                    a.sidebar-item.d-flex.justify-content-between.align-items-center(href='/photos')
-                        | Photos
-                        span.fas.fa-photo-video
-                li
-                    a.sidebar-item.d-flex.justify-content-between.align-items-center(href='/friends')
-                        | Friends
-                        span.fas.fa-user-friends
-                li
-                    a.sidebar-item.d-flex.justify-content-between.align-items-center(href='/sspoints')
-                        | SS Points
-                        span.fas.fa-dollar-sign
+    .container
+        .row
+            .col-md-4.col-xl-3
+                .card.mt-3.mb-3(style="; margin-left: 0px; width: 199px; font-size: 14px")
+                    .card-header
+                        h5.card-title.mb-0.text-center Profile
+                    .list-group.list-group-flush(role='tablist')
+                        a.list-group-item.list-group-item-action.active(data-toggle='list', href='#dashboard', role='tab')
+                            span.fas.fa-tachometer-alt.pr-4
+                            | Dashboard
+                        a.list-group-item.list-group-item-action(data-toggle='list', href='#bookmarks', role='tab')
+                            span.fas.fa-heart.pr-4
+                            | Bookmarks
+                        a.list-group-item.list-group-item-action(data-toggle='list', href='#', role='tab')
+                            span.fas.fa-clock.pr-4
+                            | Recently viewed
+                        a.list-group-item.list-group-item-action(data-toggle='list', href='#', role='tab')
+                            span.far.fa-comment.pr-4
+                            | Reviews
+                        a.list-group-item.list-group-item-action(data-toggle='list', href='#', role='tab')
+                            span.fas.fa-photo-video.pr-4
+                            | Photos
+                        a.list-group-item.list-group-item-action(data-toggle='list', href='#', role='tab')
+                            span.fas.fa-user-friends.pr-4
+                            | Friends
+                        a.list-group-item.list-group-item-action(data-toggle='list', href='#', role='tab')
+                            span.fas.fa-dollar-sign.pr-4
+                            | SS Points
 
+            .col-md-8.col-xl-9
+                .tab-content
+
+                    #bookmarks.tab-pane.fade(role='tabpanel')
+                        .card.mt-3.mb-3
+                            .card-body
+                                h3.card-title Bookmarks
+                                br
+                                br
+                                if bookmarks
+                                    .row
+                                        each venue in bookmarks
+                                            - const address = venue.venueAddress.venueStreetAddress +", "+venue.venueAddress.venueSuburb+", "+venue.venueAddress.venuePostcode;
+                                            - const imgURL = "https://studyspot.s3.amazonaws.com/venue/header/" + venue._id.toString() + ".jpg"
+                                            .col-lg-6
+                                                .card.mb-3.d-flex.align-items-stretch
+                                                    .row.no-gutters
+                                                        .col-4
+                                                            a(href="/venue/" + venue._id)
+                                                                img.venue-thumbnail(src = imgURL
+                                                                    onerror="this.src='https://studyspot.s3.amazonaws.com/venue/header/default.jpg'")
+                                                        .col-8
+                                                            .card-body
+                                                                h5.card-title #[a(href="/venue/" + venue._id) #{venue.venueName}]
+                                                                hr
+                                                                p.card-text(style='white-space:pre; font-size: 12px')
+                                                                    | #{venue.venueType}
+                                                                    | #{address}
+                                else
+                                    p There are no bookmarks
 

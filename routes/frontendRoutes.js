@@ -30,9 +30,7 @@ router.get("/login", forwardAuthenticated, (req, res, next) => res.render("login
 router.post("/login", userController.login);
 
 // GET Profile
-router.get("/profile", ensureAuthenticated, (req, res) => {
-    res.render("profile", {user: req.user})
-});
+router.get("/profile", ensureAuthenticated, userController.loadProfile);
 
 // GET Profile edit form based on user ID
 router.get("/profile/edit", userController.updateUserForm);
