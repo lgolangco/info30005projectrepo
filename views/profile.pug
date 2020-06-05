@@ -6,8 +6,8 @@ block content
         .container
             .media.align-items-end.profile-header
                 .profile.mr-5
-                    - const imgURL = "https://studyspot.s3.amazonaws.com/user/avatar/" + user._id.toString() + ".jpg"
-                    img.rounded.mb-2.profile-background(src = imgURL, width='130px'
+                    - const userAvatarURL = "https://studyspot.s3.amazonaws.com/user/avatar/" + user._id.toString() + ".jpg"
+                    img.rounded.mb-2.profile-background(src = userAvatarURL, width='130px'
                       onerror="this.src='https://studyspot.s3.amazonaws.com/user/avatar/default.jpg'")
                       
                       
