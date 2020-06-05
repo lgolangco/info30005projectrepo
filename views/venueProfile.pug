@@ -37,6 +37,27 @@ block content
       br
       .row.venue-profile-page
         
+      // Main Content Div
+      div.col-lg-7.col-md-12.offset-lg-1.venue-info-div
+      
+        // Basic Information
+        div
+          h2 #{message}
+          h2 #{venue.venueName}
+          p #{venue.venueType} | #{venue.venueAddress.venueSuburb}, #{venue.venueAddress.venueState}
+          
+          - const id = venue._id
+          
+          if (user && user.admin && loggedIn)
+            - const headerPage = "/venueHeader/" + id
+            p 
+              a(href=headerPage) + Upload a header image for this venue
+          
+          
+          
+          - const galleryPage = "/venueGallery/" + id
+          
+            a(href=galleryPage) View Gallery
         
           
         // Main Content Div
@@ -57,6 +78,9 @@ block content
               |    
                   
             
+            - const imagePage = '/venueImage/' + id
+            p 
+              a(href=imagePage) + Upload an image for this venue
             
             
             if (user)
