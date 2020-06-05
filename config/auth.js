@@ -1,5 +1,4 @@
 /* Extracted from https://github.com/bradtraversy/node_passport_login */
-
 // middleware for user authentication
 
 // only authenticated users are allowed to access it
@@ -18,9 +17,17 @@ forwardAuthenticated = function (req, res, next) {
     }
     res.redirect("/profile");
 }
+// prevents user from accessing admin page and its capabilities, redirects them back to profile page
+forwardAuthenticatedAdmin = function (req, res, next) {
+    if (req.isAuthenticated() && req.user.admin) {
+        return next();
+    }
+    res.redirect("/");
+}
 
 module.exports = {
     ensureAuthenticated,
-    forwardAuthenticated
+    forwardAuthenticated,
+    forwardAuthenticatedAdmin
 }
 
