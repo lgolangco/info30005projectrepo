@@ -14,13 +14,18 @@ const ObjectId = mongoose.Types.ObjectId;
 
 // function to view all users
 const getAllUsers = async (req, res) => {
-    users = [];
+    pointsList = [];
     try {
         const all_users = await User.find();
         if (all_users.length === 0) {
             return res.render('usererror', {message: "There are no existing users yet"});
         } else {
-            return res.render('users', {users: all_users});
+            for (const user of all_users) {
+                const reviews = await Review.find({userId: user._id});
+                pointsList.push(reviews.length);
+            }
+            console.log(pointsList,all_users.length);
+            return res.render('users', {users: all_users, pointsList: pointsList});
         }
     } catch (err) {
         res.status(400);

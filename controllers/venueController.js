@@ -31,6 +31,9 @@ const getAllVenues = async (req, res) => {
         search.splice(0,1);
         search.push({venueType: regexType});
         typeV = req.query.type;
+      } else if (req.query.searchType === "Any") {
+        search.splice(0,1);
+        typeV = req.query.searchType;
       } else if (req.query.searchType) {
         const regexType = new RegExp(escapeRegex(req.query.searchType), 'gi');
         search.push({venueType: regexType});

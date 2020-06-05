@@ -7,7 +7,7 @@ block content
             .ml-auto.mr-auto.col-md-offset-2
                 h1 Users
             .row
-                each user in users
+                each user,index in users
                     div.col-lg-3.col-sm-6
                         div.card.hovercard.user-card
                             .cardheader
@@ -21,4 +21,6 @@ block content
                                 .title
                                     a(href='/user/' + user._id) #{user.first_name} #{user.last_name}
                                 .desc Email: #{user.email}
-                                .desc User ID: #{user._id}
+                                .desc
+                                    i.fa.fa-trophy
+                                    |  #{pointsList[index]}
