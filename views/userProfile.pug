@@ -45,7 +45,7 @@ block content
                                 h3.card-title Bookmarks
                                 br
                                 br
-                                if bookmarks
+                                if bookmarks.length > 0
                                 
                                     .row
                                         each venue in bookmarks
@@ -67,7 +67,7 @@ block content
                                                                     | #{address}
 
                                 else 
-                                  p There are no bookmarks
+                                  p #{user.first_name} #{user.last_name} has not bookmarked any StudySpots.
 
 
 
@@ -78,7 +78,7 @@ block content
                                 br
                                 br
                                 
-                                if reviews
+                                if reviews.length > 0
                                     .row
                                       
                                       each review in reviews
@@ -110,7 +110,7 @@ block content
                                         
                                                                   
                                 else
-                                  p You have not left any reviews.
+                                  p #{user.first_name} #{user.last_name} has not left any reviews.
                                     
                                     
                                     

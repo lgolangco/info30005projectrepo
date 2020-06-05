@@ -8,7 +8,7 @@ block content
             .media.align-items-end.profile-header
                 .profile.mr-5
                     - const userAvatarURL = "https://studyspot.s3.amazonaws.com/user/avatar/" + user._id.toString() + ".jpg"
-                    img.rounded.mb-2.profile-background(src = userAvatarURL, width='130px'
+                    img.rounded.mb-2.profile-background.avatar-profile(src = userAvatarURL, width='130px'
                       onerror="this.src='https://studyspot.s3.amazonaws.com/user/avatar/default.jpg'")
                       
                       
@@ -64,7 +64,7 @@ block content
                                 h3.card-title Bookmarks
                                 br
                                 br
-                                if bookmarks
+                                if bookmarks.length > 0
                                     .row
                                         each venue in bookmarks
                                             - const address = venue.venueAddress.venueStreetAddress +", "+venue.venueAddress.venueSuburb+", "+venue.venueAddress.venuePostcode;
@@ -84,7 +84,7 @@ block content
                                                                     | #{venue.venueType}
                                                                     | #{address}
                                 else
-                                    p There are no bookmarks
+                                    p You have not bookmarked any StudySpots.
 
 
 
@@ -95,7 +95,7 @@ block content
                                 br
                                 br
                                 
-                                if reviews
+                                if reviews.length > 0
                                     .row
                                       
                                       each review in reviews

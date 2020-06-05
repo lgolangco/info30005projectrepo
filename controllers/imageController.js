@@ -141,9 +141,12 @@ const uploadUserAvatarImage = async (req, res) => {
 
     // Binary data base64
     const fileContent  = Buffer.from(req.files.userAvatar.data, 'binary');
-
+    console.log("fileContent");
+    console.log(fileContent);
 
     const imageKey = "user/avatar/" + req.user._id.toString() + ".jpg"
+    console.log("imageKey");
+    console.log(imageKey);
 
     // Setting up S3 upload parameters
     const params = {
