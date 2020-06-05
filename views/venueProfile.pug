@@ -37,29 +37,6 @@ block content
       br
       .row.venue-profile-page
         
-      // Main Content Div
-      div.col-lg-7.col-md-12.offset-lg-1.venue-info-div
-      
-        // Basic Information
-        div
-          h2 #{message}
-          h2 #{venue.venueName}
-          p #{venue.venueType} | #{venue.venueAddress.venueSuburb}, #{venue.venueAddress.venueState}
-          
-          - const id = venue._id
-          
-          if (user && user.admin && loggedIn)
-            - const headerPage = "/venueHeader/" + id
-            p 
-              a(href=headerPage) + Upload a header image for this venue
-          
-          
-          
-          - const galleryPage = "/venueGallery/" + id
-          
-            a(href=galleryPage) View Gallery
-        
-          
         // Main Content Div
         div.col-9.venue-info-div.mb-3
         
@@ -75,25 +52,35 @@ block content
                 img.rounded(src="/images/venue/library.png", width="20px")
               else
                 img.rounded(src="/images/venue/other.png", width="20px")
-              |    
-                  
-            
-            - const imagePage = '/venueImage/' + id
-            p 
-              a(href=imagePage) + Upload an image for this venue
-            
+              |
+            p #{venue.venueAddress.venueSuburb}, #{venue.venueAddress.venueState}
             
             if (user)
-              
-              - const id = venue._id
-              - const imagePage = '/venueImage/' + id
-              p 
-                a(href=imagePage) Upload an image for this venue
-              
               - const suggestionsPage = '/venueSuggestions/' + id
               p
                 a(href=suggestionsPage) Suggest changes
             
+            if (user)
+              - const id = venue._id
+              
+            if (user && user.admin && loggedIn)
+              - const headerPage = "/venueHeader/" + id
+              p 
+                a(href=headerPage) + Upload a header image for this venue
+              
+              
+              
+            - const galleryPage = "/venueGallery/" + id
+            
+              a(href=galleryPage) View Gallery
+            
+                      
+            if (user)
+              - const imagePage = '/venueImage/' + id
+              p 
+                a(href=imagePage) + Upload an image for this venue
+              
+              
               //- Create New Review
               //- If suggestion already submitted only show message
               if (completed)
@@ -151,10 +138,10 @@ block content
                       br
                       button.btn.btn-primary(type="submit") Submit
 
-                
+              
             else
               p Please #[a(href="/login") log in] or #[a(href="/register") sign up] to suggest changes, leave a review or upload images for this venue.
-        
+      
         // Bookmark Venue
         .col-3.mb-3
           
