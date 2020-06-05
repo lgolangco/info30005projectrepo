@@ -29,14 +29,17 @@ const getAllUsers = async (req, res) => {
 }
 
 const loadProfile = async(req, res) => {
+    points = 0;
     try {
         const bookmarks = await Venue.find({_id: { $in :req.user.bookmarks}});
-        console.log(req.user.bookmarks);
-        return res.render("profile", {user: req.user, bookmarks: bookmarks, title: "Profile"});
+        const reviews = await Review.find({userId: req.user._id});
+        points = reviews.length;
+        console.log(points,reviews);
+        return res.render("profile", {user: req.user, bookmarks: bookmarks, points: points, title: "Profile"});
     } catch (err) {
         res.status(400);
         console.log(req.user.bookmarks,err);
-        return res.render("profile", {user: req.user, bookmarks: "none"});
+        return res.render("profile", {user: req.user, bookmarks: [], points: points});
     }
 }
 
