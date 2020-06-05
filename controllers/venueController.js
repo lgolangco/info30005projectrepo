@@ -224,18 +224,25 @@ const getVenueSuggestionsByID = async (req, res) => {
 };
 
 function convertSuggestions(suggestionRaw) {
+  console.log("converting suggestions");
   const suggestionProcessed = {
     userId: ObjectId(suggestionRaw.userId),
+    userName: suggestionRaw.userName,
     venueId: ObjectId(suggestionRaw.venueId),
+    venueName: suggestionRaw.venueName,
     suggestion: suggestionRaw.suggestion,
     resolved: false
   }
+  console.log(suggestionProcessed);
   return suggestionProcessed;
 }
 
 const submitVenueSuggestion = async (req, res) => {
+  console.log("submitting venue suggestion");
   // extract info. from body
   const suggestionProcessed = convertSuggestions(req.body)
+  console.log("called convert function");
+  console.log(suggestionProcessed);
   const db = mongoose.connection;
   try {
     await db.collection('venueSuggestions').insertOne(suggestionProcessed)
