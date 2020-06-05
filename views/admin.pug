@@ -31,9 +31,10 @@ block content
             //BUTTON TO "EDIT AND APPROVE REQUEST" - copy of update page
             //BUTTON TO "DELETE REQUEST" - leads to 'are you sure you want to delete' page
             
-
-            - var deleteLink = "/admin/deleteRequest/" + request._id.toString();
-            p #[a(href="") Edit and Approve Request] | #[a(href=deleteLink) Delete Request]
+            - const updateLink = "/admin/resolveRequest/" + request._id.toString();
+            - const deleteLink = "/admin/deleteRequest/" + request._id.toString();
+            
+            p #[a(href=updateLink) Edit and Approve Request] | #[a(href=deleteLink) Delete Request]
 
                     
   

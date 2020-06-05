@@ -339,6 +339,88 @@ const getDeleteRequestPage = async (req, res) => {
   }
 };
 
+const postDeleteRequest = async (req,res) => {
+  // checks if the _id is invalid
+  if (ObjectId.isValid(req.params._id) === false) {
+    return res.render('error', {
+      error: "There are no venue requests with this id!",
+      message: "There are no venue requests with this id!",
+      venueRequesterror: "To return to admin page,"
+    });
+  }
+
+  // checks if there are no venues listed with that _id
+  await VenueRequests.find({_id: req.params._id}, function(err, venue) {
+    if (venue.length === 0) {
+      return res.render('error', {
+        error: "There are no venue requests with this id!",
+        message: "There are no venue requests with this id!",
+        venueRequesterror: "To return to admin page,"
+      });
+    }
+  })
+
+  // delete the venue with the prescribed _id
+  const result = await VenueRequests.deleteOne({_id: req.params._id}).exec();
+  if (result.n === 0) {
+    res.status(400);
+    return res.render('error', {
+      error: "Database query failed",
+      message: "Database query failed",
+      functionfailure: "Failed to delete venue request"
+    });
+  } else {
+    res.render("adminDeleteRequest",{
+      deleted: true
+    });
+    return false;
+    }
+};
+
+
+const getResolveRequestPage = async (req,res) => {
+  console.log("un");
+  // checks if the _id is invalid
+  if (ObjectId.isValid(req.params._id) === false) {
+    return res.render('error', {
+      error: "There are no venue requests with this id!",
+      message: "There are no venue requests with this id!",
+      venueRequesterror: "To return to admin page,"
+    });
+  }
+  try {
+    // checks if there are no venues listed with that _id
+    console.log("deux");
+    await VenueRequests.find({_id: req.params._id}, function(err, venueRequest) {
+      if (venueRequest.length === 0) {
+        return res.render('error', {
+          error: "There are no venue requests with this id!",
+          message: "There are no venue requests with this id!",
+          venueRequesterror: "To return to admin page,"
+        });
+      } else {
+        console.log("trois");
+        console.log(venueRequest);
+        return res.render("adminResolveRequest", {
+          venueRequest: venueRequest[0],
+          completed: false
+        })
+      }
+    })
+  } catch (err) {
+    res.status(400);
+    return res.render('error', {
+      error: "Database query failed",
+      message: "Database query failed",
+      functionfailure: "Failed to get update venue"
+    });
+  }
+
+};
+
+
+
+
 module.exports = {
     loadProfile,
     getAllUsers,
@@ -351,5 +433,7 @@ module.exports = {
     logout,
     login,
     getAdminPage,
-    getDeleteRequestPage
+    getDeleteRequestPage,
+    postDeleteRequest,
+    getResolveRequestPage
 };

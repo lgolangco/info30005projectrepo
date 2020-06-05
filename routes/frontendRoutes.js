@@ -15,6 +15,9 @@ router.get("/", (req, res, next) => {
 // GET About
 router.get("/about", (req, res, next) => res.render("about", {title: "About"}));
 
+
+// ADMIN
+
 // GET Admin page
 router.get("/admin", userController.getAdminPage);
 
@@ -22,7 +25,11 @@ router.get("/admin", userController.getAdminPage);
 router.get("/admin/deleteRequest/:_id", userController.getDeleteRequestPage);
 
 // POST Admin Delete Request
-// router.post("/admin/deleteRequest/:_id", userController.postDeleteRequest);
+router.post("/admin/deleteRequest/:_id", userController.postDeleteRequest);
+
+// GET Admin Resolve Request page
+router.get("/admin/resolveRequest/:_id", userController.getResolveRequestPage);
+
 
 // USER
 // GET Register form page
