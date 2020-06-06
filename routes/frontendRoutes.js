@@ -21,7 +21,7 @@ router.get("/about", (req, res, next) => res.render("about", {title: "About"}));
 // ADMIN
 
 // GET Admin page
-router.get("/admin", forwardAuthenticatedAdmin, adminController.getAdminPage);
+router.get("/admin", [ensureAuthenticated, forwardAuthenticatedAdmin], adminController.getAdminPage);
 
 // GET Admin Delete Request Page
 router.get("/admin/deleteRequest/:_id",forwardAuthenticatedAdmin, adminController.getDeleteRequestPage);
