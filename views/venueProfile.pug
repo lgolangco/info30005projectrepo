@@ -165,17 +165,20 @@ block content
           // Venue Update and Delete Buttons (Will be only available to users with admin attribute at later date)
           if (user && user.admin)
             h5.mt-3 Admin Functions
+            - const headerPage = "/venueHeader/" + id
+            p 
+              a(href=headerPage) + Upload a header image for this venue
+              
             .col-10.mt-3
               - const updateVenue = "/venueUpdate/" + venue._id
               a.btn.btn-Warning(href=updateVenue) UPDATE VENUE
+              
             .col-10.mt-3
               
               - const deleteVenue = "/deleteVenue/" + venue._id
               a.btn.btn-Danger(href=deleteVenue) DELETE VENUE
               
-              - const headerPage = "/venueHeader/" + id
-              p 
-                a(href=headerPage) + Upload a header image for this venue
+            
           
       hr
           
