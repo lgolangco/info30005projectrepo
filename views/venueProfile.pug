@@ -141,7 +141,7 @@ block content
               
             else
               p Please #[a(href="/login") log in] or #[a(href="/register") sign up] to suggest changes, leave a review or upload images for this venue.
-      
+            
         // Bookmark Venue
         .col-3.mb-3
           
@@ -152,9 +152,34 @@ block content
             else
               form(method="POST" action="/venue/" + venue._id + "/bookmark")
                 button.btn.btn-lg.btn-warning(type="submit") Add to Bookmarks
-          else
-            form(method="POST" action="/venue/"+venue._id+"/bookmark")
-              button.btn.btn-lg.btn-warning(type="submit") Add to Bookmarks
+          //- else
+          //-   form(method="POST" action="/venue/"+venue._id+"/bookmark")
+          //-     button.btn.btn-lg.btn-warning(type="submit") Add to Bookmarks
+          
+          //- Contacts
+          .mb-3
+            if venue.venueContact.phone || venue.venueContact.mobile || venue.venueContact.email || venue.venueContact.web
+              br
+              h5 Contact Details
+              if venue.venueContact.phone
+                p phone: #{venue.venueContact.phonePrefix} #{venue.venueContact.phone}
+              if venue.venueContact.mobile
+                p mobile: #{venue.venueContact.mobilePrefix} #{venue.venueContact.mobile}
+              if venue.venueContact.email
+                p #{venue.venueContact.email}
+              if venue.venueContact.web
+                a(href=venue.venueContact.web) #{venue.venueContact.web}
+                
+          // Venue Update and Delete Buttons (Will be only available to users with admin attribute at later date)
+          if (user && user.admin)
+            h5.mt-3 Admin Functions
+            .col-10.mt-3
+              - const updateVenue = "/venueUpdate/" + venue._id
+              a.btn.btn-Warning(href=updateVenue) UPDATE VENUE
+            .col-10.mt-3
+              
+              - const deleteVenue = "/deleteVenue/" + venue._id
+              a.btn.btn-Danger(href=deleteVenue) DELETE VENUE
           
       hr
           
@@ -249,25 +274,11 @@ block content
                     p Printing available
 
                   else
-                    p No Printing available    
-
-      
+                    p No Printing available 
+                    
         //- Side Bar
         div.col-3.offset-1.venue-side-bar
 
-          //- Contacts
-          .mb-3
-            if venue.venueContact.phone || venue.venueContact.mobile || venue.venueContact.email || venue.venueContact.web
-              br
-              h5 Contact Details
-              if venue.venueContact.phone
-                p phone: #{venue.venueContact.phonePrefix} #{venue.venueContact.phone}
-              if venue.venueContact.mobile
-                p mobile: #{venue.venueContact.mobilePrefix} #{venue.venueContact.mobile}
-              if venue.venueContact.email
-                p #{venue.venueContact.email}
-              if venue.venueContact.web
-                a(href=venue.venueContact.web) #{venue.venueContact.web}
           
           .mb-3
             //- Opening hours
@@ -292,17 +303,6 @@ block content
         
         
     
-      // Venue Update and Delete Buttons (Will be only available to users with admin attribute at later date)
-      if (user && user.admin)
-        .row
-          .col-md-2.offset-1
-            - const updateVenue = "/venueUpdate/" + venue._id
-            a.btn.btn-Warning(href=updateVenue) UPDATE VENUE
-          .col-md-2
-            
-            - const deleteVenue = "/deleteVenue/" + venue._id
-            a.btn.btn-Danger(href=deleteVenue) DELETE VENUE
-    
       // Reviews
       div.venue-reviews.mb-5
         hr
@@ -311,33 +311,37 @@ block content
           each review in venuesReviews
             if (user._id.toString() == review.userId.toString())
               - existingReview = true
+              
               .mb-5
+                
               h4.mb-3 Your Review of #{venue.venueName}
               - date = review.datePosted.toDateString()
               
-              .col-10
-                .card.mb-3
+              .col-lg-8
+                .card.mb-3.col-11
                   
-                  .row
-                      .col-2
-                        - var userAvatarURL = "https://studyspot.s3.amazonaws.com/user/avatar/" + review.userId.toString() + ".jpg"
-                        img.rounded.mb-2.profile-background(src = userAvatarURL, width='50px'
-                          onerror="this.src='https://studyspot.s3.amazonaws.com/user/avatar/default.jpg'")
-                      .col-8
-                        div
-                          //insert user name
-                          h5 #[a(href="/profile") #{review.userFirstName} #{review.userLastName}]
-                        div
-                          //- insert rating
-                          p Rating: #{review.rating}/5
+                  .row.m-3
+                    .col-2(style="display:inline-block; width:100px; height:100px; border-radius:50%; overflow:hidden")
+                      
+                      - var userAvatarURL = "https://studyspot.s3.amazonaws.com/user/avatar/" + review.userId.toString() + ".jpg"
+                      img.rounded-circle.mb-2.img-thumbnail(src = userAvatarURL, style="max-width:100%; height:50px", 
+                        onerror="this.src='https://studyspot.s3.amazonaws.com/user/avatar/default.jpg'")
+                      
+                    .col-10
+                      div
+                        //insert user name
+                        h5 #[a(href="/profile") #{review.userFirstName} #{review.userLastName}]
+                      div
+                        //- insert rating
+                        p Rating: #{review.rating}/5
+                      hr
                       
                   .offset-1
-                    //- insert review text
+                    
                     p #{review.content}
-                  
-                  .offset-9
-                    //- insert date
-                    p #{date}
+              
+                  div
+                    p.float-right #{date}
               .row 
                 .offset-1.mb-3
                   
@@ -354,32 +358,37 @@ block content
         
         //- List reviews
         .mb-5
-        h4.mb-5 Reviews from Other StudySpotters
-        each review in venuesReviews
-
-          if !(user) || (user._id.toString() != review.userId.toString())
-            
-            - date = review.datePosted.toDateString()
-            .col-lg-10
-              .card.mb-3
-                
-                .row
-                  .col-2
-                    - var userAvatarURL = "https://studyspot.s3.amazonaws.com/user/avatar/" + review.userId.toString() + ".jpg"
-                    img.rounded.mb-2.profile-background(src = userAvatarURL, width='50px'
-                      onerror="this.src='https://studyspot.s3.amazonaws.com/user/avatar/default.jpg'")
-                  .col-10
-                    div
-                      //insert user name
-                      h5 #[a(href="/user/"+review.userId) #{review.userFirstName} #{review.userLastName}]
-                    div
-                      //insert rating
-                      p Rating: #{review.rating}/5
           
-                .offset-1
-                  //insert review text
-                  p #{review.content}
-                
-                .offset-9
-                  //insert date
-                  p #{date}
+        h4.mb-5 Reviews from Other StudySpotters
+        if (venuesReviews.length == 0)
+          p.m-5 There are no reviews from other StudySpotters at #{venue.venueName}
+        
+        else
+          each review in venuesReviews
+
+            if !(user) || (user._id.toString() != review.userId.toString())
+              
+              - date = review.datePosted.toDateString()
+              .col-lg-8
+                .card.mb-3.col-11
+                  
+                  .row.m-3
+                    .col-2
+                      - var userAvatarURL = "https://studyspot.s3.amazonaws.com/user/avatar/" + review.userId.toString() + ".jpg"
+                      img.rounded-circle.mb-2.img-thumbnail(src = userAvatarURL, width='80px'
+                        onerror="this.src='https://studyspot.s3.amazonaws.com/user/avatar/default.jpg'")
+                    .col-10
+                      div
+                        //insert user name
+                        h5 #[a(href="/user/"+review.userId) #{review.userFirstName} #{review.userLastName}]
+                      div
+                        //insert rating
+                        p Rating: #{review.rating}/5
+                      hr
+            
+                  .offset-1
+                    
+                    p #{review.content}
+              
+                  div
+                    p.float-right #{date}
