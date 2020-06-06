@@ -234,11 +234,12 @@ const getUserByID = async (req, res) => {
                 const reviews = Review.find({userId: user[0]._id});
                 reviews.then(function (reviewsresult) {
                     console.log("REVIEWS");
-                    console.log(reviewsresult);
+                    console.log(reviewsresult,reviewsresult.length);
                     return res.render('userProfile', {
                         user: user[0],
                         bookmarks: bookmarksresult,
-                        reviews: reviewsresult
+                        reviews: reviewsresult,
+                        points: reviewsresult.length
                     });
                 });
             });
