@@ -17,7 +17,6 @@ block content
                                 - var userAvatarURL = "https://studyspot.s3.amazonaws.com/user/avatar/" + user._id.toString() + ".jpg"
                                 img.rounded.mb-2.profile-background(src = userAvatarURL,
                                   onerror="this.src='https://studyspot.s3.amazonaws.com/user/avatar/default.jpg'")
-                                //- img(src=user.avatar)
                                   
                             // Basic user information
                             .info
@@ -27,4 +26,3 @@ block content
                                     else
                                       a(href='/user/' + user._id) #{user.first_name} #{user.last_name}
                                 .desc Email: #{user.email}
-                                .desc User ID: #{user._id}
