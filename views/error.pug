@@ -21,6 +21,9 @@ block content
                 if imageerror
                   - const venueProfile = "/venue/" + venueId
                   p #{imageerror} #[a(href=venueProfile) click here]
+                if deleteimageerror
+                  - const venueGallery = "/venueGallery/" + venueId
+                  p #{imageerror} #[a(href=venueGallery) click here]
                 if avatarerror
                   p #{avatarerror} #[a(href="/profile") click here]
 

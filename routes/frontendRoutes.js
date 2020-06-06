@@ -119,26 +119,44 @@ router.get("/requestNew/", venueController.getRequestNew);
 // POST requestNew venue
 router.post("/requestNew/", venueController.addRequestNew);
 
+
+// IMAGES
+
 // GET venueImage page by venue Id
-router.get("/venueImage/:_id", imageController.getVenueImagePage);
+router.get("/venueImage/upload/:_id", imageController.getVenueImagePage);
 
 // POST venueImage photo by venue Id
-router.post('/venueImage/:_id', imageController.uploadVenueImage);
+router.post('/venueImage/upload/:_id', imageController.uploadVenueImage);
 
+
+// GET userVenueGallery page by venye Id
+router.get("/venueGallery/:_id", imageController.getVenueGalleryPage);
+
+// POST deleteVenueImage request by Venue Id
+router.post("/venueGallery/:_id", imageController.deleteVenueImage);
+
+// GET venueHeader page by venue Id
+router.get("/venueHeader/upload/:_id", imageController.getVenueHeaderPage);
+
+// POST venueHeader image by venue Id
+router.post("/venueHeader/upload/:_id", imageController.uploadVenueHeaderImage);
+
+// GET deleteVenueHeader page by venue Id
+router.get("/venueHeader/delete/:_id", imageController.getDeleteVenueHeaderPage);
+
+// Post deleteVenueHeader request by venue Id
+router.post("/venueHeader/delete/:_id", imageController.deleteVenueHeader);
 // GET userAvatarImage page by user Id
 router.get("/profile/uploadAvatar/:_id", imageController.getUserAvatarImagePage);
 
 // POST userAvatarImage by user Id
 router.post("/profile/uploadAvatar/:_id", imageController.uploadUserAvatarImage);
 
-// GET userVenueGallery page by venye Id
-router.get("/venueGallery/:_id", imageController.getVenueGalleryPage);
+// GET delete userAvatarImage page by user Id
+router.get("/profile/deleteAvatar/:_id", imageController.getdeleteUserAvatarImagePage);
 
-// GET venueHeader page by venue Id
-router.get("/venueHeader/:_id", imageController.getVenueHeaderPage);
-
-// POST venueHeader image by venue Id
-router.post("/venueHeader/:_id", imageController.uploadVenueHeaderImage);
+// GET delete userAvatarImage page by user Id
+router.post("/profile/deleteAvatar/:_id", imageController.deleteUserAvatar);
 
 
 module.exports = router;

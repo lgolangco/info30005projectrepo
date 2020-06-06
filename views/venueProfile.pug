@@ -61,6 +61,7 @@ block content
               - const suggestionsPage = '/venueSuggestions/' + id
               p
                 a(href=suggestionsPage) Suggest changes
+
               
             - const galleryPage = "/venueGallery/" + id
             
@@ -68,7 +69,7 @@ block content
             
                       
             if (user)
-              - const imagePage = '/venueImage/' + id
+              - const imagePage = '/venueImage/upload/' + id
               p 
                 a(href=imagePage) + Upload an image for this venue
               
@@ -165,9 +166,13 @@ block content
           // Venue Update and Delete Buttons (Will be only available to users with admin attribute at later date)
           if (user && user.admin)
             h5.mt-3 Admin Functions
-            - const headerPage = "/venueHeader/" + id
+            - const headerUploadPage = "/venueHeader/upload/" + id
             p 
-              a(href=headerPage) + Upload a header image for this venue
+              a(href=headerUploadPage) + Upload a header image for this venue
+              
+            - const headerDeletePage = "/venueHeader/delete/" + id
+            p 
+              a(href=headerDeletePage) - Delete the header image for this venue
               
             .col-10.mt-3
               - const updateVenue = "/venueUpdate/" + venue._id
