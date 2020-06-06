@@ -49,6 +49,8 @@ header.masthead h1 {
     width: 80px;
     height: 80px;
     object-fit: cover;
+    border-style: solid;
+    border-color: #e6e7e9;
 }
 
 .popular-link-avatar-name {
