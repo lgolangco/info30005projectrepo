@@ -222,7 +222,14 @@ const getVenueGalleryPage = async (req, res) => {
         Prefix: prefix
       }
       s3.listObjects(params, function (err, data) {
-        if(err)throw err;
+        if(err){
+            return res.render('error', {
+              error: "Database query failed",
+              message: "Failed to get venue gallery.",
+              imageerror: "To return to the venue profile page, ",
+              venueId: req.params._id
+            });
+        } else {
         console.log("DATA");
         console.log(data.Contents);
         imageLinks = extractURL(data.Contents);
@@ -231,7 +238,8 @@ const getVenueGalleryPage = async (req, res) => {
           venue: venue[0],
           currentUser: req.user,
           galleryImages: imageLinks
-        });
+          });
+        }
       });
     }
   } catch (err) {
@@ -386,7 +394,7 @@ const deleteVenueImage = async (req, res) => {
           return res.render('error', {
             error: "Database query failed",
             message: "Failed to delete image.",
-            deleteimageerror: "To return to the venue gallery, ",
+            imageerror: "To return to the venue gallery, ",
             venueId: req.params._id
           });
         } else {
@@ -414,11 +422,6 @@ const deleteVenueImage = async (req, res) => {
 
             });
           });
-          // return res.render('venueGallery', {
-          //   venue: venue[0],
-          //   currentUser: user,
-          //   deleted: true
-          // });
         }
       });
     }
@@ -432,6 +435,142 @@ const deleteVenueImage = async (req, res) => {
   }
 };
 
+const getDeleteVenueHeaderPage = async (req, res) => {
+  if (ObjectId.isValid(req.params._id) === false) {
+    return res.render('error', {
+      error: "There are no venues listed with this id!",
+      message: "There are no venues listed with this id!",
+      venueerror: "For a list of all registered venues,"
+    });
+  }
+  if (req.user == null) {
+    return res.render('error', {
+      error: "You're not logged in!",
+      message: "You must be an admin to delete a venue header"
+    });
+  }
+  if (req.admin == false) {
+    return res.render('error', {
+      error: "You're not an adin!",
+      message: "You must be an admin to delete a venue header"
+    });
+  }
+  const user = await User.findById(req.user._id);
+  try {
+    const venue = await Venue.find({_id: req.params._id});
+    if (venue.length === 0){
+      return res.render('error', {
+        error: "There are no venues listed with this id!",
+        message: "There are no venues listed with this id!",
+        venueerror: "For a list of all registered venues,"
+      });
+    } else {
+      const prefix = "venue/header/" + req.params._id.toString();
+      console.log("prefix");
+      console.log(prefix);
+      var params = {
+        Bucket: 'studyspot',
+        Delimiter: '',
+        Prefix: prefix
+      }
+      s3.listObjects(params, function (err, data) {
+        if(err){
+          return res.render('error', {
+            error: "Database query failed",
+            message: "Failed to get delete venue header page.",
+            imageerror: "To return to the venue profile page, ",
+            venueId: req.params._id
+          });
+        } else {
+          console.log("DATA");
+          console.log(data.Contents);
+          imageLink = extractURL(data.Contents);
+          console.log(imageLink);
+          return res.render('venueHeaderDelete', {
+            venue: venue[0],
+            currentUser: user,
+            header: imageLink
+          });
+        }
+      });
+    }
+  } catch (err) {
+    res.status(400);
+    return res.render('error', {
+      error: "Database query failed",
+      message: "Database query failed",
+      functionfailure: "Failed to get 'delete venue header' page"
+    });
+  }
+};
+
+const deleteVenueHeader = async (req, res) => {
+  console.log("SUCCESS");
+  const headerPath = "venue/header/" + req.params._id.toString() + ".jpg"
+  console.log(headerPath)
+  if (ObjectId.isValid(req.params._id) === false) {
+    return res.render('error', {
+      error: "There are no venues listed with this id!",
+      message: "There are no venues listed with this id!",
+      venueerror: "For a list of all registered venues,"
+    });
+  }
+  if (req.user == null) {
+    return res.render('error', {
+      error: "You're not logged in!",
+      message: "You must be an admin to delete a venue header."
+    });
+  }
+  if (req.user.admin == false) {
+    return res.render('error', {
+      error: "You're not an admim!",
+      message: "You must be an admin to delete a venue header"
+    });
+  }
+  const user = await User.findById(req.user._id);
+  try {
+    const venue = await Venue.find({_id: req.params._id});
+    if (venue.length === 0){
+      return res.render('error', {
+        error: "There are no venues listed with this id!",
+        message: "There are no venues listed with this id!",
+        venueerror: "For a list of all registered venues,"
+      });
+    } else {
+      // Setting up S3 upload parameters
+      const params = {
+          Bucket: 'studyspot',
+          Key: headerPath // File name you want to delete
+      };
+
+      s3.deleteObject(params, function(err, data) {
+        if (err) {
+          console.log(err);
+          return res.render('error', {
+            error: "Database query failed",
+            message: "Failed to delete header image.",
+            imageerror: "To return to the venue gallery, ",
+            venueId: req.params._id
+          });
+        } else {
+          console.log("DELETE SUCCESS");
+          return res.render('venueHeaderDelete', {
+            venue: venue[0],
+            currentUser: req.user,
+            deleted: true
+          });
+        }
+      });
+    }
+  } catch (err) {
+    res.status(400);
+    return res.render('error', {
+      error: "Database query failed",
+      message: "Database query failed",
+      functionfailure: "Failed to get delete venue header"
+    });
+  }
+};
 
 // export functions
 module.exports = {
@@ -442,5 +581,7 @@ module.exports = {
       getVenueGalleryPage,
       getVenueHeaderPage,
       uploadVenueHeaderImage,
-      deleteVenueImage
+      deleteVenueImage,
+      getDeleteVenueHeaderPage,
+      deleteVenueHeader
 };

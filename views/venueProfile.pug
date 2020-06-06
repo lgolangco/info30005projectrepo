@@ -64,10 +64,14 @@ block content
             
               
             if (user && user.admin && loggedIn)
-              - const headerPage = "/venueHeader/" + id
+              - const headerUploadPage = "/venueHeader/upload/" + id
               p 
-                a(href=headerPage) + Upload a header image for this venue
-              
+                a(href=headerUploadPage) + Upload a header image for this venue
+                
+              - const headerDeletePage = "/venueHeader/delete/" + id
+              p 
+                a(href=headerDeletePage) - Delete the header image for this venue
+                
               
               
             - const galleryPage = "/venueGallery/" + id

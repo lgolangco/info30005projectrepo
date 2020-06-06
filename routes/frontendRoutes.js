@@ -138,9 +138,15 @@ router.get("/venueGallery/:_id", imageController.getVenueGalleryPage);
 router.post("/venueGallery/:_id", imageController.deleteVenueImage);
 
 // GET venueHeader page by venue Id
-router.get("/venueHeader/:_id", imageController.getVenueHeaderPage);
+router.get("/venueHeader/upload/:_id", imageController.getVenueHeaderPage);
 
 // POST venueHeader image by venue Id
-router.post("/venueHeader/:_id", imageController.uploadVenueHeaderImage);
+router.post("/venueHeader/upload/:_id", imageController.uploadVenueHeaderImage);
+
+// GET deleteVenueHeader page by venue Id
+router.get("/venueHeader/delete/:_id", imageController.getDeleteVenueHeaderPage);
+
+// Post deleteVenueHeader request by venue Id
+router.post("/venueHeader/delete/:_id", imageController.deleteVenueHeader);
 
 module.exports = router;
