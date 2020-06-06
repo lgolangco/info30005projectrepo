@@ -24,14 +24,11 @@ const getAllUsers = async (req, res) => {
                 const reviews = await Review.find({userId: user._id});
                 pointsList.push(reviews.length);
             }
-            console.log(pointsList, all_users.length);
 
-            return res.render('users', {
-                users: all_users,
-                currentUser: req.user,
-                user: req.user,
-                pointsList: pointsList
-            });
+            console.log(pointsList,all_users.length);
+
+            return res.render('users', {users: all_users, currentUser: req.user, user: req.user, pointsList: pointsList});
+
 
         }
     } catch (err) {
@@ -40,7 +37,9 @@ const getAllUsers = async (req, res) => {
     }
 }
 
-const loadProfile = async (req, res) => {
+
+const loadProfile = async(req, res) => {
+
     points = 0;
     try {
         const bookmarks = await Venue.find({_id: {$in: req.user.bookmarks}});
@@ -49,16 +48,10 @@ const loadProfile = async (req, res) => {
         points = reviews.length;
         console.log("REVIEWS");
         console.log(reviews);
-        return res.render("profile", {
-            user: req.user,
-            bookmarks: bookmarks,
-            points: points,
-            title: "Profile",
-            reviews: reviews
-        });
+        return res.render("profile", {user: req.user, bookmarks: bookmarks, points: points, title: "Profile", reviews: reviews});
     } catch (err) {
         res.status(400);
-        console.log(req.user.bookmarks, err);
+        console.log(req.user.bookmarks,err);
         return res.render("profile", {user: req.user, bookmarks: [], points: points});
     }
 }

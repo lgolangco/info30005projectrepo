@@ -135,9 +135,37 @@ block content
             else
               p Please #[a(href="/login") log in] or #[a(href="/register") sign up] to suggest changes, leave a review or upload images for this venue.
 
-        // Bookmark Venue
         .col-3.mb-3
+          //rating
+          //h5 Total #{reviewCount} reviews
 
+          if (venue.aveRating < 0.25)
+            img.rounded(src="/images/venue/rating/0.png", width="250px")
+          else if (venue.aveRating < 0.75)
+            img.rounded(src="/images/venue/rating/0h.png", width="250px")
+          else if (venue.aveRating < 1.25)
+            img.rounded(src="/images/venue/rating/1.png", width="250px")
+          else if (venue.aveRating < 1.75)
+            img.rounded(src="/images/venue/rating/1h.png", width="250px")
+          else if (venue.aveRating < 2.25)
+            img.rounded(src="/images/venue/rating/2.png", width="250px")
+          else if (venue.aveRating < 2.75)
+            img.rounded(src="/images/venue/rating/2h.png", width="250px")
+          else if (venue.aveRating < 3.25)
+            img.rounded(src="/images/venue/rating/3.png", width="250px")
+          else if (venue.aveRating < 3.75)
+            img.rounded(src="/images/venue/rating/3h.png", width="250px")
+          else if (venue.aveRating < 4.25)
+            img.rounded(src="/images/venue/rating/4.png", width="250px")
+          else if (venue.aveRating < 4.75)
+            img.rounded(src="/images/venue/rating/4h.png", width="250px")
+          else
+            img.rounded(src="/images/venue/rating/5.png", width="250px")
+
+          //h5 Average rating #{venue.aveRating}
+          br
+          br
+          // Bookmark Venue
           if user
             if user.bookmarks.includes(venue._id)
               form(method="POST" action="/venue/" + venue._id + "/remove")

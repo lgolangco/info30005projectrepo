@@ -31,6 +31,9 @@ const getAllVenues = async (req, res) => {
         search.splice(0,1);
         search.push({venueType: regexType});
         typeV = req.query.type;
+      } else if (req.query.searchType === "Any") {
+        search.splice(0,1);
+        typeV = req.query.searchType;
       } else if (req.query.searchType) {
         const regexType = new RegExp(escapeRegex(req.query.searchType), 'gi');
         search.push({venueType: regexType});
@@ -146,17 +149,32 @@ const getVenueByID = async (req, res) => {
       console.log("LOOKING FOR ID");
       console.log(req.params._id);
       venuesReviews = findVenuesReviews(req.params._id);
-      venuesReviews.then(function(result){
-        if (req.user === undefined){
-          user = null;
-        } else {
-          user = req.user;
+
+      venuesReviews.then(async function(result){
+        var reviewCount = 0;
+        var totalRating = 0;
+
+        if(result) {
+          result.forEach(function (reviews) {
+            reviewCount++;
+            totalRating += reviews.rating;
+          });
+          await Venue.findOneAndUpdate(
+              {_id: req.params._id},
+              {aveRating: totalRating / reviewCount}
+          );
+
+          if (req.user === undefined) {
+            user = null;
+          } else {
+            user = req.user;
+          }
+          return res.render('venueProfile', {
+            venue: venue[0],
+            user: user,
+            venuesReviews: result,
+          });
         }
-        return res.render('venueProfile', {
-          venue: venue[0],
-          user: user,
-          venuesReviews: result
-        });
       });
     } else {
       res.status(400);
@@ -608,7 +626,11 @@ const removeBookmark = async (req, res) => {
       console.log("added to bookmarks");
       user.bookmarks.pull(req.params._id);
       user.save();
-      return res.redirect("/venue/"+req.params._id);
+      if(req.body.profile) {
+        return res.redirect("/profile");
+      } else {
+        return res.redirect("/venue/"+req.params._id);
+      }
     }
   } catch (err) {
     console.log(err);
@@ -619,6 +641,10 @@ const removeBookmark = async (req, res) => {
       functionfailure: "Failed to add bookmark"
     });
   }
+};
+
+function getStars(starCount){
+
 }
 
 // remember to export the functions
