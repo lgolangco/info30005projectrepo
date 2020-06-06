@@ -56,8 +56,8 @@ footer {
 
 /* Navigation */
 
-.nav-items .nav-link {
-    margin: 0 1rem;
+a.nav-item.nav-link.active {
+    color: #0b5394;
 }
 
 .navbar .nav-link,
