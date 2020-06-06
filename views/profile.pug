@@ -26,24 +26,24 @@ block content
                     .card-header
                         h5.card-title.mb-0.text-center Profile
                     .list-group.list-group-flush(role='tablist')
-                        a.list-group-item.list-group-item-action.active(data-toggle='list', href='#dashboard', role='tab')
-                            span.fas.fa-tachometer-alt.pr-4
-                            | Dashboard
-                        a.list-group-item.list-group-item-action(data-toggle='list', href='#bookmarks', role='tab')
+                        //a.list-group-item.list-group-item-action.active(data-toggle='list', href='#dashboard', role='tab')
+                        //    span.fas.fa-tachometer-alt.pr-4
+                        //    | Dashboard
+                        a.list-group-item.list-group-item-action.active(data-toggle='list', href='#bookmarks', role='tab')
                             span.fas.fa-heart.pr-4
                             | Bookmarks
-                        a.list-group-item.list-group-item-action(data-toggle='list', href='#', role='tab')
-                            span.fas.fa-clock.pr-4
-                            | Recently viewed
+                        //a.list-group-item.list-group-item-action(data-toggle='list', href='#', role='tab')
+                        //    span.fas.fa-clock.pr-4
+                        //    | Recently viewed
                         a.list-group-item.list-group-item-action(data-toggle='list', href='#', role='tab')
                             span.far.fa-comment.pr-4
                             | Reviews
-                        a.list-group-item.list-group-item-action(data-toggle='list', href='#', role='tab')
-                            span.fas.fa-photo-video.pr-4
-                            | Photos
-                        a.list-group-item.list-group-item-action(data-toggle='list', href='#', role='tab')
-                            span.fas.fa-user-friends.pr-4
-                            | Friends
+                        //a.list-group-item.list-group-item-action(data-toggle='list', href='#', role='tab')
+                        //    span.fas.fa-photo-video.pr-4
+                        //    | Photos
+                        //a.list-group-item.list-group-item-action(data-toggle='list', href='#', role='tab')
+                        //    span.fas.fa-user-friends.pr-4
+                        //    | Friends
                         a.list-group-item.list-group-item-action(data-toggle='list', href='#', role='tab')
                             span.fas.fa-dollar-sign.pr-4
                             | SS Points
@@ -51,7 +51,7 @@ block content
             .col-md-8.col-xl-9
                 .tab-content
 
-                    #bookmarks.tab-pane.fade(role='tabpanel')
+                    #bookmarks.tab-pane.fade.show.active(role='tabpanel')
                         .card.mt-3.mb-3
                             .card-body
                                 h3.card-title Bookmarks
@@ -61,7 +61,7 @@ block content
                                         each venue in bookmarks
                                             - const address = venue.venueAddress.venueStreetAddress +", "+venue.venueAddress.venueSuburb+", "+venue.venueAddress.venuePostcode;
                                             - const imgURL = "https://studyspot.s3.amazonaws.com/venue/header/" + venue._id.toString() + ".jpg"
-                                            .col-lg-6
+
                                                 .card.mb-3.d-flex.align-items-stretch
                                                     .row.no-gutters
                                                         .col-4
@@ -75,6 +75,9 @@ block content
                                                                 p.card-text(style='white-space:pre; font-size: 12px')
                                                                     | #{venue.venueType}
                                                                     | #{address}
+                                                                form(method="POST" action="/venue/" + venue._id + "/remove")
+                                                                    input(type='hidden' name='profile' value=true)
+                                                                    button.btn-warning.btn-sm(type="submit") Remove bookmark
                                 else
                                     p There are no bookmarks
 

@@ -617,7 +617,11 @@ const removeBookmark = async (req, res) => {
       console.log("added to bookmarks");
       user.bookmarks.pull(req.params._id);
       user.save();
-      return res.redirect("/venue/"+req.params._id);
+      if(req.body.profile) {
+        return res.redirect("/profile");
+      } else {
+        return res.redirect("/venue/"+req.params._id);
+      }
     }
   } catch (err) {
     console.log(err);
@@ -628,6 +632,10 @@ const removeBookmark = async (req, res) => {
       functionfailure: "Failed to add bookmark"
     });
   }
+};
+
+function getStars(starCount){
+
 }
 
 // remember to export the functions

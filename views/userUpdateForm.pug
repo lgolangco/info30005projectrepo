@@ -32,12 +32,6 @@ block content
                         div.form-group
                             label(for="pw") Password:
                             input#pw.form-control(type="password" name="password" value=user.password)
-                        div.form-group
-                            label(for="cover") Cover Photo Link:
-                            input#cover.form-control(type="cover" name="cover" value=user.cover)
-                        div.form-group
-                            label(for="avatar") Profile Photo link:
-                            input#avatar.form-control(type="avatar" name="avatar" value=user.avatar)
                         button.btn.btn-primary(type="submit") Update
                         a(href='/profile/')
                             button.btn.btn-primary(type='button') Cancel
