@@ -290,33 +290,32 @@ block content
       //- Side Bar
       div.col-lg-3.col-md-12.venue-side-bar
 
-        h5 Total #{reviewCount} reviews
+        //h5 Total #{reviewCount} reviews
 
-        if (aveRating < 0.25)
+        if (venue.aveRating < 0.25)
           img.rounded(src="/images/venue/rating/0.png", width="250px")
-        else if (aveRating < 0.75)
+        else if (venue.aveRating < 0.75)
           img.rounded(src="/images/venue/rating/0h.png", width="250px")
-        else if (aveRating < 1.25)
+        else if (venue.aveRating < 1.25)
           img.rounded(src="/images/venue/rating/1.png", width="250px")
-        else if (aveRating < 1.75)
+        else if (venue.aveRating < 1.75)
           img.rounded(src="/images/venue/rating/1h.png", width="250px")
-        else if (aveRating < 2.25)
+        else if (venue.aveRating < 2.25)
           img.rounded(src="/images/venue/rating/2.png", width="250px")
-        else if (aveRating < 2.75)
+        else if (venue.aveRating < 2.75)
           img.rounded(src="/images/venue/rating/2h.png", width="250px")
-        else if (aveRating < 3.25)
+        else if (venue.aveRating < 3.25)
           img.rounded(src="/images/venue/rating/3.png", width="250px")
-        else if (aveRating < 3.75)
+        else if (venue.aveRating < 3.75)
           img.rounded(src="/images/venue/rating/3h.png", width="250px")
-        else if (aveRating < 4.25)
+        else if (venue.aveRating < 4.25)
           img.rounded(src="/images/venue/rating/4.png", width="250px")
-        else if (aveRating < 4.75)
+        else if (venue.aveRating < 4.75)
           img.rounded(src="/images/venue/rating/4h.png", width="250px")
         else
           img.rounded(src="/images/venue/rating/5.png", width="250px")
 
-          //h5 Average rating #{aveRating}
-        br
+        //h5 Average rating #{venue.aveRating}
         br
         br
         // Bookmark Venue

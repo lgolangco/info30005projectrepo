@@ -150,30 +150,31 @@ const getVenueByID = async (req, res) => {
       console.log(req.params._id);
       venuesReviews = findVenuesReviews(req.params._id);
 
-      venuesReviews.then(function(result){
-        reviewCount = 0;
-        totalRating = 0;
-        aveRating = 0;
+      venuesReviews.then(async function(result){
+        var reviewCount = 0;
+        var totalRating = 0;
 
-        result.forEach(function(reviews) {
-          reviewCount ++;
-          totalRating += reviews.rating;
-        });
-        aveRating = totalRating / reviewCount;
-        console.log(reviewCount, aveRating);
+        if(result) {
+          result.forEach(function (reviews) {
+            reviewCount++;
+            totalRating += reviews.rating;
+          });
+          await Venue.findOneAndUpdate(
+              {_id: req.params._id},
+              {aveRating: totalRating / reviewCount}
+          );
 
-        if (req.user === undefined){
-          user = null;
-        } else {
-          user = req.user;
+          if (req.user === undefined) {
+            user = null;
+          } else {
+            user = req.user;
+          }
+          return res.render('venueProfile', {
+            venue: venue[0],
+            user: user,
+            venuesReviews: result,
+          });
         }
-        return res.render('venueProfile', {
-          venue: venue[0],
-          user: user,
-          venuesReviews: result,
-          reviewCount: reviewCount,
-          aveRating: aveRating
-        });
       });
     } else {
       res.status(400);
