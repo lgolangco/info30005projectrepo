@@ -13,7 +13,8 @@ block content
       - query = "place_id:" + query
     - else
       - query = query.replace(/ /g, "+");
-    iframe(src=`https://google.com/maps/embed/v1/place?key=${key}&q=${query}`
+    - const source = "https://google.com/maps/embed/v1/place?key=" + key + "&q=" + query 
+    iframe(src=source
            frameborder="0"
            width="90%"
            height="450")&attributes(attributes)
@@ -325,10 +326,10 @@ block content
         h3.mb-3 Location
 
         .mb-3
-          - const query = venue.venueAddress.venueStreetAddress + ", " + venue.venueAddress.venueSuburb
+          - const query = venue.venueAddress.venueStreetAddress + "," + venue.venueAddress.venueSuburb
           +google-map-place(query, gMapsKey)(maptype="roadmap")
-
-        p #{venue.venueAddress.venueStreetAddress},
+          
+        p #{venue.venueAddress.venueStreetAddress}, 
           |#{venue.venueAddress.venueSuburb}, #{venue.venueAddress.venueState}, #{venue.venueAddress.venuePostcode}
 
 
