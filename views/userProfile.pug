@@ -7,13 +7,18 @@ block content
             .media.align-items-end.profile-header
                 .profile.mr-5
                   - const userAvatarURL = "https://studyspot.s3.amazonaws.com/user/avatar/" + user._id.toString() + ".jpg"
-                    img.rounded.mb-2.profile-background(src = userAvatarURL, width='130px'
+                    img.rounded.mb-4.profile-background(src = userAvatarURL, width='130px'
                     onerror="this.src='https://studyspot.s3.amazonaws.com/user/avatar/default.jpg'")
-                .media-body.mb-3.text-white
+                .media-body.mb-1.mt-5.ml-4.text-white
+
                     h3.my-4 #{user.first_name} #{user.last_name}
-                    h6.mb-0 Email: #{user.email}
-                    if(user.biography)
-                      h6 #{user.biography}
+                    h6.mb-2(style="font-weight: light") Email: #{user.email}
+                    if user.biography
+                        h6 #{user.biography}
+                    br
+                    h3
+                        i.fa.fa-trophy
+                        |  #{points}
 
     .main.container
         .row
@@ -22,27 +27,26 @@ block content
                     .card-header
                         h5.card-title.mb-0.text-center Profile
                     .list-group.list-group-flush(role='tablist')
-                        a.list-group-item.list-group-item-action(data-toggle='list', href='#bookmarks', role='tab')
+                        a.list-group-item.list-group-item-action.active(data-toggle='list', href='#bookmarks', role='tab')
                             span.fas.fa-heart.pr-4
                             | Bookmarks
                         a.list-group-item.list-group-item-actsion(data-toggle='list', href='#reviews', role='tab')
                             span.far.fa-comment.pr-4
                             | Reviews
-                        a.list-group-item.list-group-item-action(data-toggle='list', href='#', role='tab')
-                            span.fas.fa-photo-video.pr-4
-                            | Photos
-                        a.list-group-item.list-group-item-action(data-toggle='list', href='#', role='tab')
-                            span.fas.fa-user-friends.pr-4
-                            | Friends
+                        //a.list-group-item.list-group-item-action(data-toggle='list', href='#', role='tab')
+                        //    span.fas.fa-photo-video.pr-4
+                        //    | Photos
+                        //a.list-group-item.list-group-item-action(data-toggle='list', href='#', role='tab')
+                        //    span.fas.fa-user-friends.pr-4
+                        //    | Friends
 
             .col-md-8.col-xl-9
                 .tab-content
 
-                    #bookmarks.tab-pane.fade(role='tabpanel')
+                    #bookmarks.tab-pane.fade.active.show(role='tabpanel')
                         .card.mt-3.mb-3
                             .card-body
                                 h3.card-title Bookmarks
-                                br
                                 br
                                 if bookmarks.length > 0
                                 
@@ -50,7 +54,7 @@ block content
                                         each venue in bookmarks
                                             - const address = venue.venueAddress.venueStreetAddress +", "+venue.venueAddress.venueSuburb+", "+venue.venueAddress.venuePostcode;
                                             - const imgURL = "https://studyspot.s3.amazonaws.com/venue/header/" + venue._id.toString() + ".jpg"
-                                            .col-lg-6
+                                            .col-xl-10
                                                 .card.mb-3.d-flex.align-items-stretch
                                                     .row.no-gutters
                                                         .col-4
@@ -61,7 +65,30 @@ block content
                                                             .card-body
                                                                 h5.card-title #[a(href="/venue/" + venue._id) #{venue.venueName}]
                                                                 hr
+                                                                if (venue.aveRating < 0.25)
+                                                                    img.rounded(src="/images/venue/rating/0.png", width="100px")
+                                                                else if (venue.aveRating < 0.75)
+                                                                    img.rounded(src="/images/venue/rating/0h.png", width="100px")
+                                                                else if (venue.aveRating < 1.25)
+                                                                    img.rounded(src="/images/venue/rating/1.png", width="100px")
+                                                                else if (venue.aveRating < 1.75)
+                                                                    img.rounded(src="/images/venue/rating/1h.png", width="100px")
+                                                                else if (venue.aveRating < 2.25)
+                                                                    img.rounded(src="/images/venue/rating/2.png", width="100px")
+                                                                else if (venue.aveRating < 2.75)
+                                                                    img.rounded(src="/images/venue/rating/2h.png", width="100px")
+                                                                else if (venue.aveRating < 3.25)
+                                                                    img.rounded(src="/images/venue/rating/3.png", width="100px")
+                                                                else if (venue.aveRating < 3.75)
+                                                                    img.rounded(src="/images/venue/rating/3h.png", width="100px")
+                                                                else if (venue.aveRating < 4.25)
+                                                                    img.rounded(src="/images/venue/rating/4.png", width="100px")
+                                                                else if (venue.aveRating < 4.75)
+                                                                    img.rounded(src="/images/venue/rating/4h.png", width="100px")
+                                                                else
+                                                                    img.rounded(src="/images/venue/rating/5.png", width="100px")
                                                                 p.card-text(style='white-space:pre; font-size: 12px')
+                                                                    br
                                                                     | #{venue.venueType}
                                                                     | #{address}
 
@@ -75,7 +102,6 @@ block content
                             .card-body
                                 h3.card-title Reviews
                                 br
-                                br
                                 
                                 if reviews.length > 0
                                     .row
@@ -83,7 +109,7 @@ block content
                                       each review in reviews
                                           
                                           - date = review.datePosted.toDateString()
-                                          .col-lg-10
+                                          .col-xl-10
                                             .card.mb-3
 
                                                 .row.m-3
@@ -95,8 +121,18 @@ block content
                                                             //insert user name
                                                             h5 #[a(href="/user/"+review.userId) #{review.userFirstName} #{review.userLastName}]
                                                         div
-                                                            //insert rating
-                                                            p Rating: #{review.rating}/5
+                                                            if (review.rating < 0.25)
+                                                                img.rounded(src="/images/venue/rating/0.png", width="100px")
+                                                            else if (review.rating < 1.25)
+                                                                img.rounded(src="/images/venue/rating/1.png", width="100px")
+                                                            else if (review.rating < 2.25)
+                                                                img.rounded(src="/images/venue/rating/2.png", width="100px")
+                                                            else if (review.rating < 3.25)
+                                                                img.rounded(src="/images/venue/rating/3.png", width="100px")
+                                                            else if (review.rating < 4.25)
+                                                                img.rounded(src="/images/venue/rating/4.png", width="100px")
+                                                            else
+                                                                img.rounded(src="/images/venue/rating/5.png", width="100px")
                                                         hr
 
                                                 .offset-1

@@ -13,8 +13,8 @@ block content
                   option(value='Cafe') Cafe
                   option(value='Library') Library
                   option(value='Other') Others
-              input.form-control(type="text",name="search" , placeholder="Search for cafes, libraries or hidden spots")
-              input.form-control(type="text",name="searchLocation" , placeholder="Search for suburb")
+              input.form-control(type="text",name="search" , placeholder="Search for cafes, libraries...")
+              input.form-control(type="text",name="searchLocation" , placeholder="Search by suburb")
               .input-group-append
                   button.btn.btn-warning(type="submit", value="Search")
                       i.fa.fa-search
@@ -237,7 +237,30 @@ block content
                   .card-body
                     h5.card-title #[a(href="/venue/" + venue._id) #{venue.venueName}]
                     hr
+                    if (venue.aveRating < 0.25)
+                        img.rounded(src="/images/venue/rating/0.png", width="150px")
+                    else if (venue.aveRating < 0.75)
+                        img.rounded(src="/images/venue/rating/0h.png", width="150px")
+                    else if (venue.aveRating < 1.25)
+                        img.rounded(src="/images/venue/rating/1.png", width="150px")
+                    else if (venue.aveRating < 1.75)
+                        img.rounded(src="/images/venue/rating/1h.png", width="150px")
+                    else if (venue.aveRating < 2.25)
+                        img.rounded(src="/images/venue/rating/2.png", width="150px")
+                    else if (venue.aveRating < 2.75)
+                        img.rounded(src="/images/venue/rating/2h.png", width="150px")
+                    else if (venue.aveRating < 3.25)
+                        img.rounded(src="/images/venue/rating/3.png", width="150px")
+                    else if (venue.aveRating < 3.75)
+                        img.rounded(src="/images/venue/rating/3h.png", width="150px")
+                    else if (venue.aveRating < 4.25)
+                        img.rounded(src="/images/venue/rating/4.png", width="150px")
+                    else if (venue.aveRating < 4.75)
+                        img.rounded(src="/images/venue/rating/4h.png", width="150px")
+                    else
+                        img.rounded(src="/images/venue/rating/5.png", width="150px")
                     p.card-text(style='white-space:pre;')
+                      br
                       |#{venue.venueType}
                       |#{address}
 

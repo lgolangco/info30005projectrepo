@@ -136,8 +136,9 @@ block content
               p Please #[a(href="/login") log in] or #[a(href="/register") sign up] to suggest changes, leave a review or upload images for this venue.
 
         .col-3.mb-3
+          p
           //rating
-          //h5 Total #{reviewCount} reviews
+          h5 Total #{reviewCount} reviews
 
           if (venue.aveRating < 0.25)
             img.rounded(src="/images/venue/rating/0.png", width="250px")
@@ -335,7 +336,33 @@ block content
       // Reviews
       div.venue-reviews.mb-5
         hr
-        h3.mb-3.ml-3 Reviews
+        .mb-3.ml-3
+          h3 Reviews
+          br
+          h5 Total #{reviewCount} reviews
+
+          if (venue.aveRating < 0.25)
+            img.rounded(src="/images/venue/rating/0.png", width="250px")
+          else if (venue.aveRating < 0.75)
+            img.rounded(src="/images/venue/rating/0h.png", width="250px")
+          else if (venue.aveRating < 1.25)
+            img.rounded(src="/images/venue/rating/1.png", width="250px")
+          else if (venue.aveRating < 1.75)
+            img.rounded(src="/images/venue/rating/1h.png", width="250px")
+          else if (venue.aveRating < 2.25)
+            img.rounded(src="/images/venue/rating/2.png", width="250px")
+          else if (venue.aveRating < 2.75)
+            img.rounded(src="/images/venue/rating/2h.png", width="250px")
+          else if (venue.aveRating < 3.25)
+            img.rounded(src="/images/venue/rating/3.png", width="250px")
+          else if (venue.aveRating < 3.75)
+            img.rounded(src="/images/venue/rating/3h.png", width="250px")
+          else if (venue.aveRating < 4.25)
+            img.rounded(src="/images/venue/rating/4.png", width="250px")
+          else if (venue.aveRating < 4.75)
+            img.rounded(src="/images/venue/rating/4h.png", width="250px")
+          else
+            img.rounded(src="/images/venue/rating/5.png", width="250px")
         if (user)
           each review in venuesReviews
             if (user._id.toString() == review.userId.toString())
@@ -361,8 +388,18 @@ block content
                         //insert user name
                         h5 #[a(href="/profile") #{review.userFirstName} #{review.userLastName}]
                       div
-                        //- insert rating
-                        p Rating: #{review.rating}/5
+                        if (review.rating < 0.25)
+                          img.rounded(src="/images/venue/rating/0.png", width="100px")
+                        else if (review.rating < 1.25)
+                          img.rounded(src="/images/venue/rating/1.png", width="100px")
+                        else if (review.rating < 2.25)
+                          img.rounded(src="/images/venue/rating/2.png", width="100px")
+                        else if (review.rating < 3.25)
+                          img.rounded(src="/images/venue/rating/3.png", width="100px")
+                        else if (review.rating < 4.25)
+                          img.rounded(src="/images/venue/rating/4.png", width="100px")
+                        else
+                          img.rounded(src="/images/venue/rating/5.png", width="100px")
                       hr
 
                   .offset-1
@@ -410,8 +447,18 @@ block content
                         //insert user name
                         h5 #[a(href="/user/"+review.userId) #{review.userFirstName} #{review.userLastName}]
                       div
-                        //insert rating
-                        p Rating: #{review.rating}/5
+                        if (review.rating < 0.25)
+                          img.rounded(src="/images/venue/rating/0.png", width="100px")
+                        else if (review.rating < 1.25)
+                          img.rounded(src="/images/venue/rating/1.png", width="100px")
+                        else if (review.rating < 2.25)
+                          img.rounded(src="/images/venue/rating/2.png", width="100px")
+                        else if (review.rating < 3.25)
+                          img.rounded(src="/images/venue/rating/3.png", width="100px")
+                        else if (review.rating < 4.25)
+                          img.rounded(src="/images/venue/rating/4.png", width="100px")
+                        else
+                          img.rounded(src="/images/venue/rating/5.png", width="100px")
                       hr
 
                   .offset-1
