@@ -44,8 +44,8 @@ block content
                         //a.list-group-item.list-group-item-action(data-toggle='list', href='#', role='tab')
                         //    span.fas.fa-user-friends.pr-4
                         //    | Friends
-                        a.list-group-item.list-group-item-action(data-toggle='list', href='#', role='tab')
-                            span.fas.fa-dollar-sign.pr-4
+                        a.list-group-item.list-group-item-action(data-toggle='list', href='#points', role='tab')
+                            span.fas.fa.fa-trophy.pr-4
                             | SS Points
 
             .col-md-8.col-xl-9
@@ -81,3 +81,13 @@ block content
                                 else
                                     p There are no bookmarks
 
+                    #points.tab-pane.fade(role='tabpanel')
+                        .card.mt-3.mb-3
+                            .card-body
+                                h3.card-title STUDYSPOT Points
+                                h5
+                                    br
+                                    | You currently have #{points} points.
+                                p
+                                    br
+                                    | Earn more points by reviewing venues!
