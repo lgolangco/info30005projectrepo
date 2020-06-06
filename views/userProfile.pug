@@ -85,27 +85,26 @@ block content
                                           - date = review.datePosted.toDateString()
                                           .col-lg-10
                                             .card.mb-3
-                                              
-                                              .row
-                                                .col-2
-                                                  - var userAvatarURL = "https://studyspot.s3.amazonaws.com/user/avatar/" + review.userId.toString() + ".jpg"
-                                                  img.rounded.mb-2.profile-background(src = userAvatarURL, width='50px'
-                                                    onerror="this.src='https://studyspot.s3.amazonaws.com/user/avatar/default.jpg'")
-                                                .col-10
-                                                  div
-                                                    //insert user name
-                                                    h5 #[a(href="/user/"+review.userId) #{review.userFirstName} #{review.userLastName}]
-                                                  div
-                                                    //insert rating
-                                                    p Rating: #{review.rating}/5
-                                        
-                                              .offset-1
-                                                //insert review text
-                                                p #{review.content}
-                                              
-                                              .offset-9
-                                                //insert date
-                                                p #{date}
+
+                                                .row.m-3
+                                                    .col-3
+                                                        - var userAvatarURL = "https://studyspot.s3.amazonaws.com/user/avatar/" + review.userId.toString() + ".jpg"
+                                                        img.rounded(src = userAvatarURL, width='100%', style="object-fit: cover; height: 95px" onerror="this.src='https://studyspot.s3.amazonaws.com/user/avatar/default.jpg'")
+                                                    .col-9
+                                                        div
+                                                            //insert user name
+                                                            h5 #[a(href="/user/"+review.userId) #{review.userFirstName} #{review.userLastName}]
+                                                        div
+                                                            //insert rating
+                                                            p Rating: #{review.rating}/5
+                                                        hr
+
+                                                .offset-1
+
+                                                    p #{review.content}
+
+                                                div
+                                                    p.mr-2.text-muted.float-right(style="font-size: 12px") #{date}
                                         
                                                                   
                                 else
