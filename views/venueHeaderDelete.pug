@@ -10,10 +10,14 @@ block content
                 
                 //- If suggestion already submitted only show message
                 if (deleted)
-                  h2.display-4.m-b-2 Successfully deleted an image for #{venue.venueName}.
-                  p Please note that the former header image may have been saved to your browser (cached).
-                  p To view your changes, (1) refresh your browser and clear your cache, and
-                    | (2) allow some time for the database to reflect these changes.
+                  br
+                  h2.display-4.m-b-2 Successfully deleted an image for #{venue.venueName}
+                  
+                  center
+                    br
+                    p Please note that the former header image may have been saved to your browser (cached).
+                    p To view your changes, (1) refresh your browser and clear your cache, and
+                      | (2) allow some time for the database to reflect these changes.
                   
                   p
                     a(href=profileLink) Back to #{venue.venueName}'s profile
@@ -21,7 +25,7 @@ block content
                 else
                 
                   if (header.length > 0)
-                  
+                      br
                       h1.display-4.m-b-2 Delete header image for #{venue.venueName}
                       br
                       center 
@@ -41,9 +45,12 @@ block content
                           button.btn.btn-Danger(type="Submit") DELETE Image  
                         
                   else
-                    h1.display-4.m-b-2 #{venue.venueName} has no header image.
-                    p #{venue.venueName} has no header image and is currently using the default header image.
-                    p Therefore, <strong> there is no header image to delete. </strong>
+                    br
+                    h1.display-4.m-b-2 #{venue.venueName} has no header image
+                    br
+                    center
+                      p #{venue.venueName} has no header image and is currently using the default header image.
+                      p Therefore, <strong> there is no header image to delete. </strong>
                     
-                    a(href=profileLink) Back to #{venue.venueName}'s profile
+                      a(href=profileLink) Back to #{venue.venueName}'s profile  
                     
