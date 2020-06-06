@@ -49,14 +49,22 @@ block content
           p There are no pending venue suggestions. 
         each suggestion in venueSuggestions
           
+          - const imgURL = "https://studyspot.s3.amazonaws.com/venue/header/" + suggestion.venueId.toString() + ".jpg"
+          
           .col-8.offset-1.mb-3
             .card.mb-3.d-flex.align-items-stretch
-              .card-body
-                h4.card-title #{suggestion.venueName}
-                h5 #{suggestion.userName}
-                hr
-                p.card-text(style='white-space:pre;')
-                  |#{suggestion.suggestion} 
+              .row.no-gutters
+                .col-4
+                  img.venue-thumbnail(src = imgURL
+                  onerror="this.src='https://studyspot.s3.amazonaws.com/venue/header/default.jpg'")
+                
+                .col-8
+                  .card-body
+                    h4.card-title #{suggestion.venueName}
+                    h5 #{suggestion.userName}
+                    hr
+                    p.card-text(style='white-space:pre;')
+                      |#{suggestion.suggestion} 
                 
 
                 
