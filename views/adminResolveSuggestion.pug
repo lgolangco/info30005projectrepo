@@ -1,0 +1,308 @@
+extends layout
+
+block content
+    // Venue Update Form for Admins to Update a Venue Profile GIVEN a venue suggestion [all current venue attributes will be pre-loaded into the form]
+    .main.container
+        .col-md-6.offset-3
+            
+            //-If form already submitted show success message
+            if (completed)
+              h1 #{venue.venueName} Updated!
+              
+            //- Else
+            else
+              h1 Resolve Venue Suggestion
+              
+              h4 Suggestion:
+              
+              .row
+                .col-8.offset-1.mb-3
+                  .card.mb-3.d-flex.align-items-stretch
+                    .card-body
+                      h4.card-title #{venueSuggestion.venueName}
+                      h5 #{venueSuggestion.userName}
+                      hr
+                      p.card-text(style='white-space:pre;')
+                        |#{venueSuggestion.suggestion}
+              
+              
+              // Update form
+              form(method='POST' action="")
+                  
+                  input.form-control(type="hidden" name='venueId' value=venueSuggestion.venueId)
+                  
+                  // Venue Name
+                  div.form-group
+                      label(for='venueName') Venue Name
+                      input.form-control(type='text', placeholder='e.g. Campos Coffee' name='venueName' autocomplete="off" value=venue.venueName)
+              
+                  // Venue Type
+                  div.form-group
+                    label(for="venueType") Venue Type
+                    select(name="venueType").form-control#exampleFormControlSelect1
+                      if venue.venueType === "Cafe"
+                        option(selected) Cafe
+                        option Public Library
+                        option Other
+                      else if venue.venueType === "Public Library"
+                        option Cafe
+                        option(selected) Public Library
+                        option Other
+              
+                      else if venue.venueType === "Other"
+                        option Cafe
+                        option Public Library
+                        option(selected) Other  
+                      else 
+                        option Cafe
+                        option Public Library
+                        option Other
+              
+                  // Venue Address
+                  div.form-group
+                      label(for='venueStreetAddress') Street Address
+                      input#inputAddress.form-control(type='text', placeholder='e.g. 123 Study Street' name='venueStreetAddress' autocomplete="off" value=venue.venueAddress.venueStreetAddress)
+              
+                  div.form-row
+              
+                    // Suburb
+                    div.form-group.col-md-6
+                        label(for='venueSuburb') Suburb
+                        input#inputCity.form-control(type='text', placeholder='e.g. Studyville' name='venueSuburb' autocomplete="off" value=venue.venueAddress.venueSuburb)
+              
+                    // State
+                    div.form-group.col-md-3
+                      label(for="venueState") State
+                      select(name="venueState").form-control#exampleFormControlSelect1
+                        if venue.venueAddress.venueState === "VIC"
+                          option(selected) VIC
+                          option NSW
+                          option QLD
+                          option TAS
+                          option ACT
+                          option NT
+                          option SA
+                          option WA
+                        else if venue.venueAddress.venueState === "NSW"
+                          option VIC
+                          option(selected) NSW
+                          option QLD
+                          option TAS
+                          option ACT
+                          option NT
+                          option SA
+                          option WA
+                        else if venue.venueAddress.venueState === "QLD"
+                          option VIC
+                          option NSW
+                          option(selected) QLD
+                          option TAS
+                          option ACT
+                          option NT
+                          option SA
+                          option WA
+                        else if venue.venueAddress.venueState === "TAS"
+                          option VIC
+                          option NSW
+                          option QLD
+                          option(selected) TAS
+                          option ACT
+                          option NT
+                          option SA
+                          option WA
+                        else if venue.venueAddress.venueState === "ACT"
+                          option VIC
+                          option NSW
+                          option QLD
+                          option TAS
+                          option(selected) ACT
+                          option NT
+                          option SA
+                          option WA
+                        else if venue.venueAddress.venueState === "NT"
+                          option VIC
+                          option NSW
+                          option QLD
+                          option TAS
+                          option ACT
+                          option(selected) NT
+                          option SA
+                          option WA
+                        else if venue.venueAddress.venueState === "SA"
+                          option VIC
+                          option NSW
+                          option QLD
+                          option TAS
+                          option ACT
+                          option NT
+                          option(selected) SA
+                          option WA
+                        else if venue.venueAddress.venueState === "WA"
+                          option VIC
+                          option NSW
+                          option QLD
+                          option TAS
+                          option ACT
+                          option NT
+                          option SA
+                          option(selected) WA
+                        else  
+                          option VIC
+                          option NSW
+                          option QLD
+                          option TAS
+                          option ACT
+                          option NT
+                          option SA
+                          option WA
+                    div
+              
+                    // Postcode
+                    div.form-group.col-md-3
+                        label(for='venuePostcode') Postcode
+                        input#inputZip.form-control(type='text', placeholder='e.g. 3000' name='venuePostcode' autocomplete="off" value=venue.venueAddress.venuePostcode)
+              
+                  // Venue details
+                  br
+                  h3 Venue details
+              
+                  div.form-group
+                    label(for="noise") Noise Level
+                    select(name="noise").form-control#exampleFormControlSelect1
+                      if venue.venueDetails.noise === "Low"
+                        option(selected) Low
+                        option Medium
+                        option High
+                      else if venue.venueDetails.noise === "Medium"
+                        option Low
+                        option(selected) Medium
+                        option High
+              
+                      else if venue.venueDetails.noise === "High"
+                        option Low
+                        option Medium
+                        option(selected) High  
+                      else 
+                        option Low
+                        option Medium
+                        option High
+                  div
+              
+                  // Wifi
+                  div.form-check
+                    if venue.venueDetails.wifi === true
+                      input.form-check-input(type="checkbox" value="1" name = "wifi" checked)
+                    else 
+                      input.form-check-input(type="checkbox" value="1" name = "wifi")
+                    label.form-check-label(for="wifi") Wifi
+              
+                  // Toilets
+                  div.form-check
+                    if venue.venueDetails.toilets === true
+                      input.form-check-input(type="checkbox" value="1" name = "toilets" checked)
+                    else 
+                      input.form-check-input(type="checkbox" value="1" name = "toilets")
+                    label.form-check-label(for="toilets") Toilets
+              
+                  // Power
+                  div.form-check
+                    if venue.venueDetails.power === true
+                      input.form-check-input(type="checkbox" value="1" name = "power" checked)
+                    else 
+                      input.form-check-input(type="checkbox" value="1" name = "power" )                                  
+                    label.form-check-label(for="power") Powerpoints
+              
+                  // Discussion Friendly
+                  div.form-check
+                    if venue.venueDetails.discussionFriendly === true
+                      input.form-check-input(type="checkbox" value="1" name = "discussionFriendly" checked)
+                    else 
+                      input.form-check-input(type="checkbox" value="1" name = "discussionFriendly")
+                    label.form-check-label(for="discussionFriendly") Discussion friendly
+              
+                  // Printers
+                  div.form-check
+                    if venue.venueDetails.printer === true
+                      input.form-check-input(type="checkbox" value="1" name = "printer" checked)
+                    else 
+                      input.form-check-input(type="checkbox" value="1" name = "printer")
+                    label.form-check-label(for="printer") Printing Services
+              
+                  // Venue Contact
+                  br
+                  h3 Contact details
+              
+                  div.form-row
+                    div.form-group.col-lg-2
+                        label(for='phonePrefix') Prefix
+                        input.form-control(type='text', placeholder='(03)' name='phonePrefix' autocomplete="off" value=venue.venueContact.phonePrefix)
+              
+                    div.form-group.col-lg-10
+                        label(for='phone') Landline Number
+                        input.form-control(type='text', placeholder='e.g. 1234 5678' name='phone' autocomplete="off" value=venue.venueContact.phone)
+              
+                  div.form-row
+                    div.form-group.col-lg-2
+                        label(for='mobilePrefix') Prefix
+                        input.form-control(type='text', placeholder='+61' name='mobilePrefix' autocomplete="off" value=venue.venueContact.mobilePrefix)
+              
+                    div.form-group.col-lg-10
+                        label(for='mobile') Mobile Number
+                        input.form-control(type='text', placeholder='e.g. 412 345 678' name='mobile' autocomplete="off" value=venue.venueContact.mobile)
+              
+                  div.form-group
+                    label(for="email") Email address
+                    input.form-control#exampleInputEmail1(type="email" aria-describedby="emailHelp" placeholder="Enter email" name = "email" value=venue.venueContact.email)
+              
+                  div.form-group
+                    label(for="web") Website
+                    input.form-control(type='text' placeholder="Enter website" name = "web" value=venue.venueContact.web)
+              
+              
+                  // Venue Hours
+                  br 
+                  h3 Opening Hours
+              
+                  div.form-row
+                    //Sunday
+                    div.form-group.col-lg-4
+                      label(for="sun") Sunday
+                      input.form-control(type='text' placeholder="e.g. 7am-5pm" name = "sun" value=venue.venueHours.sun)
+              
+                    //Thursday
+                    div.form-group.col-lg-4.offset-lg-2
+                      label(for="thu") Thursday
+                      input.form-control(type='text' placeholder="e.g. 7am-5pm" name = "thu" value=venue.venueHours.thu)
+              
+                  div.form-row
+                    //Monday
+                    div.form-group.col-lg-4
+                      label(for="mon") Monday
+                      input.form-control(type='text' placeholder="e.g. 7am-5pm" name = "mon" value=venue.venueHours.mon)                
+              
+                    //Friday
+                    div.form-group.col-lg-4.offset-lg-2
+                      label(for="fri") Friday
+                      input.form-control(type='text' placeholder="e.g. 7am-5pm" name = "fri" value=venue.venueHours.fri)
+              
+                  div.form-row
+              
+                    //Tuesday
+                    div.form-group.col-lg-4
+                      label(for="tue") Tuesday
+                      input.form-control(type='text' placeholder="e.g. 7am-5pm" name="tue" value=venue.venueHours.tue)
+              
+                    //Saturday
+                    div.form-group.col-lg-4.offset-lg-2
+                      label(for="sat") Saturday
+                      input.form-control(type='text' placeholder="e.g. 7am-5pm" name="sat" value=venue.venueHours.sat)
+              
+                  div.form-row
+              
+                    //Wednesday
+                    div.form-group.col-lg-4
+                      label(for="wed") Wednesday
+                      input.form-control(type='text' placeholder="e.g. 7am-5pm" name = "wed" value=venue.venueHours.wed)
+              
+                  
+                  button.btn.btn-primary(type="submit") Submit

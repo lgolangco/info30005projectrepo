@@ -1,0 +1,61 @@
+extends layout
+
+block content
+
+    // Delete Venue Header page
+    .main.container
+        .row
+            .col-md-8.offset-2
+                - const profileLink = "/venue/" + venue._id
+                
+                //- If suggestion already submitted only show message
+                if (deleted)
+                  br
+                  br
+                  h1.display-4.m-b-2 Successfully deleted
+                  h1.display-4.m-b-2 header image for
+                  h1.display-4.m-b-2 #{venue.venueName}
+                  
+                  center
+                    br
+                    p Please note that the former header image may have been saved to your browser (cached).
+                    p To view your changes, (1) refresh your browser and clear your cache, and
+                      | (2) allow some time for the database to reflect these changes.
+                  
+                    p
+                      a(href=profileLink) Back to #{venue.venueName}'s profile
+                
+                else
+                
+                  if (header.length > 0)
+                      br
+                      br
+                      h1.display-4.m-b-2 Delete header image for #{venue.venueName}
+                      br
+                      center 
+                        p Are you sure you want to delete this image?
+                        p <strong> This action cannot be undone. </strong>
+                      
+                        - const venueHeaderURL = "https://studyspot.s3.amazonaws.com/venue/header/" + venue._id.toString() + ".jpg"
+                        img.venue-header(src = venueHeaderURL)
+                      
+                        br
+                        br
+                        a(href=profileLink) Back to #{venue.venueName}'s profile
+                        
+                        br
+                        br
+                        form(method="POST" action="")
+                          button.btn.btn-Danger(type="Submit") DELETE Image  
+                        
+                  else
+                    br
+                    br
+                    h1.display-4.m-b-2 #{venue.venueName} has no header image
+                    br
+                    center
+                      p #{venue.venueName} has no header image and is currently using the default header image.
+                      p Therefore, <strong> there is no header image to delete. </strong>
+                    
+                      a(href=profileLink) Back to #{venue.venueName}'s profile  
+                    

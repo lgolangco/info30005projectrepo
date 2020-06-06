@@ -1,9 +1,7 @@
 /* Register */
 
 .registration {
-    background: #599fd9;
-    background: -webkit-linear-gradient(45deg, #599fd9, #f9eadf);
-    background: linear-gradient(45deg, #599fd9, #f9eadf);
+    background: #ffffff;
     min-height: 100vh;
     overflow-x: hidden;
     padding-bottom: 20px;

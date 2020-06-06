@@ -56,8 +56,8 @@ footer {
 
 /* Navigation */
 
-.nav-items .nav-link {
-    margin: 0 1rem;
+a.nav-item.nav-link.active {
+    color: #0b5394;
 }
 
 .navbar .nav-link,
@@ -129,6 +129,10 @@ button.btn.btn-primary {
     margin-right: 18px;
     object-fit: cover;
     border: solid 2px rgba(255, 255, 255, 0.75);
+}
+
+.avatar-profile {
+  object-fit: cover;
 }
 
 .options {

@@ -25,7 +25,9 @@ const getAllUsers = async (req, res) => {
                 pointsList.push(reviews.length);
             }
             console.log(pointsList,all_users.length);
-            return res.render('users', {users: all_users, pointsList: pointsList});
+
+            return res.render('users', {users: all_users, currentUser: req.user, user: req.user, pointsList: pointsList});
+
         }
     } catch (err) {
         res.status(400);
@@ -37,10 +39,12 @@ const loadProfile = async(req, res) => {
     points = 0;
     try {
         const bookmarks = await Venue.find({_id: { $in :req.user.bookmarks}});
+        console.log(req.user.bookmarks);
         const reviews = await Review.find({userId: req.user._id});
         points = reviews.length;
-        console.log(points,reviews);
-        return res.render("profile", {user: req.user, bookmarks: bookmarks, points: points, title: "Profile"});
+        console.log("REVIEWS");
+        console.log(reviews);
+        return res.render("profile", {user: req.user, bookmarks: bookmarks, points: points, title: "Profile", reviews: reviews});
     } catch (err) {
         res.status(400);
         console.log(req.user.bookmarks,err);
@@ -117,8 +121,6 @@ const updateUser = async (req, res, next) => {
             user["first_name"] = req.body.first_name;
             user["last_name"] = req.body.last_name;
             user["email"] = req.body.email;
-            user["cover"] = req.body.cover;
-            user["avatar"] = req.body.avatar;
             user["biography"] = req.body.biography;
 
             // save
@@ -210,7 +212,16 @@ const getUserByID = async (req, res) => {
         if (user.length === 0) {
             return res.render('usererror', {message: "There are no users listed with this id"});
         } else if (user) {
-            return res.render('userProfile', {user: user[0]});
+            const bookmarks = Venue.find({_id: { $in : user[0].bookmarks}});
+            bookmarks.then(function(bookmarksresult){
+              console.log(bookmarksresult);
+              const reviews = Review.find({userId: user[0]._id});
+              reviews.then(function(reviewsresult){
+                console.log("REVIEWS");
+                console.log(reviewsresult);
+                return res.render('userProfile', {user: user[0], bookmarks: bookmarksresult, reviews: reviewsresult});
+              });
+            });
         } else {
             res.status(400);
             return res.render('usererror', {message: "getUserByID function failed"});
@@ -229,7 +240,7 @@ const getUserByEmail = async (req, res) => {
             return res.render('usererror', {message: "getUserByEmail function failed"});
         }
     })
-}
+};
 
 
 // function to delete User
@@ -266,7 +277,7 @@ const logout = (req, res) => {
     req.logout();
     req.flash("success_msg", "You are logged out");
     res.redirect("/login");
-}
+};
 
 const login = (req, res, next) => {
     passport.authenticate("local", {
@@ -274,7 +285,8 @@ const login = (req, res, next) => {
         failureRedirect: "/login",
         failureFlash: true
     })(req, res, next);
-}
+};
+
 
 
 module.exports = {

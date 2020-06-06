@@ -14,13 +14,19 @@ block content
                               
                             // Profile photo
                             .avatar2
-                                img(src=user.avatar)
+                                - var userAvatarURL = "https://studyspot.s3.amazonaws.com/user/avatar/" + user._id.toString() + ".jpg"
+                                img.rounded.mb-2.profile-background(src = userAvatarURL,
+                                  onerror="this.src='https://studyspot.s3.amazonaws.com/user/avatar/default.jpg'")
                                   
                             // Basic user information
                             .info
                                 .title
-                                    a(href='/user/' + user._id) #{user.first_name} #{user.last_name}
+                                    if (currentUser && currentUser._id.toString() == user._id.toString())
+                                      a(href='/profile/') #{user.first_name} #{user.last_name}
+                                    else
+                                      a(href='/user/' + user._id) #{user.first_name} #{user.last_name}
                                 .desc Email: #{user.email}
                                 .desc
                                     i.fa.fa-trophy
                                     |  #{pointsList[index]}
+

@@ -1,21 +1,56 @@
 const express = require("express");
 const router = express.Router();
 
-const {ensureAuthenticated, forwardAuthenticated} = require("../config/auth");
+const {ensureAuthenticated, forwardAuthenticated, forwardAuthenticatedAdmin} = require("../config/auth");
 
 const userController = require("../controllers/userController.js");
 const venueController = require("../controllers/venueController.js");
+const adminController = require("../controllers/adminController.js");
+const imageController = require("../controllers/imageController.js");
 
 
 // GET home page
 router.get("/", (req, res, next) => {
-    return res.render("index", {title: "Home"});
+    return res.render("index", {title: "Home", user: req.user});
 });
 
 // GET About
 router.get("/about", (req, res, next) => res.render("about", {title: "About"}));
 
+
+// ADMIN
+
+// GET Admin page
+router.get("/admin", forwardAuthenticatedAdmin, adminController.getAdminPage);
+
+// GET Admin Delete Request Page
+router.get("/admin/deleteRequest/:_id",forwardAuthenticatedAdmin, adminController.getDeleteRequestPage);
+
+// POST Admin Delete Request
+router.post("/admin/deleteRequest/:_id", adminController.postDeleteRequest);
+
+// GET Admin Resolve Request page
+router.get("/admin/resolveRequest/:_id",forwardAuthenticatedAdmin, adminController.getResolveRequestPage);
+
+// POST Admin Resolve Request form
+router.post("/admin/resolveRequest/:_id", adminController.postResolveRequest);
+
+// GET Admin Delete Suggestion page
+router.get("/admin/deleteSuggestion/:_id",forwardAuthenticatedAdmin, adminController.getDeleteSuggestionPage);
+
+// POST Admin Delete Suggestion
+router.post("/admin/deleteSuggestion/:_id", adminController.postDeleteSuggestionPage);
+
+// GET Admin Resolve Suggestion page
+router.get("/admin/resolveSuggestion/:_id",forwardAuthenticatedAdmin, adminController.getResolveSuggestionPage);
+
+// POST Admin Resolve Suggestion form
+router.post("/admin/resolveSuggestion/:_id", adminController.postResolveSuggestionPage);
+
+
+
 // USER
+
 // GET Register form page
 router.get("/register", forwardAuthenticated, (req, res, next) => res.render("register", {title: "Sign Up"}));
 
@@ -47,6 +82,8 @@ router.post("/profile/delete", userController.deleteUserByID);
 
 // GET Logout
 router.get("/logout", userController.logout);
+
+
 
 // VENUE
 
@@ -81,5 +118,45 @@ router.get("/requestNew/", venueController.getRequestNew);
 
 // POST requestNew venue
 router.post("/requestNew/", venueController.addRequestNew);
+
+
+// IMAGES
+
+// GET venueImage page by venue Id
+router.get("/venueImage/upload/:_id", imageController.getVenueImagePage);
+
+// POST venueImage photo by venue Id
+router.post('/venueImage/upload/:_id', imageController.uploadVenueImage);
+
+// GET userVenueGallery page by venye Id
+router.get("/venueGallery/:_id", imageController.getVenueGalleryPage);
+
+// POST deleteVenueImage request by Venue Id
+router.post("/venueGallery/:_id", imageController.deleteVenueImage);
+
+// GET venueHeader page by venue Id
+router.get("/venueHeader/upload/:_id", imageController.getVenueHeaderPage);
+
+// POST venueHeader image by venue Id
+router.post("/venueHeader/upload/:_id", imageController.uploadVenueHeaderImage);
+
+// GET deleteVenueHeader page by venue Id
+router.get("/venueHeader/delete/:_id", imageController.getDeleteVenueHeaderPage);
+
+// Post deleteVenueHeader request by venue Id
+router.post("/venueHeader/delete/:_id", imageController.deleteVenueHeader);
+
+// GET userAvatarImage page by user Id
+router.get("/profile/uploadAvatar/:_id", imageController.getUserAvatarImagePage);
+
+// POST userAvatarImage by user Id
+router.post("/profile/uploadAvatar/:_id", imageController.uploadUserAvatarImage);
+
+// GET delete userAvatarImage page by user Id
+router.get("/profile/deleteAvatar/:_id", imageController.getdeleteUserAvatarImagePage);
+
+// GET delete userAvatarImage page by user Id
+router.post("/profile/deleteAvatar/:_id", imageController.deleteUserAvatar);
+
 
 module.exports = router;

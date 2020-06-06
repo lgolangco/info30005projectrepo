@@ -1,0 +1,59 @@
+extends layout
+
+
+block content
+  // View All Venues in With Basic Details Card Format
+  br
+  br
+  #venues-page.main.container
+
+      h1 Gallery for #{venue.venueName}
+
+      .row
+      
+        br
+        .col-md-7.offset-1
+      
+      if deleted
+        p(style="text-align: center; color: red;") <strong> Successfully deleted an image for this venue. </strong>
+      
+      
+      - const imageUpload = '/venueImage/upload/' + venue._id
+      if imageLinks.length == 0
+        p(style="text-align: center;") Thare are no images for this venue yet.
+        if currentUser
+          p(style="text-align: center;") To add the first photo to this collection, #[a(href=imageUpload) click here!]
+        else
+          p(style="text-align: center;") Please #[a(href="/login") log in] or #[a(href="/register") sign up] to contribute to this gallery!
+        br
+        br
+      
+      else
+        p(style="text-align: center;") This gallery is a collection of photos uploaded by StudySpot users.
+        if currentUser
+          p(style="text-align: center;") To add your own photo to this collection, #[a(href=imageUpload) click here!]
+        else
+          p(style="text-align: center;") Please #[a(href="/login") log in] or #[a(href="/register") sign up] to contribute to this gallery!
+        br
+        br
+        
+        .row.text-center.text-lg-left
+            
+            for imagePath in imageLinks
+              
+              - var imageURL = "https://studyspot.s3.amazonaws.com/" + imagePath
+              .col-lg-3.col-md-4.col-6
+                div(style="height: 200px; width: 250px; overflow: hidden; margin: 10px")
+                  a(href=imageURL)
+                    img.img-fluid.img-thumbnail(src=imageURL style="height:200px; width: 250px;")
+                  
+                if currentUser && currentUser.admin == true    
+                  center
+    
+                    form(method="POST" action="")
+                      input.form-control(type="hidden" name='imagePath' value=imagePath)
+                      button.btn.btn-Danger(type="Submit") Delete this image
+                    br
+                      
+                      
+                      

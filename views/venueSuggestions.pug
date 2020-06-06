@@ -32,14 +32,15 @@ block content
                         
                         //ADD USER SCHEMA/EMAIL IN BACKEND so can set value = user.EMAIL or username
                         input.form-control-plaintext#staticEmail(type="text" readonly value=user.email) 
-                        input.form-control(type="hidden" name='userId' value=user._id) 
+                        input.form-control(type="hidden" name='userId' value=user._id)
+                        input.form-control(type="hidden" name='userName' value=user.first_name + " " + user.last_name)  
                     
                       
                       // Display static venue name
                       label.col-sm-1.col-form-label(for="staticVenueName") Venue:
                       div.col-sm-11
                     
-                        input.form-control-plaintext(type="text" readonly value=venue.venueName)
+                        input.form-control-plaintext(type="text" name='venueName' readonly value=venue.venueName)
                         input.form-control(type="hidden" name='venueId' value=venue._id)  
                     
                     // Textbox

@@ -242,18 +242,25 @@ const getVenueSuggestionsByID = async (req, res) => {
 };
 
 function convertSuggestions(suggestionRaw) {
+  console.log("converting suggestions");
   const suggestionProcessed = {
     userId: ObjectId(suggestionRaw.userId),
+    userName: suggestionRaw.userName,
     venueId: ObjectId(suggestionRaw.venueId),
+    venueName: suggestionRaw.venueName,
     suggestion: suggestionRaw.suggestion,
     resolved: false
   }
+  console.log(suggestionProcessed);
   return suggestionProcessed;
 }
 
 const submitVenueSuggestion = async (req, res) => {
+  console.log("submitting venue suggestion");
   // extract info. from body
   const suggestionProcessed = convertSuggestions(req.body)
+  console.log("called convert function");
+  console.log(suggestionProcessed);
   const db = mongoose.connection;
   try {
     await db.collection('venueSuggestions').insertOne(suggestionProcessed)
@@ -292,6 +299,7 @@ const getVenueUpdateByID = async (req, res) => {
       return res.render("venueUpdate", {
         title: "Update Profile",
         id: req.params._id,
+        user: req.user,
         venue: venue[0],
         completed: false
       });
@@ -385,6 +393,7 @@ const updateVenue = async (req, res) => {
 
 
   venueProcessed = convertVenue(req.body);
+  console.log(venueProcessed);
   // update the venue with the prescribed _id
   await Venue.findOneAndUpdate(
       {_id: req.params._id},
@@ -575,7 +584,6 @@ const addRequestNew = async (req, res) => {
      });
    }
 };
-
 
 // function to add venue to user's bookmarks
 const bookmark = async (req, res) => {
