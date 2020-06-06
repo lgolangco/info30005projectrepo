@@ -120,10 +120,10 @@ router.get("/requestNew/", venueController.getRequestNew);
 router.post("/requestNew/", venueController.addRequestNew);
 
 // GET venueImage page by venue Id
-router.get("/venueImage/:_id", imageController.getVenueImagePage);
+router.get("/venueImage/upload/:_id", imageController.getVenueImagePage);
 
 // POST venueImage photo by venue Id
-router.post('/venueImage/:_id', imageController.uploadVenueImage);
+router.post('/venueImage/upload/:_id', imageController.uploadVenueImage);
 
 // GET userAvatarImage page by user Id
 router.get("/profile/uploadAvatar/:_id", imageController.getUserAvatarImagePage);
@@ -134,11 +134,13 @@ router.post("/profile/uploadAvatar/:_id", imageController.uploadUserAvatarImage)
 // GET userVenueGallery page by venye Id
 router.get("/venueGallery/:_id", imageController.getVenueGalleryPage);
 
+// POST deleteVenueImage request by Venue Id
+router.post("/venueGallery/:_id", imageController.deleteVenueImage);
+
 // GET venueHeader page by venue Id
 router.get("/venueHeader/:_id", imageController.getVenueHeaderPage);
 
 // POST venueHeader image by venue Id
 router.post("/venueHeader/:_id", imageController.uploadVenueHeaderImage);
-
 
 module.exports = router;

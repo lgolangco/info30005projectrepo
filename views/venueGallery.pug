@@ -9,26 +9,13 @@ block content
 
       h1 Gallery for #{venue.venueName}
 
-
-      //- // Register/Request a new Venue
-      //- 
-      //- if (user && user.admin)
-      //-   br
-      //-   h5
-      //-     a(href="/newvenue") + Register a new venue
-      //-   br
-      //- else if (user)
-      //-   br
-      //-   h5
-      //-     a(href="/requestNew/") + Request a new StudySpot
-      //-   br
-      //- 
-      //- br
-
       .row
       
         br
         .col-md-7.offset-1
+      
+      if deleted
+        p(style="text-align: center; color: red;") <strong> Successfully deleted an image for this venue. </strong>
       
       
       - const imageUpload = '/venueImage/' + venue._id
@@ -59,3 +46,14 @@ block content
                 div(style="height: 200px; width: 250px; overflow: hidden; margin: 10px")
                   a(href=imageURL)
                     img.img-fluid.img-thumbnail(src=imageURL style="height:200px; width: auto")
+                  
+                if currentUser && currentUser.admin == true    
+                  center
+    
+                    form(method="POST" action="")
+                      input.form-control(type="hidden" name='imagePath' value=imagePath)
+                      button.btn.btn-Danger(type="Submit") Delete this image
+                    br
+                      
+                      
+                      

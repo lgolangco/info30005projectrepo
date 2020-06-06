@@ -35,7 +35,7 @@ const getVenueImagePage = async (req, res) => {
         venueerror: "For a list of all registered venues,"
       });
     } else {
-      return res.render('venueImage', {
+      return res.render('venueImageUpload', {
         venue: venue[0],
         user: user
       });
@@ -91,7 +91,7 @@ const uploadVenueImage = async (req, res) => {
         const venue = Venue.findById(req.params._id);
         venue.then(function(result){
           res.status(200);
-          return res.render("venueImage",{
+          return res.render("venueImageUpload",{
             venue: result,
             completed: true
           });
@@ -322,7 +322,6 @@ const uploadVenueHeaderImage = async (req, res) => {
     // Uploading files to the bucket
     s3.upload(params, function(err, data) {
         if (err) {
-            throw err;
             return res.render('error', {
               error: "Database query failed",
               message: "Failed to upload image.",
@@ -342,6 +341,96 @@ const uploadVenueHeaderImage = async (req, res) => {
 
 };
 
+const deleteVenueImage = async (req, res) => {
+  console.log("SUCCESS");
+  console.log(req.body.imagePath)
+  const imagePath = req.body.imagePath
+  if (ObjectId.isValid(req.params._id) === false) {
+    return res.render('error', {
+      error: "There are no venues listed with this id!",
+      message: "There are no venues listed with this id!",
+      venueerror: "For a list of all registered venues,"
+    });
+  }
+  if (req.user == null) {
+    return res.render('error', {
+      error: "You're not logged in!",
+      message: "You must be an admin to delete a venue photo."
+    });
+  }
+  if (req.user.admin == false) {
+    return res.render('error', {
+      error: "You're not an admim!",
+      message: "You must be an admin to delete a venue photo"
+    });
+  }
+  const user = await User.findById(req.user._id);
+  try {
+    const venue = await Venue.find({_id: req.params._id});
+    if (venue.length === 0){
+      return res.render('error', {
+        error: "There are no venues listed with this id!",
+        message: "There are no venues listed with this id!",
+        venueerror: "For a list of all registered venues,"
+      });
+    } else {
+      // Setting up S3 upload parameters
+      const params = {
+          Bucket: 'studyspot',
+          Key: imagePath // File name you want to delete
+      };
+
+      s3.deleteObject(params, function(err, data) {
+        if (err) {
+          console.log(err);
+          return res.render('error', {
+            error: "Database query failed",
+            message: "Failed to delete image.",
+            deleteimageerror: "To return to the venue gallery, ",
+            venueId: req.params._id
+          });
+        } else {
+          console.log("DELETED");
+
+          const prefix = "venue/fromUsers/" + req.params._id.toString();
+          console.log("prefix");
+          console.log(prefix);
+          var params = {
+            Bucket: 'studyspot',
+            Delimiter: '',
+            Prefix: prefix
+          }
+          s3.listObjects(params, function (err, data) {
+            if(err)throw err;
+            console.log("DATA");
+            console.log(data.Contents);
+            imageLinks = extractURL(data.Contents);
+            console.log(imageLinks);
+            return res.render('venueGallery', {
+              venue: venue[0],
+              currentUser: req.user,
+              galleryImages: imageLinks,
+              deleted: true
+
+            });
+          });
+          // return res.render('venueGallery', {
+          //   venue: venue[0],
+          //   currentUser: user,
+          //   deleted: true
+          // });
+        }
+      });
+    }
+  } catch (err) {
+    res.status(400);
+    return res.render('error', {
+      error: "Database query failed",
+      message: "Database query failed",
+      functionfailure: "Failed to get 'upload venue image' page"
+    });
+  }
+};
 
 
 // export functions
@@ -352,5 +441,6 @@ module.exports = {
       uploadUserAvatarImage,
       getVenueGalleryPage,
       getVenueHeaderPage,
-      uploadVenueHeaderImage
+      uploadVenueHeaderImage,
+      deleteVenueImage
 };
