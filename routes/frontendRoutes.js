@@ -128,7 +128,6 @@ router.get("/venueImage/upload/:_id", imageController.getVenueImagePage);
 // POST venueImage photo by venue Id
 router.post('/venueImage/upload/:_id', imageController.uploadVenueImage);
 
-
 // GET userVenueGallery page by venye Id
 router.get("/venueGallery/:_id", imageController.getVenueGalleryPage);
 

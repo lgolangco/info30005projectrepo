@@ -11,19 +11,20 @@ block content
                   br
                   br
                   br
-                  h2.display-4.m-b-2 Successfully submitted your image!
+                  h1.display-4.m-b-2 Successfully submitted your image!
                   br
-                  p Thank you for uploading an image for #{venue.venueName}!
-                  p The admins will review your image and update our database accordingly.
-                  
-                  br
-                  - const returnPage = "/venue/" + venue._id
-                  p To <strong> return </strong> to the #{venue.venueName} profile page, #[a(href=returnPage) click here].
-                  p To <strong> upload another image </strong>  for #{venue.venueName}, #[a(href="") click here].
-                  
-                  - const id = venue._id
-                  - const galleryPage = "/venueGallery/" + id
-                  p Or, to <strong> view #{venue.venueName}'s photo gallery </strong> #[a(href=galleryPage) click here].
+                  center
+                    p Thank you for uploading an image for #{venue.venueName}!
+                    p The admins will review your image and update our database accordingly.
+                    
+                    br
+                    - const returnPage = "/venue/" + venue._id
+                    p To <strong> return </strong> to the #{venue.venueName} profile page, #[a(href=returnPage) click here].
+                    p To <strong> upload another image </strong>  for #{venue.venueName}, #[a(href="") click here].
+                    
+                    - const id = venue._id
+                    - const galleryPage = "/venueGallery/" + id
+                    p Or, to <strong> view #{venue.venueName}'s photo gallery </strong> #[a(href=galleryPage) click here].
                 
                 //- Else, show suggestion form
                 else
@@ -33,23 +34,21 @@ block content
                   h1.display-4.m-b-2 Upload an image for
                   h1.display-4.m-b-2 #{venue.venueName}
                   br
-                  p
-                    | Hi! Thank you for helping us improve StudySpot.
-                    | Uploading an image below will allow the admins to review your image,
-                    | who will then update the venues accordingly.
-                  
-                  p Please note that we can only accept images in <strong> .jpeg, .jpg, or .png </strong> format.
+                  center
+                    p
+                      | Hi! Thank you for helping us improve StudySpot.
+                      | Uploading an image below will allow the admins to review your image,
+                      | who will then update the venues accordingly.
                     
-                  form(enctype='multipart/form-data' method='POST' action='')
-                    .row
+                    p Please note that we can only accept images in <strong> .jpeg, .jpg, or .png </strong> format.
                     
-                      .row
-                      label(for="venueImage") Upload an Image for this Venue
-                        .row
-                        input(type="file" id="venueImage" name="venueImage" accept=".jpg,.jpeg,.png" required)
-                  
+                    form.form-group(enctype='multipart/form-data' method='POST' action='')
+                        label(for="venueImage") Upload an Image for this Venue
+                        br
+                        input.form-control-file(type="file" id="venueImage" name="venueImage" accept=".jpg,.jpeg,.png" required)
                     
-                    .row
-                      button.mb-3.btn.btn-primary(type="submit") Submit
+                        center
+                        br
+                        button.mb-3.btn.btn-primary(type="submit") Submit
                   
                   
