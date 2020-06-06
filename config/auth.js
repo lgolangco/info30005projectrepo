@@ -10,7 +10,7 @@ ensureAuthenticated = function (req, res, next) {
     res.redirect("/login");
 }
 
-// prevents user from accessing web page when user not authenticated, redirects them back to profile page
+// prevents authenticated user from accessing web page, redirects them back to profile page
 forwardAuthenticated = function (req, res, next) {
     if (!req.isAuthenticated()) {
         return next();
