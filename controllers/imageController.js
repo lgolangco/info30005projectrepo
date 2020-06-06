@@ -109,6 +109,14 @@ const getUserAvatarImagePage = async (req, res) => {
       message: "You must be logged in to change your avatar"
     });
   }
+
+  if (req.user._id.toString() != req.params._id){
+    return res.render('error', {
+      error: "You can only change your own avatar",
+      message: "You can only change your own avatar"
+    });
+  }
+
   const user = await User.findById(req.user._id);
   try {
     if (user == null){
@@ -132,12 +140,19 @@ const getUserAvatarImagePage = async (req, res) => {
 };
 
 const uploadUserAvatarImage = async (req, res) => {
-  if (req.user == null){
-    return res.render('error', {
-      error: "You're not logged in!",
-      message: "You must be logged in to upload an avatar."
-    });
-  }
+    if (req.user == null){
+      return res.render('error', {
+        error: "You're not logged in!",
+        message: "You must be logged in to upload an avatar."
+      });
+    }
+
+    if (req.user._id.toString() != req.params._id){
+      return res.render('error', {
+        error: "You can only delete your own avatar",
+        message: "You can only delete your own avatar"
+      });
+    }
 
     // Binary data base64
     const fileContent  = Buffer.from(req.files.userAvatar.data, 'binary');
@@ -473,26 +488,6 @@ const getDeleteVenueHeaderPage = async (req, res) => {
         Delimiter: '',
         Prefix: prefix
       }
-      s3.listObjects(params, function (err, data) {
-        if(err){
-          return res.render('error', {
-            error: "Database query failed",
-            message: "Failed to get delete venue header page.",
-            imageerror: "To return to the venue profile page, ",
-            venueId: req.params._id
-          });
-        } else {
-          console.log("DATA");
-          console.log(data.Contents);
-          imageLink = extractURL(data.Contents);
-          console.log(imageLink);
-          return res.render('venueHeaderDelete', {
-            venue: venue[0],
-            currentUser: user,
-            header: imageLink
-          });
-        }
-      });
     }
   } catch (err) {
     res.status(400);
@@ -572,6 +567,111 @@ const deleteVenueHeader = async (req, res) => {
   }
 };
 
+
+const getdeleteUserAvatarImagePage = async (req, res) => {
+
+    if (ObjectId.isValid(req.params._id) === false || req.user == null) {
+      return res.render('error', {
+        error: "You're not logged in!",
+        message: "You must be logged in to change your avatar"
+      });
+    }
+
+    if (req.user._id.toString() != req.params._id){
+      return res.render('error', {
+        error: "You can only delete your own avatar",
+        message: "You can only delete your own avatar"
+      });
+    }
+
+    const prefix = "user/avatar/" + req.params._id.toString();
+    var params = {
+      Bucket: 'studyspot',
+      Delimiter: '',
+      Prefix: prefix
+    }
+
+    s3.listObjects(params, function (err, data) {
+      if(err){
+        return res.render('error', {
+          error: "Database query failed",
+          message: "Failed to get delete avatar page.",
+          functionfailure: "Failed to get delete avatar page"
+        });
+      } else {
+        console.log("DATA");
+        console.log(data.Contents);
+        imageLink = extractURL(data.Contents);
+        console.log(imageLink);
+        return res.render('userAvatarDelete', {
+          avatar: imageLink,
+          user: req.user
+        });
+      }
+    });
+
+};
+
+const deleteUserAvatar = async (req, res) => {
+  console.log("SUCCESS");
+  const avatarPath = "user/avatar/" + req.params._id.toString() + ".jpg"
+  console.log(avatarPath)
+
+  if (ObjectId.isValid(req.params._id) === false || req.user == null) {
+    return res.render('error', {
+      error: "You're not logged in!",
+      message: "You must be logged in to change your avatar"
+    });
+  }
+
+  if (req.user._id.toString() != req.params._id){
+    return res.render('error', {
+      error: "You can only delete your own avatar",
+      message: "You can only delete your own avatar"
+    });
+  }
+
+  try {
+    const user = await User.find({_id: req.params._id});
+    if (user.length === 0){
+      return res.render('error', {
+        error: "There are no users listed with this id!",
+        message: "There are no users listed with this id!",
+      });
+    } else {
+      // Setting up S3 upload parameters
+      const params = {
+          Bucket: 'studyspot',
+          Key: avatarPath // File name you want to delete
+      };
+
+      s3.deleteObject(params, function(err, data) {
+        if (err) {
+          console.log(err);
+          return res.render('error', {
+            error: "Database query failed",
+            message: "Failed to delete avatar image.",
+            avatarerror: "To return to your profile,"
+          });
+        } else {
+          console.log("DELETE SUCCESS");
+          return res.render('userAvatarDelete', {
+            deleted: true
+          });
+        }
+      });
+    }
+  } catch (err) {
+    res.status(400);
+    return res.render('error', {
+      error: "Database query failed",
+      message: "Database query failed",
+      functionfailure: "Failed to get delete venue header"
+    });
+  }
+};
+
+
 // export functions
 module.exports = {
       getVenueImagePage,
@@ -583,5 +683,7 @@ module.exports = {
       uploadVenueHeaderImage,
       deleteVenueImage,
       getDeleteVenueHeaderPage,
-      deleteVenueHeader
+      deleteVenueHeader,
+      getdeleteUserAvatarImagePage,
+      deleteUserAvatar
 };

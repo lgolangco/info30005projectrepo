@@ -1,0 +1,57 @@
+extends layout
+
+block content
+
+    // Delete Avatar User page
+    .main.container
+        .row
+            .col-md-8.offset-2
+                
+                //- If suggestion already submitted only show message
+                if (deleted)
+                  br
+                  h2.display-4.m-b-2 Successfully deleted your avatar.
+                  p Please note that your former avatar may have been saved to your browser (cached).
+                  p To view your changes, (1) refresh your browser and clear your cache, and
+                    | (2) allow some time for the database to reflect these changes.
+                  
+                  p
+                    a(href="/profile") Back to your profile
+                
+                else
+                
+                  if (avatar.length > 0)
+                      br
+                      h1.display-4.m-b-2 Delete your avatar
+                      br
+                      center 
+                        p Are you sure you want to delete this image?
+                        p <strong> This action cannot be undone. </strong>
+                      
+                        - const avatarURL = "https://studyspot.s3.amazonaws.com/user/avatar/" + user._id.toString() + ".jpg"
+                        img.rounded.mb-2.profile-background.avatar-profile(src = avatarURL, width='130px')
+                      
+                        br
+                        br
+                        a(href="/profile") Back to your profile
+                        
+                        br
+                        br
+                        form(method="POST" action="")
+                          button.btn.btn-Danger(type="Submit") DELETE Avatar  
+                        
+                  else
+                    
+                    br
+                    h1 You currently have no avatar
+                    br
+                    center
+                      p You currently have no avatar - your avatar is represetned by the default avatar image.
+                      
+                      - const defaultURL = "https://studyspot.s3.amazonaws.com/user/avatar/default.jpg"
+                      img.rounded.mb-2.profile-background.avatar-profile(src = defaultURL, width='130px')
+                      br
+                    
+                      - const updateAvatar = "profile/uploadAvatar/" + user._id
+                      p To upload a new avatar, #[a(href=updateAvatar) click here].
+                      

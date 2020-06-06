@@ -119,17 +119,15 @@ router.get("/requestNew/", venueController.getRequestNew);
 // POST requestNew venue
 router.post("/requestNew/", venueController.addRequestNew);
 
+
+// IMAGES
+
 // GET venueImage page by venue Id
 router.get("/venueImage/upload/:_id", imageController.getVenueImagePage);
 
 // POST venueImage photo by venue Id
 router.post('/venueImage/upload/:_id', imageController.uploadVenueImage);
 
-// GET userAvatarImage page by user Id
-router.get("/profile/uploadAvatar/:_id", imageController.getUserAvatarImagePage);
-
-// POST userAvatarImage by user Id
-router.post("/profile/uploadAvatar/:_id", imageController.uploadUserAvatarImage);
 
 // GET userVenueGallery page by venye Id
 router.get("/venueGallery/:_id", imageController.getVenueGalleryPage);
@@ -148,5 +146,17 @@ router.get("/venueHeader/delete/:_id", imageController.getDeleteVenueHeaderPage)
 
 // Post deleteVenueHeader request by venue Id
 router.post("/venueHeader/delete/:_id", imageController.deleteVenueHeader);
+// GET userAvatarImage page by user Id
+router.get("/profile/uploadAvatar/:_id", imageController.getUserAvatarImagePage);
+
+// POST userAvatarImage by user Id
+router.post("/profile/uploadAvatar/:_id", imageController.uploadUserAvatarImage);
+
+// GET delete userAvatarImage page by user Id
+router.get("/profile/deleteAvatar/:_id", imageController.getdeleteUserAvatarImagePage);
+
+// GET delete userAvatarImage page by user Id
+router.post("/profile/deleteAvatar/:_id", imageController.deleteUserAvatar);
+
 
 module.exports = router;
