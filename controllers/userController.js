@@ -24,9 +24,11 @@ const getAllUsers = async (req, res) => {
                 const reviews = await Review.find({userId: user._id});
                 pointsList.push(reviews.length);
             }
+
             console.log(pointsList,all_users.length);
 
             return res.render('users', {users: all_users, currentUser: req.user, user: req.user, pointsList: pointsList});
+
 
         }
     } catch (err) {
@@ -35,10 +37,12 @@ const getAllUsers = async (req, res) => {
     }
 }
 
+
 const loadProfile = async(req, res) => {
+
     points = 0;
     try {
-        const bookmarks = await Venue.find({_id: { $in :req.user.bookmarks}});
+        const bookmarks = await Venue.find({_id: {$in: req.user.bookmarks}});
         console.log(req.user.bookmarks);
         const reviews = await Review.find({userId: req.user._id});
         points = reviews.length;
@@ -103,10 +107,10 @@ const updateUser = async (req, res, next) => {
 
             const user = users[0]
 
-            if(user["password"] !== req.body.password) {
+            if (user["password"] !== req.body.password) {
                 // Hash Password
                 bcrypt.genSalt(10, (err, salt) =>
-                     bcrypt.hash(req.body.password, salt, async (err, hash) => {
+                    bcrypt.hash(req.body.password, salt, async (err, hash) => {
                         if (err) throw err;
                         // set password to hash
                         const users2 = await User.find({_id: req.user._id});
@@ -129,7 +133,6 @@ const updateUser = async (req, res, next) => {
                     return res.redirect("/profile");
                 })
                 .catch(err => console.log(err));
-
 
 
         } else {
@@ -212,15 +215,19 @@ const getUserByID = async (req, res) => {
         if (user.length === 0) {
             return res.render('usererror', {message: "There are no users listed with this id"});
         } else if (user) {
-            const bookmarks = Venue.find({_id: { $in : user[0].bookmarks}});
-            bookmarks.then(function(bookmarksresult){
-              console.log(bookmarksresult);
-              const reviews = Review.find({userId: user[0]._id});
-              reviews.then(function(reviewsresult){
-                console.log("REVIEWS");
-                console.log(reviewsresult);
-                return res.render('userProfile', {user: user[0], bookmarks: bookmarksresult, reviews: reviewsresult});
-              });
+            const bookmarks = Venue.find({_id: {$in: user[0].bookmarks}});
+            bookmarks.then(function (bookmarksresult) {
+                console.log(bookmarksresult);
+                const reviews = Review.find({userId: user[0]._id});
+                reviews.then(function (reviewsresult) {
+                    console.log("REVIEWS");
+                    console.log(reviewsresult);
+                    return res.render('userProfile', {
+                        user: user[0],
+                        bookmarks: bookmarksresult,
+                        reviews: reviewsresult
+                    });
+                });
             });
         } else {
             res.status(400);
@@ -286,7 +293,6 @@ const login = (req, res, next) => {
         failureFlash: true
     })(req, res, next);
 };
-
 
 
 module.exports = {

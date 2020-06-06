@@ -17,7 +17,7 @@ block content
               .row
                   .col-2
                     - var userAvatarURL = "https://studyspot.s3.amazonaws.com/user/avatar/" + review.userId.toString() + ".jpg"
-                    img.rounded.mb-2.profile-background(src = userAvatarURL, width='50px'
+                    img.rounded.mb-2.profile-background(src = userAvatarURL, style="height: 100px; width: 100px; object-fit: cover"
                       onerror="this.src='https://studyspot.s3.amazonaws.com/user/avatar/default.jpg'")
                   .col-8
                     div
@@ -45,7 +45,7 @@ block content
           
           p Edit your review for <strong>#{venue.venueName} </strong>           
 
-          form(method='POST' action='') 
+          form(method='POST' action='')
               
             input.form-control(type="hidden" name='userId' value=user._id) 
             
