@@ -14,13 +14,25 @@ const ObjectId = mongoose.Types.ObjectId;
 
 // function to view all users
 const getAllUsers = async (req, res) => {
-    users = [];
+    pointsList = [];
     try {
         const all_users = await User.find();
         if (all_users.length === 0) {
             return res.render('usererror', {message: "There are no existing users yet"});
         } else {
-            return res.render('users', {users: all_users, currentUser: req.user, user: req.user});
+            for (const user of all_users) {
+                const reviews = await Review.find({userId: user._id});
+                pointsList.push(reviews.length);
+            }
+            console.log(pointsList, all_users.length);
+
+            return res.render('users', {
+                users: all_users,
+                currentUser: req.user,
+                user: req.user,
+                pointsList: pointsList
+            });
+
         }
     } catch (err) {
         res.status(400);
@@ -28,18 +40,26 @@ const getAllUsers = async (req, res) => {
     }
 }
 
-const loadProfile = async(req, res) => {
+const loadProfile = async (req, res) => {
+    points = 0;
     try {
-        const bookmarks = await Venue.find({_id: { $in :req.user.bookmarks}});
+        const bookmarks = await Venue.find({_id: {$in: req.user.bookmarks}});
         console.log(req.user.bookmarks);
         const reviews = await Review.find({userId: req.user._id});
+        points = reviews.length;
         console.log("REVIEWS");
         console.log(reviews);
-        return res.render("profile", {user: req.user, bookmarks: bookmarks, title: "Profile", reviews: reviews});
+        return res.render("profile", {
+            user: req.user,
+            bookmarks: bookmarks,
+            points: points,
+            title: "Profile",
+            reviews: reviews
+        });
     } catch (err) {
         res.status(400);
-        console.log(req.user.bookmarks,err);
-        return res.render("profile", {user: req.user, bookmarks: "none"});
+        console.log(req.user.bookmarks, err);
+        return res.render("profile", {user: req.user, bookmarks: [], points: points});
     }
 }
 
@@ -94,10 +114,10 @@ const updateUser = async (req, res, next) => {
 
             const user = users[0]
 
-            if(user["password"] !== req.body.password) {
+            if (user["password"] !== req.body.password) {
                 // Hash Password
                 bcrypt.genSalt(10, (err, salt) =>
-                     bcrypt.hash(req.body.password, salt, async (err, hash) => {
+                    bcrypt.hash(req.body.password, salt, async (err, hash) => {
                         if (err) throw err;
                         // set password to hash
                         const users2 = await User.find({_id: req.user._id});
@@ -112,8 +132,6 @@ const updateUser = async (req, res, next) => {
             user["first_name"] = req.body.first_name;
             user["last_name"] = req.body.last_name;
             user["email"] = req.body.email;
-            user["cover"] = req.body.cover;
-            user["avatar"] = req.body.avatar;
             user["biography"] = req.body.biography;
 
             // save
@@ -122,7 +140,6 @@ const updateUser = async (req, res, next) => {
                     return res.redirect("/profile");
                 })
                 .catch(err => console.log(err));
-
 
 
         } else {
@@ -205,15 +222,19 @@ const getUserByID = async (req, res) => {
         if (user.length === 0) {
             return res.render('usererror', {message: "There are no users listed with this id"});
         } else if (user) {
-            const bookmarks = Venue.find({_id: { $in : user[0].bookmarks}});
-            bookmarks.then(function(bookmarksresult){
-              console.log(bookmarksresult);
-              const reviews = Review.find({userId: user[0]._id});
-              reviews.then(function(reviewsresult){
-                console.log("REVIEWS");
-                console.log(reviewsresult);
-                return res.render('userProfile', {user: user[0], bookmarks: bookmarksresult, reviews: reviewsresult});
-              });
+            const bookmarks = Venue.find({_id: {$in: user[0].bookmarks}});
+            bookmarks.then(function (bookmarksresult) {
+                console.log(bookmarksresult);
+                const reviews = Review.find({userId: user[0]._id});
+                reviews.then(function (reviewsresult) {
+                    console.log("REVIEWS");
+                    console.log(reviewsresult);
+                    return res.render('userProfile', {
+                        user: user[0],
+                        bookmarks: bookmarksresult,
+                        reviews: reviewsresult
+                    });
+                });
             });
         } else {
             res.status(400);
@@ -279,7 +300,6 @@ const login = (req, res, next) => {
         failureFlash: true
     })(req, res, next);
 };
-
 
 
 module.exports = {
