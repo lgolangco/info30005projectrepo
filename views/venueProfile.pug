@@ -376,8 +376,7 @@ block content
                   .row.m-3
                     .col-3
                       - var userAvatarURL = "https://studyspot.s3.amazonaws.com/user/avatar/" + review.userId.toString() + ".jpg"
-                      img.rounded(src = userAvatarURL, width='100px',
-                        onerror="this.src='https://studyspot.s3.amazonaws.com/user/avatar/default.jpg'")
+                      img.rounded(src = userAvatarURL, width='100%', onerror="this.src='https://studyspot.s3.amazonaws.com/user/avatar/default.jpg'")
                     .col-9
                       div
                         //insert user name
