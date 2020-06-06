@@ -173,6 +173,7 @@ const getVenueByID = async (req, res) => {
             venue: venue[0],
             user: user,
             venuesReviews: result,
+          reviewCount: reviewCount
           });
         }
       });
