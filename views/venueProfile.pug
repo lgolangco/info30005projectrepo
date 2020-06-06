@@ -61,14 +61,6 @@ block content
               - const suggestionsPage = '/venueSuggestions/' + id
               p
                 a(href=suggestionsPage) Suggest changes
-            
-              
-            if (user && user.admin && loggedIn)
-              - const headerPage = "/venueHeader/" + id
-              p 
-                a(href=headerPage) + Upload a header image for this venue
-              
-              
               
             - const galleryPage = "/venueGallery/" + id
             
@@ -180,6 +172,10 @@ block content
               
               - const deleteVenue = "/deleteVenue/" + venue._id
               a.btn.btn-Danger(href=deleteVenue) DELETE VENUE
+              
+              - const headerPage = "/venueHeader/" + id
+              p 
+                a(href=headerPage) + Upload a header image for this venue
           
       hr
           
