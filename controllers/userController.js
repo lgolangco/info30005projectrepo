@@ -112,8 +112,6 @@ const updateUser = async (req, res, next) => {
             user["first_name"] = req.body.first_name;
             user["last_name"] = req.body.last_name;
             user["email"] = req.body.email;
-            user["cover"] = req.body.cover;
-            user["avatar"] = req.body.avatar;
             user["biography"] = req.body.biography;
 
             // save
