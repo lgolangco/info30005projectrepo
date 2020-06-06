@@ -1,7 +1,7 @@
 extends layout
-    
+
 block content
-  
+
   // Google Maps Mixin to Display Venue Location
   mixin google-map-place(query, key)
     - if ("alt" in attributes)
@@ -20,124 +20,124 @@ block content
       - if (alt)
         | Your browser does not support iframes.
   - const gMapsKey = "AIzaSyDw04dJQyETFjfsthXJzhvjAiY9XE9Labc";
-  
+
   //- Show Heading if Venue has been Deleted
   if (deleted)
     br
     h1 Venue successfully deleted.
-  
+
   //- Regular Venue Profile
   else
     .col-8.offset-2
       center
         - const venueHeaderURL = "https://studyspot.s3.amazonaws.com/venue/header/" + venue._id.toString() + ".jpg"
-        img.venue-header(src = venueHeaderURL 
+        img.venue-header(src = venueHeaderURL
           onerror="this.src='https://studyspot.s3.amazonaws.com/venue/header/default.jpg'")
-        
+
       br
       .row.venue-profile-page
-        
+
         // Main Content Div
         div.col-9.venue-info-div.mb-3
-        
+
           // Basic Information
           div
             h2 #{message}
             h2 #{venue.venueName}
-            h5 
-              |#{venue.venueType} 
+            h5
+              |#{venue.venueType}
               if venue.venueType === "Cafe"
-                img.rounded(src="/images/venue/cafe.png", width="20px")
+                img.rounded.ml-2(src="/images/venue/cafe.png", width="20px")
               else if venue.venueType === "Public Library"
-                img.rounded(src="/images/venue/library.png", width="20px")
+                img.rounded.ml-2(src="/images/venue/library.png", width="20px")
               else
-                img.rounded(src="/images/venue/other.png", width="20px")
+                img.rounded.ml-2(src="/images/venue/other.png", width="20px")
               |
             p #{venue.venueAddress.venueSuburb}, #{venue.venueAddress.venueState}
-            
+
             - const id = venue._id
-            
+
             if (user)
               - const suggestionsPage = '/venueSuggestions/' + id
               p
                 a(href=suggestionsPage) Suggest changes
 
-              
+
             - const galleryPage = "/venueGallery/" + id
-            
+
               a(href=galleryPage) View Gallery
-            
-                      
+
+
             if (user)
               - const imagePage = '/venueImage/upload/' + id
-              p 
+              p
                 a(href=imagePage) + Upload an image for this venue
-              
-              
+
+
               //- Create New Review
               //- If suggestion already submitted only show message
               if (completed)
                 p Successfully added your review
-              
+
               else
-                
+
                 //- Check if user has already got a review
                 - var existingReview = false
                 each review in venuesReviews
                   if (user._id.toString() == review.userId.toString())
                     - existingReview = true
-                    
+
                 //- Show suggestion form if user has not written review
                 if !(existingReview) && !(completed)
                   div.bg-light.border.col-lg-10
-                    p Submit a review for <strong>#{venue.venueName} </strong>           
+                    p Submit a review for <strong>#{venue.venueName} </strong>
 
-                    form(method='POST' action='') 
-                      
-                      input.form-control(type="hidden" name='userId' value=user._id) 
-                      
-                      input.form-control(type="hidden" name='userFirstName' value=user.first_name) 
-                      input.form-control(type="hidden" name='userLastName' value=user.last_name) 
-                  
-                      input.form-control(type="hidden" name='venueId' value=venue._id)  
-                
-                    
+                    form(method='POST' action='')
+
+                      input.form-control(type="hidden" name='userId' value=user._id)
+
+                      input.form-control(type="hidden" name='userFirstName' value=user.first_name)
+                      input.form-control(type="hidden" name='userLastName' value=user.last_name)
+
+                      input.form-control(type="hidden" name='venueId' value=venue._id)
+
+
                       div.btn-group.btn-group-toggle(data-toggle="buttons")
                         label.btn.btn-outline-danger
-                          input#option1(type="radio" name="star" value=1 autocomplete="off") 
+                          input#option1(type="radio" name="star" value=1 autocomplete="off")
                           |1 Star ★
 
                         label.btn.btn-outline-warning
-                          input#option2(type="radio" name="star" value=2 autocomplete="off") 
+                          input#option2(type="radio" name="star" value=2 autocomplete="off")
                           |2 Stars ★
-                        
+
                         label.btn.btn-outline-secondary
-                          input#option3(type="radio" name="star" value=3 autocomplete="off") 
+                          input#option3(type="radio" name="star" value=3 autocomplete="off")
                           |3 Stars ★
-                          
+
                         label.btn.btn-outline-info
-                          input#option4(type="radio" name="star" value=4 autocomplete="off") 
+                          input#option4(type="radio" name="star" value=4 autocomplete="off")
                           |4 Stars ★
-                          
+
                         label.btn.btn-outline-success
-                          input#option5(type="radio" name="star" value=5 autocomplete="off") 
+                          input#option5(type="radio" name="star" value=5 autocomplete="off")
                           |5 Stars ★
-                    
+
                       //- Textbox
                       br
                       br
                       textarea.col-lg-11.form-control(rows="3" name="review" placeholder="Please enter review here.")
-                      //- Submit 
+                      //- Submit
                       br
                       button.btn.btn-primary(type="submit") Submit
 
-              
+
             else
               p Please #[a(href="/login") log in] or #[a(href="/register") sign up] to suggest changes, leave a review or upload images for this venue.
-            
+
         // Bookmark Venue
         .col-3.mb-3
-          
+
           if user
             if user.bookmarks.includes(venue._id)
               form(method="POST" action="/venue/" + venue._id + "/remove")
@@ -148,7 +148,7 @@ block content
           //- else
           //-   form(method="POST" action="/venue/"+venue._id+"/bookmark")
           //-     button.btn.btn-lg.btn-warning(type="submit") Add to Bookmarks
-          
+
           //- Contacts
           .mb-3
             if venue.venueContact.phone || venue.venueContact.mobile || venue.venueContact.email || venue.venueContact.web
@@ -162,38 +162,38 @@ block content
                 p #{venue.venueContact.email}
               if venue.venueContact.web
                 a(href=venue.venueContact.web) #{venue.venueContact.web}
-                
+
           // Venue Update and Delete Buttons (Will be only available to users with admin attribute at later date)
           if (user && user.admin)
             h5.mt-3 Admin Functions
             - const headerUploadPage = "/venueHeader/upload/" + id
-            p 
+            p
               a(href=headerUploadPage) + Upload a header image for this venue
-              
+
             - const headerDeletePage = "/venueHeader/delete/" + id
-            p 
+            p
               a(href=headerDeletePage) - Delete the header image for this venue
-              
+
             .col-10.mt-3
               - const updateVenue = "/venueUpdate/" + venue._id
               a.btn.btn-Warning(href=updateVenue) UPDATE VENUE
-              
+
             .col-10.mt-3
-              
+
               - const deleteVenue = "/deleteVenue/" + venue._id
               a.btn.btn-Danger(href=deleteVenue) DELETE VENUE
-              
-            
-          
+
+
+
       hr
-          
-      .row    
+
+      .row
         // Venue Details
-        div.venue-details-div.col-8.mb-3
+        div.venue-details-div.col-9.mb-3(style="font-size: 14px")
           h3 Details
-          
-          .row
-            
+
+          .row.px-3
+
             // Noise
             .card.col-2
               center
@@ -203,11 +203,10 @@ block content
                   img.rounded-img-top.mt-3(src="/images/venue/med.png", width="40px")
                 else
                   img.rounded-img-top.mt-3(src="/images/venue/high.png", width="40px")
-              
-              .card-body
-                center
-                  p #{venue.venueDetails.noise} noise
-            
+                .venue-table-text
+                  center
+                    p #{venue.venueDetails.noise} noise
+
             // Wifi
             .card.col-2
               center
@@ -215,13 +214,12 @@ block content
                   img.rounded.mt-3(src="/images/venue/wifi.png", width="50px")
                 else
                   img.rounded.mt-3(src="/images/venue/nowifi.png", width="50px")
-              .card-body
-                center
-                  if venue.venueDetails.wifi
-                    p Wifi
-                  else
-                    p No wifi
-            
+                .venue-table-text
+                    if venue.venueDetails.wifi
+                      p Wifi
+                    else
+                      p No wifi
+
             // Toilets
             .card.col-2
               center
@@ -229,13 +227,13 @@ block content
                   img.rounded.mt-3(src="/images/venue/toilets.png", width="50px")
                 else
                   img.rounded.mt-3(src="/images/venue/notoilets.png", width="50px")
-              .card-body
-                center
-                  if venue.venueDetails.toilets
-                    p Toilets
-                  else
-                    p No toilets
-                    
+                .venue-table-text
+                  center
+                    if venue.venueDetails.toilets
+                      p Toilets
+                    else
+                      p No toilets
+
             // Powerpoints
             .card.col-2
               center
@@ -243,14 +241,14 @@ block content
                   img.rounded.mt-3(src="/images/venue/power.png", width="50px")
                 else
                   img.rounded.mt-3(src="/images/venue/nopower.png", width="50px")
-              .card-body
-                center
-                  if venue.venueDetails.power
-                    p Powerpoints
-                  else
-                    p No powerpoints
-                    
-                    
+                .venue-table-text
+                  center
+                    if venue.venueDetails.power
+                      p Powerpoints
+                    else
+                      p No powerpoints
+
+
             // Discussion-Friendly
             .card.col-2
               center
@@ -258,13 +256,13 @@ block content
                   img.rounded.mt-3(src="/images/venue/discussion.png", width="50px")
                 else
                   img.rounded.mt-3(src="/images/venue/silence.png", width="50px")
-              .card-body
-                center
-                  if venue.venueDetails.discussionFriendly
-                    p Discussion Friendly
-                  else
-                    p Silent Space
-                    
+                .venue-table-text
+                  center
+                    if venue.venueDetails.discussionFriendly
+                      p Discussion Friendly
+                    else
+                      p Silent Space
+
             // Printer
             .card.col-2
               center
@@ -272,18 +270,17 @@ block content
                   img.rounded.mt-3(src="/images/venue/printer.png", width="50px")
                 else
                   img.rounded.mt-3(src="/images/venue/noprinter.png", width="50px")
-              .card-body
-                center
-                  if venue.venueDetails.printer
-                    p Printing available
+                .venue-table-text
+                  center
+                    if venue.venueDetails.printer
+                      p Printing available
 
-                  else
-                    p No Printing available 
-                    
+                    else
+                      p No Printing available
+
         //- Side Bar
-        div.col-3.offset-1.venue-side-bar
+        div.col-3
 
-          
           .mb-3
             //- Opening hours
             h5 Opening Hours
@@ -291,47 +288,47 @@ block content
             - const venueHours = venue.venueHours.toObject()
               each timeframe, day in venueHours
                 p= day+ ": " + timeframe
-      
+
       //- Location
-      
+
       .col-12.mb-5
         hr
         h3.mb-3 Location
-        
+
         .mb-3
           - const query = venue.venueAddress.venueStreetAddress + ", " + venue.venueAddress.venueSuburb
           +google-map-place(query, gMapsKey)(maptype="roadmap")
-        
-        p #{venue.venueAddress.venueStreetAddress}, 
+
+        p #{venue.venueAddress.venueStreetAddress},
           |#{venue.venueAddress.venueSuburb}, #{venue.venueAddress.venueState}, #{venue.venueAddress.venuePostcode}
-        
-        
-    
+
+
+
       // Reviews
       div.venue-reviews.mb-5
         hr
-        h3.mb-3 Reviews
+        h3.mb-3.ml-3 Reviews
         if (user)
           each review in venuesReviews
             if (user._id.toString() == review.userId.toString())
               - existingReview = true
-              
+
               .mb-5
-                
-              h4.mb-3 Your Review of #{venue.venueName}
+
+              h4.mb-3.ml-3 Your Review of #{venue.venueName}
               - date = review.datePosted.toDateString()
-              
+
               .col-lg-8
                 .card.mb-3.col-11
-                  
+
                   .row.m-3
-                    .col-2(style="display:inline-block; width:100px; height:100px; border-radius:50%; overflow:hidden")
-                      
+                    .col-3
+
                       - var userAvatarURL = "https://studyspot.s3.amazonaws.com/user/avatar/" + review.userId.toString() + ".jpg"
-                      img.rounded-circle.mb-2.img-thumbnail(src = userAvatarURL, style="max-width:100%; height:50px", 
+                      img.rounded(src = userAvatarURL, width='100px'
                         onerror="this.src='https://studyspot.s3.amazonaws.com/user/avatar/default.jpg'")
-                      
-                    .col-10
+
+                    .col-9
                       div
                         //insert user name
                         h5 #[a(href="/profile") #{review.userFirstName} #{review.userLastName}]
@@ -339,49 +336,48 @@ block content
                         //- insert rating
                         p Rating: #{review.rating}/5
                       hr
-                      
+
                   .offset-1
-                    
+
                     p #{review.content}
-              
+
                   div
                     p.float-right #{date}
-              .row 
+              .row
                 .offset-1.mb-3
-                  
+
                   - const updateReview = "/review/update/" + review._id
-                  a(href=updateReview) Edit Review  
-                  
+                  a(href=updateReview) Edit Review
+
                   - const deleteReview = "/review/delete/" + review._id
                   a(href=deleteReview) Delete Review
-            
-        
-          
-            
 
-        
+
+
+
+
+
         //- List reviews
         .mb-5
-          
-        h4.mb-5 Reviews from Other StudySpotters
+
+        h4.mb-5.ml-3 Reviews from Other StudySpotters
         if (venuesReviews.length == 0)
           p.m-5 There are no reviews from other StudySpotters at #{venue.venueName}
-        
+
         else
           each review in venuesReviews
 
             if !(user) || (user._id.toString() != review.userId.toString())
-              
+
               - date = review.datePosted.toDateString()
               .col-lg-8
                 .card.mb-3.col-11
-                  
+
                   .row.m-3
-                    .col-2
+                    .col-3
                       - var userAvatarURL = "https://studyspot.s3.amazonaws.com/user/avatar/" + review.userId.toString() + ".jpg"
-                      img.rounded-circle.mb-2.img-thumbnail(src = userAvatarURL, width='80px'
-                        onerror="this.src='https://studyspot.s3.amazonaws.com/user/avatar/default.jpg'")
-                    .col-10
+                      img.rounded(src = userAvatarURL, width='100%', onerror="this.src='https://studyspot.s3.amazonaws.com/user/avatar/default.jpg'")
+                    .col-9
                       div
                         //insert user name
                         h5 #[a(href="/user/"+review.userId) #{review.userFirstName} #{review.userLastName}]
@@ -389,10 +385,10 @@ block content
                         //insert rating
                         p Rating: #{review.rating}/5
                       hr
-            
+
                   .offset-1
-                    
+
                     p #{review.content}
-              
+
                   div
                     p.float-right #{date}
