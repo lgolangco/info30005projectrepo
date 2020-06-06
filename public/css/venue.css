@@ -52,3 +52,11 @@
     padding-top: 10px;
     padding-bottom: 10px;
 }
+
+.review-img {
+    width: 500px;
+    object-fit: cover;
+    height: auto;
+}
+
+
