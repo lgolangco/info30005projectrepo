@@ -57,4 +57,5 @@ block content
               - var imageURL = "https://studyspot.s3.amazonaws.com/" + imagePath
               .col-lg-3.col-md-4.col-6
                 div(style="height: 200px; width: 250px; overflow: hidden; margin: 10px")
-                  img.img-fluid.img-thumbnail(src=imageURL style="height:200px; width: auto")
+                  a(href=imageURL)
+                    img.img-fluid.img-thumbnail(src=imageURL style="height:200px; width: auto")
