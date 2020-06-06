@@ -15,6 +15,7 @@ const ObjectId = mongoose.Types.ObjectId;
 // function to view all users
 const getAllUsers = async (req, res) => {
     pointsList = [];
+    users = [];
     try {
         const all_users = await User.find();
         if (all_users.length === 0) {
@@ -22,12 +23,24 @@ const getAllUsers = async (req, res) => {
         } else {
             for (const user of all_users) {
                 const reviews = await Review.find({userId: user._id});
-                pointsList.push(reviews.length);
+                pointsList.push([user._id, reviews.length]);
             }
 
-            console.log(pointsList,all_users.length);
+            pointsList.sort(function(a, b) {
+                return a[1] < b[1] ? 1 : -1;
+            });
+            for (const i of pointsList) {
+                for (const user of all_users) {
+                    if (user._id === i[0]) {
+                        users.push(user)
+                    }
+                }
+            }
 
-            return res.render('users', {users: all_users, currentUser: req.user, user: req.user, pointsList: pointsList});
+            console.log(pointsList,users);
+
+
+            return res.render('users', {users: users, currentUser: req.user, user: req.user, pointsList: pointsList});
 
 
         }

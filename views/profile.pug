@@ -17,17 +17,16 @@ block content
                     a.btn.btn-light.btn-sm.btn-block(href="/profile/uploadAvatar/" + user._id) Change your avatar
                     a.btn.btn-secondary.btn-sm.btn-block(href="/profile/deleteAvatar/" + user._id) Delete your avatar
                     a.btn.btn-danger.btn-sm.btn-block(href="/profile/delete") Delete my account
-                .media-body.mb-5.text-white
+                .media-body.mb-3.ml-4.text-white
 
                     h3.my-4 #{user.first_name} #{user.last_name}
                     h6.mb-2(style="font-weight: light") Email: #{user.email}
+                    if biography
+                        h6 #{user.biography}
                     br
                     h3
                         i.fa.fa-trophy
                         |  #{points}
-
-                    if biography
-                        h6 #{user.biography}
 
     .container
         .row
@@ -66,13 +65,12 @@ block content
                             .card-body
                                 h3.card-title Bookmarks
                                 br
-                                br
                                 if bookmarks.length > 0
                                     .row
                                         each venue in bookmarks
                                             - const address = venue.venueAddress.venueStreetAddress +", "+venue.venueAddress.venueSuburb+", "+venue.venueAddress.venuePostcode;
                                             - const imgURL = "https://studyspot.s3.amazonaws.com/venue/header/" + venue._id.toString() + ".jpg"
-
+                                            .col-xl-10
                                                 .card.mb-3.d-flex.align-items-stretch
                                                     .row.no-gutters
                                                         .col-4
@@ -83,6 +81,29 @@ block content
                                                             .card-body
                                                                 h5.card-title #[a(href="/venue/" + venue._id) #{venue.venueName}]
                                                                 hr
+                                                                if (venue.aveRating < 0.25)
+                                                                    img.rounded(src="/images/venue/rating/0.png", width="100px")
+                                                                else if (venue.aveRating < 0.75)
+                                                                    img.rounded(src="/images/venue/rating/0h.png", width="100px")
+                                                                else if (venue.aveRating < 1.25)
+                                                                    img.rounded(src="/images/venue/rating/1.png", width="100px")
+                                                                else if (venue.aveRating < 1.75)
+                                                                    img.rounded(src="/images/venue/rating/1h.png", width="100px")
+                                                                else if (venue.aveRating < 2.25)
+                                                                    img.rounded(src="/images/venue/rating/2.png", width="100px")
+                                                                else if (venue.aveRating < 2.75)
+                                                                    img.rounded(src="/images/venue/rating/2h.png", width="100px")
+                                                                else if (venue.aveRating < 3.25)
+                                                                    img.rounded(src="/images/venue/rating/3.png", width="100px")
+                                                                else if (venue.aveRating < 3.75)
+                                                                    img.rounded(src="/images/venue/rating/3h.png", width="100px")
+                                                                else if (venue.aveRating < 4.25)
+                                                                    img.rounded(src="/images/venue/rating/4.png", width="100px")
+                                                                else if (venue.aveRating < 4.75)
+                                                                    img.rounded(src="/images/venue/rating/4h.png", width="100px")
+                                                                else
+                                                                    img.rounded(src="/images/venue/rating/5.png", width="100px")
+                                                                p.card-text(style='white-space:pre; font-size: 12px')
                                                                 p.card-text(style='white-space:pre; font-size: 12px')
                                                                     | #{venue.venueType}
                                                                     | #{address}
@@ -109,7 +130,6 @@ block content
                             .card-body
                                 h3.card-title Reviews
                                 br
-                                br
                                 
                                 if reviews.length > 0
                                     .row
@@ -117,7 +137,7 @@ block content
                                       each review in reviews
                                           
                                           - date = review.datePosted.toDateString()
-                                          .col-lg-10
+                                          .col-xl-10
                                             .card.mb-3
 
                                                 .row.m-3
@@ -129,8 +149,18 @@ block content
                                                             //insert user name
                                                             h5 #[a(href="/user/"+review.userId) #{review.userFirstName} #{review.userLastName}]
                                                         div
-                                                            //insert rating
-                                                            p Rating: #{review.rating}/5
+                                                            if (review.rating < 0.25)
+                                                                img.rounded(src="/images/venue/rating/0.png", width="100px")
+                                                            else if (review.rating < 1.25)
+                                                                img.rounded(src="/images/venue/rating/1.png", width="100px")
+                                                            else if (review.rating < 2.25)
+                                                                img.rounded(src="/images/venue/rating/2.png", width="100px")
+                                                            else if (review.rating < 3.25)
+                                                                img.rounded(src="/images/venue/rating/3.png", width="100px")
+                                                            else if (review.rating < 4.25)
+                                                                img.rounded(src="/images/venue/rating/4.png", width="100px")
+                                                            else
+                                                                img.rounded(src="/images/venue/rating/5.png", width="100px")
                                                         hr
 
                                                 .offset-1

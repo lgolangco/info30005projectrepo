@@ -5,7 +5,10 @@ block content
     .main.container
         div.row
             .ml-auto.mr-auto.col-md-offset-2
-                h1 Users
+                br
+                br
+                h1 Leaderboard
+                br
             .row
                 each user,index in users
                     div.col-lg-3.col-sm-6
@@ -27,7 +30,12 @@ block content
                                       a(href='/user/' + user._id) #{user.first_name} #{user.last_name}
                                 .desc Email: #{user.email}
 
+                                br
+
+
                                 #bottom.desc
+
                                     i.fa.fa-trophy
-                                    |  #{pointsList[index]}
+                                    |  #{pointsList[index][1]}
+                                    br
 
