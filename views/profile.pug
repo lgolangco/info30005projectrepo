@@ -12,11 +12,6 @@ block content
                       onerror="this.src='https://studyspot.s3.amazonaws.com/user/avatar/default.jpg'")
 
 
-                    
-                    a.btn.btn-warning.btn-sm.btn-block(href="/profile/edit") Edit profile
-                    a.btn.btn-light.btn-sm.btn-block(href="/profile/uploadAvatar/" + user._id) Change your avatar
-                    a.btn.btn-secondary.btn-sm.btn-block(href="/profile/deleteAvatar/" + user._id) Delete your avatar
-                    a.btn.btn-danger.btn-sm.btn-block(href="/profile/delete") Delete my account
                 .media-body.mb-3.ml-4.text-white
 
                     h3.my-4 #{user.first_name} #{user.last_name}
@@ -56,6 +51,10 @@ block content
                         a.list-group-item.list-group-item-action(data-toggle='list', href='#points', role='tab')
                             span.fas.fa.fa-trophy.pr-4
                             | SS Points
+                a.btn.btn-warning.btn-sm.btn-block(href="/profile/edit" style="width:199px") Edit profile
+                a.btn.btn-light.btn-sm.btn-block(href="/profile/uploadAvatar/" + user._id style="width:199px") Change your avatar
+                a.btn.btn-secondary.btn-sm.btn-block(href="/profile/deleteAvatar/" + user._id style="width:199px") Delete your avatar
+                a.btn.btn-danger.btn-sm.btn-block(href="/profile/delete" style="width:199px") Delete my account
 
             .col-md-8.col-xl-9
                 .tab-content
