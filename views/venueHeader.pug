@@ -11,13 +11,14 @@ block content
                   br
                   br
                   br
-                  h2.display-4.m-b-2 Successfully submitted your image!
+                  h1.display-4.m-b-2 Successfully submitted your image!
                   br
 
                   br
-                  - const returnPage = "/venue/" + venue._id
-                  p To return to the #{venue.venueName} profile page and see the new header, #[a(href=returnPage) click here].
-                  p Please allow some time for your image to upload and for your profile to reflect this change.
+                  center
+                    - const returnPage = "/venue/" + venue._id
+                    p To return to the #{venue.venueName} profile page and see the new header, #[a(href=returnPage) click here].
+                    p Please allow some time for your image to upload and for your profile to reflect this change.
                 
                 //- Else, show suggestion form
                 else
@@ -27,20 +28,18 @@ block content
                   h1.display-4.m-b-2 Upload a header for
                   h1.display-4.m-b-2 #{venue.venueName}
                   br
-                  p Please ensure that you are uploading an <strong> appropriate, high-quality </strong> photo.
-                  
-                  p Please note that we can only accept images in <strong> .jpeg, .jpg, or .png </strong> format.
+                  center
+                    p Please ensure that you are uploading an <strong> appropriate, high-quality </strong> photo.
+                    p Please note that we can only accept images in <strong> .jpeg, .jpg, or .png </strong> format.
                     
-                  form(enctype='multipart/form-data' method='POST' action='')
-                    .row
-                    
-                      .row
+                    br
+                    form.form-group(enctype='multipart/form-data' method='POST' action='')
                       label(for="venueHeader") Upload an Image for this Venue
-                        .row
-                        input(type="file" id="venueHeader" name="venueHeader" accept=".jpg,.jpeg,.png" required)
-                  
-                    
-                    .row
-                      button.mb-3.btn.btn-primary(type="submit") Submit
+                      br
+                      input.form-control-file(type="file" id="venueHeader" name="venueHeader" accept=".jpg,.jpeg,.png" required)
+                      
+                      center
+                        br
+                        button.mb-3.btn.btn-primary(type="submit") Submit
                   
                   

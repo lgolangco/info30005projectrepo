@@ -11,7 +11,10 @@ block content
                 //- If suggestion already submitted only show message
                 if (deleted)
                   br
-                  h2.display-4.m-b-2 Successfully deleted an image for #{venue.venueName}
+                  br
+                  h1.display-4.m-b-2 Successfully deleted
+                  h1.display-4.m-b-2 header image for
+                  h1.display-4.m-b-2 #{venue.venueName}
                   
                   center
                     br
@@ -19,12 +22,13 @@ block content
                     p To view your changes, (1) refresh your browser and clear your cache, and
                       | (2) allow some time for the database to reflect these changes.
                   
-                  p
-                    a(href=profileLink) Back to #{venue.venueName}'s profile
+                    p
+                      a(href=profileLink) Back to #{venue.venueName}'s profile
                 
                 else
                 
                   if (header.length > 0)
+                      br
                       br
                       h1.display-4.m-b-2 Delete header image for #{venue.venueName}
                       br
@@ -45,6 +49,7 @@ block content
                           button.btn.btn-Danger(type="Submit") DELETE Image  
                         
                   else
+                    br
                     br
                     h1.display-4.m-b-2 #{venue.venueName} has no header image
                     br
