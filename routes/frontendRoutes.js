@@ -146,6 +146,7 @@ router.get("/venueHeader/delete/:_id", imageController.getDeleteVenueHeaderPage)
 
 // Post deleteVenueHeader request by venue Id
 router.post("/venueHeader/delete/:_id", imageController.deleteVenueHeader);
+
 // GET userAvatarImage page by user Id
 router.get("/profile/uploadAvatar/:_id", imageController.getUserAvatarImagePage);
 

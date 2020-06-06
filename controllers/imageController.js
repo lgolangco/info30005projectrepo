@@ -451,6 +451,7 @@ const deleteVenueImage = async (req, res) => {
 };
 
 const getDeleteVenueHeaderPage = async (req, res) => {
+  console.log("YES HERE");
   if (ObjectId.isValid(req.params._id) === false) {
     return res.render('error', {
       error: "There are no venues listed with this id!",
@@ -470,7 +471,7 @@ const getDeleteVenueHeaderPage = async (req, res) => {
       message: "You must be an admin to delete a venue header"
     });
   }
-  const user = await User.findById(req.user._id);
+  console.log("USER FOUND");
   try {
     const venue = await Venue.find({_id: req.params._id});
     if (venue.length === 0){
@@ -480,6 +481,7 @@ const getDeleteVenueHeaderPage = async (req, res) => {
         venueerror: "For a list of all registered venues,"
       });
     } else {
+      console.log("USER FOUND");
       const prefix = "venue/header/" + req.params._id.toString();
       console.log("prefix");
       console.log(prefix);
@@ -488,6 +490,26 @@ const getDeleteVenueHeaderPage = async (req, res) => {
         Delimiter: '',
         Prefix: prefix
       }
+
+      s3.listObjects(params, function (err, data) {
+        if(err){
+          return res.render('error', {
+            error: "Database query failed",
+            message: "Failed to get delete header page.",
+            imageerror: "To return to the venue profile page,"
+          });
+        } else {
+          console.log("DATA");
+          console.log(data.Contents);
+          imageLink = extractURL(data.Contents);
+          console.log(imageLink);
+          return res.render('venueHeaderDelete', {
+            header: imageLink,
+            venue: venue[0]
+          });
+        }
+      });
+
     }
   } catch (err) {
     res.status(400);
