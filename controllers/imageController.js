@@ -301,7 +301,7 @@ const uploadVenueHeaderImage = async (req, res) => {
 
   if (req.user.admin == false){
     return res.render('error', {
-      error: "You're not an adin!",
+      error: "You're not an admin!",
       message: "You must be an admin to upload a venue header."
     });
   }

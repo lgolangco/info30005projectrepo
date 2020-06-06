@@ -55,13 +55,13 @@ block content
               |
             p #{venue.venueAddress.venueSuburb}, #{venue.venueAddress.venueState}
             
+            - const id = venue._id
+            
             if (user)
               - const suggestionsPage = '/venueSuggestions/' + id
               p
                 a(href=suggestionsPage) Suggest changes
             
-            if (user)
-              - const id = venue._id
               
             if (user && user.admin && loggedIn)
               - const headerPage = "/venueHeader/" + id
