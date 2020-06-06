@@ -14,13 +14,20 @@ const ObjectId = mongoose.Types.ObjectId;
 
 // function to view all users
 const getAllUsers = async (req, res) => {
-    users = [];
+    pointsList = [];
     try {
         const all_users = await User.find();
         if (all_users.length === 0) {
             return res.render('usererror', {message: "There are no existing users yet"});
         } else {
-            return res.render('users', {users: all_users, currentUser: req.user, user: req.user});
+            for (const user of all_users) {
+                const reviews = await Review.find({userId: user._id});
+                pointsList.push(reviews.length);
+            }
+            console.log(pointsList,all_users.length);
+
+            return res.render('users', {users: all_users, currentUser: req.user, user: req.user, pointsList: pointsList});
+
         }
     } catch (err) {
         res.status(400);
@@ -29,17 +36,19 @@ const getAllUsers = async (req, res) => {
 }
 
 const loadProfile = async(req, res) => {
+    points = 0;
     try {
         const bookmarks = await Venue.find({_id: { $in :req.user.bookmarks}});
         console.log(req.user.bookmarks);
         const reviews = await Review.find({userId: req.user._id});
+        points = reviews.length;
         console.log("REVIEWS");
         console.log(reviews);
-        return res.render("profile", {user: req.user, bookmarks: bookmarks, title: "Profile", reviews: reviews});
+        return res.render("profile", {user: req.user, bookmarks: bookmarks, points: points, title: "Profile", reviews: reviews});
     } catch (err) {
         res.status(400);
         console.log(req.user.bookmarks,err);
-        return res.render("profile", {user: req.user, bookmarks: "none"});
+        return res.render("profile", {user: req.user, bookmarks: [], points: points});
     }
 }
 

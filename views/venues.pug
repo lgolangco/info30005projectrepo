@@ -12,7 +12,7 @@ block content
                   option(value='Any' selected='') Any Type
                   option(value='Cafe') Cafe
                   option(value='Library') Library
-                  option(value='Others') Others
+                  option(value='Other') Others
               input.form-control(type="text",name="search" , placeholder="Search for cafes, libraries or hidden spots")
               input.form-control(type="text",name="searchLocation" , placeholder="Search for suburb")
               .input-group-append
@@ -91,14 +91,14 @@ block content
                                     span.form-check-label
                                         | Library
 
-                            if typeV === 'Others'
+                            if typeV === 'Other'
                                 label.form-check
-                                    input.form-check-input(type='radio' name='type' value='Others' checked)
+                                    input.form-check-input(type='radio' name='type' value='Other' checked)
                                     span.form-check-label
                                         | Others
                             else
                                 label.form-check
-                                    input.form-check-input(type='radio' name='type' value='Others')
+                                    input.form-check-input(type='radio' name='type' value='Other')
                                     span.form-check-label
                                         | Others
 

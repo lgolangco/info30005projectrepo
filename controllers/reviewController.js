@@ -78,12 +78,13 @@ const addReview = async (req, res) => {
         } else {
           user = req.user;
         }
+
         return res.render('venueProfile', {
           venue: venue[0],
           user: user,
           venuesReviews: result,
           completed: true,
-          newReview: reviewProcessed
+          newReview: reviewProcessed,
         });
       });
 
