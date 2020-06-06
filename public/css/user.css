@@ -80,25 +80,12 @@ img.profile-background {
     object-fit: cover;
     margin: 10px 0px;
     background-color: white;
-}
-
-.profile-thumbnail {
-    margin: -100px 10px 0px 50px;
-    z-index: 9;
-    width: 200px;
-    height: 220px;
-    object-fit: cover;
+    border-style: solid;
+    border-color: #ffffff;
 }
 
 .profile-details {
     margin: -150px 10px 0px 50px;
-}
-
-
-.profile-thumbnail {
-    margin: -60px 20px 0px 25px;
-    z-index: 9;
-    width: 19.5%;
 }
 
 .sidebar-item.active, .sidebar-item:hover {
