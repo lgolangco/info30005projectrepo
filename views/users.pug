@@ -14,13 +14,13 @@ block content
                     div.col-lg-3.col-sm-6
                         div.card.hovercard.user-card
                             .cardheader
-                              
+
                             // Profile photo
                             .avatar2
                                 - var userAvatarURL = "https://studyspot.s3.amazonaws.com/user/avatar/" + user._id.toString() + ".jpg"
                                 img.rounded.mb-2.profile-background(src = userAvatarURL,
                                   onerror="this.src='https://studyspot.s3.amazonaws.com/user/avatar/default.jpg'")
-                                  
+
                             // Basic user information
                             .info
                                 .title
@@ -29,8 +29,12 @@ block content
                                     else
                                       a(href='/user/' + user._id) #{user.first_name} #{user.last_name}
                                 .desc Email: #{user.email}
+
                                 br
-                                .desc(style="font-size: 24px")
+
+
+                                #bottom.desc
+
                                     i.fa.fa-trophy
                                     |  #{pointsList[index][1]}
                                     br
