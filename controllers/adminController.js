@@ -84,6 +84,18 @@ const postDeleteRequest = async (req,res) => {
       venueRequesterror: "To return to admin page,"
     });
   }
+  if (req.user == null) {
+    return res.render('error', {
+      error: "You're not logged in!",
+      message: "You must be logged in to delete this venue request"
+    });
+  }
+  else if (req.user.admin == false) {
+    return res.render('error', {
+      error: "You're not an admin!",
+      message: "You must be an admin to delete this venue request"
+    });
+  }
 
   // checks if there are no venues listed with that _id
   await VenueRequests.find({_id: req.params._id}, function(err, venue) {
@@ -121,6 +133,18 @@ const getResolveRequestPage = async (req,res) => {
       error: "There are no venue requests with this id!",
       message: "There are no venue requests with this id!",
       venueRequesterror: "To return to admin page,"
+    });
+  }
+  if (req.user == null) {
+    return res.render('error', {
+      error: "You're not logged in!",
+      message: "You must be logged in to resolve this venue request"
+    });
+  }
+  else if (req.user.admin == false) {
+    return res.render('error', {
+      error: "You're not an admin!",
+      message: "You must be an admin to resolve this venue request"
     });
   }
   try {
@@ -342,6 +366,18 @@ if (ObjectId.isValid(req.params._id) === false) {
     error: "There are no venue suggestions with this id!",
     message: "There are no venue suggestions with this id!",
     venueRequesterror: "To return to admin page,"
+  });
+}
+if (req.user == null) {
+  return res.render('error', {
+    error: "You're not logged in!",
+    message: "You must be logged in to delete this venue suggestion"
+  });
+}
+else if (req.user.admin == false) {
+  return res.render('error', {
+    error: "You're not an admin!",
+    message: "You must be an admin to delete this venue suggestion"
   });
 }
 try {

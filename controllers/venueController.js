@@ -258,6 +258,19 @@ function convertSuggestions(suggestionRaw) {
 }
 
 const submitVenueSuggestion = async (req, res) => {
+  if (ObjectId.isValid(req.params._id) === false) {
+    return res.render('error', {
+      error: "There are no venues listed with this id!",
+      message: "There are no venues listed with this id!",
+      venueerror: "For a list of all registered venues,"
+    });
+  }
+  if (req.user == null) {
+    return res.render('error', {
+      error: "You're not logged in!",
+      message: "You must be logged in to submit a suggestion"
+    });
+  }
   console.log("submitting venue suggestion");
   // extract info. from body
   const suggestionProcessed = convertSuggestions(req.body)
@@ -287,6 +300,18 @@ const getVenueUpdateByID = async (req, res) => {
       error: "There are no venues listed with this id!",
       message: "There are no venues listed with this id!",
       venueerror: "For a list of all registered venues,"
+    });
+  }
+  if (req.user == null) {
+    return res.render('error', {
+      error: "You're not logged in!",
+      message: "You must be a logged in to update a venue"
+    });
+  }
+  if (req.user.admin == false) {
+    return res.render('error', {
+      error: "You're not an admin!",
+      message: "You must be an admin to update a venue"
     });
   }
   try {
@@ -358,6 +383,18 @@ function convertVenue(venueRaw) {
 
 // function to add venue
 const addVenue = async (req, res) => {
+  if (req.user == null) {
+    return res.render('error', {
+      error: "You're not logged in!",
+      message: "You must be logged in to add a venue"
+    });
+  }
+  if (req.user.admin == false) {
+    return res.render('error', {
+      error: "You're not an admin!",
+      message: "You must be an admin to add a venue"
+    });
+  }
   // extract info. from body
    venueProcessed = convertVenue(req.body);
    const db = mongoose.connection;
@@ -383,9 +420,24 @@ const addVenue = async (req, res) => {
 const updateVenue = async (req, res) => {
   // checks if the _id is invalid
   if (ObjectId.isValid(req.params._id) === false) {
-      return res.send("There are no venues listed with this id");
+    return res.render('error', {
+      error: "There are no venues listed with this id!",
+      message: "There are no venues listed with this id!",
+      venueerror: "For a list of all registered venues,"
+    });
   }
-
+  if (req.user == null) {
+    return res.render('error', {
+      error: "You're not logged in!",
+      message: "You must be logged in to update a venue"
+    });
+  }
+  if (req.user.admin == false) {
+    return res.render('error', {
+      error: "You're not an admin!",
+      message: "You must be an admin to submit a suggestion"
+    });
+  }
   // checks if there are no venues listed with that _id
   await Venue.find({_id: req.params._id}, function(err, venue) {
     if (venue.length === 0) {
@@ -435,7 +487,13 @@ const getDeleteVenueConfirmationPage = async (req, res) => {
   if (req.user == null) {
     return res.render('error', {
       error: "You're not logged in!",
-      message: "You must be logged in to delete this venue"
+      message: "You must be logged in to delete a venue"
+    });
+  }
+  if (req.user.admin == false) {
+    return res.render('error', {
+      error: "You're not an admin!",
+      message: "You must be an admin to delete a venue"
     });
   }
 
@@ -474,6 +532,18 @@ const deleteVenue = async (req, res) => {
       error: "There are no venues listed with this id!",
       message: "There are no venues listed with this id!",
       venueerror: "For a list of all registered venues,"
+    });
+  }
+  if (req.user == null) {
+    return res.render('error', {
+      error: "You're not logged in!",
+      message: "You must be logged in to delete a venue"
+    });
+  }
+  if (req.user.admin == false) {
+    return res.render('error', {
+      error: "You're not an admin!",
+      message: "You must be an admin to delete a venue"
     });
   }
 
@@ -569,6 +639,12 @@ const getRequestNew = async (req, res) => {
 };
 
 const addRequestNew = async (req, res) => {
+  if (req.user == null) {
+    return res.render ("error", {
+      error: "You must be logged in to request a new venue!",
+      message: "You must be logged in to request a new venue!"
+    });
+  }
   // extract info. from body
    newVenueProcessed = convertVenue(req.body);
    newVenueProcessed.userId = ObjectId(req.body.userId);
@@ -594,6 +670,12 @@ const addRequestNew = async (req, res) => {
 
 // function to add venue to user's bookmarks
 const bookmark = async (req, res) => {
+  if (req.user == null) {
+    return res.render ("error", {
+      error: "You must be logged in to bookmark a venue!",
+      message: "You must be logged in to bookmark a venue!"
+    });
+  }
   try {
     const user = await User.findById(req.user._id);
     if (user.length === 0){
@@ -621,6 +703,12 @@ const bookmark = async (req, res) => {
 
 // function to add venue to user's bookmarks
 const removeBookmark = async (req, res) => {
+  if (req.user == null) {
+    return res.render ("error", {
+      error: "You must be logged in to remove a bookmark!",
+      message: "You must be logged in to remove a bookmark!"
+    });
+  }
   try {
     const user = await User.findById(req.user._id);
     if (user.length === 0){
