@@ -55,12 +55,13 @@ block content
 
           form(method='POST' action='')
               
-            input.form-control(type="hidden" name='userId' value=user._id) 
-            
-            input.form-control(type="hidden" name='userFirstName' value=user.first_name) 
-            input.form-control(type="hidden" name='userLastName' value=user.last_name) 
-            
-            input.form-control(type="hidden" name='venueId' value=venue._id)  
+            input.form-control(type="hidden" name='userId' value=user._id)
+
+            input.form-control(type="hidden" name='userFirstName' value=user.first_name)
+            input.form-control(type="hidden" name='userLastName' value=user.last_name)
+
+            input.form-control(type="hidden" name='venueId' value=venue._id)
+            input.form-control(type="hidden" name='venueName' value=venue.venueName)  
         
           
 

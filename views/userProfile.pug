@@ -119,7 +119,7 @@ block content
                                                     .col-9
                                                         div
                                                             //insert user name
-                                                            h5 #[a(href="/user/"+review.userId) #{review.userFirstName} #{review.userLastName}]
+                                                            h5.card-title #[a(href="/venue/" + review.venueId) #{review.venueName}]
                                                         div
                                                             if (review.rating < 0.25)
                                                                 img.rounded(src="/images/venue/rating/0.png", width="100px")
