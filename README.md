@@ -333,6 +333,8 @@ e.g. /review/5ea67d644f821a73b6841702/
 ## Admin
 
 ### Overview  
+The admin functionality serves to allow admins to resolve or delete requests or suggestions from users. The admin page displays outstanding requests and suggestions in the form of bootstrap cards, with links below to allow admins to update and delete. 
+
 
 ### Schemas
 The admin attribute is included within the user attribute. However, the following two schemas are heavily used on the admin page.  
