@@ -232,6 +232,7 @@ block content
                 .col-8
                   .card-body
                     h5.card-title #[a(href="/venue/" + venue._id) #{venue.venueName}]
+                    p.text-muted(style="font-size: 12px") #{address}
                     hr
                     if (venue.aveRating < 0.25)
                         img.rounded(src="/images/venue/rating/0.png", width="150px")
@@ -255,10 +256,6 @@ block content
                         img.rounded(src="/images/venue/rating/4h.png", width="150px")
                     else
                         img.rounded(src="/images/venue/rating/5.png", width="150px")
-                    p.card-text(style='white-space:pre;')
-                      br
-                      |#{venue.venueType}
-                      |#{address}
-
-
-
+                    
+                    p.card-text.mt-3 #{venue.venueType}
+                    
