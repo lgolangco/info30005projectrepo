@@ -11,14 +11,16 @@ block content
               
             //- Else
             else
+              br
+                 
               h1 Resolve Venue Suggestion
               
               h4 Suggestion:
               
               .row
-                .col-8.offset-1.mb-3
+                .offset-1.mb-3
                   .card.mb-3.d-flex.align-items-stretch
-                    .card-body
+                    .card-body(style='word-wrap: break-word;')
                       h4.card-title #{venueSuggestion.venueName}
                       h5 #{venueSuggestion.userName}
                       hr

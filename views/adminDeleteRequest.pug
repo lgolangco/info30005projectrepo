@@ -9,29 +9,34 @@ block content
                 
                 //- If deletion already submitted only show message
                 if (deleted)
-                  h2.display-4.m-b-2 Successfully deleted the venue request!
+                  br
+                  br
+                  h1.display-4.m-b-2 Successfully deleted the venue request!
                   
-                  a(href="/admin") Back to admin page
+                  center  
+                    a(href="/admin") Back to admin page
                 
                 //- Else, show delete form
                 else
                 
+                  br
                   h1.display-4.m-b-2 Delete request to create #{venueRequest.venueName}
                   br
-                  p Are you sure you want to delete this request?
-                  p <strong> This action cannot be undone. </strong>
-                  
-                  br
-                  a(href="/admin") Back to admin page
-                  
-                  br
-                  br
-                  // INSERT EDIT AND APPROVE LINK
-                  
-                  - const updateReview = "/venueUpdate/" + venueRequest._id
-                  a.btn.btn-Warning(href=updateReview) UPDATE Venue 
-                  
-                  
-                  br
-                  form(method="POST" action="")
-                    button.btn.btn-Danger(type="Submit") DELETE Venue Request
+                  center
+                    p Are you sure you want to delete this request?
+                    p <strong> This action cannot be undone. </strong>
+                    
+                    br
+                    a(href="/admin") Back to admin page
+                    
+                    br
+                    br
+                    // INSERT EDIT AND APPROVE LINK
+                    
+                    - const updateReview = "/admin/resolveRequest/" + venueRequest._id
+                    a.btn.btn-Warning(href=updateReview) EDIT/APPROVE Venue request
+                    
+                    br
+                    br
+                    form(method="POST" action="")
+                      button.btn.btn-Danger(type="Submit") DELETE Venue Request
