@@ -159,6 +159,7 @@ const uploadUserAvatarImage = async (req, res) => {
         error: "You can only delete your own avatar",
         message: "You can only delete your own avatar"
       });
+    }
 
     // Binary data base64
     const fileContent  = Buffer.from(req.files.userAvatar.data, 'binary');
