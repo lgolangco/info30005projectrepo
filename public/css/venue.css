@@ -1,43 +1,43 @@
 /* Venue Page */
 
-.venue-table{
+.venue-table {
     background-color: white;
 }
 
-.venue-side-bar{
+.venue-side-bar {
     background-color: white;
 }
 
-.venue-details-div{
+.venue-details-div {
     background-color: white;
 }
 
-.venue-details-table{
+.venue-details-table {
     text-align: center;
     table-layout: fixed;
     vertical-align: text-bottom;
 }
 
-.venue-profile-page{
+.venue-profile-page {
     background-color: white;
 }
 
-#venues-page{
+#venues-page {
     background-color: white;
 }
 
-.venue-header{
-  object-fit: cover;
-  object-position: 50% 60%;
-  width:100%;
-  height: 350px;
+.venue-header {
+    object-fit: cover;
+    object-position: 50% 60%;
+    width: 100%;
+    height: 350px;
 }
 
-.venue-thumbnail{
-  object-fit: cover;
-  object-position: 50% 60%;
-  width:100%;
-  height: 100%;
+.venue-thumbnail {
+    object-fit: cover;
+    object-position: 50% 60%;
+    width: 100%;
+    height: 100%;
 }
 
 .venue-table-text {

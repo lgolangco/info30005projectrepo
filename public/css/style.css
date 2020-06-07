@@ -54,7 +54,7 @@ h1 {
 }
 
 footer {
-    font-family: "Montserrat","Poppins",sans-serif;
+    font-family: "Montserrat", "Poppins", sans-serif;
 }
 
 
@@ -136,7 +136,7 @@ button.btn.btn-primary {
 }
 
 .avatar-profile {
-  object-fit: cover;
+    object-fit: cover;
 }
 
 .options {
@@ -160,5 +160,5 @@ button.btn.btn-primary {
 
 .fas, .far {
     margin-left: 10px;
-    text-decoration: none!important;
+    text-decoration: none !important;
 }
