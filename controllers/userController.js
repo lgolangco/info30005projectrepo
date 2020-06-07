@@ -26,7 +26,7 @@ const getAllUsers = async (req, res) => {
                 pointsList.push([user._id, reviews.length]);
             }
 
-            pointsList.sort(function(a, b) {
+            pointsList.sort(function (a, b) {
                 return a[1] < b[1] ? 1 : -1;
             });
             for (const i of pointsList) {
@@ -37,10 +37,16 @@ const getAllUsers = async (req, res) => {
                 }
             }
 
-            console.log(pointsList,users);
+            console.log(pointsList, users);
 
 
-            return res.render('users', {users: users, currentUser: req.user, user: req.user, pointsList: pointsList});
+            return res.render('users', {
+                title: "Users",
+                users: users,
+                currentUser: req.user,
+                user: req.user,
+                pointsList: pointsList
+            });
 
 
         }
@@ -51,7 +57,7 @@ const getAllUsers = async (req, res) => {
 }
 
 
-const loadProfile = async(req, res) => {
+const loadProfile = async (req, res) => {
 
     points = 0;
     try {
@@ -61,10 +67,16 @@ const loadProfile = async(req, res) => {
         points = reviews.length;
         console.log("REVIEWS");
         console.log(reviews);
-        return res.render("profile", {user: req.user, bookmarks: bookmarks, points: points, title: "Profile", reviews: reviews});
+        return res.render("profile", {
+            user: req.user,
+            bookmarks: bookmarks,
+            points: points,
+            title: "Profile",
+            reviews: reviews
+        });
     } catch (err) {
         res.status(400);
-        console.log(req.user.bookmarks,err);
+        console.log(req.user.bookmarks, err);
         return res.render("profile", {user: req.user, bookmarks: [], points: points});
     }
 }
@@ -234,7 +246,7 @@ const getUserByID = async (req, res) => {
                 const reviews = Review.find({userId: user[0]._id});
                 reviews.then(function (reviewsresult) {
                     console.log("REVIEWS");
-                    console.log(reviewsresult,reviewsresult.length);
+                    console.log(reviewsresult, reviewsresult.length);
                     return res.render('userProfile', {
                         user: user[0],
                         bookmarks: bookmarksresult,
