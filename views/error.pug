@@ -26,6 +26,12 @@ block content
                   p #{imageerror} #[a(href=venueGallery) click here]
                 if avatarerror
                   p #{avatarerror} #[a(href="/profile") click here]
+                if back
+                    button.btn-warning(onclick='goBack()') Go Back
+                    script.
+                        function goBack() {
+                            window.history.back();
+                        }
 
                 else  
                   p 

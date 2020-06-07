@@ -19,7 +19,11 @@ const getAllUsers = async (req, res) => {
     try {
         const all_users = await User.find();
         if (all_users.length === 0) {
-            return res.render('usererror', {message: "There are no existing users yet"});
+            return res.render('error', {
+                error: "There are no existing users yet",
+                message: "There are no venues listed with this id!",
+                back: "Return"
+            });
         } else {
             for (const user of all_users) {
                 const reviews = await Review.find({userId: user._id});
@@ -49,7 +53,11 @@ const getAllUsers = async (req, res) => {
         }
     } catch (err) {
         res.status(400);
-        return res.render('usererror', {message: "Database query failed"});
+        return res.render('error', {
+            error: "Database query failed",
+            message: "Database query failed",
+            back: "Return"
+        });
     }
 }
 
@@ -85,7 +93,11 @@ const updateUserForm = async (req, res) => {
         if (!users) {
             res.status(400);
             console.log("User not found");
-            return res.render('usererror', {message: "User not found"});
+            return res.render('error', {
+                error: "User not found",
+                message: "User not found",
+                back: "Return"
+            });
         }
         const user = users[0];
         console.log("Updating user:", user);
@@ -97,7 +109,11 @@ const updateUserForm = async (req, res) => {
     } catch (err) {
         res.status(400);
         console.log(err);
-        return res.render('usererror', {message: "Edit user failed"});
+        return res.render('error', {
+            error: "Edit user failed",
+            message: "Edit user failed",
+            back: "Return"
+        });
     }
 }
 
@@ -106,7 +122,11 @@ const updateUserForm = async (req, res) => {
 const updateUser = async (req, res, next) => {
     // checks if the _id is invalid
     if (ObjectId.isValid(req.user._id) === false) {
-        return res.render('usererror', {message: "There are no users listed with this id"});
+        return res.render('error', {
+            error: "There are no users listed with this id",
+            message: "There are no users listed with this id",
+            back: "Return"
+        });
     }
 
     // checks if there are no venues listed with that _id
@@ -114,7 +134,11 @@ const updateUser = async (req, res, next) => {
     if (users.length === 0) {
         res.status(400);
         console.log("User not found");
-        return res.render('usererror', {message: "There are no users listed with this id"});
+        return res.render('error', {
+            error: "There are no users listed with this id",
+            message: "There are no users listed with this id",
+            back: "Return"
+        });
     }
 
     try {
@@ -162,7 +186,11 @@ const updateUser = async (req, res, next) => {
     } catch (err) {
         res.status(400);
         console.log(err);
-        return res.render('usererror', {message: "Edit user failed"});
+        return res.render('error', {
+            error: "Edit user failed",
+            message: "Edit user failed",
+            back: "Return"
+        });
     }
 };
 
@@ -227,12 +255,20 @@ const addUser = async (req, res, next) => {
 const getUserByID = async (req, res) => {
     // checks if the _id is invalid
     if (ObjectId.isValid(req.params._id) === false) {
-        return res.render('usererror', {message: "There are no users listed with this id"});
+        return res.render('error', {
+            error: "There are no users listed with this id",
+            message: "There are no users listed with this id",
+            back: "Return"
+        });
     }
 
     await User.find({_id: req.params._id}, function (err, user) {
         if (user.length === 0) {
-            return res.render('usererror', {message: "There are no users listed with this id"});
+            return res.render('error', {
+                error: "There are no users listed with this id",
+                message: "There are no users listed with this id",
+                back: "Return"
+            });
         } else if (user) {
             const bookmarks = Venue.find({_id: {$in: user[0].bookmarks}});
             bookmarks.then(function (bookmarksresult) {
@@ -248,7 +284,11 @@ const getUserByID = async (req, res) => {
             });
         } else {
             res.status(400);
-            return res.render('usererror', {message: "getUserByID function failed"});
+            return res.render('error', {
+                error: "getUserByID function failed",
+                message: "getUserByID function failed",
+                back: "Return"
+            });
         }
     })
 };
@@ -261,7 +301,11 @@ const getUserByEmail = async (req, res) => {
             return res.redirect("/user/" + user[0]._id);
         } catch (err) {
             res.status(400);
-            return res.render('usererror', {message: "getUserByEmail function failed"});
+            return res.render('error', {
+                error: "Database query failed",
+                message: "Database query failed",
+                back: "Return"
+            });
         }
     })
 };
@@ -272,7 +316,11 @@ const deleteUserByID = async (req, res) => {
 
     // checks if the _id is invalid
     if (ObjectId.isValid(req.user._id) === false) {
-        return res.render('usererror', {message: "There are no users listed with this id"});
+        return res.render('error', {
+            error: "There are no users listed with this id",
+            message: "There are no users listed with this id",
+            back: "Return"
+        });
     }
 
     // deletes the reviews associated with the user
