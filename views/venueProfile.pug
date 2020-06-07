@@ -70,7 +70,7 @@ block content
 
             if (user)
               - const imagePage = '/venueImage/upload/' + id
-              p
+              p.my-3
                 a(href=imagePage) + Upload an image for this venue
 
 
@@ -190,7 +190,7 @@ block content
               if venue.venueContact.email
                 p #{venue.venueContact.email}
               if venue.venueContact.web
-                a(href=venue.venueContact.web) #{venue.venueContact.web}
+                a(href="https://" + venue.venueContact.web) #{venue.venueContact.web}
 
           // Venue Update and Delete Buttons (Will be only available to users with admin attribute at later date)
           if (user && user.admin)
