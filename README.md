@@ -424,7 +424,7 @@ e.g. /admin/deleteSuggestion/5eae288471ca2e93550a7c5f
 This is used to render the resolve suggestion page. It renders a bootstrap card with the suggestion showing, as well as a pre-filled update venue form.
 e.g. /admin/resolveSuggestion/5eae288471ca2e93550a7c5f
 
-9. 8. **postResolveSuggestionPage: GET /admin/resolveSuggestion/:_id**
+9. **postResolveSuggestionPage: GET /admin/resolveSuggestion/:_id**
 This is used to post the suggestion form. It updates the venue with the values input into the form, and deletes the suggestion. It shows a confirmation message after completing these operations.
 e.g. /admin/resolveSuggestion/5eae288471ca2e93550a7c5f
 
