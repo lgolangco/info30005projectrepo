@@ -153,8 +153,10 @@ const getVenueByID = async (req, res) => {
       venuesReviews.then(async function(result){
         var reviewCount = 0;
         var totalRating = 0;
-
+        console.log("SUCCESS RESULT HERE");
+        console.log(result)
         if(result) {
+          console.log("RESULT TRIGGERED");
           result.forEach(function (reviews) {
             reviewCount++;
             totalRating += reviews.rating;
@@ -163,19 +165,18 @@ const getVenueByID = async (req, res) => {
               {_id: req.params._id},
               {aveRating: totalRating / reviewCount}
           );
-
-          if (req.user === undefined) {
-            user = null;
-          } else {
-            user = req.user;
-          }
-          return res.render('venueProfile', {
-            venue: venue[0],
-            user: user,
-            venuesReviews: result,
-          reviewCount: reviewCount
-          });
         }
+        if (req.user === undefined) {
+          user = null;
+        } else {
+          user = req.user;
+        }
+        return res.render('venueProfile', {
+          venue: venue[0],
+          user: user,
+          venuesReviews: result,
+          reviewCount: reviewCount
+        });
       });
     } else {
       res.status(400);
@@ -194,7 +195,7 @@ const findVenuesReviews = async (venueId) => {
   console.log(venuesReviews);
   if (venuesReviews.length === 0){
     console.log("no reviews found");
-    return false
+    return false;
   } else {
     console.log("success")
     return venuesReviews;
