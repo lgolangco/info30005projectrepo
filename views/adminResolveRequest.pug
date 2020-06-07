@@ -7,12 +7,18 @@ block content
             
             //-If form already submitted show success message
             if (completed)
-              h3 Request Posted and Resolved
+              br
+              br
+              h1 Request Posted and Resolved
             
             //- Else
             else
+              br
+              br
+              br
               h1 Venue Request Resolution Form
-              h3 Resolving #{venueRequest.userFirstName} #{venueRequest.userLastName}'s request to create #{venueRequest.venueName}
+              center
+                h3 Resolving #{venueRequest.userFirstName} #{venueRequest.userLastName}'s request to create #{venueRequest.venueName}
               
               .col-8.offset-2
                 

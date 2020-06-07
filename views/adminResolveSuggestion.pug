@@ -5,24 +5,30 @@ block content
     .main.container
         .col-md-6.offset-3
             
-            //-If form already submitted show success message
-            if (completed)
+          //-If form already submitted show success message
+          if (completed)
+            br
+            be
               h1 #{venue.venueName} Updated!
               
-            //- Else
-            else
+          //- Else
+          else
+              br
+                 
               h1 Resolve Venue Suggestion
+              
+              br
               
               h4 Suggestion:
               
               .row
-                .col-8.offset-1.mb-3
-                  .card.mb-3.d-flex.align-items-stretch
-                    .card-body
+                .offset-1.mb-3
+                  .card.mb-3.d-flex.align-items-stretch(style="width: 100%;")
+                    .card-body(style='word-wrap: break-word;')
                       h4.card-title #{venueSuggestion.venueName}
                       h5 #{venueSuggestion.userName}
                       hr
-                      p.card-text(style='white-space:pre;')
+                      p.card-text
                         |#{venueSuggestion.suggestion}
               
               

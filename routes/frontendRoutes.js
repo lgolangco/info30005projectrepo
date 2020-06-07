@@ -89,6 +89,18 @@ router.get("/logout", userController.logout);
 
 // GET newVenue form page
 router.get("/newvenue", (req, res, next) => {
+  if (req.user == null) {
+    return res.render ("error", {
+      error: "You must be logged in to add a new venue!",
+      message: "You must be an admin to add a new venue!"
+    });
+  }
+  if (req.user.admin == false) {
+    return res.render ("error", {
+      error: "You must be an admin to add a new venue!",
+      message: "You must be an admin to add a new venue!"
+    });
+  }
   return res.render("newvenue", {title: "Register a New Venue"});
 });
 
