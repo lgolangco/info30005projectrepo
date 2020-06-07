@@ -476,6 +476,11 @@ const deleteVenue = async (req, res) => {
     });
   }
 
+  // deletes the reviews associated with the user
+  Review.deleteMany({venueId: req.params._id}, function (err) {
+      res.status(400);
+  });
+
   // checks if there are no venues listed with that _id
   await Venue.find({_id: req.params._id}, function(err, venue) {
     if (venue.length === 0) {
