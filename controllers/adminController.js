@@ -157,7 +157,6 @@ const getResolveRequestPage = async (req,res) => {
           venueRequesterror: "To return to admin page,"
         });
       } else {
-        console.log(venueRequest);
         return res.render("adminResolveRequest", {
           user: req.user,
           venueRequest: venueRequest[0],
@@ -419,7 +418,6 @@ try {
 };
 
 const postResolveSuggestionPage = async (req, res) => {
-  console.log("one");
   if (ObjectId.isValid(req.params._id) === false) {
     return res.render('error', {
       error: "There are no venue suggestions with this id!",
@@ -439,27 +437,19 @@ const postResolveSuggestionPage = async (req, res) => {
       message: "You must be an admin to resolve this venue suggestion"
     });
   }
-  console.log("two");
   venueProcessed = convertVenue(req.body);
-  console.log("three");
   const db = mongoose.connection;
-  console.log("four");
 
   try {
-    console.log("five");
-    console.log(venueProcessed)
     await Venue.findOneAndUpdate(
       {_id: req.body.venueId},
       {$set: venueProcessed},
       function(err) {
 
         if (!err){
-          console.log("umm");
           const result = VenueSuggestions.deleteOne({_id: req.params._id}).exec();
-          console.log("six");
 
           if (result.n === 0) {
-            console.log("oh no");
             res.status(400);
             return res.render('error', {
               error: "Database query failed",
@@ -468,7 +458,6 @@ const postResolveSuggestionPage = async (req, res) => {
             });
 
           } else {
-            console.log("seven");
             res.render("adminResolveSuggestion", {
               completed: true,
               venue: venueProcessed

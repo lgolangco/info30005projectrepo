@@ -4,7 +4,6 @@ $(document).ready(function(){
 
 function setActiveTab() {
     var path = window.location.pathname;
-    console.log(path);
     if (path.includes("venue")) {
         $(".venue").addClass("active");
     } else if (path.includes("user")) {

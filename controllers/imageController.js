@@ -108,8 +108,6 @@ const uploadVenueImage = async (req, res) => {
 };
 
 const getUserAvatarImagePage = async (req, res) => {
-  console.log("s3");
-  console.log(s3);
   if (ObjectId.isValid(req.params._id) === false || req.user == null) {
     return res.render('error', {
       error: "You're not logged in!",
@@ -163,12 +161,8 @@ const uploadUserAvatarImage = async (req, res) => {
 
     // Binary data base64
     const fileContent  = Buffer.from(req.files.userAvatar.data, 'binary');
-    console.log("fileContent");
-    console.log(fileContent);
 
     const imageKey = "user/avatar/" + req.user._id.toString() + ".jpg"
-    console.log("imageKey");
-    console.log(imageKey);
 
     // Setting up S3 upload parameters
     const params = {
@@ -199,20 +193,12 @@ const uploadUserAvatarImage = async (req, res) => {
 };
 
 function extractURL(images) {
-  console.log("images");
-  console.log(images);
   var imageLinks = [];
   var i = 0;
   while (i < images.length){
-    console.log("images[i]");
-    console.log(images[i]);
-    console.log("image[i].Key");
-    console.log(images[i].Key);
     imageLinks.push(images[i].Key);
     i += 1;
   }
-
-  console.log(imageLinks)
 
   return imageLinks;
 }
@@ -236,8 +222,6 @@ const getVenueGalleryPage = async (req, res) => {
       });
     } else {
       const prefix = "venue/fromUsers/" + req.params._id.toString();
-      console.log("prefix");
-      console.log(prefix);
       var params = {
         Bucket: 'studyspot',
         Delimiter: '',
@@ -252,10 +236,7 @@ const getVenueGalleryPage = async (req, res) => {
               venueId: req.params._id
             });
         } else {
-        console.log("DATA");
-        console.log(data.Contents);
         imageLinks = extractURL(data.Contents);
-        console.log(imageLinks);
         return res.render('venueGallery', {
           venue: venue[0],
           currentUser: req.user,
@@ -379,7 +360,6 @@ const uploadVenueHeaderImage = async (req, res) => {
 
 const deleteVenueImage = async (req, res) => {
   console.log("SUCCESS");
-  console.log(req.body.imagePath)
   const imagePath = req.body.imagePath
   if (ObjectId.isValid(req.params._id) === false) {
     return res.render('error', {
@@ -429,8 +409,6 @@ const deleteVenueImage = async (req, res) => {
           console.log("DELETED");
 
           const prefix = "venue/fromUsers/" + req.params._id.toString();
-          console.log("prefix");
-          console.log(prefix);
           var params = {
             Bucket: 'studyspot',
             Delimiter: '',
@@ -438,10 +416,7 @@ const deleteVenueImage = async (req, res) => {
           }
           s3.listObjects(params, function (err, data) {
             if(err)throw err;
-            console.log("DATA");
-            console.log(data.Contents);
             imageLinks = extractURL(data.Contents);
-            console.log(imageLinks);
             return res.render('venueGallery', {
               venue: venue[0],
               currentUser: req.user,
@@ -464,7 +439,6 @@ const deleteVenueImage = async (req, res) => {
 };
 
 const getDeleteVenueHeaderPage = async (req, res) => {
-  console.log("YES HERE");
   if (ObjectId.isValid(req.params._id) === false) {
     return res.render('error', {
       error: "There are no venues listed with this id!",
@@ -496,8 +470,6 @@ const getDeleteVenueHeaderPage = async (req, res) => {
     } else {
       console.log("USER FOUND");
       const prefix = "venue/header/" + req.params._id.toString();
-      console.log("prefix");
-      console.log(prefix);
       var params = {
         Bucket: 'studyspot',
         Delimiter: '',
@@ -512,10 +484,7 @@ const getDeleteVenueHeaderPage = async (req, res) => {
             imageerror: "To return to the venue profile page,"
           });
         } else {
-          console.log("DATA");
-          console.log(data.Contents);
           imageLink = extractURL(data.Contents);
-          console.log(imageLink);
           return res.render('venueHeaderDelete', {
             header: imageLink,
             venue: venue[0]
@@ -537,7 +506,6 @@ const getDeleteVenueHeaderPage = async (req, res) => {
 const deleteVenueHeader = async (req, res) => {
   console.log("SUCCESS");
   const headerPath = "venue/header/" + req.params._id.toString() + ".jpg"
-  console.log(headerPath)
   if (ObjectId.isValid(req.params._id) === false) {
     return res.render('error', {
       error: "There are no venues listed with this id!",
@@ -634,10 +602,7 @@ const getdeleteUserAvatarImagePage = async (req, res) => {
           functionfailure: "Failed to get delete avatar page"
         });
       } else {
-        console.log("DATA");
-        console.log(data.Contents);
         imageLink = extractURL(data.Contents);
-        console.log(imageLink);
         return res.render('userAvatarDelete', {
           avatar: imageLink,
           user: req.user
@@ -650,7 +615,6 @@ const getdeleteUserAvatarImagePage = async (req, res) => {
 const deleteUserAvatar = async (req, res) => {
   console.log("SUCCESS");
   const avatarPath = "user/avatar/" + req.params._id.toString() + ".jpg"
-  console.log(avatarPath)
 
   if (ObjectId.isValid(req.params._id) === false || req.user == null) {
     return res.render('error', {

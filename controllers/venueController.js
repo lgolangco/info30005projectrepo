@@ -22,7 +22,6 @@ const getAllVenues = async (req, res) => {
 
   try {
     if(req.query) {
-      console.log(req.query,filters,noise,req.query.noise);
       if (req.query.type === "Any") {
         search.splice(0,1);
         typeV = req.query.type;
@@ -83,7 +82,6 @@ const getAllVenues = async (req, res) => {
       search.push({})
     }
 
-    console.log(search);
     search.push({});
     Venue.find({
       $and: search
@@ -153,10 +151,7 @@ const getVenueByID = async (req, res) => {
       venuesReviews.then(async function(result){
         var reviewCount = 0;
         var totalRating = 0;
-        console.log("SUCCESS RESULT HERE");
-        console.log(result)
         if(result) {
-          console.log("RESULT TRIGGERED");
           result.forEach(function (reviews) {
             reviewCount++;
             totalRating += reviews.rating;
@@ -191,13 +186,10 @@ const getVenueByID = async (req, res) => {
 
 const findVenuesReviews = async (venueId) => {
   const venuesReviews = await Review.find({venueId: venueId});
-  console.log("venuesReviews");
-  console.log(venuesReviews);
   if (venuesReviews.length === 0){
     console.log("no reviews found");
     return false;
   } else {
-    console.log("success")
     return venuesReviews;
   }
 };
@@ -253,7 +245,6 @@ function convertSuggestions(suggestionRaw) {
     suggestion: suggestionRaw.suggestion,
     resolved: false
   }
-  console.log(suggestionProcessed);
   return suggestionProcessed;
 }
 
@@ -275,7 +266,6 @@ const submitVenueSuggestion = async (req, res) => {
   // extract info. from body
   const suggestionProcessed = convertSuggestions(req.body)
   console.log("called convert function");
-  console.log(suggestionProcessed);
   const db = mongoose.connection;
   try {
     await db.collection('venueSuggestions').insertOne(suggestionProcessed)
@@ -447,7 +437,6 @@ const updateVenue = async (req, res) => {
 
 
   venueProcessed = convertVenue(req.body);
-  console.log(venueProcessed);
   // update the venue with the prescribed _id
   await Venue.findOneAndUpdate(
       {_id: req.params._id},

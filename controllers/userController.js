@@ -37,9 +37,6 @@ const getAllUsers = async (req, res) => {
                 }
             }
 
-            console.log(pointsList, users);
-
-
             return res.render('users', {
                 title: "Users",
                 users: users,
@@ -62,11 +59,8 @@ const loadProfile = async (req, res) => {
     points = 0;
     try {
         const bookmarks = await Venue.find({_id: {$in: req.user.bookmarks}});
-        console.log(req.user.bookmarks);
         const reviews = await Review.find({userId: req.user._id});
         points = reviews.length;
-        console.log("REVIEWS");
-        console.log(reviews);
         return res.render("profile", {
             user: req.user,
             bookmarks: bookmarks,
@@ -76,7 +70,7 @@ const loadProfile = async (req, res) => {
         });
     } catch (err) {
         res.status(400);
-        console.log(req.user.bookmarks, err);
+        console.log(err);
         return res.render("profile", {user: req.user, bookmarks: [], points: points});
     }
 }
@@ -242,11 +236,8 @@ const getUserByID = async (req, res) => {
         } else if (user) {
             const bookmarks = Venue.find({_id: {$in: user[0].bookmarks}});
             bookmarks.then(function (bookmarksresult) {
-                console.log(bookmarksresult);
                 const reviews = Review.find({userId: user[0]._id});
                 reviews.then(function (reviewsresult) {
-                    console.log("REVIEWS");
-                    console.log(reviewsresult, reviewsresult.length);
                     return res.render('userProfile', {
                         user: user[0],
                         bookmarks: bookmarksresult,

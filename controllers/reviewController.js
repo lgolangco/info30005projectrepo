@@ -44,8 +44,6 @@ function convertReviews(reviewRaw) {
 // function to find all reviews for a venue
 const findVenuesReviews = async (venueId) => {
   const venuesReviews = await Review.find({venueId: venueId});
-  console.log("venuesReviews");
-  console.log(venuesReviews);
   if (venuesReviews.length === 0){
     console.log("no reviews found");
     return false
@@ -228,8 +226,6 @@ const updateReview = async (req, res) => {
     }
   })
 
-  console.log("REQ.BODY");
-  console.log(req.body);
   reviewProcessed = convertReviews(req.body);
   // update the venue with the prescribed _id
   await Review.findOneAndUpdate(
