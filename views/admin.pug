@@ -29,9 +29,6 @@ block content
                     p.card-text(style='white-space:pre;')
                       |#{request.venueType} 
                       |#{address}
-                    
-            //BUTTON TO "EDIT AND APPROVE REQUEST" - copy of update page
-            //BUTTON TO "DELETE REQUEST" - leads to 'are you sure you want to delete' page
             
             - const updateLink = "/admin/resolveRequest/" + request._id.toString();
             - const deleteLink = "/admin/deleteRequest/" + request._id.toString();
