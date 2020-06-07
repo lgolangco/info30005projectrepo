@@ -2,6 +2,7 @@ const mongoose = require("mongoose");
 
 const reviewSchema = new mongoose.Schema({
     venueId: {type: mongoose.Types.ObjectId, ref: 'venue'},
+    venueName: {type: String, required:true},
     userId: {type: mongoose.Types.ObjectId, ref: 'user'},
     userFirstName: {type: String, required:true, trim: true},
     userLastName: {type: String, required:true, trim: true},
