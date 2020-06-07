@@ -1,8 +1,11 @@
+// Extracted from https://bootsnipp.com/snippets/qr9bx
+
 .container.text-center
     .row
         .col-12.col-lg-4.d-flex.align-items-stretch
             .card.m-2
-                img.card-img-top(src="../images/homepage/cafe-sevenseeds.jpg", alt="cafe-sevenseeds")
+                a.inner(href="/venue?searchType=Cafe&search=&searchLocation=")
+                    img.card-img-top(src="../images/homepage/cafe-sevenseeds.jpg", alt="cafe-sevenseeds")
                 .card-body.d-flex.flex-column.align-items-center
                     img.popular-link-avatar.rounded-circle(src="../images/homepage/philipe-cavalcante.jpg", alt="person1")
                     .popular-link-avatar-name.text-muted By Philipa C.
@@ -12,8 +15,9 @@
                     a.card-link.text-danger.mt-auto(href="/venue?searchType=Cafe&search=&searchLocation=") View Cafes
 
         .col-12.col-lg-4.d-flex.align-items-stretch
-            .card.m-2
-                img.card-img-top(src="../images/homepage/library-vic.jpg", alt="vic-library")
+            .card.m-2(href="/venue?searchType=Library&search=&searchLocation=")
+                a.inner(href="/venue?searchType=Library&search=&searchLocation=")
+                    img.card-img-top(src="../images/homepage/library-vic.jpg", alt="vic-library")
                 .card-body.d-flex.flex-column.align-items-center
                     img.popular-link-avatar.rounded-circle(src="../images/homepage/courtney-cook.jpg", alt="person2")
                     .popular-link-avatar-name.text-muted By Courtney C.
@@ -24,7 +28,8 @@
 
         .col-12.col-lg-4.d-flex.align-items-stretch
             .card.m-2
-                img.card-img-top(src="../images/homepage/south-lawn.jpg", alt="cafe-sevenseeds")
+                a.inner(href="/venue?searchType=Other&search=&searchLocation=")
+                    img.card-img-top(src="../images/homepage/south-lawn.jpg", alt="cafe-sevenseeds")
                 .card-body.d-flex.flex-column.align-items-center
                     img.popular-link-avatar.rounded-circle(src="../images/homepage/charles-deluvio-avatar.jpg", alt="person3")
                     .popular-link-avatar-name.text-muted By Charles D.

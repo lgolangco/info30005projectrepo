@@ -32,6 +32,7 @@ function convertReviews(reviewRaw) {
     userId: ObjectId(reviewRaw.userId),
     userFirstName: reviewRaw.userFirstName,
     userLastName: reviewRaw.userLastName,
+    venueName: reviewRaw.venueName,
     datePosted:new Date(),
     content: reviewRaw.review,
     rating: parseInt(reviewRaw.star)

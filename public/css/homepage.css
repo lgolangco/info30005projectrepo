@@ -51,6 +51,7 @@ header.masthead h1 {
     object-fit: cover;
     border-style: solid;
     border-color: #e6e7e9;
+    z-index:1;
 }
 
 .popular-link-avatar-name {
@@ -71,4 +72,54 @@ header.masthead h1 {
 
 .aboutus {
     padding: 120px 30px;
+}
+
+.our-team-main {
+    width: 100%;
+    height: auto;
+    border-bottom: 5px #323233 solid;
+    background: #fff;
+    text-align: center;
+    border-radius: 10px;
+    overflow: hidden;
+    position: relative;
+    margin-bottom: 28px;
+}
+
+
+.our-team-main img {
+    border-radius: 50%;
+    margin-bottom: 20px;
+    width: 90px;
+}
+
+.our-team-main h3 {
+    font-size: 20px;
+    font-weight: 700;
+}
+
+.our-team-main p {
+    margin-bottom: 0;
+}
+
+.team-front {
+    width: 100%;
+    height: auto;
+    position: relative;
+    z-index: 10;
+    background: #fff;
+    padding: 15px;
+    bottom: 0px;
+}
+
+.inner {
+    overflow: hidden;
+}
+
+.inner img {
+    transition: all 1.5s ease;
+}
+
+.inner:hover img {
+    transform: scale(1.5);
 }
