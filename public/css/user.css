@@ -5,13 +5,13 @@
 .user-card {
     padding-top: 20px;
     margin: 20px 3px 20px 3px;
-    background-color: rgba(214, 224, 226, 0.2);
+    background-color: #ffffff;
     border-top-width: 0;
     border-bottom-width: 2px;
     border-radius: 3px;
     height: 350px;
     box-sizing: border-box;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    box-shadow: 0 4px 8px 0 #6C757D;
 }
 
 .card.hovercard {
@@ -19,11 +19,11 @@
     padding-top: 0;
     overflow: hidden;
     text-align: center;
-    background-color: rgba(214, 224, 226, 0.2);
+    background-color: #ffffff;
 }
 
 .card.hovercard .cardheader {
-    background-color: #3d85c6;
+    background: linear-gradient(-35deg, #3d85c6, #0b5394);
     background-size: cover;
     height: 115px;
 }
@@ -53,7 +53,7 @@
     margin-bottom: 4px;
     font-size: 24px;
     line-height: 1;
-    color: #262626;
+    color: #404040;
     vertical-align: middle;
 }
 
@@ -61,7 +61,7 @@
     overflow: hidden;
     font-size: 12px;
     line-height: 20px;
-    color: #737373;
+    color: #6C757D;
     text-overflow: ellipsis;
 }
 
@@ -69,7 +69,7 @@
 /* Profile and User Page */
 
 .profile-cover {
-    background: linear-gradient(-35deg, #60c3c0, #0b5394);
+    background: linear-gradient(-35deg, #3d85c6, #0b5394);
 }
 
 img.profile-background {

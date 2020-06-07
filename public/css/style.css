@@ -10,7 +10,7 @@ body {
 }
 
 a {
-    color: #737373;
+    color: #6C757D;
     text-decoration: solid;
     background-color: transparent;
 }
@@ -23,8 +23,12 @@ h1, h2, h3, h4, h5, h6 {
     font-family: "Poppins", "sans-serif";
 }
 
+h4, h5 {
+    color: #404040;
+}
+
 h1 {
-    color: #000000;
+    color: #404040;
     font-size: 40px;
     line-height: 66px;
     vertical-align: baseline;
@@ -45,7 +49,7 @@ h1 {
 }
 
 .main {
-    color: #000000;
+    color: #404040;
     min-height: calc(100vh - 34px);
 }
 
@@ -147,7 +151,7 @@ button.btn.btn-primary {
     font-size: 1.25rem;
     cursor: pointer;
     margin-left: 1rem;
-    color: rgba(0,0,0, .35);
+    color: #404040;
 }
 
 .options .material-icons:hover {
