@@ -69,46 +69,45 @@ block content
                                         each venue in bookmarks
                                             - const address = venue.venueAddress.venueStreetAddress +", "+venue.venueAddress.venueSuburb+", "+venue.venueAddress.venuePostcode;
                                             - const imgURL = "https://studyspot.s3.amazonaws.com/venue/header/" + venue._id.toString() + ".jpg"
-                                            .col-xl-10
-                                                .card.mb-3.d-flex.align-items-stretch
-                                                    .row.no-gutters
-                                                        .col-4
-                                                            a(href="/venue/" + venue._id)
-                                                                img.venue-thumbnail(src = imgURL
-                                                                    onerror="this.src='https://studyspot.s3.amazonaws.com/venue/header/default.jpg'")
-                                                        .col-8
-                                                            .card-body
-                                                                h5.card-title #[a(href="/venue/" + venue._id) #{venue.venueName}]
-                                                                hr
-                                                                if (venue.aveRating < 0.25)
-                                                                    img.rounded(src="/images/venue/rating/0.png", width="100px")
-                                                                else if (venue.aveRating < 0.75)
-                                                                    img.rounded(src="/images/venue/rating/0h.png", width="100px")
-                                                                else if (venue.aveRating < 1.25)
-                                                                    img.rounded(src="/images/venue/rating/1.png", width="100px")
-                                                                else if (venue.aveRating < 1.75)
-                                                                    img.rounded(src="/images/venue/rating/1h.png", width="100px")
-                                                                else if (venue.aveRating < 2.25)
-                                                                    img.rounded(src="/images/venue/rating/2.png", width="100px")
-                                                                else if (venue.aveRating < 2.75)
-                                                                    img.rounded(src="/images/venue/rating/2h.png", width="100px")
-                                                                else if (venue.aveRating < 3.25)
-                                                                    img.rounded(src="/images/venue/rating/3.png", width="100px")
-                                                                else if (venue.aveRating < 3.75)
-                                                                    img.rounded(src="/images/venue/rating/3h.png", width="100px")
-                                                                else if (venue.aveRating < 4.25)
-                                                                    img.rounded(src="/images/venue/rating/4.png", width="100px")
-                                                                else if (venue.aveRating < 4.75)
-                                                                    img.rounded(src="/images/venue/rating/4h.png", width="100px")
-                                                                else
-                                                                    img.rounded(src="/images/venue/rating/5.png", width="100px")
-                                                                p.card-text(style='white-space:pre; font-size: 12px')
-                                                                p.card-text(style='white-space:pre; font-size: 12px')
-                                                                    | #{venue.venueType}
-                                                                    | #{address}
-                                                                form(method="POST" action="/venue/" + venue._id + "/remove")
-                                                                    input(type='hidden' name='profile' value=true)
-                                                                    button.btn-warning.btn-sm(type="submit") Remove bookmark
+                                              .card.mb-3.d-flex.align-items-stretch
+                                                  .row.no-gutters
+                                                      .col-4
+                                                          a(href="/venue/" + venue._id)
+                                                              img.venue-thumbnail(src = imgURL
+                                                                  onerror="this.src='https://studyspot.s3.amazonaws.com/venue/header/default.jpg'")
+                                                      .col-8
+                                                          .card-body
+                                                              h5.card-title #[a(href="/venue/" + venue._id) #{venue.venueName}]
+                                                              hr
+                                                              if (venue.aveRating < 0.25)
+                                                                  img.rounded(src="/images/venue/rating/0.png", width="100px")
+                                                              else if (venue.aveRating < 0.75)
+                                                                  img.rounded(src="/images/venue/rating/0h.png", width="100px")
+                                                              else if (venue.aveRating < 1.25)
+                                                                  img.rounded(src="/images/venue/rating/1.png", width="100px")
+                                                              else if (venue.aveRating < 1.75)
+                                                                  img.rounded(src="/images/venue/rating/1h.png", width="100px")
+                                                              else if (venue.aveRating < 2.25)
+                                                                  img.rounded(src="/images/venue/rating/2.png", width="100px")
+                                                              else if (venue.aveRating < 2.75)
+                                                                  img.rounded(src="/images/venue/rating/2h.png", width="100px")
+                                                              else if (venue.aveRating < 3.25)
+                                                                  img.rounded(src="/images/venue/rating/3.png", width="100px")
+                                                              else if (venue.aveRating < 3.75)
+                                                                  img.rounded(src="/images/venue/rating/3h.png", width="100px")
+                                                              else if (venue.aveRating < 4.25)
+                                                                  img.rounded(src="/images/venue/rating/4.png", width="100px")
+                                                              else if (venue.aveRating < 4.75)
+                                                                  img.rounded(src="/images/venue/rating/4h.png", width="100px")
+                                                              else
+                                                                  img.rounded(src="/images/venue/rating/5.png", width="100px")
+                                                              p.card-text(style='white-space:pre; font-size: 12px')
+                                                              p.card-text(style='white-space:pre; font-size: 12px')
+                                                                  | #{venue.venueType}
+                                                                  | #{address}
+                                                              form(method="POST" action="/venue/" + venue._id + "/remove")
+                                                                  input(type='hidden' name='profile' value=true)
+                                                                  button.btn-warning.btn-sm(type="submit") Remove bookmark
                                 else
                                     p You have not bookmarked any StudySpots.
 
