@@ -51,11 +51,18 @@ const getVenueImagePage = async (req, res) => {
 };
 
 const uploadVenueImage = async (req, res) => {
+  if (ObjectId.isValid(req.params._id) === false) {
+    return res.render('error', {
+      error: "There are no venues listed with this id!",
+      message: "There are no venues listed with this id!",
+      venueerror: "For a list of all registered venues,"
+    });
+  }
 
   if (req.user == null){
     return res.render('error', {
       error: "You're not logged in!",
-      message: "You must be logged in to submit a suggestion"
+      message: "You must be logged in to upload a venue photo"
     });
   }
     // Binary data base64
@@ -152,7 +159,6 @@ const uploadUserAvatarImage = async (req, res) => {
         error: "You can only delete your own avatar",
         message: "You can only delete your own avatar"
       });
-    }
 
     // Binary data base64
     const fileContent  = Buffer.from(req.files.userAvatar.data, 'binary');
@@ -314,7 +320,13 @@ const getVenueHeaderPage = async (req, res) => {
 
 
 const uploadVenueHeaderImage = async (req, res) => {
-
+  if (ObjectId.isValid(req.params._id) === false) {
+    return res.render('error', {
+      error: "There are no venues listed with this id!",
+      message: "There are no venues listed with this id!",
+      venueerror: "For a list of all registered venues,"
+    });
+  }
   if (req.user == null){
     return res.render('error', {
       error: "You're not logged in!",
