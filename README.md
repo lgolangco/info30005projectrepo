@@ -390,3 +390,43 @@ The venueRequests schema is almost identical to the venue schema:
      - adminResolveSuggestion.pug
 
 ### Controllers/Functions
+The Admin functionality is performed through the adminController. It has the following functionalities:
+
+1. **getAdminPage: GET /admin**
+This is used to render the admin page. It renders the admin page with venueRequests and venueSuggestions presented as bootstrap cards which the admin can delete or resolve.
+e.g. /admin
+
+2. **getDeleteRequestPage: GET /admin/deleteRequest/:_id**  
+This is used to render the delete venue request confirmation page. It renders a button which will delete the venue request, as well as a button which leads to the update request page, and a link back to the admin page.
+e.g. /admin/deleteRequest/5eae288471ca2e93550a7c5f
+
+3. **postDeleteRequest: POST /admin/deleteRequest/:_id**  
+This is used to post the delete request. It deletes the venue request and before showing a confirmation message.
+e.g. /admin/deleteRequest/5eae288471ca2e93550a7c5f
+
+4. **getResolveRequestPage: GET /admin/resolveRequest/:_id**
+This is used to render the resolve request page. It renders a pre-filled create venue form.
+e.g. /admin/resolveRequest/5eae288471ca2e93550a7c5f
+
+5. **postResolveRequest: POST /admin/resolveRequest/:_id**
+This is used to post the request form. It creates a new venue with the values input into the form, and deletes the request. It shows a confirmation message after completing these operations.
+e.g. /admin/resolveRequest/5eae288471ca2e93550a7c5f
+
+6. **getDeleteSuggestionPage: GET /admin/deleteSuggestion/:_id**
+This is used to render the delete venue suggestion confirmation page. It renders a button which will delete the venue suggestion, as well as a button which leads to the update suggestion page, and a link back to the admin page.
+e.g. /admin/deleteSuggestion/5eae288471ca2e93550a7c5f
+
+7. **postDeleteSuggestionPage: POST /admin/deleteSuggestion/:_id**
+This is used to delete the suggestion. It deletes the venue suggestion and before showing a confirmation message.
+e.g. /admin/deleteSuggestion/5eae288471ca2e93550a7c5f
+
+8. **getResolveSuggestionPage: GET /admin/resolveSuggestion/:_id**
+This is used to render the resolve suggestion page. It renders a bootstrap card with the suggestion showing, as well as a pre-filled update venue form.
+e.g. /admin/resolveSuggestion/5eae288471ca2e93550a7c5f
+
+9. 8. **postResolveSuggestionPage: GET /admin/resolveSuggestion/:_id**
+This is used to post the suggestion form. It updates the venue with the values input into the form, and deletes the suggestion. It shows a confirmation message after completing these operations.
+e.g. /admin/resolveSuggestion/5eae288471ca2e93550a7c5f
+
+## Testing
+We were unable to successfully implement testing of any of our functionalities, despite very helpful input from our tutor and demonstrator. We consistently received an 'await' error that we were ultimately unable to resolve.
